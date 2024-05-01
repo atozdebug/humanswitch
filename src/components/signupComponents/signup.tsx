@@ -17,9 +17,9 @@ const Signup = () => {
     step===2 ?
     <SignupTwo setStep={setStep} />:
     step===3 ?
-    <SignupThree />:
+    <SignupThree setStep={setStep} />:
     step===4 ? 
-    <SignupFour />:
+    <SignupFour setStep={setStep} />:
     <SignupFive />
 }
     </>

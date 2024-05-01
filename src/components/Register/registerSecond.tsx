@@ -17,22 +17,17 @@ const RegisterSecond = () => {
         <a href="" className="text-purple-500 font-semibold">
           mehak@humanswitch.com
         </a>
-         
+        
       </p>
 
       <div className="form-info">
         <label
           className="block text-gray-700 text-sm font-medium mb-2 "
-          htmlFor="username"
-        >
-          Name*
+          htmlFor="username" >Name*
         </label>
         <input
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="username"
-          type="text"
-          placeholder="Enter your name"
-        ></input>
+          id="username"type="text"placeholder="Enter your name" ></input>
         <div className="password my-3">
           <label
             className="block text-gray-700 text-sm font-medium mb-2"
@@ -50,13 +45,8 @@ const RegisterSecond = () => {
             Must be at least 8 characters.
           </p>
           <button className="rounded w-full mt-5 bg-purple hover:bg-purple-700 py-2 px-4 text-white font-semibold">
-            {" "}
-            Create Account
-          </button>
-          <a
-            href=""
-            className="flex justify-center gap-5 mt-3 text-sm font-semibold"
-          >
+            {" "}  Create Account</button>
+          <a href="" className="flex justify-center gap-5 mt-3 text-sm font-semibold">
             <span>
               {" "}
               <img src="/assets/images/arrow-left.png" />

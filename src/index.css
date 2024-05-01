@@ -16,22 +16,50 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+ #root {
+  width: 100% !important;
+  margin: 0px!important;
+  padding: 0px !important;
+  text-align: unset !important;
+  max-width: none;
+} 
+.nav-header {
+  max-width: calc(1440px - 40px);
+  margin: 0 auto;
+  padding: 34px 40px;
+}
+.back-btnn {
+  max-width: calc(1440px - 40px);
+  margin: 11px auto;
+  padding: 0px 40px;
+}
 
-
-/* body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-} */
-
+.footer {
+  max-width: calc(1440px - 40px);
+  margin: 0 auto;
+  padding: 0px 40px;
+}
+.active {
+  background-color: #375DFB;
+  color: #fff;
+}
+.form {
+  height: calc(100vh - 155px);
+}
+.form-2 {
+  height: calc(100vh - 226px);
+}
+.form-3 {
+    height: calc(100vh - 280px);
+}
 .login-form {
   max-width: 400px;
   margin: 0 auto;
   padding: 70px 0;
 }
-
+.lft-space {
+  padding-left: 34px !important;
+}
 
 button:focus,
 button:focus-visible {
@@ -60,10 +88,12 @@ hr {
   color: #E2E4E9;
 }
 .text-border {
+  justify-content: center;
   border: 1px solid #E2E4E9;
   border-radius: 27px;
   min-width: 20px;
   min-height: 20px;
+  display: flex;
 }
 input {
   padding: 10px 12px !important;

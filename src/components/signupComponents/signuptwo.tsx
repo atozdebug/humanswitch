@@ -2,17 +2,17 @@ const SignupTwo = ({setStep}:any) => {
   return (
     <div className="main">
      <div className="nav-header flex items-center content-center  justify-between">
-    <div className="logo">
+    <div className="logo-head">
         <h1><span>
           {" "}
-          <img src="/assets/images/Group2.png" />
+          <img src="/assets/images/Logo.png" />
         </span>{" "}</h1>
 
     </div>
     <nav aria-label="Page navigation example">
   <ul className="inline-flex -space-x-px text-sm">
     <li>
-      <a href="#" className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white   rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800  dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"><span className="text-border font-medium text-xs mr-3">1</span> Personal</a>
+      <a href="#" className="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white   rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800  dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white "><span className="text-border font-medium text-xs mr-3 active">1</span> Personal</a>
     </li>
     <li>
       <a href="#" className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white  hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"><img src="/assets/images/arrow-right-s-line.png" /></a>
@@ -32,15 +32,16 @@ const SignupTwo = ({setStep}:any) => {
 <h1 className="text-center flex justify-center"><img src="/assets/images/croose.png" /></h1>
 </div>
 <hr className="border-color: gray;"></hr>
-<div className="text-start my-2">
-<button className="px-4 py-2 text-heading border border-[#E2E4E9] font-semibold rounded-lg  focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">
+<div className="text-start my-2 back-btnn">
+<button className="px-4 py-2.5 text-heading border border-[#E2E4E9] font-semibold rounded-lg  focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"onClick={() => setStep((prev: number) => prev - 1)}
+>
     Back
 </button>
 </div>
-<div className="form flex flex-col max-w-md m-auto my-5">
+<div className="form-2 flex flex-col max-w-md m-auto justify-center">
     <h1 className="text-center flex justify-center"><img src="/assets/images/Custom-icon.png" /></h1>
-    <h2 className="text-gray-dark text-2xl font-medium">Personal Information</h2>
-    <p className="gray-dark">Provide essential information to proceed.</p>
+    <h2 className="text-gray-dark text-2xl font-medium text-center">Personal Information</h2>
+    <p className="gray-dark text-center">Provide essential information to proceed.</p>
     <hr className="my-5"></hr>
     <div className="flex items-center content-center  justify-between mb-5 ">
       <div>
@@ -53,25 +54,22 @@ const SignupTwo = ({setStep}:any) => {
     </div>
 </div>
     <div className="">
-    <label className="block text-heading text-sm font-medium mb-2" htmlFor="First Name">First Name*</label>
+    <label className="block text-heading text-sm font-medium mb-2" htmlFor="First Name">First Name<span className="text-span-clr">*</span></label>
         <input className="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-input-text leading-tight focus:outline-none focus:shadow-outline"
           id="email" type="text" placeholder="James"></input>
           <div className="my-5">
-          <label className="block text-heading text-sm font-medium mb-2" htmlFor="last Name">Last Name*</label>
+          <label className="block text-heading text-sm font-medium mb-2" htmlFor="last Name">Last Name<span className="text-span-clr">*</span></label>
         <input className="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-input-text leading-tight focus:outline-none focus:shadow-outline"
           id="email" type="text" placeholder="Brown"></input>
           </div>
           <div>
-          <label className="block text-heading text-sm font-medium mb-2" htmlFor="Phone Number">Phone Number*</label>
+          <label className="block text-heading text-sm font-medium mb-2" htmlFor="Phone Number">Phone Number<span className="text-span-clr">*</span></label>
         <input className="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-input-text leading-tight focus:outline-none focus:shadow-outline"
           id="email" type="text" placeholder="(555) 000-0000"></input>
           </div>
        
-    <button className="rounded w-full mt-5 bg-purple hover:bg-purple-700 py-2 px-4 text-white font-semibold"
-   onClick={()=>setStep((prev:number)=>prev+1)}>
-            {" "}  Continue with emailass</button>
-    
-
+    <button className="rounded w-full mt-5 bg-purple hover:bg-purple-700 py-2.5 px-4 text-white font-semibold"
+   onClick={()=>setStep((prev:number)=>prev+1)}>{" "}  Continue</button>
     </div>
 
 </div>
