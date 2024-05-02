@@ -1,14 +1,6 @@
 const SignupThree = ({ setStep }: any) => {
   return (
     <div className="main">
-      <div className="text-start my-2 back-btnn">
-        <button
-          className="px-4 py-2 text-heading border border-[#E2E4E9] font-semibold rounded-lg  focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
-          onClick={() => setStep((prev: number) => prev - 1)}
-        >
-          Back
-        </button>
-      </div>
       <div className="form-3 flex flex-col max-w-md m-auto my-5">
         <h1 className="text-center flex justify-center">
           <img src="/assets/images/Custom-icon.png" />
@@ -66,7 +58,7 @@ const SignupThree = ({ setStep }: any) => {
           </div>
         </div>
         <button
-          className="rounded w-full mt-5 bg-purple hover:bg-purple-700 py-2.5 px-4 text-white font-semibold"
+          className="rounded w-full mt-5 bg-purple-500 hover:bg-purple-700 py-2.5 px-4 text-white font-semibold"
           onClick={() => setStep((prev: number) => prev + 1)}
         >
           {" "}
