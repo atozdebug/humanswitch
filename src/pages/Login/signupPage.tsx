@@ -1,11 +1,11 @@
 import { useState } from "react";
-import SignupOne from "./signupone";
-import SignupTwo from "./signuptwo";
-import SignupThree from "./signupthree";
-import SignupFour from "./signupfour";
-import SignupFive from "./signupfive";
+import SignupOne from "../../components/SignupComponents/signupFirst";
+import SignupTwo from "../../components/SignupComponents/signupSecond";
+import SignupThree from "../../components/SignupComponents/signupThird";
+import SignupFour from "../../components/SignupComponents/signupFourth";
+import SignupFive from "../../components/SignupComponents/signupFifth";
 
-const Signup = () => {
+const SignupPage = () => {
   const [step, setStep] = useState<number>(1);
   return (
     <>
@@ -24,4 +24,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default SignupPage;
