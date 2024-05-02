@@ -46,7 +46,7 @@ const SignupOne = ({setStep}:any) => {
         <input type="checkbox" className="form-checkbox rounded text-heading font-medium text-sm border-2 border-blue-500 focus:ring focus:ring-blue-300" />
         <span className="text-heading">I agree to the <a href="/terms-and-conditions" className="text-heading underline font-semibold">Terms & Conditions</a> and <a href="/privacy-policy" className="text-heading font-semibold underline">Privacy Policy</a>.</span>
     </label>
-    <button className="rounded w-full mt-5 bg-dark-purple hover:bg-dark-purple-700 py-2.5 px-4 text-white font-semibold"
+    <button className="rounded w-full mt-5 bg-purple bg-dark-purple hover:bg-dark-purple-700 py-2.5 px-4 text-white font-semibold"
    onClick={()=>setStep((prev:number)=>prev+1)}>
             {" "}  Continue with email</button>
             <div className="flex items-center justify-between my-5">

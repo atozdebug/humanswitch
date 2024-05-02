@@ -14,8 +14,12 @@ export default {
         'gray-dark': '#525866',
         'heading': '#0A0D14',
         'input-text': '#868C98',
-        'border-clr': '#E2E4E9'
-       
+        'border-clr': '#E2E4E9',
+        'dark-purple': '#2B1664',    
+        'span-clr': '#375DFB',    
+        'content': '#525866',    
+        'border-error': '#DF1C41',    
+        'success': '#38C793',
       },
     },
   },
