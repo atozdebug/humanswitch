@@ -7,8 +7,9 @@ import {
   Outlet,
   Navigate,
 } from "react-router-dom";
+import LoginHr from "./pages/Login/hrLogin";
 const ForgetPasswordPage = lazy(() => import("./pages/Login/forgetPassword"));
-const SignupPages = lazy(() => import("./pages/Login/signupPage"));
+const SignupPages = lazy(() => import("./pages/Login/hrSignupPage"));
 const LoginPage = lazy(() => import("./pages/Login/loginPage"));
 const RegisterPage = lazy(() => import("./pages/Login/registerPage"));
 const HomePage = lazy(() => import("./pages/DashBoard/homePage"));
@@ -44,9 +45,11 @@ const App = () => {
             )}
           </Route>
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/loginhr" element={<LoginHr />} />
+
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/forgetPassword" element={<ForgetPasswordPage />} />
-          <Route path="/signup" element={<SignupPages />} />
+          <Route path="/signuphr" element={<SignupPages />} />
           <Route
             path="/home"
             element={
