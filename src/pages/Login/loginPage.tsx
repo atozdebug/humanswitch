@@ -52,6 +52,7 @@ const LoginPage: React.FC = () => {
     //reset()
     // Implement your form submission logic here
   };
+
   return (
     <div className="login-form">
       <h5 className="text-xl flex justify-center gap-5 header font-semibold  ">
@@ -65,7 +66,7 @@ const LoginPage: React.FC = () => {
       </h2>
       <p className="font-normal">welcome back please enter your details.</p>
 
-      <div className="form-info mt-4">
+      {/* <div className="form-info mt-4">
         <label
           className="block text-gray-700 text-sm font-medium mb-2"
           htmlFor="Work email"
@@ -109,7 +110,7 @@ const LoginPage: React.FC = () => {
             </span>
           </p>
         </div>
-      </div>
+      </div> */}
 
       <form onSubmit={handleSubmit(onSubmit)} className="form-info mt-4">
         <div>
@@ -146,7 +147,7 @@ const LoginPage: React.FC = () => {
           <input
             id="password"
             type="password"
-            placeholder="Create a password"
+            placeholder="Enter your password"
             className={`shadow appearance-none border border-color: gray; rounded w-full py-2 px-3 text-gray leading-tight focus:outline-none focus:shadow-outline ${
               errors.password ? "border-[#F04438]" : ""
             }`}
@@ -160,7 +161,7 @@ const LoginPage: React.FC = () => {
           )}
           <button
             type="submit"
-            className="rounded w-full mt-5 bg-purple hover:bg-purple-700 py-2 px-4 text-white font-semibold"
+            className="rounded w-full mt-5 bg-purple-500 hover:bg-purple-700 py-2 px-4 text-white font-semibold"
           >
             Login
           </button>

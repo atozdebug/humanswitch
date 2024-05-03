@@ -48,13 +48,13 @@ const RegisterFirst: React.FC<RegisterFirstProps> = ({
       <form onSubmit={handleSubmit(onSubmit)} className="my-6">
         <div>
           <label className="block w-full pb-1 text-sm font-medium text-gray-500 border-color: gray; text-align: start; transition-all duration-200 ease-in-out group-focus-within:text-blue-400 lable-lft">
-            Focus outline
+            Enter your mail
           </label>
           <input
             id="1"
             type="text"
             placeholder="Enter your work email"
-            className={`peer h-10 w-full rounded-md border border-slate-300 px-4 font-thin outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400 ${
+            className={`peer h-10 w-full rounded-md border border-slate-300 px-4 outline-none drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400 ${
               errors.email ? "border-[#F04438]" : ""
             }`}
             {...register("email")}
@@ -77,7 +77,7 @@ const RegisterFirst: React.FC<RegisterFirstProps> = ({
         </div>
         <button
           type="submit"
-          className="rounded w-full mt-5 bg-purple hover:bg-purple-700 py-2 px-4 text-white font-semibold"
+          className="rounded w-full mt-5 bg-purple-500 hover:bg-purple-700 py-2 px-4 text-white font-semibold"
         >
           Continue with email
         </button>
