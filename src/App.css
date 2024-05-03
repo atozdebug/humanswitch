@@ -40,3 +40,202 @@
 .read-the-docs {
   color: #888;
 }
+.text-clip {
+  background-clip: text;
+  color: transparent;
+}
+.chapter1 {
+  transform: rotate(0deg) translate(0) rotate(0deg);
+}
+.animationAll .chapter1 {
+  animation: chapter1Animation 1s cubic-bezier(0.22, 0.61, 0.36, 1) forwards
+    0.3s;
+}
+@keyframes chapter1Animation {
+  0% {
+    transform: rotate(0deg) translate(0) rotate(0deg);
+  }
+  /* 100% {transform: rotate(-72deg) translate(300px) rotate(72deg)} */
+  100% {
+    transform: translate(93px, -285px);
+  }
+}
+/* //// */
+.chapter2 {
+  transform: rotate(0deg) translate(0) rotate(0deg);
+}
+.animationAll .chapter2 {
+  animation: chapter2Animation 1s cubic-bezier(0.22, 0.61, 0.36, 1) forwards
+    0.3s;
+}
+@keyframes chapter2Animation {
+  0% {
+    transform: rotate(0deg) translate(0) rotate(0deg);
+  }
+  /* 100% {transform: rotate(-36deg) translate(300px) rotate(36deg);} */
+  100% {
+    transform: translate(243px, -177px);
+  }
+}
+/* //// */
+.chapter3 {
+  transform: rotate(0deg) translate(0) rotate(0deg);
+}
+.animationAll .chapter3 {
+  animation: chapter3Animation 1s cubic-bezier(0.22, 0.61, 0.36, 1) forwards
+    0.3s;
+}
+@keyframes chapter3Animation {
+  0% {
+    transform: rotate(0deg) translate(0) rotate(0deg);
+  }
+  /* 100% {transform: rotate(0deg) translate(300px) rotate(0deg);} */
+  100% {
+    transform: translate(300px, 0px);
+  }
+}
+/* //// */
+.chapter4 {
+  transform: rotate(0deg) translate(0) rotate(0deg);
+}
+.animationAll .chapter4 {
+  animation: chapter4Animation 1s cubic-bezier(0.22, 0.61, 0.36, 1) forwards
+    0.3s;
+}
+@keyframes chapter4Animation {
+  0% {
+    transform: rotate(0deg) translate(0) rotate(0deg);
+  }
+  /* 100% {transform: rotate(36deg) translate(300px) rotate(-36deg);} */
+  100% {
+    transform: translate(243px, 177px);
+  }
+}
+/* //// */
+.chapter5 {
+  transform: rotate(0deg) translate(0) rotate(0deg);
+}
+.animationAll .chapter5 {
+  animation: chapter5Animation 1s cubic-bezier(0.22, 0.61, 0.36, 1) forwards
+    0.3s;
+}
+@keyframes chapter5Animation {
+  0% {
+    transform: rotate(0deg) translate(0) rotate(0deg);
+  }
+  /* 100% {transform: rotate(72deg) translate(300px) rotate(-72deg);} */
+  100% {
+    transform: translate(93px, 285px);
+  }
+}
+/* ///// */
+.chapter6 {
+  transform: rotate(0deg) translate(0) rotate(0deg);
+}
+.animationAll .chapter6 {
+  animation: chapter6Animation 1s cubic-bezier(0.22, 0.61, 0.36, 1) forwards
+    0.3s;
+}
+@keyframes chapter6Animation {
+  0% {
+    transform: rotate(0deg) translate(0) rotate(0deg);
+  }
+  /* 100% {transform: rotate(108deg) translate(300px) rotate(-108deg);} */
+  100% {
+    transform: translate(-93px, 285px);
+  }
+}
+/* ///// */
+.chapter7 {
+  transform: rotate(0deg) translate(0) rotate(0deg);
+}
+.animationAll .chapter7 {
+  animation: chapter7Animation 1s cubic-bezier(0.22, 0.61, 0.36, 1) forwards
+    0.3s;
+}
+@keyframes chapter7Animation {
+  0% {
+    transform: rotate(0deg) translate(0) rotate(0deg);
+  }
+  /* 100% {transform: rotate(144deg) translate(300px) rotate(-144deg);} */
+  100% {
+    transform: translate(-243px, 177px);
+  }
+}
+/* //// */
+.chapter8 {
+  transform: rotate(0deg) translate(0) rotate(0deg);
+}
+.animationAll .chapter8 {
+  animation: chapter8Animation 1s cubic-bezier(0.22, 0.61, 0.36, 1) forwards
+    0.3s;
+}
+@keyframes chapter8Animation {
+  0% {
+    transform: rotate(0deg) translate(0) rotate(0deg);
+  }
+  /* 100% {transform: rotate(180deg) translate(300px) rotate(-180deg);} */
+  100% {
+    transform: translate(-300px, 0px);
+  }
+}
+/* //// */
+.chapter9 {
+  transform: rotate(0deg) translate(0) rotate(0deg);
+}
+.animationAll .chapter9 {
+  animation: chapter9Animation 1s cubic-bezier(0.22, 0.61, 0.36, 1) forwards
+    0.3s;
+}
+@keyframes chapter9Animation {
+  0% {
+    transform: rotate(0deg) translate(0) rotate(0deg);
+  }
+  /* 100% {transform: rotate(216deg) translate(300px) rotate(-216deg);} */
+  100% {
+    transform: translate(-243px, -177px);
+  }
+}
+/* //// */
+.chapter10 {
+  transform: rotate(0deg) translate(0) rotate(0deg);
+}
+.animationAll .chapter10 {
+  animation: chapter10Animation 1s cubic-bezier(0.22, 0.61, 0.36, 1) forwards
+    0.3s;
+}
+@keyframes chapter10Animation {
+  0% {
+    transform: rotate(0deg) translate(0) rotate(0deg);
+  }
+  /* 100% {transform: rotate(252deg) translate(300px) rotate(-252deg);} */
+  100% {
+    transform: translate(-93px, -285px);
+  }
+}
+.chapter-cs {
+  margin: -64px;
+  transform-origin: 300px;
+}
+body .active-items-start {
+  align-items: start;
+}
+.disabled {
+  opacity: 0.7;
+  pointer-events: none;
+}
+@media (max-width: 767.98px) {
+  .chapter-cs,
+  .head-goal {
+    position: static !important;
+    transform: none !important;
+    margin: 0 auto !important;
+  }
+  .head-goal {
+    order: -1 !important;
+  }
+  .chapter-all {
+    border: 0 !important;
+    padding-bottom: 0 !important;
+  }
+}
