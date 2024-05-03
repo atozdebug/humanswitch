@@ -81,6 +81,8 @@ const SignupThree = ({ handleSubmit, register, onSubmit, errors }: any) => {
           Continue{" "}
         </button>
       </form>
+
+
     </div>
   );
 };

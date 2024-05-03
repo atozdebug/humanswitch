@@ -20,7 +20,7 @@ export default {
       },
       minwidth: {
 
-        '168': '168',
+        '168px': '168px',
     },
     },
   },
