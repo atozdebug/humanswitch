@@ -8,6 +8,8 @@ import {
   Navigate,
 } from "react-router-dom";
 import LoginHr from "./pages/Login/hrLogin";
+import Settings from "./pages/DashBoard/settings";
+import Chatbot from "./pages/DashBoard/chatbot";
 const ForgetPasswordPage = lazy(() => import("./pages/Login/forgetPassword"));
 const SignupPages = lazy(() => import("./pages/Login/hrSignupPage"));
 const LoginPage = lazy(() => import("./pages/Login/loginPage"));
@@ -50,6 +52,10 @@ const App = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/loginhr" element={<LoginHr />} />
           <Route path="/forgetPassword" element={<ForgetPasswordPage />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/chatbot" element={<Chatbot />} />
+
+
           <Route
             path="/home"
             element={
