@@ -1,7 +1,10 @@
-const SignupThree = ({ setStep }: any) => {
+const SignupThree = ({ handleSubmit, register, onSubmit, errors }: any) => {
   return (
     <div className="main">
-      <div className="form-3 flex flex-col max-w-md m-auto my-5">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="form-3 flex flex-col max-w-md m-auto my-5"
+      >
         <h1 className="text-center flex justify-center">
           <img src="/assets/images/Custom-icon.png" />
         </h1>
@@ -12,7 +15,11 @@ const SignupThree = ({ setStep }: any) => {
           Choose your role within your company.
         </p>
         <hr className="my-5"></hr>
-        <div className="flex  items-center content-center  justify-between border border-[#E2E4E9] p-4 rounded-xl">
+        <div
+          className={`flex items-center content-center  justify-between border ${
+            errors?.role ? "border-red-600" : "border-[#E2E4E9]"
+          } p-4 rounded-xl`}
+        >
           <div>
             <h1 className="text-center flex justify-center">
               <img src="/assets/images/camra.png" />
@@ -28,14 +35,19 @@ const SignupThree = ({ setStep }: any) => {
             <input
               id="default-radio-1"
               type="radio"
-              value=""
+              value="Admin"
               name="default-radio"
-              className="w-4 h-4 text-blue-600 bg-gray-100   dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:bg-gray-700"
+              {...register("role")}
+              className="w-4 h-4 text-blue-600 bg-gray-100  dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:bg-gray-700"
             />
           </div>
         </div>
 
-        <div className="flex  items-center content-center  justify-between border border-[#E2E4E9] p-4 rounded-xl mt-5">
+        <div
+          className={`flex items-center content-center  justify-between border ${
+            errors?.role ? "border-red-600" : "border-[#E2E4E9]"
+          } p-4 rounded-xl mt-5`}
+        >
           <div>
             <h1 className="text-center flex justify-center">
               <img src="/assets/images/user.png" />
@@ -49,22 +61,26 @@ const SignupThree = ({ setStep }: any) => {
           </div>
           <div>
             <input
-              id="default-radio-1"
+              id="default-radio-2"
               type="radio"
-              value=""
+              value="Employee"
               name="default-radio"
+              {...register("role")}
               className="w-4 h-4 text-blue-600 bg-gray-100   dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:bg-gray-700"
             />
           </div>
         </div>
+        {errors?.role && (
+          <p className="text-red-500 text-sm mt-2">{errors?.role?.message}</p>
+        )}
         <button
           className="rounded w-full mt-5 bg-purple-500 hover:bg-purple-700 py-2.5 px-4 text-white font-semibold"
-          onClick={() => setStep((prev: number) => prev + 1)}
+          type="submit"
         >
           {" "}
           Continue{" "}
         </button>
-      </div>
+      </form>
     </div>
   );
 };

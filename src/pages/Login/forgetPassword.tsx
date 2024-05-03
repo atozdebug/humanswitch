@@ -86,7 +86,7 @@ const ForgetPasswordPage = () => {
   const {
     register,
     handleSubmit,
-    reset,
+    // reset,
     formState: { errors },
   } = useForm<FormData | any>({
     resolver: schemas(step),

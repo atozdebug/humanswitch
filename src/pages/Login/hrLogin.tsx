@@ -1,4 +1,62 @@
-const LoginHr = ({ setStep }: any) => {
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup.object().shape({
+  email: yup
+    .string()
+    .email("Please enter a valid work email address")
+    .required("Email is required"),
+  password: yup
+    .string()
+    .required("Password is required")
+    .matches(
+      /^(?=.*[a-z])/,
+      "Password must contain at least one lowercase letter"
+    )
+    .matches(
+      /^(?=.*[A-Z])/,
+      "Password must contain at least one uppercase letter"
+    )
+    .matches(/^(?=.*[0-9])/, "Password must contain at least one number")
+    .matches(
+      /^(?=.*[\W_])/,
+      "Password must contain at least one special character"
+    )
+    .min(8, "Password must be atleast 8 characters long"),
+  checkBox: yup
+    .boolean()
+    .required("You must agree to the Terms & Conditions and Privacy Policy."),
+});
+
+interface FormData {
+  email: string;
+  password: string;
+  checkBox: boolean;
+}
+const defaultValues = {
+  email: "",
+  password: "",
+  checkBox: false,
+};
+
+const LoginHr = () => {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: yupResolver(schema),
+    defaultValues,
+  });
+
+  const onSubmit: any = (data: FormData) => {
+    console.log("Form data:", data);
+    //reset()
+    // Implement your form submission logic here
+  };
+
   return (
     <div className="main my-2 px-5 mob">
       <div className="grid grid-cols-3 gap-4">
@@ -18,7 +76,10 @@ const LoginHr = ({ setStep }: any) => {
               </p>
             </div>
           </div>
-          <div className="form-2 flex flex-col max-w-md m-auto justify-center">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="form-2 flex flex-col max-w-md m-auto justify-center"
+          >
             <h1 className="text-center flex justify-center">
               <img src="/assets/images/Custom-lock.png" />
             </h1>
@@ -46,19 +107,26 @@ const LoginHr = ({ setStep }: any) => {
                 className="block text-heading text-sm font-medium mb-2"
                 htmlFor="email"
               >
-                {" "}
                 Email Address <span className="text-span-clr">*</span>{" "}
               </label>
               <div className="relative">
-                <span className="absolute inset-x-3  inset-y-3">
+                <span className="absolute h-2 w-4 inset-y-3 inset-x-3">
                   <img src="/assets/images/mail-line.png" />
                 </span>
                 <input
-                  className="shadow appearance-none lft-space bg-transparent  border border-slate-300 rounded w-full py-2 px-3 text-input-text leading-tight focus:outline-none focus:shadow-outline"
+                  className={`shadow appearance-none lft-space bg-transparent  border rounded w-full py-2 px-3 text-input-text leading-tight focus:outline-none focus:shadow-outline ${
+                    errors.email ? "border-[#F04438]" : " border-slate-300 "
+                  }`}
                   id="email"
-                  type="text"
+                  type="email"
                   placeholder="hello@humanswitch.ai"
-                ></input>
+                  {...register("email")}
+                />
+                {errors.email && (
+                  <p className="text-red-500 text-sm mt-2">
+                    {errors?.email?.message}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -70,26 +138,33 @@ const LoginHr = ({ setStep }: any) => {
                 Password<span className="text-span-clr">*</span>
               </label>
               <div className="relative">
-                <span className="absolute inset-y-3 inset-x-3">
-                  {" "}
+                <span className="absolute h-2 w-4 inset-y-3 inset-x-3">
                   <img src="/assets/images/lock-2-line.png" />
                 </span>
                 <input
-                  className="lft-space shadow appearance-none border border-slate-300 rounded w-full py-2   pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline"
+                  className={`lft-space shadow appearance-none border  rounded w-full py-2   pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline ${
+                    errors.password ? "border-[#F04438]" : "border-slate-300"
+                  }`}
                   id="password"
                   type="password"
                   placeholder=".........."
-                ></input>
-                <span className="absolute inset-y-4  right-2 ">
-                  {" "}
+                  {...register("password")}
+                />
+                <span className="absolute h-2 w-4 inset-y-3 right-2">
                   <img src="/assets/images/eye-line.png" />
                 </span>
+                {errors?.password && (
+                  <p className="text-red-500 text-sm mt-2">
+                    {errors?.password?.message}
+                  </p>
+                )}
               </div>
             </div>
 
-            <div>
+            <label>
               <input
-                type="checkbox"
+                type="checkBox"
+                {...register("checkBox")}
                 className="form-checkbox text-indigo-600 border-transparent  border-none  relative space-top "
               />
               <span className="ml-2 text-heading font-normal text-sm">
@@ -101,16 +176,20 @@ const LoginHr = ({ setStep }: any) => {
                   Forgot password?
                 </a>
               </span>
-            </div>
+              {errors.checkBox && (
+                <p className="text-red-500 text-sm mt-2">
+                  You must agree to the Terms & Conditions and Privacy Policy.
+                </p>
+              )}
+            </label>
 
             <button
+              type="submit"
               className="rounded w-full mt-5 bg-purple-500 hover:bg-purple-700 py-2.5 px-4 text-white font-semibold"
-              onClick={() => setStep((prev: number) => prev + 1)}
             >
-              {" "}
               Login
             </button>
-          </div>
+          </form>
         </div>
 
         <div className="col-span-2 bg-[#F6F8FA] py-9">

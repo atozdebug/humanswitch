@@ -37,6 +37,7 @@ const App = () => {
     >
       <BrowserRouter>
         <Routes>
+          <Route path="/*" element={<Navigate to="/" />} />
           <Route path="/" element={<Outlet />}>
             {token ? (
               <Route index element={<Navigate to="/home" />} />
@@ -44,12 +45,11 @@ const App = () => {
               <Route index element={<Navigate to="/login" />} />
             )}
           </Route>
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/signuphr" element={<SignupPages />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/loginhr" element={<LoginHr />} />
-
-          <Route path="/register" element={<RegisterPage />} />
           <Route path="/forgetPassword" element={<ForgetPasswordPage />} />
-          <Route path="/signuphr" element={<SignupPages />} />
           <Route
             path="/home"
             element={
@@ -58,7 +58,6 @@ const App = () => {
               </RouteGuard>
             }
           />
-          <Route path="/*" element={<Navigate to="/" />} />
         </Routes>
       </BrowserRouter>
     </Suspense>

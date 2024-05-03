@@ -1,7 +1,10 @@
-const SignupTwo = ({ setStep }: any) => {
+const SignupTwo = ({ handleSubmit, register, onSubmit, errors }: any) => {
   return (
     <div className="main">
-      <div className="form-2 flex flex-col max-w-md m-auto justify-center">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="form-2 flex flex-col max-w-md m-auto justify-center"
+      >
         <h1 className="text-center flex justify-center">
           <img src="/assets/images/Custom-icon.png" />
         </h1>
@@ -13,7 +16,11 @@ const SignupTwo = ({ setStep }: any) => {
         </p>
         <hr className="my-5"></hr>
         <div className="flex items-center content-center  justify-between mb-5 ">
-          <div>
+          <div
+            className={`${
+              errors?.profilePicture ? "border rounded-full border-red-500" : ""
+            }`}
+          >
             <h1>
               <img src="/assets/images/Custom-icon.png" />
             </h1>
@@ -28,63 +35,90 @@ const SignupTwo = ({ setStep }: any) => {
             <input
               type="file"
               id="image-upload"
-              name="image-upload"
               accept="image/*"
+              {...register("profilePicture")}
               className="block w-full text-start  text-sm text-gray-900 bg-gray-50 rounded-lg cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
             />
+            {errors?.profilePicture && (
+              <p className="text-red-500 text-sm mt-2">
+                {errors?.profilePicture?.message}
+              </p>
+            )}
           </div>
         </div>
-        <div className="">
+
+        <label
+          className="block text-heading text-sm font-medium mb-2"
+          htmlFor="firstName"
+        >
+          First Name*
+        </label>
+        <input
+          className={`shadow appearance-none border  rounded w-full py-2 px-3 text-input-text leading-tight focus:outline-none focus:shadow-outline ${
+            errors.firstName ? "border-[#F04438]" : "border-slate-300"
+          }`}
+          id="firstName"
+          type="text"
+          placeholder="James"
+          {...register("firstName")}
+        />
+        {errors?.firstName && (
+          <p className="text-red-500 text-sm mt-2">
+            {errors?.firstName?.message}
+          </p>
+        )}
+        <div className="my-5">
           <label
             className="block text-heading text-sm font-medium mb-2"
-            htmlFor="First Name"
+            htmlFor="lastName"
           >
-            First Name<span className="text-span-clr">*</span>
+            Last Name*
           </label>
           <input
-            className="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-input-text leading-tight focus:outline-none focus:shadow-outline"
-            id="email"
+            className={`shadow appearance-none border  rounded w-full py-2 px-3 text-input-text leading-tight focus:outline-none focus:shadow-outline ${
+              errors.lastName ? "border-[#F04438]" : "border-slate-300"
+            }`}
+            id="lastName"
             type="text"
-            placeholder="James"
-          ></input>
-          <div className="my-5">
-            <label
-              className="block text-heading text-sm font-medium mb-2"
-              htmlFor="last Name"
-            >
-              Last Name<span className="text-span-clr">*</span>
-            </label>
-            <input
-              className="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-input-text leading-tight focus:outline-none focus:shadow-outline"
-              id="email"
-              type="text"
-              placeholder="Brown"
-            ></input>
-          </div>
-          <div>
-            <label
-              className="block text-heading text-sm font-medium mb-2"
-              htmlFor="Phone Number"
-            >
-              Phone Number<span className="text-span-clr">*</span>
-            </label>
-            <input
-              className="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-input-text leading-tight focus:outline-none focus:shadow-outline"
-              id="email"
-              type="text"
-              placeholder="(555) 000-0000"
-            ></input>
-          </div>
-
-          <button
-            className="rounded w-full mt-5 bg-purple-500 hover:bg-purple-700 py-2.5 px-4 text-white font-semibold"
-            onClick={() => setStep((prev: number) => prev + 1)}
-          >
-            {" "}
-            Continue
-          </button>
+            placeholder="Brown"
+            {...register("lastName")}
+          />
+          {errors?.lastName && (
+            <p className="text-red-500 text-sm mt-2">
+              {errors?.lastName?.message}
+            </p>
+          )}
         </div>
-      </div>
+        <div>
+          <label
+            className="block text-heading text-sm font-medium mb-2"
+            htmlFor="phoneNumber"
+          >
+            Phone Number*
+          </label>
+          <input
+            className={`shadow appearance-none border  rounded w-full py-2 px-3 text-input-text leading-tight focus:outline-none focus:shadow-outline ${
+              errors.phoneNumber ? "border-red-500" : "border-slate-300"
+            }`}
+            id="phoneNumber"
+            type="number"
+            placeholder="(555) 000-0000"
+            {...register("phoneNumber")}
+          />
+          {errors?.phoneNumber && (
+            <p className="text-red-500 text-sm mt-2">
+              {errors?.phoneNumber?.message}
+            </p>
+          )}
+        </div>
+
+        <button
+          className="rounded w-full mt-5 bg-purple-500 hover:bg-purple-700 py-2.5 px-4 text-white font-semibold"
+          type="submit"
+        >
+          Continue
+        </button>
+      </form>
     </div>
   );
 };

@@ -1,6 +1,6 @@
-const SignupOne = ({ setStep }: any) => {
+const SignupOne = ({ handleSubmit, register, onSubmit, errors }: any) => {
   return (
-    <div className="main ">
+    <div className="main">
       <div className="form flex flex-col max-w-md m-auto justify-center">
         <h1 className="flex justify-center text-center">
           <img src="/assets/images/plus.png" />
@@ -11,33 +11,44 @@ const SignupOne = ({ setStep }: any) => {
         <p className="gray-dark text-center">
           Use your work email for a better experience
         </p>
-        <div className="">
+        <form onSubmit={handleSubmit(onSubmit)} className="">
           <label
             className="block text-heading text-sm font-medium mb-2"
             htmlFor="email"
           >
-            Email <span className="text-span-clr">*</span>{" "}
+            Email*
           </label>
           <input
-            className="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-input-text leading-tight focus:outline-none focus:shadow-outline"
+            className={`shadow appearance-none border  rounded w-full py-2 px-3 text-input-text leading-tight focus:outline-none focus:shadow-outline ${
+              errors.email ? "border-[#F04438]" : "border-slate-300"
+            }`}
             id="email"
             type="text"
             placeholder="hello@humanswitch.ai"
-          ></input>
+            {...register("email")}
+          />
+          {errors?.email && (
+            <p className="text-red-500 text-sm mt-2">
+              {errors?.email?.message}
+            </p>
+          )}
           <label className="flex items-center space-x-2 mt-5">
             <input
               type="checkbox"
-              className="form-checkbox rounded text-heading font-medium text-sm border-2 border-blue-500 focus:ring focus:ring-blue-300"
+              className={`form-checkbox rounded text-heading font-medium text-sm border focus:ring focus:ring-blue-300  ${
+                errors.agreeTerms ? "border-red-500" : ""
+              }`}
+              {...register("agreeTerms")}
             />
             <span className="text-heading">
-              I agree to the{" "}
+              I agree to the
               <a
                 href="/terms-and-conditions"
                 className="text-heading underline font-semibold"
               >
                 Terms & Conditions
-              </a>{" "}
-              and{" "}
+              </a>
+              and
               <a
                 href="/privacy-policy"
                 className="text-heading font-semibold underline"
@@ -47,11 +58,15 @@ const SignupOne = ({ setStep }: any) => {
               .
             </span>
           </label>
+          {errors.agreeTerms && (
+            <p className="text-red-500 text-sm mt-2">
+              You must agree to the Terms & Conditions and Privacy Policy.
+            </p>
+          )}
           <button
-            className="rounded w-full mt-5 bg-dark-purple hover:bg-dark-purple-700 py-2.5 px-4 text-white font-semibold"
-            onClick={() => setStep((prev: number) => prev + 1)}
+            type="submit"
+            className="rounded w-full mt-5 bg-purple-800 hover:bg-dark-purple-700 py-2.5 px-4 text-white font-semibold"
           >
-            {" "}
             Continue with email
           </button>
           <div className="flex items-center justify-between my-5">
@@ -74,7 +89,7 @@ const SignupOne = ({ setStep }: any) => {
               <span className="text-gray-dark font-semibold">Login</span>
             </a>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );

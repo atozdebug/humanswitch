@@ -1,7 +1,10 @@
-const SignupFive = ({ setStep }: any) => {
+const SignupFive = ({ handleSubmit, register, onSubmit, errors }: any) => {
   return (
     <div className="main">
-      <div className="form-2 flex flex-col max-w-md m-auto justify-center">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="form-2 flex flex-col max-w-md m-auto justify-center"
+      >
         <h1 className="text-center flex justify-center">
           <img src="/assets/images/Custom-lock.png" />
         </h1>
@@ -20,45 +23,57 @@ const SignupFive = ({ setStep }: any) => {
             Create a Password<span className="text-span-clr">*</span>
           </label>
           <div className="relative">
-            <span className="absolute inset-y-4 inset-x-3">
-              {" "}
+            <span className="absolute h-2 w-4 inset-y-3 inset-x-3">
               <img src="/assets/images/lock-2-line.png" />
             </span>
             <input
-              className="lft-space shadow appearance-none border border-slate-300 rounded w-full py-2   pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline"
-              id="email"
+              className={`lft-space shadow appearance-none border ${
+                errors.password ? "border-red-600" : "border-slate-300"
+              } rounded w-full py-2 pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
+              id="password"
               type="password"
               placeholder=".........."
-            ></input>
-            <span className="absolute inset-y-4  right-2 ">
-              {" "}
+              {...register("password")}
+            />
+            <span className="absolute h-2 w-4 inset-y-3 right-2">
               <img src="/assets/images/eye-line.png" />
             </span>
+            {errors.password && (
+              <p className="text-[#F04438] text-sm mt-2">
+                {errors.password.message}
+              </p>
+            )}
           </div>
         </div>
 
         <div className="my-5">
           <label
             className="block text-heading text-sm font-medium mb-2"
-            htmlFor="password"
+            htmlFor="confirmPassword"
           >
             Confirm Password<span className="text-span-clr">*</span>
           </label>
           <div className="relative">
-            <span className="absolute inset-y-4 inset-x-3">
-              {" "}
+            <span className="absolute h-2 w-4 inset-y-3 inset-x-3">
               <img src="/assets/images/lock-2-line.png" />
             </span>
             <input
-              className="lft-space shadow appearance-none border border-slate-300 rounded w-full py-2   pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline"
-              id="email"
+              className={`lft-space shadow appearance-none border ${
+                errors.confirmPassword ? "border-red-600" : "border-slate-300"
+              } rounded w-full py-2   pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
+              id="confirmPassword"
               type="password"
+              {...register("confirmPassword")}
               placeholder=".........."
-            ></input>
-            <span className="absolute inset-y-4  right-2 ">
-              {" "}
+            />
+            <span className="absolute h-2 w-4 inset-y-3 right-2">
               <img src="/assets/images/eye-line.png" />
             </span>
+            {errors.confirmPassword && (
+              <p className="text-[#F04438] text-sm mt-2">
+                {errors.confirmPassword.message}
+              </p>
+            )}
           </div>
         </div>
         <div className="flex items-center justify-between mb-5">
@@ -125,12 +140,12 @@ const SignupFive = ({ setStep }: any) => {
 
         <button
           className="rounded w-full mt-5 bg-purple-500 hover:bg-purple-700 py-2.5 px-4 text-white font-semibold"
-          onClick={() => setStep((prev: number) => prev + 1)}
+          type="submit"
         >
           {" "}
           Continue
         </button>
-      </div>
+      </form>
     </div>
   );
 };

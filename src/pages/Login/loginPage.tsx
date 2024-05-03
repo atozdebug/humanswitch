@@ -52,6 +52,7 @@ const LoginPage: React.FC = () => {
     //reset()
     // Implement your form submission logic here
   };
+
   return (
     <div className="login-form">
       <h5 className="text-xl flex justify-center gap-5 header font-semibold  ">
