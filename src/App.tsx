@@ -10,6 +10,7 @@ import {
 import LoginHr from "./pages/Login/hrLogin";
 import Settings from "./pages/DashBoard/settings";
 import Chatbot from "./pages/DashBoard/chatbot";
+import Layout from "./components/Layout/layout";
 const ForgetPasswordPage = lazy(() => import("./pages/Login/forgetPassword"));
 const SignupPages = lazy(() => import("./pages/Login/hrSignupPage"));
 const LoginPage = lazy(() => import("./pages/Login/loginPage"));
@@ -39,32 +40,35 @@ const App = () => {
     >
       <BrowserRouter>
         <Routes>
-          <Route path="/*" element={<Navigate to="/" />} />
+          {/* <Route path="/*" element={<Navigate to="/" />} />
           <Route path="/" element={<Outlet />}>
             {token ? (
               <Route index element={<Navigate to="/home" />} />
             ) : (
               <Route index element={<Navigate to="/login" />} />
             )}
-          </Route>
+          </Route> */}
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/signuphr" element={<SignupPages />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/loginhr" element={<LoginHr />} />
           <Route path="/forgetPassword" element={<ForgetPasswordPage />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/chatbot" element={<Chatbot />} />
-
-
-          <Route
-            path="/home"
-            element={
-              <RouteGuard>
-                <HomePage />
-              </RouteGuard>
-            }
-          />
         </Routes>
+        <Layout>
+          <Routes>
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/chatbot" element={<Chatbot />} />
+
+            <Route
+              path="/home"
+              element={
+                <RouteGuard>
+                  <HomePage />
+                </RouteGuard>
+              }
+            />
+          </Routes>
+        </Layout>
       </BrowserRouter>
     </Suspense>
   );
