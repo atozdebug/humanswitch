@@ -4,25 +4,28 @@ import {
   BrowserRouter,
   Routes,
   Route,
-  Outlet,
-  Navigate,
+  // Outlet,
+  // Navigate,
 } from "react-router-dom";
 import LoginHr from "./pages/Login/hrLogin";
 import Settings from "./pages/DashBoard/settings";
 import Chatbot from "./pages/DashBoard/chatbot";
 import Layout from "./components/Layout/layout";
+import DashBoard from "./pages/DashBoard/dashboard";
 const ForgetPasswordPage = lazy(() => import("./pages/Login/forgetPassword"));
 const SignupPages = lazy(() => import("./pages/Login/hrSignupPage"));
 const LoginPage = lazy(() => import("./pages/Login/loginPage"));
 const RegisterPage = lazy(() => import("./pages/Login/registerPage"));
-const HomePage = lazy(() => import("./pages/DashBoard/homePage"));
+const HomePage = lazy(() => import("./pages/Login/homePage"));
 
-const RouteGuard = ({ children }: any) => {
-  const token = localStorage.getItem("authToken");
-  return token ? children : <Navigate to="/login" />;
-};
+// const RouteGuard = ({ children }: any) => {
+//   const token = localStorage.getItem("authToken");
+//   return token ? children : <Navigate to="/login" />;
+// };
+
 const App = () => {
-  const token = localStorage.getItem("authToken");
+  const isTrue = false;
+  // const token = localStorage.getItem("authToken");
   return (
     <Suspense
       fallback={
@@ -53,22 +56,17 @@ const App = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/loginhr" element={<LoginHr />} />
           <Route path="/forgetPassword" element={<ForgetPasswordPage />} />
+          <Route path="/home" element={<HomePage />} />
         </Routes>
-        <Layout>
-          <Routes>
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/chatbot" element={<Chatbot />} />
-
-            <Route
-              path="/home"
-              element={
-                <RouteGuard>
-                  <HomePage />
-                </RouteGuard>
-              }
-            />
-          </Routes>
-        </Layout>
+        {isTrue && (
+          <Layout>
+            <Routes>
+              <Route path="/settings" element={<Settings />} />
+              <Route path="/chatbot" element={<Chatbot />} />
+              <Route path="/dashboard" element={<DashBoard />} />
+            </Routes>
+          </Layout>
+        )}
       </BrowserRouter>
     </Suspense>
   );

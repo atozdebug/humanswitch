@@ -1,7 +1,7 @@
 const Chatbot = () => {
   return (
     <div className="bg-gray-100 min-h-screen ">
-      <div className="ml-64 p-8 bg-[#F6F8FA]">
+      <div className="p-8 bg-[#F6F8FA]">
         <div className="main-sec">
           <div className="bg-image">
             <div className="absolute content-img">
