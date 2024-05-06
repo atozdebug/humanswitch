@@ -53,29 +53,31 @@ const HomePage = () => {
                 </span>{" "}
                 from HumanSwitch.ai
               </h1>
-              <button
-                className="md:ms-0 mx-auto flex select-none items-center gap-3 rounded-lg bg-gradient1 py-4 px-6 text-center align-middle font-sans text-lg font-bold text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                type="button"
-                data-ripple-light="true"
-              >
-                Let's Start
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 512 512"
-                  stroke-width="2"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                  className="h-5 w-5"
+              <a href="/dashboard">
+                <button
+                  className="md:ms-0 mx-auto flex select-none items-center gap-3 rounded-lg bg-gradient1 py-4 px-6 text-center align-middle font-sans text-lg font-bold text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                  type="button"
+                  data-ripple-light="true"
                 >
-                  <path
-                    d="M256 0C114.837 0 0 114.837 0 256s114.837 256 256 256 256-114.837 256-256S397.163 0 256 0zm79.083 271.083L228.416 377.749A21.275 21.275 0 0 1 213.333 384a21.277 21.277 0 0 1-15.083-6.251c-8.341-8.341-8.341-21.824 0-30.165L289.835 256l-91.584-91.584c-8.341-8.341-8.341-21.824 0-30.165s21.824-8.341 30.165 0l106.667 106.667c8.341 8.341 8.341 21.823 0 30.165z"
-                    fill="currentColor"
-                    opacity="1"
-                    data-original="currentColor"
-                  ></path>
-                </svg>
-              </button>
+                  Let's Start
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 512 512"
+                    stroke-width="2"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                    className="h-5 w-5"
+                  >
+                    <path
+                      d="M256 0C114.837 0 0 114.837 0 256s114.837 256 256 256 256-114.837 256-256S397.163 0 256 0zm79.083 271.083L228.416 377.749A21.275 21.275 0 0 1 213.333 384a21.277 21.277 0 0 1-15.083-6.251c-8.341-8.341-8.341-21.824 0-30.165L289.835 256l-91.584-91.584c-8.341-8.341-8.341-21.824 0-30.165s21.824-8.341 30.165 0l106.667 106.667c8.341 8.341 8.341 21.823 0 30.165z"
+                      fill="currentColor"
+                      opacity="1"
+                      data-original="currentColor"
+                    ></path>
+                  </svg>
+                </button>
+              </a>
             </div>
             <div className="col-banner-right"></div>
           </div>
@@ -111,29 +113,31 @@ const HomePage = () => {
                   and strategy. This ensures technology that understands ethics
                   and human nuances, enhancing your team.
                 </p>
-                <button
-                  className="md:ms-0 mx-auto flex select-none items-center gap-3 rounded-lg bg-gradient1 py-4 px-6 text-center align-middle font-sans text-lg font-bold text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                  type="button"
-                  data-ripple-light="true"
-                >
-                  Let's Start
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 512 512"
-                    stroke-width="2"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                    className="h-5 w-5"
+                <a href="/dashboard">
+                  <button
+                    className="md:ms-0 mx-auto flex select-none items-center gap-3 rounded-lg bg-gradient1 py-4 px-6 text-center align-middle font-sans text-lg font-bold text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                    type="button"
+                    data-ripple-light="true"
                   >
-                    <path
-                      d="M256 0C114.837 0 0 114.837 0 256s114.837 256 256 256 256-114.837 256-256S397.163 0 256 0zm79.083 271.083L228.416 377.749A21.275 21.275 0 0 1 213.333 384a21.277 21.277 0 0 1-15.083-6.251c-8.341-8.341-8.341-21.824 0-30.165L289.835 256l-91.584-91.584c-8.341-8.341-8.341-21.824 0-30.165s21.824-8.341 30.165 0l106.667 106.667c8.341 8.341 8.341 21.823 0 30.165z"
-                      fill="currentColor"
-                      opacity="1"
-                      data-original="currentColor"
-                    ></path>
-                  </svg>
-                </button>
+                    Let's Start
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 512 512"
+                      stroke-width="2"
+                      stroke="currentColor"
+                      aria-hidden="true"
+                      className="h-5 w-5"
+                    >
+                      <path
+                        d="M256 0C114.837 0 0 114.837 0 256s114.837 256 256 256 256-114.837 256-256S397.163 0 256 0zm79.083 271.083L228.416 377.749A21.275 21.275 0 0 1 213.333 384a21.277 21.277 0 0 1-15.083-6.251c-8.341-8.341-8.341-21.824 0-30.165L289.835 256l-91.584-91.584c-8.341-8.341-8.341-21.824 0-30.165s21.824-8.341 30.165 0l106.667 106.667c8.341 8.341 8.341 21.823 0 30.165z"
+                        fill="currentColor"
+                        opacity="1"
+                        data-original="currentColor"
+                      ></path>
+                    </svg>
+                  </button>
+                </a>
               </div>
             </div>
             <div className="xl:ps-14 md:order-2">
@@ -262,29 +266,31 @@ const HomePage = () => {
                       placeholder="Business Email"
                     />
                   </div>
-                  <button
-                    className="flex items-center gap-2 justify-center rounded-lg bg-gradient1 w-full py-3 px-6 text-center align-middle font-sans text-sm font-bold text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                    type="button"
-                    data-ripple-light="true"
-                  >
-                    Register Now{" "}
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 512 512"
-                      stroke-width="2"
-                      stroke="currentColor"
-                      aria-hidden="true"
-                      className="h-5 w-5"
+                  <a href="/signuphr">
+                    <button
+                      className="flex items-center gap-2 justify-center rounded-lg bg-gradient1 w-full py-3 px-6 text-center align-middle font-sans text-sm font-bold text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                      type="button"
+                      data-ripple-light="true"
                     >
-                      <path
-                        d="M256 0C114.837 0 0 114.837 0 256s114.837 256 256 256 256-114.837 256-256S397.163 0 256 0zm79.083 271.083L228.416 377.749A21.275 21.275 0 0 1 213.333 384a21.277 21.277 0 0 1-15.083-6.251c-8.341-8.341-8.341-21.824 0-30.165L289.835 256l-91.584-91.584c-8.341-8.341-8.341-21.824 0-30.165s21.824-8.341 30.165 0l106.667 106.667c8.341 8.341 8.341 21.823 0 30.165z"
-                        fill="currentColor"
-                        opacity="1"
-                        data-original="currentColor"
-                      ></path>
-                    </svg>
-                  </button>
+                      Register Now{" "}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 512 512"
+                        stroke-width="2"
+                        stroke="currentColor"
+                        aria-hidden="true"
+                        className="h-5 w-5"
+                      >
+                        <path
+                          d="M256 0C114.837 0 0 114.837 0 256s114.837 256 256 256 256-114.837 256-256S397.163 0 256 0zm79.083 271.083L228.416 377.749A21.275 21.275 0 0 1 213.333 384a21.277 21.277 0 0 1-15.083-6.251c-8.341-8.341-8.341-21.824 0-30.165L289.835 256l-91.584-91.584c-8.341-8.341-8.341-21.824 0-30.165s21.824-8.341 30.165 0l106.667 106.667c8.341 8.341 8.341 21.823 0 30.165z"
+                          fill="currentColor"
+                          opacity="1"
+                          data-original="currentColor"
+                        ></path>
+                      </svg>
+                    </button>
+                  </a>
                 </form>
               </div>
             </div>

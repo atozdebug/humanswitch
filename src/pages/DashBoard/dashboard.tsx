@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import PersonIcon from "@mui/icons-material/Person";
+import Modal from "../../components/Dashboard/Modal";
 
 const sideBarItems = [
   {
@@ -147,6 +148,7 @@ const sideBarItems = [
 ];
 const DashBoard = () => {
   const [activeSection, setActiveSection] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [stepAnswers, setStepAnswers] = useState<any>({
     // Each key represents a step number, and the value is an object of question answers
     0: {},
@@ -178,6 +180,9 @@ const DashBoard = () => {
         [questionId]: value,
       },
     }));
+    if (step === 0 && questionId === "question-4") {
+      toggleModal();
+    }
   };
 
   const section2Ref = useRef(null);
@@ -223,7 +228,9 @@ const DashBoard = () => {
     setStepsTick(newList);
   };
 
-  console.log(stepAnswers);
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
 
   return (
     <>
@@ -291,7 +298,7 @@ const DashBoard = () => {
             </a>
           </div>
         </nav>
-        {/* <div className="lg:hidden" role="dialog" aria-modal="true">
+        <div className="lg:hidden" role="dialog" aria-modal="true">
           <div className="fixed inset-0 z-10"></div>
           <div className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div className="flex items-center justify-between">
@@ -423,7 +430,7 @@ const DashBoard = () => {
               </div>
             </div>
           </div>
-        </div> */}
+        </div>
       </header>
       <section className="full-div">
         <div className="full-div-inner">
@@ -890,6 +897,7 @@ const DashBoard = () => {
           </div>
         </div>
       </section>
+      <Modal isOpen={isModalOpen} onClose={toggleModal} />
     </>
   );
 };
