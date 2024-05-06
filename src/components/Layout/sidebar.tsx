@@ -67,7 +67,7 @@ const SideBar = () => {
             </div>
             <div className="flex flex-col justify-center">
               <text className="text-lg font-semibold">HumanSwitch.ai</text>
-              <text className="text-sm ">HR Management</text>
+              <text className="text-sm">HR Management</text>
             </div>
           </div>
 
@@ -76,7 +76,8 @@ const SideBar = () => {
             {sideBarItems.map((item) => {
               const isActive = item.navigateTo === location.pathname;
               return (
-                <div
+                <a
+                  href={`${item.navigateTo}`}
                   className={`top  hover:bg-bg-clr hover:font-medium rounded-lg  flex items-center gap-2 my-2 relative ${
                     isActive
                       ? " font-semibold px-6"
@@ -98,7 +99,7 @@ const SideBar = () => {
                     </div>
                     <div>{item.name}</div>
                   </div>
-                </div>
+                </a>
               );
             })}
           </div>
