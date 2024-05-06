@@ -30,6 +30,10 @@ const header = [
     id: 5,
     name: "Password",
   },
+  {
+    id: 6,
+    name: "Summary",
+  },
 ];
 
 const schemaFirst = yup.object().shape({
