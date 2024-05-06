@@ -227,7 +227,7 @@ const SignupPage = () => {
           <h1>
             <span>
               {" "}
-              <img src="/assets/images/Logo.png" />
+              <img src="/assets/images/Logo1.png" />
             </span>{" "}
           </h1>
         </div>
