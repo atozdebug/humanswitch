@@ -6,9 +6,9 @@ const SignupThree = ({ handleSubmit, register, onSubmit, errors }: any) => {
         className="form-3 flex flex-col max-w-md m-auto my-5"
       >
         <h1 className="text-center flex justify-center">
-          <img src="/assets/images/Custom-icon.png" />
+          <img src="/assets/images/user-name.png" />
         </h1>
-        <h2 className="text-gray-dark text-2xl font-medium text-center">
+        <h2 className="text-main-heading text-2xl font-medium text-center">
           Role Selection
         </h2>
         <p className="gray-dark text-center">
@@ -38,7 +38,7 @@ const SignupThree = ({ handleSubmit, register, onSubmit, errors }: any) => {
               value="Admin"
               name="default-radio"
               {...register("role")}
-              className="w-4 h-4 text-blue-600 bg-gray-100  dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:bg-gray-700"
+              className="min-w-[13px] text-blue-600 bg-gray-100  dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:bg-gray-700"
             />
           </div>
         </div>
@@ -66,7 +66,7 @@ const SignupThree = ({ handleSubmit, register, onSubmit, errors }: any) => {
               value="Employee"
               name="default-radio"
               {...register("role")}
-              className="w-4 h-4 text-blue-600 bg-gray-100   dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:bg-gray-700"
+              className="min-w-[13px] text-blue-600 bg-gray-100   dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:bg-gray-700"
             />
           </div>
         </div>

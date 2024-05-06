@@ -32,6 +32,8 @@ export default {
          "red-code" : "#DF1C41",
          "bggreen": "#2B1664",
          "bggreen-500": "#6E3FF3",
+         "main-heading": " #0A0D14",
+        
       },
       padding: {
         100: "100%",
@@ -50,6 +52,8 @@ export default {
       },
       borderRadius: {
         '20': '20px',
+        '10': '10px',
+
       
       },
       maxWidth: {
@@ -62,6 +66,7 @@ export default {
         700: "700px",
         20: "20px",
         123: "123px",
+        13: "13px",
 
         
       },
@@ -74,6 +79,7 @@ export default {
       },
       minHeight: {
         "62px": "62px",
+        13: "13px",
       },
       width: {
         60: "60%",

@@ -5,7 +5,7 @@ const SignupOne = ({ handleSubmit, register, onSubmit, errors }: any) => {
         <h1 className="flex justify-center text-center">
           <img src="/assets/images/plus.png" />
         </h1>
-        <h2 className="text-gray-dark text-2xl font-medium text-center">
+        <h2 className="text-main-heading text-2xl font-medium text-center">
           Welcome to HumanSwitch.ai
         </h2>
         <p className="gray-dark text-center">
@@ -18,24 +18,24 @@ const SignupOne = ({ handleSubmit, register, onSubmit, errors }: any) => {
             className="block text-heading text-sm font-medium mb-2"
             htmlFor="Email"
           >
-           Email<span className="text-span-clr">*</span>
+           Email<span className="text-span-clr ">*</span>
           </label>
           <div className="relative">
             <span className="absolute  inset-y-3 inset-x-3">
               <img src="/assets/images/mail-line.png" />
             </span>
             <input
-              className={`lft-space shadow appearance-none border ${
-                errors.password ? "border-red-600" : "border-slate-300"
-              } rounded w-full py-2 pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
-              id="password"
-              type="password"
+              className={`lft-space shadow appearance-none border  ${
+                errors.email ? "border-red-600" : "border-slate-300"
+              } rounded-[10px] w-full py-2 pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
+              id="email"
+              type="email"
               placeholder="hello@humanswitch.ai"
               {...register("email")}
             />
-            {errors.password && (
+            {errors.email && (
               <p className="text-[#F04438] text-sm mt-2">
-                {errors.password.message}
+                {errors.email.message}
               </p>
             )}
           </div>
@@ -94,7 +94,7 @@ const SignupOne = ({ handleSubmit, register, onSubmit, errors }: any) => {
           )}
           <button
             type="submit"
-            className="rounded w-full mt-5 bg-bggreen hover:bg-bggreen-500 shadow-md  py-2.5 px-4 text-white font-semibold"
+            className="rounded-[10px] w-full mt-5 bg-bggreen hover:bg-bggreen-500 shadow-md  py-2.5 px-4 text-white font-semibold"
           >
             Continue with email
           </button>
@@ -103,7 +103,7 @@ const SignupOne = ({ handleSubmit, register, onSubmit, errors }: any) => {
             <p>or</p>
             <hr className="border-gray w-40"></hr>
           </div>
-          <button className="rounded w-full font-semibold text-base border bg-transparent border-slate-300 outline-none py-2.5 px-4 text-black flex justify-center gap-5  drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400">
+          <button className="rounded-[10px] w-full font-semibold text-base border bg-transparent border-slate-300 outline-none py-2.5 px-4 text-black flex justify-center gap-5  drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400">
             {" "}
             <span className="img-size">
               {" "}
