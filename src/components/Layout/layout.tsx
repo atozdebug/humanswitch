@@ -2,6 +2,7 @@ import Header from "./header";
 import SideBar from "./sidebar";
 
 const Layout = ({ children }: any) => {
+  const isTrue = false;
   return (
     <div className="bg-gray-100 text-black main-outerr">
       <div
@@ -12,7 +13,7 @@ const Layout = ({ children }: any) => {
           height: "full",
         }}
       >
-        <SideBar />
+        {isTrue && <SideBar />}
         <div
           style={{
             display: "flex",
@@ -21,9 +22,7 @@ const Layout = ({ children }: any) => {
           }}
           className="content-right"
         >
-          <div>
-            <Header />
-          </div>
+          {isTrue && <Header />}
           {children}
         </div>
       </div>

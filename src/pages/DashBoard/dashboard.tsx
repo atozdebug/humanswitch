@@ -1,9 +1,184 @@
 import { useState, useRef, useEffect } from "react";
+import PersonIcon from "@mui/icons-material/Person";
+
+const sideBarItems = [
+  {
+    id: 1,
+    name: "Strategy",
+    description:
+      "Defining a sharp vision that embraces both business success and social responsibility.",
+    icon: <PersonIcon />,
+    questions: [
+      {
+        question:
+          "In hoeverre is de AI-strategie van uw organisatie afgestemd op de algemene bedrijfsstrategie? Opties: Zeer goed uitgelijnd, Meestal uitgelijnd, Neutraal, Meestal verkeerd uitgelijnd, Helemaal niet uitgelijnd",
+      },
+      {
+        question:
+          "Hoe toegewijd is het leiderschap van uw organisatie aan het implementeren van AI-initiatieven? Opties: Zeer toegewijd, toegewijd, neutraal, enigszins toegewijd, niet toegewijd",
+      },
+      {
+        question:
+          "Hoe is risicobeheer geïntegreerd in de AI-strategie van uw organisatie? Opties: Volledig geïntegreerd, Gedeeltelijk geïntegreerd, Neutraal, Gedeeltelijk niet geïntegreerd, Helemaal niet geïntegreerd",
+      },
+      {
+        question:
+          "Kunt u beschrijven hoe de AI-strategie van uw organisatie momenteel wordt ontwikkeld en geïmplementeerd?",
+      },
+      {
+        question:
+          "Welke obstakels ziet u binnen uw organisatie voor het succesvol implementeren van AI-initiatieven?",
+      },
+      {
+        question:
+          "Hoe denkt u dat AI kan bijdragen aan het behalen van de langetermijndoelstellingen van uw organisatie?",
+      },
+      {
+        question:
+          "Wat zijn volgens u de belangrijkste aspecten waarmee rekening moet worden gehouden bij het ontwikkelen van een AI-strategie?",
+      },
+    ],
+  },
+  {
+    id: 2,
+    name: "Clientele",
+    description:
+      "Defining a sharp vision that embraces both business success and social responsibility.",
+    icon: <PersonIcon />,
+  },
+  {
+    id: 3,
+    name: "Budget/ROI",
+    description:
+      "Defining a sharp vision that embraces both business success and social responsibility.",
+    icon: <PersonIcon />,
+  },
+  {
+    id: 4,
+    name: "Employees",
+    description:
+      "Defining a sharp vision that embraces both business success and social responsibility.",
+    icon: <PersonIcon />,
+    questions: [
+      {
+        question:
+          "Hoe zou u de organisatiecultuur met betrekking tot de adoptie en innovatie van AI omschrijven?",
+      },
+      {
+        question:
+          "Welke maatregelen zijn er getroffen om top AI-talent binnen uw organisatie aan te trekken en te behouden?",
+      },
+      {
+        question:
+          "Hoe investeert uw organisatie in het opleiden en ontwikkelen van medewerkers in AI-gerelateerde vaardigheden?",
+      },
+    ],
+  },
+  {
+    id: 5,
+    name: "Market",
+    description:
+      "Defining a sharp vision that embraces both business success and social responsibility.",
+    icon: <PersonIcon />,
+  },
+  {
+    id: 6,
+    name: "Compliance",
+    description:
+      "Defining a sharp vision that embraces both business success and social responsibility.",
+    icon: <PersonIcon />,
+    questions: [
+      {
+        question:
+          "Voldoet uw organisatie aan de relevante regelgeving en standaarden met betrekking tot AI-implementatie?",
+      },
+    ],
+  },
+  {
+    id: 7,
+    name: "Partners/Suppliers",
+    description:
+      "Defining a sharp vision that embraces both business success and social responsibility.",
+    icon: <PersonIcon />,
+  },
+  {
+    id: 8,
+    name: "Data/ICT",
+    description:
+      "Defining a sharp vision that embraces both business success and social responsibility.",
+    icon: <PersonIcon />,
+    questions: [
+      {
+        question:
+          "Hoe waarborgt uw organisatie de schaalbaarheid van haar data-infrastructuur ter ondersteuning van AI-initiatieven?",
+      },
+      {
+        question:
+          "Welke technologische infrastructuur is aanwezig om databeheer en analyse voor AI-toepassingen te vergemakkelijken?",
+      },
+      {
+        question:
+          "Voldoet uw organisatie aan de relevante dataregelgeving en -normen bij de implementatie van AI-oplossingen?",
+      },
+      {
+        question:
+          "Welke impact heeft de inzet van AI op de operationele capaciteit van uw organisatie?",
+      },
+      {
+        question:
+          "Beschikt uw organisatie over het nodige talent en de expertise om AI-technologieën effectief in te zetten?",
+      },
+    ],
+  },
+  {
+    id: 9,
+    name: "Customer Value & Social Impact",
+    description:
+      "Defining a sharp vision that embraces both business success and social responsibility.",
+    icon: <PersonIcon />,
+  },
+  {
+    id: 10,
+    name: "Innovation",
+    description:
+      "Defining a sharp vision that embraces both business success and social responsibility.",
+    icon: <PersonIcon />,
+  },
+];
 const DashBoard = () => {
   const [activeSection, setActiveSection] = useState(null);
-  const [addClass1, setAddClass1] = useState<any>(false);
-  const [addClass2, setAddClass2] = useState<any>(false);
-  const [addClass3, setAddClass3] = useState<any>(false);
+  const [stepAnswers, setStepAnswers] = useState<any>({
+    // Each key represents a step number, and the value is an object of question answers
+    0: {},
+    1: {},
+    2: {},
+    3: {},
+    4: {},
+    5: {},
+    6: {},
+    7: {},
+    8: {},
+    9: {},
+  });
+
+  const handleInputChange = (
+    step: number,
+    questionId: string,
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { value } = event.target;
+
+    // Update the state with the new value for the corresponding step and question
+    setStepAnswers((prevStepAnswers: any) => ({
+      ...prevStepAnswers,
+      [step]: {
+        ...prevStepAnswers[step],
+        [questionId]: value,
+      },
+    }));
+  };
 
   const section2Ref = useRef(null);
 
@@ -48,8 +223,8 @@ const DashBoard = () => {
     setStepsTick(newList);
   };
 
-  console.log("ticks   ", stepsTick);
-  console.log("ddggdgdd ", stepsTick.includes(1));
+  console.log(stepAnswers);
+
   return (
     <>
       <header className="bg-white shadow-md relative">
@@ -116,7 +291,7 @@ const DashBoard = () => {
             </a>
           </div>
         </nav>
-        <div className="lg:hidden" role="dialog" aria-modal="true">
+        {/* <div className="lg:hidden" role="dialog" aria-modal="true">
           <div className="fixed inset-0 z-10"></div>
           <div className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div className="flex items-center justify-between">
@@ -248,7 +423,7 @@ const DashBoard = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </header>
       <section className="full-div">
         <div className="full-div-inner">
@@ -271,651 +446,73 @@ const DashBoard = () => {
                   isActive ? "active" : ""
                 }`}
               >
-                <div
-                  className={`flex gap-3 mb-3 chapteritem relative z-10 ${
-                    step == 1 ? "" : "items-center"
-                  } ${isActive ? "items-start" : "items-center"}`}
-                >
+                {sideBarItems.map((item: any) => (
                   <div
-                    className={`w-10 min-w-10 h-10 inline-flex items-center justify-center rounded-md ${
-                      stepsTick.includes(2) || step == 2
-                        ? "bg-g-success"
-                        : "bg-gradient1"
-                    }`}
+                    className={`flex gap-3 mb-3 chapteritem relative z-10 ${
+                      step == item.id ? "" : "items-center"
+                    } ${isActive ? "items-start" : "items-center"}`}
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      version="1.1"
-                      width="512"
-                      height="512"
-                      x="0"
-                      y="0"
-                      viewBox="0 0 64 64"
-                      className={`w-4 h-4 text-white ${
-                        stepsTick.includes(2) || step == 2 ? "" : "hidden"
+                    <div
+                      className={`w-10 min-w-10 h-10 inline-flex items-center justify-center rounded-md ${
+                        stepsTick.includes(item.id + 1) || step == item.id + 1
+                          ? "bg-g-success"
+                          : "bg-gradient1"
                       }`}
                     >
-                      <g transform="matrix(1.0699999999999992,0,0,1.0699999999999992,-2.239650142192822,-2.2399999332427853)">
-                        <path
-                          fill="currentColor"
-                          d="M59.39 11.24a5.49 5.49 0 0 0-7.77 0L21.78 41.08l-9.41-9.41a5.49 5.49 0 0 0-7.77 0 5.49 5.49 0 0 0 0 7.77l13.33 13.32a5.49 5.49 0 0 0 7.77 0L59.4 19a5.49 5.49 0 0 0-.01-7.76z"
-                          opacity="1"
-                          data-original="currentColor"
-                        ></path>
-                      </g>
-                    </svg>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      version="1.1"
-                      width="512"
-                      height="512"
-                      x="0"
-                      y="0"
-                      viewBox="0 0 512 512.002"
-                      className={`w-4 h-4 text-white ${
-                        stepsTick.includes(2) || step == 2 ? "hidden" : ""
-                      }`}
-                    >
-                      <g transform="matrix(0.98,0,0,0.98,49.27163876531441,5.12004028320311)">
-                        <path
-                          d="M210.352 246.633c33.882 0 63.222-12.153 87.195-36.13 23.973-23.972 36.125-53.304 36.125-87.19 0-33.876-12.152-63.211-36.129-87.192C273.566 12.152 244.23 0 210.352 0c-33.887 0-63.22 12.152-87.192 36.125s-36.129 53.309-36.129 87.188c0 33.886 12.156 63.222 36.133 87.195 23.977 23.969 53.313 36.125 87.188 36.125zM426.129 393.703c-.692-9.976-2.09-20.86-4.149-32.351-2.078-11.579-4.753-22.524-7.957-32.528-3.308-10.34-7.808-20.55-13.37-30.336-5.774-10.156-12.555-19-20.165-26.277-7.957-7.613-17.699-13.734-28.965-18.2-11.226-4.44-23.668-6.69-36.976-6.69-5.227 0-10.281 2.144-20.043 8.5a2711.03 2711.03 0 0 1-20.879 13.46c-6.707 4.274-15.793 8.278-27.016 11.903-10.949 3.543-22.066 5.34-33.039 5.34-10.972 0-22.086-1.797-33.047-5.34-11.21-3.622-20.296-7.625-26.996-11.899-7.77-4.965-14.8-9.496-20.898-13.469-9.75-6.355-14.809-8.5-20.035-8.5-13.313 0-25.75 2.254-36.973 6.7-11.258 4.457-21.004 10.578-28.969 18.199-7.605 7.281-14.39 16.12-20.156 26.273-5.558 9.785-10.058 19.992-13.371 30.34-3.2 10.004-5.875 20.945-7.953 32.524-2.059 11.476-3.457 22.363-4.149 32.363A438.821 438.821 0 0 0 0 423.949c0 26.727 8.496 48.363 25.25 64.32 16.547 15.747 38.441 23.735 65.066 23.735h246.532c26.625 0 48.511-7.984 65.062-23.734 16.758-15.946 25.254-37.586 25.254-64.325-.004-10.316-.351-20.492-1.035-30.242zm0 0"
-                          fill="currentColor"
-                          opacity="1"
-                          data-original="currentColor"
-                        ></path>
-                      </g>
-                    </svg>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        version="1.1"
+                        width="512"
+                        height="512"
+                        x="0"
+                        y="0"
+                        viewBox="0 0 64 64"
+                        className={`w-4 h-4 text-white ${
+                          stepsTick.includes(item.id + 1) || step == item.id + 1
+                            ? ""
+                            : "hidden"
+                        }`}
+                      >
+                        <g transform="matrix(1.0699999999999992,0,0,1.0699999999999992,-2.239650142192822,-2.2399999332427853)">
+                          <path
+                            fill="currentColor"
+                            d="M59.39 11.24a5.49 5.49 0 0 0-7.77 0L21.78 41.08l-9.41-9.41a5.49 5.49 0 0 0-7.77 0 5.49 5.49 0 0 0 0 7.77l13.33 13.32a5.49 5.49 0 0 0 7.77 0L59.4 19a5.49 5.49 0 0 0-.01-7.76z"
+                            opacity="1"
+                            data-original="currentColor"
+                          ></path>
+                        </g>
+                      </svg>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        version="1.1"
+                        width="512"
+                        height="512"
+                        x="0"
+                        y="0"
+                        viewBox="0 0 512 512.002"
+                        className={`w-4 h-4 text-white ${
+                          stepsTick.includes(item.id + 1) || step == item.id + 1
+                            ? "hidden"
+                            : ""
+                        }`}
+                      >
+                        <g transform="matrix(0.98,0,0,0.98,49.27163876531441,5.12004028320311)">
+                          {item.icon}
+                        </g>
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="font-bold text-md">{item.name}</p>
+                      <p
+                        className={`w-full leading-relaxed md:text-base text-sm ${
+                          step == item.id ? "" : " h-0 overflow-hidden"
+                        } ${isActive ? "" : "h-0 overflow-hidden"}`}
+                      >
+                        {item.description}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="font-bold text-md">Strategy</p>
-                    <p
-                      className={`w-full leading-relaxed md:text-base text-sm ${
-                        step == 1 ? "" : " h-0 overflow-hidden"
-                      } ${isActive ? "" : "h-0 overflow-hidden"}`}
-                    >
-                      Defining a sharp vision that embraces both business
-                      success and social responsibility.
-                    </p>
-                  </div>
-                </div>
-                <div
-                  className={`flex gap-3 mb-3 chapteritem relative z-10 ${
-                    step == 2 ? "" : "items-center"
-                  }`}
-                >
-                  <div
-                    className={`w-10 min-w-10 h-10 inline-flex items-center justify-center rounded-md ${
-                      stepsTick.includes(3) || step == 3
-                        ? "bg-g-success"
-                        : "bg-gradient1"
-                    }`}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      version="1.1"
-                      width="512"
-                      height="512"
-                      x="0"
-                      y="0"
-                      viewBox="0 0 64 64"
-                      className={`w-4 h-4 text-white ${
-                        stepsTick.includes(3) || step == 3 ? "" : "hidden"
-                      }`}
-                    >
-                      <g transform="matrix(1.0699999999999992,0,0,1.0699999999999992,-2.239650142192822,-2.2399999332427853)">
-                        <path
-                          fill="currentColor"
-                          d="M59.39 11.24a5.49 5.49 0 0 0-7.77 0L21.78 41.08l-9.41-9.41a5.49 5.49 0 0 0-7.77 0 5.49 5.49 0 0 0 0 7.77l13.33 13.32a5.49 5.49 0 0 0 7.77 0L59.4 19a5.49 5.49 0 0 0-.01-7.76z"
-                          opacity="1"
-                          data-original="currentColor"
-                        ></path>
-                      </g>
-                    </svg>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      version="1.1"
-                      width="512"
-                      height="512"
-                      x="0"
-                      y="0"
-                      viewBox="0 0 512 512.002"
-                      className={`w-4 h-4 text-white ${
-                        stepsTick.includes(3) || step == 3 ? "hidden" : ""
-                      }`}
-                    >
-                      <g transform="matrix(0.98,0,0,0.98,49.27163876531441,5.12004028320311)">
-                        <path
-                          d="M210.352 246.633c33.882 0 63.222-12.153 87.195-36.13 23.973-23.972 36.125-53.304 36.125-87.19 0-33.876-12.152-63.211-36.129-87.192C273.566 12.152 244.23 0 210.352 0c-33.887 0-63.22 12.152-87.192 36.125s-36.129 53.309-36.129 87.188c0 33.886 12.156 63.222 36.133 87.195 23.977 23.969 53.313 36.125 87.188 36.125zM426.129 393.703c-.692-9.976-2.09-20.86-4.149-32.351-2.078-11.579-4.753-22.524-7.957-32.528-3.308-10.34-7.808-20.55-13.37-30.336-5.774-10.156-12.555-19-20.165-26.277-7.957-7.613-17.699-13.734-28.965-18.2-11.226-4.44-23.668-6.69-36.976-6.69-5.227 0-10.281 2.144-20.043 8.5a2711.03 2711.03 0 0 1-20.879 13.46c-6.707 4.274-15.793 8.278-27.016 11.903-10.949 3.543-22.066 5.34-33.039 5.34-10.972 0-22.086-1.797-33.047-5.34-11.21-3.622-20.296-7.625-26.996-11.899-7.77-4.965-14.8-9.496-20.898-13.469-9.75-6.355-14.809-8.5-20.035-8.5-13.313 0-25.75 2.254-36.973 6.7-11.258 4.457-21.004 10.578-28.969 18.199-7.605 7.281-14.39 16.12-20.156 26.273-5.558 9.785-10.058 19.992-13.371 30.34-3.2 10.004-5.875 20.945-7.953 32.524-2.059 11.476-3.457 22.363-4.149 32.363A438.821 438.821 0 0 0 0 423.949c0 26.727 8.496 48.363 25.25 64.32 16.547 15.747 38.441 23.735 65.066 23.735h246.532c26.625 0 48.511-7.984 65.062-23.734 16.758-15.946 25.254-37.586 25.254-64.325-.004-10.316-.351-20.492-1.035-30.242zm0 0"
-                          fill="currentColor"
-                          opacity="1"
-                          data-original="currentColor"
-                        ></path>
-                      </g>
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="font-bold text-md">Clientele</p>
-                    <p
-                      className={`w-full leading-relaxed md:text-base text-sm ${
-                        step == 2 ? "" : " h-0 overflow-hidden"
-                      }`}
-                    >
-                      Defining a sharp vision that embraces both business
-                      success and social responsibility.
-                    </p>
-                  </div>
-                </div>
-                <div
-                  className={`flex gap-3 mb-3 chapteritem relative z-10 ${
-                    step == 3 ? "" : "items-center"
-                  }`}
-                >
-                  <div
-                    className={`w-10 min-w-10 h-10 inline-flex items-center justify-center rounded-md ${
-                      stepsTick.includes(4) || step == 4
-                        ? "bg-g-success"
-                        : "bg-gradient1"
-                    }`}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      version="1.1"
-                      width="512"
-                      height="512"
-                      x="0"
-                      y="0"
-                      viewBox="0 0 64 64"
-                      className={`w-4 h-4 text-white ${
-                        stepsTick.includes(4) || step == 4 ? "" : "hidden"
-                      }`}
-                    >
-                      <g transform="matrix(1.0699999999999992,0,0,1.0699999999999992,-2.239650142192822,-2.2399999332427853)">
-                        <path
-                          fill="currentColor"
-                          d="M59.39 11.24a5.49 5.49 0 0 0-7.77 0L21.78 41.08l-9.41-9.41a5.49 5.49 0 0 0-7.77 0 5.49 5.49 0 0 0 0 7.77l13.33 13.32a5.49 5.49 0 0 0 7.77 0L59.4 19a5.49 5.49 0 0 0-.01-7.76z"
-                          opacity="1"
-                          data-original="currentColor"
-                        ></path>
-                      </g>
-                    </svg>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      version="1.1"
-                      width="512"
-                      height="512"
-                      x="0"
-                      y="0"
-                      viewBox="0 0 512 512.002"
-                      className={`w-4 h-4 text-white ${
-                        stepsTick.includes(4) || step == 4 ? "hidden" : ""
-                      }`}
-                    >
-                      <g transform="matrix(0.98,0,0,0.98,49.27163876531441,5.12004028320311)">
-                        <path
-                          d="M210.352 246.633c33.882 0 63.222-12.153 87.195-36.13 23.973-23.972 36.125-53.304 36.125-87.19 0-33.876-12.152-63.211-36.129-87.192C273.566 12.152 244.23 0 210.352 0c-33.887 0-63.22 12.152-87.192 36.125s-36.129 53.309-36.129 87.188c0 33.886 12.156 63.222 36.133 87.195 23.977 23.969 53.313 36.125 87.188 36.125zM426.129 393.703c-.692-9.976-2.09-20.86-4.149-32.351-2.078-11.579-4.753-22.524-7.957-32.528-3.308-10.34-7.808-20.55-13.37-30.336-5.774-10.156-12.555-19-20.165-26.277-7.957-7.613-17.699-13.734-28.965-18.2-11.226-4.44-23.668-6.69-36.976-6.69-5.227 0-10.281 2.144-20.043 8.5a2711.03 2711.03 0 0 1-20.879 13.46c-6.707 4.274-15.793 8.278-27.016 11.903-10.949 3.543-22.066 5.34-33.039 5.34-10.972 0-22.086-1.797-33.047-5.34-11.21-3.622-20.296-7.625-26.996-11.899-7.77-4.965-14.8-9.496-20.898-13.469-9.75-6.355-14.809-8.5-20.035-8.5-13.313 0-25.75 2.254-36.973 6.7-11.258 4.457-21.004 10.578-28.969 18.199-7.605 7.281-14.39 16.12-20.156 26.273-5.558 9.785-10.058 19.992-13.371 30.34-3.2 10.004-5.875 20.945-7.953 32.524-2.059 11.476-3.457 22.363-4.149 32.363A438.821 438.821 0 0 0 0 423.949c0 26.727 8.496 48.363 25.25 64.32 16.547 15.747 38.441 23.735 65.066 23.735h246.532c26.625 0 48.511-7.984 65.062-23.734 16.758-15.946 25.254-37.586 25.254-64.325-.004-10.316-.351-20.492-1.035-30.242zm0 0"
-                          fill="currentColor"
-                          opacity="1"
-                          data-original="currentColor"
-                        ></path>
-                      </g>
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="font-bold text-md">Budget/ROI</p>
-                    <p
-                      className={`w-full leading-relaxed md:text-base text-sm ${
-                        step == 3 ? "" : " h-0 overflow-hidden"
-                      }`}
-                    >
-                      Defining a sharp vision that embraces both business
-                      success and social responsibility.
-                    </p>
-                  </div>
-                </div>
-                <div
-                  className={`flex gap-3 mb-3 chapteritem relative z-10 ${
-                    step == 4 ? "" : "items-center"
-                  }`}
-                >
-                  <div
-                    className={`w-10 min-w-10 h-10 inline-flex items-center justify-center rounded-md ${
-                      stepsTick.includes(5) || step == 5
-                        ? "bg-g-success"
-                        : "bg-gradient1"
-                    }`}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      version="1.1"
-                      width="512"
-                      height="512"
-                      x="0"
-                      y="0"
-                      viewBox="0 0 64 64"
-                      className={`w-4 h-4 text-white ${
-                        stepsTick.includes(5) || step == 5 ? "" : "hidden"
-                      }`}
-                    >
-                      <g transform="matrix(1.0699999999999992,0,0,1.0699999999999992,-2.239650142192822,-2.2399999332427853)">
-                        <path
-                          fill="currentColor"
-                          d="M59.39 11.24a5.49 5.49 0 0 0-7.77 0L21.78 41.08l-9.41-9.41a5.49 5.49 0 0 0-7.77 0 5.49 5.49 0 0 0 0 7.77l13.33 13.32a5.49 5.49 0 0 0 7.77 0L59.4 19a5.49 5.49 0 0 0-.01-7.76z"
-                          opacity="1"
-                          data-original="currentColor"
-                        ></path>
-                      </g>
-                    </svg>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      version="1.1"
-                      width="512"
-                      height="512"
-                      x="0"
-                      y="0"
-                      viewBox="0 0 512 512.002"
-                      className={`w-4 h-4 text-white ${
-                        stepsTick.includes(5) || step == 5 ? "hidden" : ""
-                      }`}
-                    >
-                      <g transform="matrix(0.98,0,0,0.98,49.27163876531441,5.12004028320311)">
-                        <path
-                          d="M210.352 246.633c33.882 0 63.222-12.153 87.195-36.13 23.973-23.972 36.125-53.304 36.125-87.19 0-33.876-12.152-63.211-36.129-87.192C273.566 12.152 244.23 0 210.352 0c-33.887 0-63.22 12.152-87.192 36.125s-36.129 53.309-36.129 87.188c0 33.886 12.156 63.222 36.133 87.195 23.977 23.969 53.313 36.125 87.188 36.125zM426.129 393.703c-.692-9.976-2.09-20.86-4.149-32.351-2.078-11.579-4.753-22.524-7.957-32.528-3.308-10.34-7.808-20.55-13.37-30.336-5.774-10.156-12.555-19-20.165-26.277-7.957-7.613-17.699-13.734-28.965-18.2-11.226-4.44-23.668-6.69-36.976-6.69-5.227 0-10.281 2.144-20.043 8.5a2711.03 2711.03 0 0 1-20.879 13.46c-6.707 4.274-15.793 8.278-27.016 11.903-10.949 3.543-22.066 5.34-33.039 5.34-10.972 0-22.086-1.797-33.047-5.34-11.21-3.622-20.296-7.625-26.996-11.899-7.77-4.965-14.8-9.496-20.898-13.469-9.75-6.355-14.809-8.5-20.035-8.5-13.313 0-25.75 2.254-36.973 6.7-11.258 4.457-21.004 10.578-28.969 18.199-7.605 7.281-14.39 16.12-20.156 26.273-5.558 9.785-10.058 19.992-13.371 30.34-3.2 10.004-5.875 20.945-7.953 32.524-2.059 11.476-3.457 22.363-4.149 32.363A438.821 438.821 0 0 0 0 423.949c0 26.727 8.496 48.363 25.25 64.32 16.547 15.747 38.441 23.735 65.066 23.735h246.532c26.625 0 48.511-7.984 65.062-23.734 16.758-15.946 25.254-37.586 25.254-64.325-.004-10.316-.351-20.492-1.035-30.242zm0 0"
-                          fill="currentColor"
-                          opacity="1"
-                          data-original="currentColor"
-                        ></path>
-                      </g>
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="font-bold text-md">Employees</p>
-                    <p
-                      className={`w-full leading-relaxed md:text-base text-sm ${
-                        step == 4 ? "" : " h-0 overflow-hidden"
-                      }`}
-                    >
-                      Defining a sharp vision that embraces both business
-                      success and social responsibility.
-                    </p>
-                  </div>
-                </div>
-                <div
-                  className={`flex gap-3 mb-3 chapteritem relative z-10 ${
-                    step == 5 ? "" : "items-center"
-                  }`}
-                >
-                  <div
-                    className={`w-10 min-w-10 h-10 inline-flex items-center justify-center rounded-md ${
-                      stepsTick.includes(6) || step == 6
-                        ? "bg-g-success"
-                        : "bg-gradient1"
-                    }`}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      version="1.1"
-                      width="512"
-                      height="512"
-                      x="0"
-                      y="0"
-                      viewBox="0 0 64 64"
-                      className={`w-4 h-4 text-white ${
-                        stepsTick.includes(6) || step == 6 ? "" : "hidden"
-                      }`}
-                    >
-                      <g transform="matrix(1.0699999999999992,0,0,1.0699999999999992,-2.239650142192822,-2.2399999332427853)">
-                        <path
-                          fill="currentColor"
-                          d="M59.39 11.24a5.49 5.49 0 0 0-7.77 0L21.78 41.08l-9.41-9.41a5.49 5.49 0 0 0-7.77 0 5.49 5.49 0 0 0 0 7.77l13.33 13.32a5.49 5.49 0 0 0 7.77 0L59.4 19a5.49 5.49 0 0 0-.01-7.76z"
-                          opacity="1"
-                          data-original="currentColor"
-                        ></path>
-                      </g>
-                    </svg>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      version="1.1"
-                      width="512"
-                      height="512"
-                      x="0"
-                      y="0"
-                      viewBox="0 0 512 512.002"
-                      className={`w-4 h-4 text-white ${
-                        stepsTick.includes(6) || step == 6 ? "hidden" : ""
-                      }`}
-                    >
-                      <g transform="matrix(0.98,0,0,0.98,49.27163876531441,5.12004028320311)">
-                        <path
-                          d="M210.352 246.633c33.882 0 63.222-12.153 87.195-36.13 23.973-23.972 36.125-53.304 36.125-87.19 0-33.876-12.152-63.211-36.129-87.192C273.566 12.152 244.23 0 210.352 0c-33.887 0-63.22 12.152-87.192 36.125s-36.129 53.309-36.129 87.188c0 33.886 12.156 63.222 36.133 87.195 23.977 23.969 53.313 36.125 87.188 36.125zM426.129 393.703c-.692-9.976-2.09-20.86-4.149-32.351-2.078-11.579-4.753-22.524-7.957-32.528-3.308-10.34-7.808-20.55-13.37-30.336-5.774-10.156-12.555-19-20.165-26.277-7.957-7.613-17.699-13.734-28.965-18.2-11.226-4.44-23.668-6.69-36.976-6.69-5.227 0-10.281 2.144-20.043 8.5a2711.03 2711.03 0 0 1-20.879 13.46c-6.707 4.274-15.793 8.278-27.016 11.903-10.949 3.543-22.066 5.34-33.039 5.34-10.972 0-22.086-1.797-33.047-5.34-11.21-3.622-20.296-7.625-26.996-11.899-7.77-4.965-14.8-9.496-20.898-13.469-9.75-6.355-14.809-8.5-20.035-8.5-13.313 0-25.75 2.254-36.973 6.7-11.258 4.457-21.004 10.578-28.969 18.199-7.605 7.281-14.39 16.12-20.156 26.273-5.558 9.785-10.058 19.992-13.371 30.34-3.2 10.004-5.875 20.945-7.953 32.524-2.059 11.476-3.457 22.363-4.149 32.363A438.821 438.821 0 0 0 0 423.949c0 26.727 8.496 48.363 25.25 64.32 16.547 15.747 38.441 23.735 65.066 23.735h246.532c26.625 0 48.511-7.984 65.062-23.734 16.758-15.946 25.254-37.586 25.254-64.325-.004-10.316-.351-20.492-1.035-30.242zm0 0"
-                          fill="currentColor"
-                          opacity="1"
-                          data-original="currentColor"
-                        ></path>
-                      </g>
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="font-bold text-md">Market</p>
-                    <p
-                      className={`w-full leading-relaxed md:text-base text-sm ${
-                        step == 5 ? "" : " h-0 overflow-hidden"
-                      }`}
-                    >
-                      Defining a sharp vision that embraces both business
-                      success and social responsibility.
-                    </p>
-                  </div>
-                </div>
-                <div
-                  className={`flex gap-3 mb-3 chapteritem relative z-10 ${
-                    step == 6 ? "" : "items-center"
-                  }`}
-                >
-                  <div
-                    className={`w-10 min-w-10 h-10 inline-flex items-center justify-center rounded-md ${
-                      stepsTick.includes(7) || step == 7
-                        ? "bg-g-success"
-                        : "bg-gradient1"
-                    }`}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      version="1.1"
-                      width="512"
-                      height="512"
-                      x="0"
-                      y="0"
-                      viewBox="0 0 64 64"
-                      className={`w-4 h-4 text-white ${
-                        stepsTick.includes(7) || step == 7 ? "" : "hidden"
-                      }`}
-                    >
-                      <g transform="matrix(1.0699999999999992,0,0,1.0699999999999992,-2.239650142192822,-2.2399999332427853)">
-                        <path
-                          fill="currentColor"
-                          d="M59.39 11.24a5.49 5.49 0 0 0-7.77 0L21.78 41.08l-9.41-9.41a5.49 5.49 0 0 0-7.77 0 5.49 5.49 0 0 0 0 7.77l13.33 13.32a5.49 5.49 0 0 0 7.77 0L59.4 19a5.49 5.49 0 0 0-.01-7.76z"
-                          opacity="1"
-                          data-original="currentColor"
-                        ></path>
-                      </g>
-                    </svg>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      version="1.1"
-                      width="512"
-                      height="512"
-                      x="0"
-                      y="0"
-                      viewBox="0 0 512 512.002"
-                      className={`w-4 h-4 text-white ${
-                        stepsTick.includes(7) || step == 7 ? "hidden" : ""
-                      }`}
-                    >
-                      <g transform="matrix(0.98,0,0,0.98,49.27163876531441,5.12004028320311)">
-                        <path
-                          d="M210.352 246.633c33.882 0 63.222-12.153 87.195-36.13 23.973-23.972 36.125-53.304 36.125-87.19 0-33.876-12.152-63.211-36.129-87.192C273.566 12.152 244.23 0 210.352 0c-33.887 0-63.22 12.152-87.192 36.125s-36.129 53.309-36.129 87.188c0 33.886 12.156 63.222 36.133 87.195 23.977 23.969 53.313 36.125 87.188 36.125zM426.129 393.703c-.692-9.976-2.09-20.86-4.149-32.351-2.078-11.579-4.753-22.524-7.957-32.528-3.308-10.34-7.808-20.55-13.37-30.336-5.774-10.156-12.555-19-20.165-26.277-7.957-7.613-17.699-13.734-28.965-18.2-11.226-4.44-23.668-6.69-36.976-6.69-5.227 0-10.281 2.144-20.043 8.5a2711.03 2711.03 0 0 1-20.879 13.46c-6.707 4.274-15.793 8.278-27.016 11.903-10.949 3.543-22.066 5.34-33.039 5.34-10.972 0-22.086-1.797-33.047-5.34-11.21-3.622-20.296-7.625-26.996-11.899-7.77-4.965-14.8-9.496-20.898-13.469-9.75-6.355-14.809-8.5-20.035-8.5-13.313 0-25.75 2.254-36.973 6.7-11.258 4.457-21.004 10.578-28.969 18.199-7.605 7.281-14.39 16.12-20.156 26.273-5.558 9.785-10.058 19.992-13.371 30.34-3.2 10.004-5.875 20.945-7.953 32.524-2.059 11.476-3.457 22.363-4.149 32.363A438.821 438.821 0 0 0 0 423.949c0 26.727 8.496 48.363 25.25 64.32 16.547 15.747 38.441 23.735 65.066 23.735h246.532c26.625 0 48.511-7.984 65.062-23.734 16.758-15.946 25.254-37.586 25.254-64.325-.004-10.316-.351-20.492-1.035-30.242zm0 0"
-                          fill="currentColor"
-                          opacity="1"
-                          data-original="currentColor"
-                        ></path>
-                      </g>
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="font-bold text-md">Compliance</p>
-                    <p
-                      className={`w-full leading-relaxed md:text-base text-sm ${
-                        step == 6 ? "" : " h-0 overflow-hidden"
-                      }`}
-                    >
-                      Defining a sharp vision that embraces both business
-                      success and social responsibility.
-                    </p>
-                  </div>
-                </div>
-                <div
-                  className={`flex gap-3 mb-3 chapteritem relative z-10 ${
-                    step == 7 ? "" : "items-center"
-                  }`}
-                >
-                  <div
-                    className={`w-10 min-w-10 h-10 inline-flex items-center justify-center rounded-md ${
-                      stepsTick.includes(8) || step == 8
-                        ? "bg-g-success"
-                        : "bg-gradient1"
-                    }`}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      version="1.1"
-                      width="512"
-                      height="512"
-                      x="0"
-                      y="0"
-                      viewBox="0 0 64 64"
-                      className={`w-4 h-4 text-white ${
-                        stepsTick.includes(8) || step == 8 ? "" : "hidden"
-                      }`}
-                    >
-                      <g transform="matrix(1.0699999999999992,0,0,1.0699999999999992,-2.239650142192822,-2.2399999332427853)">
-                        <path
-                          fill="currentColor"
-                          d="M59.39 11.24a5.49 5.49 0 0 0-7.77 0L21.78 41.08l-9.41-9.41a5.49 5.49 0 0 0-7.77 0 5.49 5.49 0 0 0 0 7.77l13.33 13.32a5.49 5.49 0 0 0 7.77 0L59.4 19a5.49 5.49 0 0 0-.01-7.76z"
-                          opacity="1"
-                          data-original="currentColor"
-                        ></path>
-                      </g>
-                    </svg>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      version="1.1"
-                      width="512"
-                      height="512"
-                      x="0"
-                      y="0"
-                      viewBox="0 0 512 512.002"
-                      className={`w-4 h-4 text-white ${
-                        stepsTick.includes(8) || step == 8 ? "hidden" : ""
-                      }`}
-                    >
-                      <g transform="matrix(0.98,0,0,0.98,49.27163876531441,5.12004028320311)">
-                        <path
-                          d="M210.352 246.633c33.882 0 63.222-12.153 87.195-36.13 23.973-23.972 36.125-53.304 36.125-87.19 0-33.876-12.152-63.211-36.129-87.192C273.566 12.152 244.23 0 210.352 0c-33.887 0-63.22 12.152-87.192 36.125s-36.129 53.309-36.129 87.188c0 33.886 12.156 63.222 36.133 87.195 23.977 23.969 53.313 36.125 87.188 36.125zM426.129 393.703c-.692-9.976-2.09-20.86-4.149-32.351-2.078-11.579-4.753-22.524-7.957-32.528-3.308-10.34-7.808-20.55-13.37-30.336-5.774-10.156-12.555-19-20.165-26.277-7.957-7.613-17.699-13.734-28.965-18.2-11.226-4.44-23.668-6.69-36.976-6.69-5.227 0-10.281 2.144-20.043 8.5a2711.03 2711.03 0 0 1-20.879 13.46c-6.707 4.274-15.793 8.278-27.016 11.903-10.949 3.543-22.066 5.34-33.039 5.34-10.972 0-22.086-1.797-33.047-5.34-11.21-3.622-20.296-7.625-26.996-11.899-7.77-4.965-14.8-9.496-20.898-13.469-9.75-6.355-14.809-8.5-20.035-8.5-13.313 0-25.75 2.254-36.973 6.7-11.258 4.457-21.004 10.578-28.969 18.199-7.605 7.281-14.39 16.12-20.156 26.273-5.558 9.785-10.058 19.992-13.371 30.34-3.2 10.004-5.875 20.945-7.953 32.524-2.059 11.476-3.457 22.363-4.149 32.363A438.821 438.821 0 0 0 0 423.949c0 26.727 8.496 48.363 25.25 64.32 16.547 15.747 38.441 23.735 65.066 23.735h246.532c26.625 0 48.511-7.984 65.062-23.734 16.758-15.946 25.254-37.586 25.254-64.325-.004-10.316-.351-20.492-1.035-30.242zm0 0"
-                          fill="currentColor"
-                          opacity="1"
-                          data-original="currentColor"
-                        ></path>
-                      </g>
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="font-bold text-md">Partners/Suppliers</p>
-                    <p
-                      className={`w-full leading-relaxed md:text-base text-sm ${
-                        step == 7 ? "" : " h-0 overflow-hidden"
-                      }`}
-                    >
-                      Defining a sharp vision that embraces both business
-                      success and social responsibility.
-                    </p>
-                  </div>
-                </div>
-                <div
-                  className={`flex gap-3 mb-3 chapteritem relative z-10 ${
-                    step == 8 ? "" : "items-center"
-                  }`}
-                >
-                  <div
-                    className={`w-10 min-w-10 h-10 inline-flex items-center justify-center rounded-md ${
-                      stepsTick.includes(9) || step == 9
-                        ? "bg-g-success"
-                        : "bg-gradient1"
-                    }`}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      version="1.1"
-                      width="512"
-                      height="512"
-                      x="0"
-                      y="0"
-                      viewBox="0 0 64 64"
-                      className={`w-4 h-4 text-white ${
-                        stepsTick.includes(9) || step == 9 ? "" : "hidden"
-                      }`}
-                    >
-                      <g transform="matrix(1.0699999999999992,0,0,1.0699999999999992,-2.239650142192822,-2.2399999332427853)">
-                        <path
-                          fill="currentColor"
-                          d="M59.39 11.24a5.49 5.49 0 0 0-7.77 0L21.78 41.08l-9.41-9.41a5.49 5.49 0 0 0-7.77 0 5.49 5.49 0 0 0 0 7.77l13.33 13.32a5.49 5.49 0 0 0 7.77 0L59.4 19a5.49 5.49 0 0 0-.01-7.76z"
-                          opacity="1"
-                          data-original="currentColor"
-                        ></path>
-                      </g>
-                    </svg>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      version="1.1"
-                      width="512"
-                      height="512"
-                      x="0"
-                      y="0"
-                      viewBox="0 0 512 512.002"
-                      className={`w-4 h-4 text-white ${
-                        stepsTick.includes(9) || step == 9 ? "hidden" : ""
-                      }`}
-                    >
-                      <g transform="matrix(0.98,0,0,0.98,49.27163876531441,5.12004028320311)">
-                        <path
-                          d="M210.352 246.633c33.882 0 63.222-12.153 87.195-36.13 23.973-23.972 36.125-53.304 36.125-87.19 0-33.876-12.152-63.211-36.129-87.192C273.566 12.152 244.23 0 210.352 0c-33.887 0-63.22 12.152-87.192 36.125s-36.129 53.309-36.129 87.188c0 33.886 12.156 63.222 36.133 87.195 23.977 23.969 53.313 36.125 87.188 36.125zM426.129 393.703c-.692-9.976-2.09-20.86-4.149-32.351-2.078-11.579-4.753-22.524-7.957-32.528-3.308-10.34-7.808-20.55-13.37-30.336-5.774-10.156-12.555-19-20.165-26.277-7.957-7.613-17.699-13.734-28.965-18.2-11.226-4.44-23.668-6.69-36.976-6.69-5.227 0-10.281 2.144-20.043 8.5a2711.03 2711.03 0 0 1-20.879 13.46c-6.707 4.274-15.793 8.278-27.016 11.903-10.949 3.543-22.066 5.34-33.039 5.34-10.972 0-22.086-1.797-33.047-5.34-11.21-3.622-20.296-7.625-26.996-11.899-7.77-4.965-14.8-9.496-20.898-13.469-9.75-6.355-14.809-8.5-20.035-8.5-13.313 0-25.75 2.254-36.973 6.7-11.258 4.457-21.004 10.578-28.969 18.199-7.605 7.281-14.39 16.12-20.156 26.273-5.558 9.785-10.058 19.992-13.371 30.34-3.2 10.004-5.875 20.945-7.953 32.524-2.059 11.476-3.457 22.363-4.149 32.363A438.821 438.821 0 0 0 0 423.949c0 26.727 8.496 48.363 25.25 64.32 16.547 15.747 38.441 23.735 65.066 23.735h246.532c26.625 0 48.511-7.984 65.062-23.734 16.758-15.946 25.254-37.586 25.254-64.325-.004-10.316-.351-20.492-1.035-30.242zm0 0"
-                          fill="currentColor"
-                          opacity="1"
-                          data-original="currentColor"
-                        ></path>
-                      </g>
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="font-bold text-md">Data/ICT</p>
-                    <p
-                      className={`w-full leading-relaxed md:text-base text-sm ${
-                        step == 8 ? "" : " h-0 overflow-hidden"
-                      }`}
-                    >
-                      Defining a sharp vision that embraces both business
-                      success and social responsibility.
-                    </p>
-                  </div>
-                </div>
-                <div
-                  className={`flex gap-3 mb-3 chapteritem relative z-10 ${
-                    step == 9 ? "" : "items-center"
-                  }`}
-                >
-                  <div
-                    className={`w-10 min-w-10 h-10 inline-flex items-center justify-center rounded-md ${
-                      stepsTick.includes(10) || step == 10
-                        ? "bg-g-success"
-                        : "bg-gradient1"
-                    }`}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      version="1.1"
-                      width="512"
-                      height="512"
-                      x="0"
-                      y="0"
-                      viewBox="0 0 64 64"
-                      className={`w-4 h-4 text-white ${
-                        stepsTick.includes(10) || step == 10 ? "" : "hidden"
-                      }`}
-                    >
-                      <g transform="matrix(1.0699999999999992,0,0,1.0699999999999992,-2.239650142192822,-2.2399999332427853)">
-                        <path
-                          fill="currentColor"
-                          d="M59.39 11.24a5.49 5.49 0 0 0-7.77 0L21.78 41.08l-9.41-9.41a5.49 5.49 0 0 0-7.77 0 5.49 5.49 0 0 0 0 7.77l13.33 13.32a5.49 5.49 0 0 0 7.77 0L59.4 19a5.49 5.49 0 0 0-.01-7.76z"
-                          opacity="1"
-                          data-original="currentColor"
-                        ></path>
-                      </g>
-                    </svg>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      version="1.1"
-                      width="512"
-                      height="512"
-                      x="0"
-                      y="0"
-                      viewBox="0 0 512 512.002"
-                      className={`w-4 h-4 text-white ${
-                        stepsTick.includes(10) || step == 10 ? "hidden" : ""
-                      }`}
-                    >
-                      <g transform="matrix(0.98,0,0,0.98,49.27163876531441,5.12004028320311)">
-                        <path
-                          d="M210.352 246.633c33.882 0 63.222-12.153 87.195-36.13 23.973-23.972 36.125-53.304 36.125-87.19 0-33.876-12.152-63.211-36.129-87.192C273.566 12.152 244.23 0 210.352 0c-33.887 0-63.22 12.152-87.192 36.125s-36.129 53.309-36.129 87.188c0 33.886 12.156 63.222 36.133 87.195 23.977 23.969 53.313 36.125 87.188 36.125zM426.129 393.703c-.692-9.976-2.09-20.86-4.149-32.351-2.078-11.579-4.753-22.524-7.957-32.528-3.308-10.34-7.808-20.55-13.37-30.336-5.774-10.156-12.555-19-20.165-26.277-7.957-7.613-17.699-13.734-28.965-18.2-11.226-4.44-23.668-6.69-36.976-6.69-5.227 0-10.281 2.144-20.043 8.5a2711.03 2711.03 0 0 1-20.879 13.46c-6.707 4.274-15.793 8.278-27.016 11.903-10.949 3.543-22.066 5.34-33.039 5.34-10.972 0-22.086-1.797-33.047-5.34-11.21-3.622-20.296-7.625-26.996-11.899-7.77-4.965-14.8-9.496-20.898-13.469-9.75-6.355-14.809-8.5-20.035-8.5-13.313 0-25.75 2.254-36.973 6.7-11.258 4.457-21.004 10.578-28.969 18.199-7.605 7.281-14.39 16.12-20.156 26.273-5.558 9.785-10.058 19.992-13.371 30.34-3.2 10.004-5.875 20.945-7.953 32.524-2.059 11.476-3.457 22.363-4.149 32.363A438.821 438.821 0 0 0 0 423.949c0 26.727 8.496 48.363 25.25 64.32 16.547 15.747 38.441 23.735 65.066 23.735h246.532c26.625 0 48.511-7.984 65.062-23.734 16.758-15.946 25.254-37.586 25.254-64.325-.004-10.316-.351-20.492-1.035-30.242zm0 0"
-                          fill="currentColor"
-                          opacity="1"
-                          data-original="currentColor"
-                        ></path>
-                      </g>
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="font-bold text-md">
-                      Customer Value & Social Impact
-                    </p>
-                    <p
-                      className={`w-full leading-relaxed md:text-base text-sm ${
-                        step == 9 ? "" : " h-0 overflow-hidden"
-                      }`}
-                    >
-                      Defining a sharp vision that embraces both business
-                      success and social responsibility.
-                    </p>
-                  </div>
-                </div>
-                <div
-                  className={`flex gap-3 mb-0 chapteritem relative z-10 ${
-                    step == 10 ? "" : "items-center"
-                  }`}
-                >
-                  <div
-                    className={`w-10 min-w-10 h-10 inline-flex items-center justify-center bg-gradient1 rounded-md`}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      version="1.1"
-                      width="512"
-                      height="512"
-                      x="0"
-                      y="0"
-                      viewBox="0 0 512 512.002"
-                      className="w-4 h-4 text-white"
-                    >
-                      <g transform="matrix(0.98,0,0,0.98,49.27163876531441,5.12004028320311)">
-                        <path
-                          d="M210.352 246.633c33.882 0 63.222-12.153 87.195-36.13 23.973-23.972 36.125-53.304 36.125-87.19 0-33.876-12.152-63.211-36.129-87.192C273.566 12.152 244.23 0 210.352 0c-33.887 0-63.22 12.152-87.192 36.125s-36.129 53.309-36.129 87.188c0 33.886 12.156 63.222 36.133 87.195 23.977 23.969 53.313 36.125 87.188 36.125zM426.129 393.703c-.692-9.976-2.09-20.86-4.149-32.351-2.078-11.579-4.753-22.524-7.957-32.528-3.308-10.34-7.808-20.55-13.37-30.336-5.774-10.156-12.555-19-20.165-26.277-7.957-7.613-17.699-13.734-28.965-18.2-11.226-4.44-23.668-6.69-36.976-6.69-5.227 0-10.281 2.144-20.043 8.5a2711.03 2711.03 0 0 1-20.879 13.46c-6.707 4.274-15.793 8.278-27.016 11.903-10.949 3.543-22.066 5.34-33.039 5.34-10.972 0-22.086-1.797-33.047-5.34-11.21-3.622-20.296-7.625-26.996-11.899-7.77-4.965-14.8-9.496-20.898-13.469-9.75-6.355-14.809-8.5-20.035-8.5-13.313 0-25.75 2.254-36.973 6.7-11.258 4.457-21.004 10.578-28.969 18.199-7.605 7.281-14.39 16.12-20.156 26.273-5.558 9.785-10.058 19.992-13.371 30.34-3.2 10.004-5.875 20.945-7.953 32.524-2.059 11.476-3.457 22.363-4.149 32.363A438.821 438.821 0 0 0 0 423.949c0 26.727 8.496 48.363 25.25 64.32 16.547 15.747 38.441 23.735 65.066 23.735h246.532c26.625 0 48.511-7.984 65.062-23.734 16.758-15.946 25.254-37.586 25.254-64.325-.004-10.316-.351-20.492-1.035-30.242zm0 0"
-                          fill="currentColor"
-                          opacity="1"
-                          data-original="currentColor"
-                        ></path>
-                      </g>
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="font-bold text-md">Innovation</p>
-                    <p
-                      className={`w-full leading-relaxed md:text-base text-sm ${
-                        step == 10 ? "" : " h-0 overflow-hidden"
-                      }`}
-                    >
-                      Defining a sharp vision that embraces both business
-                      success and social responsibility.
-                    </p>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
             <div className="col-right lg:max-w-calc350px max-w-calc300px w-full overflow-auto">
@@ -980,1029 +577,76 @@ const DashBoard = () => {
               {/* screen 1 */}
               <div
                 className={`chapter-screen1 h-full ${
-                  step == 1 ? "screen1" : "hidden"
+                  step == sideBarItems[step - 1].id ? "screen1" : "hidden"
                 } ${isActive ? "" : "hidden"}`}
               >
                 <div className="header-title pt-6 text-center border-s border-white">
                   <h2 className="xl:text-5xl md:text-4xl text-2xl mb-6 font-bold xl:leading-normal leading-normal bg-gradient1 text-clip">
-                    Strategy
+                    {sideBarItems[step - 1].name}
                   </h2>
                 </div>
                 <div className="chapterContent max-w-screen-lg mx-auto pb-12 pt-8">
                   <div className="questions-form">
-                    <div className="form-item mb-6">
-                      <div className="flex gap-2 items-center justify-between mb-2">
-                        <p className="mb-0 flex gap-2 leading-normal items-center">
-                          Industry
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            version="1.1"
-                            xmlnsXlink="http://www.w3.org/1999/xlink"
-                            width="16"
-                            height="16"
-                            x="0"
-                            y="0"
-                            viewBox="0 0 45.999 45.999"
-                            xmlSpace="preserve"
+                    {sideBarItems[step - 1].questions?.map(
+                      (question: any, index: number) => (
+                        <div className="form-item mb-6">
+                          <div className="flex gap-2 items-center justify-between mb-2">
+                            <p className="mb-0 flex gap-2 leading-normal items-center">
+                              Industry
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                version="1.1"
+                                xmlnsXlink="http://www.w3.org/1999/xlink"
+                                width="16"
+                                height="16"
+                                x="0"
+                                y="0"
+                                viewBox="0 0 45.999 45.999"
+                                xmlSpace="preserve"
+                              >
+                                <g>
+                                  <path
+                                    d="M39.264 6.736c-8.982-8.981-23.545-8.982-32.528 0-8.982 8.982-8.981 23.545 0 32.528 8.982 8.98 23.545 8.981 32.528 0 8.981-8.983 8.98-23.545 0-32.528zM25.999 33a3 3 0 1 1-6 0V21a3 3 0 1 1 6 0v12zm-3.053-17.128c-1.728 0-2.88-1.224-2.844-2.735-.036-1.584 1.116-2.771 2.879-2.771 1.764 0 2.88 1.188 2.917 2.771-.001 1.511-1.152 2.735-2.952 2.735z"
+                                    fill="#18CBB8"
+                                    opacity="1"
+                                    data-original="#18CBB8"
+                                  ></path>
+                                </g>
+                              </svg>
+                            </p>
+                            <span className="bg-lightblue py-1 leading-tight px-3 text-xs rounded-md">
+                              Short sentence
+                            </span>
+                          </div>
+                          <label
+                            htmlFor={`question-${step - 1}-${index}`}
+                            className="block text-sm font-medium leading-6 text-gray-900"
                           >
-                            <g>
-                              <path
-                                d="M39.264 6.736c-8.982-8.981-23.545-8.982-32.528 0-8.982 8.982-8.981 23.545 0 32.528 8.982 8.98 23.545 8.981 32.528 0 8.981-8.983 8.98-23.545 0-32.528zM25.999 33a3 3 0 1 1-6 0V21a3 3 0 1 1 6 0v12zm-3.053-17.128c-1.728 0-2.88-1.224-2.844-2.735-.036-1.584 1.116-2.771 2.879-2.771 1.764 0 2.88 1.188 2.917 2.771-.001 1.511-1.152 2.735-2.952 2.735z"
-                                fill="#18CBB8"
-                                opacity="1"
-                                data-original="#18CBB8"
-                              ></path>
-                            </g>
-                          </svg>
-                        </p>
-                        <span className="bg-lightblue py-1 leading-tight px-3 text-xs rounded-md">
-                          Short sentence
-                        </span>
-                      </div>
-                      <label
-                        htmlFor="about"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
-                        What Industry is your comapny in?
-                      </label>
-                      <div className="mt-2">
-                        <textarea
-                          id="about"
-                          name="about"
-                          className="bg-white border border-lightblue text-gray-900 text-sm rounded-lg focus:ring-mediumblue focus:border-mediumblue block w-full p-2.5 min-h-62px"
-                        ></textarea>
-                      </div>
-                    </div>
-                    <div className="form-item mb-6">
-                      <div className="flex gap-2 items-center justify-between mb-2">
-                        <p className="mb-0 flex gap-2 leading-normal items-center">
-                          Industry
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            version="1.1"
-                            xmlnsXlink="http://www.w3.org/1999/xlink"
-                            width="16"
-                            height="16"
-                            x="0"
-                            y="0"
-                            viewBox="0 0 45.999 45.999"
-                            xmlSpace="preserve"
-                          >
-                            <g>
-                              <path
-                                d="M39.264 6.736c-8.982-8.981-23.545-8.982-32.528 0-8.982 8.982-8.981 23.545 0 32.528 8.982 8.98 23.545 8.981 32.528 0 8.981-8.983 8.98-23.545 0-32.528zM25.999 33a3 3 0 1 1-6 0V21a3 3 0 1 1 6 0v12zm-3.053-17.128c-1.728 0-2.88-1.224-2.844-2.735-.036-1.584 1.116-2.771 2.879-2.771 1.764 0 2.88 1.188 2.917 2.771-.001 1.511-1.152 2.735-2.952 2.735z"
-                                fill="#18CBB8"
-                                opacity="1"
-                                data-original="#18CBB8"
-                              ></path>
-                            </g>
-                          </svg>
-                        </p>
-                        <span className="bg-lightblue py-1 leading-tight px-3 text-xs rounded-md">
-                          Short sentence
-                        </span>
-                      </div>
-                      <label
-                        htmlFor="about"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
-                        What Industry is your comapny in?
-                      </label>
-                      <div className="mt-2">
-                        <textarea
-                          id="about"
-                          name="about"
-                          className="bg-white border border-lightblue text-gray-900 text-sm rounded-lg focus:ring-mediumblue focus:border-mediumblue block w-full p-2.5 min-h-62px"
-                        ></textarea>
-                      </div>
-                    </div>
-                    <div className="submit-form"></div>
-                  </div>
-                </div>
-              </div>
-              {/* screen 2 */}
-              <div
-                className={`chapter-screen2 h-full ${
-                  step == 2 ? "screen2" : "hidden"
-                }`}
-              >
-                <div className="header-title pt-6 text-center border-s border-white">
-                  <h2 className="xl:text-5xl md:text-4xl text-2xl mb-6 font-bold xl:leading-normal leading-normal bg-gradient1 text-clip">
-                    Clientele
-                  </h2>
-                </div>
-                <div className="chapterContent max-w-screen-lg mx-auto pb-12 pt-8">
-                  <div className="questions-form">
-                    <div className="form-item mb-6">
-                      <div className="flex gap-2 items-center justify-between mb-2">
-                        <p className="mb-0 flex gap-2 leading-normal items-center">
-                          Industry
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            version="1.1"
-                            xmlnsXlink="http://www.w3.org/1999/xlink"
-                            width="16"
-                            height="16"
-                            x="0"
-                            y="0"
-                            viewBox="0 0 45.999 45.999"
-                            xmlSpace="preserve"
-                          >
-                            <g>
-                              <path
-                                d="M39.264 6.736c-8.982-8.981-23.545-8.982-32.528 0-8.982 8.982-8.981 23.545 0 32.528 8.982 8.98 23.545 8.981 32.528 0 8.981-8.983 8.98-23.545 0-32.528zM25.999 33a3 3 0 1 1-6 0V21a3 3 0 1 1 6 0v12zm-3.053-17.128c-1.728 0-2.88-1.224-2.844-2.735-.036-1.584 1.116-2.771 2.879-2.771 1.764 0 2.88 1.188 2.917 2.771-.001 1.511-1.152 2.735-2.952 2.735z"
-                                fill="#18CBB8"
-                                opacity="1"
-                                data-original="#18CBB8"
-                              ></path>
-                            </g>
-                          </svg>
-                        </p>
-                        <span className="bg-lightblue py-1 leading-tight px-3 text-xs rounded-md">
-                          Short sentence
-                        </span>
-                      </div>
-                      <label
-                        htmlFor="about"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
-                        What Industry is your comapny in?
-                      </label>
-                      <div className="mt-2">
-                        <textarea
-                          id="about"
-                          name="about"
-                          className="bg-white border border-lightblue text-gray-900 text-sm rounded-lg focus:ring-mediumblue focus:border-mediumblue block w-full p-2.5 min-h-62px"
-                        ></textarea>
-                      </div>
-                    </div>
-                    <div className="form-item mb-6">
-                      <div className="flex gap-2 items-center justify-between mb-2">
-                        <p className="mb-0 flex gap-2 leading-normal items-center">
-                          Industry
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            version="1.1"
-                            xmlnsXlink="http://www.w3.org/1999/xlink"
-                            width="16"
-                            height="16"
-                            x="0"
-                            y="0"
-                            viewBox="0 0 45.999 45.999"
-                            xmlSpace="preserve"
-                          >
-                            <g>
-                              <path
-                                d="M39.264 6.736c-8.982-8.981-23.545-8.982-32.528 0-8.982 8.982-8.981 23.545 0 32.528 8.982 8.98 23.545 8.981 32.528 0 8.981-8.983 8.98-23.545 0-32.528zM25.999 33a3 3 0 1 1-6 0V21a3 3 0 1 1 6 0v12zm-3.053-17.128c-1.728 0-2.88-1.224-2.844-2.735-.036-1.584 1.116-2.771 2.879-2.771 1.764 0 2.88 1.188 2.917 2.771-.001 1.511-1.152 2.735-2.952 2.735z"
-                                fill="#18CBB8"
-                                opacity="1"
-                                data-original="#18CBB8"
-                              ></path>
-                            </g>
-                          </svg>
-                        </p>
-                        <span className="bg-lightblue py-1 leading-tight px-3 text-xs rounded-md">
-                          Short sentence
-                        </span>
-                      </div>
-                      <label
-                        htmlFor="about"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
-                        What Industry is your comapny in?
-                      </label>
-                      <div className="mt-2">
-                        <textarea
-                          id="about"
-                          name="about"
-                          className="bg-white border border-lightblue text-gray-900 text-sm rounded-lg focus:ring-mediumblue focus:border-mediumblue block w-full p-2.5 min-h-62px"
-                        ></textarea>
-                      </div>
-                    </div>
-                    <div className="submit-form"></div>
-                  </div>
-                </div>
-              </div>
-              {/* screen 3 */}
-              <div
-                className={`chapter-screen3 h-full ${
-                  step == 3 ? "screen3" : "hidden"
-                }`}
-              >
-                <div className="header-title pt-6 text-center border-s border-white">
-                  <h2 className="xl:text-5xl md:text-4xl text-2xl mb-6 font-bold xl:leading-normal leading-normal bg-gradient1 text-clip">
-                    Budget/ROI
-                  </h2>
-                </div>
-                <div className="chapterContent max-w-screen-lg mx-auto pb-12 pt-8">
-                  <div className="questions-form">
-                    <div className="form-item mb-6">
-                      <div className="flex gap-2 items-center justify-between mb-2">
-                        <p className="mb-0 flex gap-2 leading-normal items-center">
-                          Industry
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            version="1.1"
-                            xmlnsXlink="http://www.w3.org/1999/xlink"
-                            width="16"
-                            height="16"
-                            x="0"
-                            y="0"
-                            viewBox="0 0 45.999 45.999"
-                            xmlSpace="preserve"
-                          >
-                            <g>
-                              <path
-                                d="M39.264 6.736c-8.982-8.981-23.545-8.982-32.528 0-8.982 8.982-8.981 23.545 0 32.528 8.982 8.98 23.545 8.981 32.528 0 8.981-8.983 8.98-23.545 0-32.528zM25.999 33a3 3 0 1 1-6 0V21a3 3 0 1 1 6 0v12zm-3.053-17.128c-1.728 0-2.88-1.224-2.844-2.735-.036-1.584 1.116-2.771 2.879-2.771 1.764 0 2.88 1.188 2.917 2.771-.001 1.511-1.152 2.735-2.952 2.735z"
-                                fill="#18CBB8"
-                                opacity="1"
-                                data-original="#18CBB8"
-                              ></path>
-                            </g>
-                          </svg>
-                        </p>
-                        <span className="bg-lightblue py-1 leading-tight px-3 text-xs rounded-md">
-                          Short sentence
-                        </span>
-                      </div>
-                      <label
-                        htmlFor="about"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
-                        What Industry is your comapny in?
-                      </label>
-                      <div className="mt-2">
-                        <textarea
-                          id="about"
-                          name="about"
-                          className="bg-white border border-lightblue text-gray-900 text-sm rounded-lg focus:ring-mediumblue focus:border-mediumblue block w-full p-2.5 min-h-62px"
-                        ></textarea>
-                      </div>
-                    </div>
-                    <div className="form-item mb-6">
-                      <div className="flex gap-2 items-center justify-between mb-2">
-                        <p className="mb-0 flex gap-2 leading-normal items-center">
-                          Industry
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            version="1.1"
-                            xmlnsXlink="http://www.w3.org/1999/xlink"
-                            width="16"
-                            height="16"
-                            x="0"
-                            y="0"
-                            viewBox="0 0 45.999 45.999"
-                            xmlSpace="preserve"
-                          >
-                            <g>
-                              <path
-                                d="M39.264 6.736c-8.982-8.981-23.545-8.982-32.528 0-8.982 8.982-8.981 23.545 0 32.528 8.982 8.98 23.545 8.981 32.528 0 8.981-8.983 8.98-23.545 0-32.528zM25.999 33a3 3 0 1 1-6 0V21a3 3 0 1 1 6 0v12zm-3.053-17.128c-1.728 0-2.88-1.224-2.844-2.735-.036-1.584 1.116-2.771 2.879-2.771 1.764 0 2.88 1.188 2.917 2.771-.001 1.511-1.152 2.735-2.952 2.735z"
-                                fill="#18CBB8"
-                                opacity="1"
-                                data-original="#18CBB8"
-                              ></path>
-                            </g>
-                          </svg>
-                        </p>
-                        <span className="bg-lightblue py-1 leading-tight px-3 text-xs rounded-md">
-                          Short sentence
-                        </span>
-                      </div>
-                      <label
-                        htmlFor="about"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
-                        What Industry is your comapny in?
-                      </label>
-                      <div className="mt-2">
-                        <textarea
-                          id="about"
-                          name="about"
-                          className="bg-white border border-lightblue text-gray-900 text-sm rounded-lg focus:ring-mediumblue focus:border-mediumblue block w-full p-2.5 min-h-62px"
-                        ></textarea>
-                      </div>
-                    </div>
-                    <div className="submit-form"></div>
-                  </div>
-                </div>
-              </div>
-              {/* screen 4 */}
-              <div
-                className={`chapter-screen4 h-full ${
-                  step == 4 ? "screen4" : "hidden"
-                }`}
-              >
-                <div className="header-title pt-6 text-center border-s border-white">
-                  <h2 className="xl:text-5xl md:text-4xl text-2xl mb-6 font-bold xl:leading-normal leading-normal bg-gradient1 text-clip">
-                    Employees
-                  </h2>
-                </div>
-                <div className="chapterContent max-w-screen-lg mx-auto pb-12 pt-8">
-                  <div className="questions-form">
-                    <div className="form-item mb-6">
-                      <div className="flex gap-2 items-center justify-between mb-2">
-                        <p className="mb-0 flex gap-2 leading-normal items-center">
-                          Industry
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            version="1.1"
-                            xmlnsXlink="http://www.w3.org/1999/xlink"
-                            width="16"
-                            height="16"
-                            x="0"
-                            y="0"
-                            viewBox="0 0 45.999 45.999"
-                            xmlSpace="preserve"
-                          >
-                            <g>
-                              <path
-                                d="M39.264 6.736c-8.982-8.981-23.545-8.982-32.528 0-8.982 8.982-8.981 23.545 0 32.528 8.982 8.98 23.545 8.981 32.528 0 8.981-8.983 8.98-23.545 0-32.528zM25.999 33a3 3 0 1 1-6 0V21a3 3 0 1 1 6 0v12zm-3.053-17.128c-1.728 0-2.88-1.224-2.844-2.735-.036-1.584 1.116-2.771 2.879-2.771 1.764 0 2.88 1.188 2.917 2.771-.001 1.511-1.152 2.735-2.952 2.735z"
-                                fill="#18CBB8"
-                                opacity="1"
-                                data-original="#18CBB8"
-                              ></path>
-                            </g>
-                          </svg>
-                        </p>
-                        <span className="bg-lightblue py-1 leading-tight px-3 text-xs rounded-md">
-                          Short sentence
-                        </span>
-                      </div>
-                      <label
-                        htmlFor="about"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
-                        What Industry is your comapny in?
-                      </label>
-                      <div className="mt-2">
-                        <textarea
-                          id="about"
-                          name="about"
-                          className="bg-white border border-lightblue text-gray-900 text-sm rounded-lg focus:ring-mediumblue focus:border-mediumblue block w-full p-2.5 min-h-62px"
-                        ></textarea>
-                      </div>
-                    </div>
-                    <div className="form-item mb-6">
-                      <div className="flex gap-2 items-center justify-between mb-2">
-                        <p className="mb-0 flex gap-2 leading-normal items-center">
-                          Industry
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            version="1.1"
-                            xmlnsXlink="http://www.w3.org/1999/xlink"
-                            width="16"
-                            height="16"
-                            x="0"
-                            y="0"
-                            viewBox="0 0 45.999 45.999"
-                            xmlSpace="preserve"
-                          >
-                            <g>
-                              <path
-                                d="M39.264 6.736c-8.982-8.981-23.545-8.982-32.528 0-8.982 8.982-8.981 23.545 0 32.528 8.982 8.98 23.545 8.981 32.528 0 8.981-8.983 8.98-23.545 0-32.528zM25.999 33a3 3 0 1 1-6 0V21a3 3 0 1 1 6 0v12zm-3.053-17.128c-1.728 0-2.88-1.224-2.844-2.735-.036-1.584 1.116-2.771 2.879-2.771 1.764 0 2.88 1.188 2.917 2.771-.001 1.511-1.152 2.735-2.952 2.735z"
-                                fill="#18CBB8"
-                                opacity="1"
-                                data-original="#18CBB8"
-                              ></path>
-                            </g>
-                          </svg>
-                        </p>
-                        <span className="bg-lightblue py-1 leading-tight px-3 text-xs rounded-md">
-                          Short sentence
-                        </span>
-                      </div>
-                      <label
-                        htmlFor="about"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
-                        What Industry is your comapny in?
-                      </label>
-                      <div className="mt-2">
-                        <textarea
-                          id="about"
-                          name="about"
-                          className="bg-white border border-lightblue text-gray-900 text-sm rounded-lg focus:ring-mediumblue focus:border-mediumblue block w-full p-2.5 min-h-62px"
-                        ></textarea>
-                      </div>
-                    </div>
-                    <div className="submit-form"></div>
-                  </div>
-                </div>
-              </div>
-              {/* screen 5 */}
-              <div
-                className={`chapter-screen5 h-full ${
-                  step == 5 ? "screen5" : "hidden"
-                }`}
-              >
-                <div className="header-title pt-6 text-center border-s border-white">
-                  <h2 className="xl:text-5xl md:text-4xl text-2xl mb-6 font-bold xl:leading-normal leading-normal bg-gradient1 text-clip">
-                    Market
-                  </h2>
-                </div>
-                <div className="chapterContent max-w-screen-lg mx-auto pb-12 pt-8">
-                  <div className="questions-form">
-                    <div className="form-item mb-6">
-                      <div className="flex gap-2 items-center justify-between mb-2">
-                        <p className="mb-0 flex gap-2 leading-normal items-center">
-                          Industry
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            version="1.1"
-                            xmlnsXlink="http://www.w3.org/1999/xlink"
-                            width="16"
-                            height="16"
-                            x="0"
-                            y="0"
-                            viewBox="0 0 45.999 45.999"
-                            xmlSpace="preserve"
-                          >
-                            <g>
-                              <path
-                                d="M39.264 6.736c-8.982-8.981-23.545-8.982-32.528 0-8.982 8.982-8.981 23.545 0 32.528 8.982 8.98 23.545 8.981 32.528 0 8.981-8.983 8.98-23.545 0-32.528zM25.999 33a3 3 0 1 1-6 0V21a3 3 0 1 1 6 0v12zm-3.053-17.128c-1.728 0-2.88-1.224-2.844-2.735-.036-1.584 1.116-2.771 2.879-2.771 1.764 0 2.88 1.188 2.917 2.771-.001 1.511-1.152 2.735-2.952 2.735z"
-                                fill="#18CBB8"
-                                opacity="1"
-                                data-original="#18CBB8"
-                              ></path>
-                            </g>
-                          </svg>
-                        </p>
-                        <span className="bg-lightblue py-1 leading-tight px-3 text-xs rounded-md">
-                          Short sentence
-                        </span>
-                      </div>
-                      <label
-                        htmlFor="about"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
-                        What Industry is your comapny in?
-                      </label>
-                      <div className="mt-2">
-                        <textarea
-                          id="about"
-                          name="about"
-                          className="bg-white border border-lightblue text-gray-900 text-sm rounded-lg focus:ring-mediumblue focus:border-mediumblue block w-full p-2.5 min-h-62px"
-                        ></textarea>
-                      </div>
-                    </div>
-                    <div className="form-item mb-6">
-                      <div className="flex gap-2 items-center justify-between mb-2">
-                        <p className="mb-0 flex gap-2 leading-normal items-center">
-                          Industry
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            version="1.1"
-                            xmlnsXlink="http://www.w3.org/1999/xlink"
-                            width="16"
-                            height="16"
-                            x="0"
-                            y="0"
-                            viewBox="0 0 45.999 45.999"
-                            xmlSpace="preserve"
-                          >
-                            <g>
-                              <path
-                                d="M39.264 6.736c-8.982-8.981-23.545-8.982-32.528 0-8.982 8.982-8.981 23.545 0 32.528 8.982 8.98 23.545 8.981 32.528 0 8.981-8.983 8.98-23.545 0-32.528zM25.999 33a3 3 0 1 1-6 0V21a3 3 0 1 1 6 0v12zm-3.053-17.128c-1.728 0-2.88-1.224-2.844-2.735-.036-1.584 1.116-2.771 2.879-2.771 1.764 0 2.88 1.188 2.917 2.771-.001 1.511-1.152 2.735-2.952 2.735z"
-                                fill="#18CBB8"
-                                opacity="1"
-                                data-original="#18CBB8"
-                              ></path>
-                            </g>
-                          </svg>
-                        </p>
-                        <span className="bg-lightblue py-1 leading-tight px-3 text-xs rounded-md">
-                          Short sentence
-                        </span>
-                      </div>
-                      <label
-                        htmlFor="about"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
-                        What Industry is your comapny in?
-                      </label>
-                      <div className="mt-2">
-                        <textarea
-                          id="about"
-                          name="about"
-                          className="bg-white border border-lightblue text-gray-900 text-sm rounded-lg focus:ring-mediumblue focus:border-mediumblue block w-full p-2.5 min-h-62px"
-                        ></textarea>
-                      </div>
-                    </div>
-                    <div className="submit-form"></div>
-                  </div>
-                </div>
-              </div>
-              {/* screen 6 */}
-              <div
-                className={`chapter-screen6 h-full ${
-                  step == 6 ? "screen6" : "hidden"
-                }`}
-              >
-                <div className="header-title pt-6 text-center border-s border-white">
-                  <h2 className="xl:text-5xl md:text-4xl text-2xl mb-6 font-bold xl:leading-normal leading-normal bg-gradient1 text-clip">
-                    Compliance
-                  </h2>
-                </div>
-                <div className="chapterContent max-w-screen-lg mx-auto pb-12 pt-8">
-                  <div className="questions-form">
-                    <div className="form-item mb-6">
-                      <div className="flex gap-2 items-center justify-between mb-2">
-                        <p className="mb-0 flex gap-2 leading-normal items-center">
-                          Industry
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            version="1.1"
-                            xmlnsXlink="http://www.w3.org/1999/xlink"
-                            width="16"
-                            height="16"
-                            x="0"
-                            y="0"
-                            viewBox="0 0 45.999 45.999"
-                            xmlSpace="preserve"
-                          >
-                            <g>
-                              <path
-                                d="M39.264 6.736c-8.982-8.981-23.545-8.982-32.528 0-8.982 8.982-8.981 23.545 0 32.528 8.982 8.98 23.545 8.981 32.528 0 8.981-8.983 8.98-23.545 0-32.528zM25.999 33a3 3 0 1 1-6 0V21a3 3 0 1 1 6 0v12zm-3.053-17.128c-1.728 0-2.88-1.224-2.844-2.735-.036-1.584 1.116-2.771 2.879-2.771 1.764 0 2.88 1.188 2.917 2.771-.001 1.511-1.152 2.735-2.952 2.735z"
-                                fill="#18CBB8"
-                                opacity="1"
-                                data-original="#18CBB8"
-                              ></path>
-                            </g>
-                          </svg>
-                        </p>
-                        <span className="bg-lightblue py-1 leading-tight px-3 text-xs rounded-md">
-                          Short sentence
-                        </span>
-                      </div>
-                      <label
-                        htmlFor="about"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
-                        What Industry is your comapny in?
-                      </label>
-                      <div className="mt-2">
-                        <textarea
-                          id="about"
-                          name="about"
-                          className="bg-white border border-lightblue text-gray-900 text-sm rounded-lg focus:ring-mediumblue focus:border-mediumblue block w-full p-2.5 min-h-62px"
-                        ></textarea>
-                      </div>
-                    </div>
-                    <div className="form-item mb-6">
-                      <div className="flex gap-2 items-center justify-between mb-2">
-                        <p className="mb-0 flex gap-2 leading-normal items-center">
-                          Industry
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            version="1.1"
-                            xmlnsXlink="http://www.w3.org/1999/xlink"
-                            width="16"
-                            height="16"
-                            x="0"
-                            y="0"
-                            viewBox="0 0 45.999 45.999"
-                            xmlSpace="preserve"
-                          >
-                            <g>
-                              <path
-                                d="M39.264 6.736c-8.982-8.981-23.545-8.982-32.528 0-8.982 8.982-8.981 23.545 0 32.528 8.982 8.98 23.545 8.981 32.528 0 8.981-8.983 8.98-23.545 0-32.528zM25.999 33a3 3 0 1 1-6 0V21a3 3 0 1 1 6 0v12zm-3.053-17.128c-1.728 0-2.88-1.224-2.844-2.735-.036-1.584 1.116-2.771 2.879-2.771 1.764 0 2.88 1.188 2.917 2.771-.001 1.511-1.152 2.735-2.952 2.735z"
-                                fill="#18CBB8"
-                                opacity="1"
-                                data-original="#18CBB8"
-                              ></path>
-                            </g>
-                          </svg>
-                        </p>
-                        <span className="bg-lightblue py-1 leading-tight px-3 text-xs rounded-md">
-                          Short sentence
-                        </span>
-                      </div>
-                      <label
-                        htmlFor="about"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
-                        What Industry is your comapny in?
-                      </label>
-                      <div className="mt-2">
-                        <textarea
-                          id="about"
-                          name="about"
-                          className="bg-white border border-lightblue text-gray-900 text-sm rounded-lg focus:ring-mediumblue focus:border-mediumblue block w-full p-2.5 min-h-62px"
-                        ></textarea>
-                      </div>
-                    </div>
-                    <div className="submit-form"></div>
-                  </div>
-                </div>
-              </div>
-              {/* screen 7 */}
-              <div
-                className={`chapter-screen7 h-full ${
-                  step == 7 ? "screen7" : "hidden"
-                }`}
-              >
-                <div className="header-title pt-6 text-center border-s border-white">
-                  <h2 className="xl:text-5xl md:text-4xl text-2xl mb-6 font-bold xl:leading-normal leading-normal bg-gradient1 text-clip">
-                    Partners/Suppliers
-                  </h2>
-                </div>
-                <div className="chapterContent max-w-screen-lg mx-auto pb-12 pt-8">
-                  <div className="questions-form">
-                    <div className="form-item mb-6">
-                      <div className="flex gap-2 items-center justify-between mb-2">
-                        <p className="mb-0 flex gap-2 leading-normal items-center">
-                          Industry
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            version="1.1"
-                            xmlnsXlink="http://www.w3.org/1999/xlink"
-                            width="16"
-                            height="16"
-                            x="0"
-                            y="0"
-                            viewBox="0 0 45.999 45.999"
-                            xmlSpace="preserve"
-                          >
-                            <g>
-                              <path
-                                d="M39.264 6.736c-8.982-8.981-23.545-8.982-32.528 0-8.982 8.982-8.981 23.545 0 32.528 8.982 8.98 23.545 8.981 32.528 0 8.981-8.983 8.98-23.545 0-32.528zM25.999 33a3 3 0 1 1-6 0V21a3 3 0 1 1 6 0v12zm-3.053-17.128c-1.728 0-2.88-1.224-2.844-2.735-.036-1.584 1.116-2.771 2.879-2.771 1.764 0 2.88 1.188 2.917 2.771-.001 1.511-1.152 2.735-2.952 2.735z"
-                                fill="#18CBB8"
-                                opacity="1"
-                                data-original="#18CBB8"
-                              ></path>
-                            </g>
-                          </svg>
-                        </p>
-                        <span className="bg-lightblue py-1 leading-tight px-3 text-xs rounded-md">
-                          Short sentence
-                        </span>
-                      </div>
-                      <label
-                        htmlFor="about"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
-                        What Industry is your comapny in?
-                      </label>
-                      <div className="mt-2">
-                        <textarea
-                          id="about"
-                          name="about"
-                          className="bg-white border border-lightblue text-gray-900 text-sm rounded-lg focus:ring-mediumblue focus:border-mediumblue block w-full p-2.5 min-h-62px"
-                        ></textarea>
-                      </div>
-                    </div>
-                    <div className="form-item mb-6">
-                      <div className="flex gap-2 items-center justify-between mb-2">
-                        <p className="mb-0 flex gap-2 leading-normal items-center">
-                          Industry
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            version="1.1"
-                            xmlnsXlink="http://www.w3.org/1999/xlink"
-                            width="16"
-                            height="16"
-                            x="0"
-                            y="0"
-                            viewBox="0 0 45.999 45.999"
-                            xmlSpace="preserve"
-                          >
-                            <g>
-                              <path
-                                d="M39.264 6.736c-8.982-8.981-23.545-8.982-32.528 0-8.982 8.982-8.981 23.545 0 32.528 8.982 8.98 23.545 8.981 32.528 0 8.981-8.983 8.98-23.545 0-32.528zM25.999 33a3 3 0 1 1-6 0V21a3 3 0 1 1 6 0v12zm-3.053-17.128c-1.728 0-2.88-1.224-2.844-2.735-.036-1.584 1.116-2.771 2.879-2.771 1.764 0 2.88 1.188 2.917 2.771-.001 1.511-1.152 2.735-2.952 2.735z"
-                                fill="#18CBB8"
-                                opacity="1"
-                                data-original="#18CBB8"
-                              ></path>
-                            </g>
-                          </svg>
-                        </p>
-                        <span className="bg-lightblue py-1 leading-tight px-3 text-xs rounded-md">
-                          Short sentence
-                        </span>
-                      </div>
-                      <label
-                        htmlFor="about"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
-                        What Industry is your comapny in?
-                      </label>
-                      <div className="mt-2">
-                        <textarea
-                          id="about"
-                          name="about"
-                          className="bg-white border border-lightblue text-gray-900 text-sm rounded-lg focus:ring-mediumblue focus:border-mediumblue block w-full p-2.5 min-h-62px"
-                        ></textarea>
-                      </div>
-                    </div>
-                    <div className="submit-form"></div>
-                  </div>
-                </div>
-              </div>
-              {/* screen 8 */}
-              <div
-                className={`chapter-screen8 h-full ${
-                  step == 8 ? "screen8" : "hidden"
-                }`}
-              >
-                <div className="header-title pt-6 text-center border-s border-white">
-                  <h2 className="xl:text-5xl md:text-4xl text-2xl mb-6 font-bold xl:leading-normal leading-normal bg-gradient1 text-clip">
-                    Data/ICT
-                  </h2>
-                </div>
-                <div className="chapterContent max-w-screen-lg mx-auto pb-12 pt-8">
-                  <div className="questions-form">
-                    <div className="form-item mb-6">
-                      <div className="flex gap-2 items-center justify-between mb-2">
-                        <p className="mb-0 flex gap-2 leading-normal items-center">
-                          Industry
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            version="1.1"
-                            xmlnsXlink="http://www.w3.org/1999/xlink"
-                            width="16"
-                            height="16"
-                            x="0"
-                            y="0"
-                            viewBox="0 0 45.999 45.999"
-                            xmlSpace="preserve"
-                          >
-                            <g>
-                              <path
-                                d="M39.264 6.736c-8.982-8.981-23.545-8.982-32.528 0-8.982 8.982-8.981 23.545 0 32.528 8.982 8.98 23.545 8.981 32.528 0 8.981-8.983 8.98-23.545 0-32.528zM25.999 33a3 3 0 1 1-6 0V21a3 3 0 1 1 6 0v12zm-3.053-17.128c-1.728 0-2.88-1.224-2.844-2.735-.036-1.584 1.116-2.771 2.879-2.771 1.764 0 2.88 1.188 2.917 2.771-.001 1.511-1.152 2.735-2.952 2.735z"
-                                fill="#18CBB8"
-                                opacity="1"
-                                data-original="#18CBB8"
-                              ></path>
-                            </g>
-                          </svg>
-                        </p>
-                        <span className="bg-lightblue py-1 leading-tight px-3 text-xs rounded-md">
-                          Short sentence
-                        </span>
-                      </div>
-                      <label
-                        htmlFor="about"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
-                        What Industry is your comapny in?
-                      </label>
-                      <div className="mt-2">
-                        <textarea
-                          id="about"
-                          name="about"
-                          className="bg-white border border-lightblue text-gray-900 text-sm rounded-lg focus:ring-mediumblue focus:border-mediumblue block w-full p-2.5 min-h-62px"
-                        ></textarea>
-                      </div>
-                    </div>
-                    <div className="form-item mb-6">
-                      <div className="flex gap-2 items-center justify-between mb-2">
-                        <p className="mb-0 flex gap-2 leading-normal items-center">
-                          Industry
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            version="1.1"
-                            xmlnsXlink="http://www.w3.org/1999/xlink"
-                            width="16"
-                            height="16"
-                            x="0"
-                            y="0"
-                            viewBox="0 0 45.999 45.999"
-                            xmlSpace="preserve"
-                          >
-                            <g>
-                              <path
-                                d="M39.264 6.736c-8.982-8.981-23.545-8.982-32.528 0-8.982 8.982-8.981 23.545 0 32.528 8.982 8.98 23.545 8.981 32.528 0 8.981-8.983 8.98-23.545 0-32.528zM25.999 33a3 3 0 1 1-6 0V21a3 3 0 1 1 6 0v12zm-3.053-17.128c-1.728 0-2.88-1.224-2.844-2.735-.036-1.584 1.116-2.771 2.879-2.771 1.764 0 2.88 1.188 2.917 2.771-.001 1.511-1.152 2.735-2.952 2.735z"
-                                fill="#18CBB8"
-                                opacity="1"
-                                data-original="#18CBB8"
-                              ></path>
-                            </g>
-                          </svg>
-                        </p>
-                        <span className="bg-lightblue py-1 leading-tight px-3 text-xs rounded-md">
-                          Short sentence
-                        </span>
-                      </div>
-                      <label
-                        htmlFor="about"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
-                        What Industry is your comapny in?
-                      </label>
-                      <div className="mt-2">
-                        <textarea
-                          id="about"
-                          name="about"
-                          className="bg-white border border-lightblue text-gray-900 text-sm rounded-lg focus:ring-mediumblue focus:border-mediumblue block w-full p-2.5 min-h-62px"
-                        ></textarea>
-                      </div>
-                    </div>
-                    <div className="submit-form"></div>
-                  </div>
-                </div>
-              </div>
-              {/* screen 9 */}
-              <div
-                className={`chapter-screen9 h-full ${
-                  step == 9 ? "screen9" : "hidden"
-                }`}
-              >
-                <div className="header-title pt-6 text-center border-s border-white">
-                  <h2 className="xl:text-5xl md:text-4xl text-2xl mb-6 font-bold xl:leading-normal leading-normal bg-gradient1 text-clip">
-                    Customer Value & Social Impact
-                  </h2>
-                </div>
-                <div className="chapterContent max-w-screen-lg mx-auto pb-12 pt-8">
-                  <div className="questions-form">
-                    <div className="form-item mb-6">
-                      <div className="flex gap-2 items-center justify-between mb-2">
-                        <p className="mb-0 flex gap-2 leading-normal items-center">
-                          Industry
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            version="1.1"
-                            xmlnsXlink="http://www.w3.org/1999/xlink"
-                            width="16"
-                            height="16"
-                            x="0"
-                            y="0"
-                            viewBox="0 0 45.999 45.999"
-                            xmlSpace="preserve"
-                          >
-                            <g>
-                              <path
-                                d="M39.264 6.736c-8.982-8.981-23.545-8.982-32.528 0-8.982 8.982-8.981 23.545 0 32.528 8.982 8.98 23.545 8.981 32.528 0 8.981-8.983 8.98-23.545 0-32.528zM25.999 33a3 3 0 1 1-6 0V21a3 3 0 1 1 6 0v12zm-3.053-17.128c-1.728 0-2.88-1.224-2.844-2.735-.036-1.584 1.116-2.771 2.879-2.771 1.764 0 2.88 1.188 2.917 2.771-.001 1.511-1.152 2.735-2.952 2.735z"
-                                fill="#18CBB8"
-                                opacity="1"
-                                data-original="#18CBB8"
-                              ></path>
-                            </g>
-                          </svg>
-                        </p>
-                        <span className="bg-lightblue py-1 leading-tight px-3 text-xs rounded-md">
-                          Short sentence
-                        </span>
-                      </div>
-                      <label
-                        htmlFor="about"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
-                        What Industry is your comapny in?
-                      </label>
-                      <div className="mt-2">
-                        <textarea
-                          id="about"
-                          name="about"
-                          className="bg-white border border-lightblue text-gray-900 text-sm rounded-lg focus:ring-mediumblue focus:border-mediumblue block w-full p-2.5 min-h-62px"
-                        ></textarea>
-                      </div>
-                    </div>
-                    <div className="form-item mb-6">
-                      <div className="flex gap-2 items-center justify-between mb-2">
-                        <p className="mb-0 flex gap-2 leading-normal items-center">
-                          Industry
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            version="1.1"
-                            xmlnsXlink="http://www.w3.org/1999/xlink"
-                            width="16"
-                            height="16"
-                            x="0"
-                            y="0"
-                            viewBox="0 0 45.999 45.999"
-                            xmlSpace="preserve"
-                          >
-                            <g>
-                              <path
-                                d="M39.264 6.736c-8.982-8.981-23.545-8.982-32.528 0-8.982 8.982-8.981 23.545 0 32.528 8.982 8.98 23.545 8.981 32.528 0 8.981-8.983 8.98-23.545 0-32.528zM25.999 33a3 3 0 1 1-6 0V21a3 3 0 1 1 6 0v12zm-3.053-17.128c-1.728 0-2.88-1.224-2.844-2.735-.036-1.584 1.116-2.771 2.879-2.771 1.764 0 2.88 1.188 2.917 2.771-.001 1.511-1.152 2.735-2.952 2.735z"
-                                fill="#18CBB8"
-                                opacity="1"
-                                data-original="#18CBB8"
-                              ></path>
-                            </g>
-                          </svg>
-                        </p>
-                        <span className="bg-lightblue py-1 leading-tight px-3 text-xs rounded-md">
-                          Short sentence
-                        </span>
-                      </div>
-                      <label
-                        htmlFor="about"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
-                        What Industry is your comapny in?
-                      </label>
-                      <div className="mt-2">
-                        <textarea
-                          id="about"
-                          name="about"
-                          className="bg-white border border-lightblue text-gray-900 text-sm rounded-lg focus:ring-mediumblue focus:border-mediumblue block w-full p-2.5 min-h-62px"
-                        ></textarea>
-                      </div>
-                    </div>
-                    <div className="submit-form"></div>
-                  </div>
-                </div>
-              </div>
-              {/* screen 10 */}
-              <div
-                className={`chapter-screen10 h-full ${
-                  step == 10 ? "screen10" : "hidden"
-                }`}
-              >
-                <div className="header-title pt-6 text-center border-s border-white">
-                  <h2 className="xl:text-5xl md:text-4xl text-2xl mb-6 font-bold xl:leading-normal leading-normal bg-gradient1 text-clip">
-                    Innovation
-                  </h2>
-                </div>
-                <div className="chapterContent max-w-screen-lg mx-auto pb-12 pt-8">
-                  <div className="questions-form">
-                    <div className="form-item mb-6">
-                      <div className="flex gap-2 items-center justify-between mb-2">
-                        <p className="mb-0 flex gap-2 leading-normal items-center">
-                          Industry
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            version="1.1"
-                            xmlnsXlink="http://www.w3.org/1999/xlink"
-                            width="16"
-                            height="16"
-                            x="0"
-                            y="0"
-                            viewBox="0 0 45.999 45.999"
-                            xmlSpace="preserve"
-                          >
-                            <g>
-                              <path
-                                d="M39.264 6.736c-8.982-8.981-23.545-8.982-32.528 0-8.982 8.982-8.981 23.545 0 32.528 8.982 8.98 23.545 8.981 32.528 0 8.981-8.983 8.98-23.545 0-32.528zM25.999 33a3 3 0 1 1-6 0V21a3 3 0 1 1 6 0v12zm-3.053-17.128c-1.728 0-2.88-1.224-2.844-2.735-.036-1.584 1.116-2.771 2.879-2.771 1.764 0 2.88 1.188 2.917 2.771-.001 1.511-1.152 2.735-2.952 2.735z"
-                                fill="#18CBB8"
-                                opacity="1"
-                                data-original="#18CBB8"
-                              ></path>
-                            </g>
-                          </svg>
-                        </p>
-                        <span className="bg-lightblue py-1 leading-tight px-3 text-xs rounded-md">
-                          Short sentence
-                        </span>
-                      </div>
-                      <label
-                        htmlFor="about"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
-                        What Industry is your comapny in?
-                      </label>
-                      <div className="mt-2">
-                        <textarea
-                          id="about"
-                          name="about"
-                          className="bg-white border border-lightblue text-gray-900 text-sm rounded-lg focus:ring-mediumblue focus:border-mediumblue block w-full p-2.5 min-h-62px"
-                        ></textarea>
-                      </div>
-                    </div>
-                    <div className="form-item mb-6">
-                      <div className="flex gap-2 items-center justify-between mb-2">
-                        <p className="mb-0 flex gap-2 leading-normal items-center">
-                          Industry
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            version="1.1"
-                            xmlnsXlink="http://www.w3.org/1999/xlink"
-                            width="16"
-                            height="16"
-                            x="0"
-                            y="0"
-                            viewBox="0 0 45.999 45.999"
-                            xmlSpace="preserve"
-                          >
-                            <g>
-                              <path
-                                d="M39.264 6.736c-8.982-8.981-23.545-8.982-32.528 0-8.982 8.982-8.981 23.545 0 32.528 8.982 8.98 23.545 8.981 32.528 0 8.981-8.983 8.98-23.545 0-32.528zM25.999 33a3 3 0 1 1-6 0V21a3 3 0 1 1 6 0v12zm-3.053-17.128c-1.728 0-2.88-1.224-2.844-2.735-.036-1.584 1.116-2.771 2.879-2.771 1.764 0 2.88 1.188 2.917 2.771-.001 1.511-1.152 2.735-2.952 2.735z"
-                                fill="#18CBB8"
-                                opacity="1"
-                                data-original="#18CBB8"
-                              ></path>
-                            </g>
-                          </svg>
-                        </p>
-                        <span className="bg-lightblue py-1 leading-tight px-3 text-xs rounded-md">
-                          Short sentence
-                        </span>
-                      </div>
-                      <label
-                        htmlFor="about"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                      >
-                        What Industry is your comapny in?
-                      </label>
-                      <div className="mt-2">
-                        <textarea
-                          id="about"
-                          name="about"
-                          className="bg-white border border-lightblue text-gray-900 text-sm rounded-lg focus:ring-mediumblue focus:border-mediumblue block w-full p-2.5 min-h-62px"
-                        ></textarea>
-                      </div>
-                    </div>
+                            {question.question}
+                          </label>
+                          <div className="mt-2">
+                            <textarea
+                              id={`question-${step - 1}-${index}`}
+                              name={`question-${step - 1}-${index}`}
+                              className="bg-white border border-lightblue text-gray-900 text-sm rounded-lg focus:ring-mediumblue focus:border-mediumblue block w-full p-2.5 min-h-62px"
+                              // Bind value to the state property for this question
+                              value={
+                                stepAnswers[step - 1]?.[`question-${index}`] ||
+                                ""
+                              }
+                              // Handle input changes to update state
+                              onChange={(e) =>
+                                handleInputChange(
+                                  step - 1,
+                                  `question-${index}`,
+                                  e
+                                )
+                              }
+                            />
+                          </div>
+                        </div>
+                      )
+                    )}
                     <div className="submit-form"></div>
                   </div>
                 </div>
@@ -2022,6 +666,7 @@ const DashBoard = () => {
                       className="ms-auto flex select-none items-center gap-3 bg-white py-2 px-0 text-center text-md text-black  active:shadow-none focus:outline-0"
                       type="button"
                       data-ripple-light="true"
+                      onClick={toggleActive}
                     >
                       Start
                       <svg

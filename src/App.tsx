@@ -24,7 +24,7 @@ const HomePage = lazy(() => import("./pages/Login/homePage"));
 // };
 
 const App = () => {
-  const isTrue = false;
+  const isTrue = true;
   // const token = localStorage.getItem("authToken");
   return (
     <Suspense
@@ -56,7 +56,7 @@ const App = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/loginhr" element={<LoginHr />} />
           <Route path="/forgetPassword" element={<ForgetPasswordPage />} />
-          <Route path="/home" element={<HomePage />} />
+          <Route path="/" element={<HomePage />} />
         </Routes>
         {isTrue && (
           <Layout>

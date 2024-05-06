@@ -9,50 +9,51 @@ import NightsStayIcon from "@mui/icons-material/NightsStay";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import VerifiedIcon from "@mui/icons-material/Verified";
 
+let sideBarItems = [
+  {
+    name: "Dashboard",
+    icon: <DashboardIcon />,
+    navigateTo: "/dashboard",
+  },
+  {
+    name: "My Reports",
+    icon: <AssessmentIcon />,
+    navigateTo: "/reports",
+  },
+  {
+    name: "AI Advisor",
+    icon: <FaceRetouchingNaturalIcon />,
+    navigateTo: "/advisor",
+  },
+  {
+    name: "Integrations",
+    icon: <TuneIcon />,
+    navigateTo: "/integrations",
+  },
+  {
+    name: "Users",
+    icon: <PeopleAltIcon />,
+    navigateTo: "/users",
+  },
+];
+
+let bottomSidebarItems = [
+  {
+    name: "My Account",
+    icon: <ManageAccountsIcon />,
+    navigateTo: "/account",
+  },
+  {
+    name: "Support",
+    icon: <HeadsetMicIcon />,
+    navigateTo: "/support",
+  },
+];
+
 const SideBar = () => {
-  let sideBarItems = [
-    {
-      name: "Dashboard",
-      icon: <DashboardIcon />,
-      navigateTo: "/dashboard",
-    },
-    {
-      name: "My Reports",
-      icon: <AssessmentIcon />,
-      navigateTo: "/reports",
-    },
-    {
-      name: "AI Advisor",
-      icon: <FaceRetouchingNaturalIcon />,
-      navigateTo: "/advisor",
-    },
-    {
-      name: "Integrations",
-      icon: <TuneIcon />,
-      navigateTo: "/integrations",
-    },
-    {
-      name: "Users",
-      icon: <PeopleAltIcon />,
-      navigateTo: "/users",
-    },
-  ];
-
-  let bottomSidebarItems = [
-    {
-      name: "My Account",
-      icon: <ManageAccountsIcon />,
-      navigateTo: "/account",
-    },
-    {
-      name: "Support",
-      icon: <HeadsetMicIcon />,
-      navigateTo: "/support",
-    },
-  ];
-
   return (
     <div>
+      {" "}
       <div className="bg-white relative h-full w-72 overflow-y-auto border-r border-[#E2E4E9] flex justify-between flex-col lft-nav">
         <div className="py-4 px-6">
           <div className="flex items-center gap-2 border-b pb-5">

@@ -39,10 +39,7 @@
   margin: 0 auto;
   padding: 0px 40px;
 }
-.active {
-  background-color: #375dfb;
-  color: #fff;
-}
+
 .form {
   height: calc(100vh - 155px);
 }
