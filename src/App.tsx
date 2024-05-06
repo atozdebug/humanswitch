@@ -1,44 +1,81 @@
-import { Suspense, lazy} from 'react'
-import './App.css'
-import { BrowserRouter, Routes, Route, Outlet, Navigate } from "react-router-dom";
-const ForgetPasswordPage = lazy(() => import('./pages/forgetPassword'));
-const SignupPages = lazy(() => import('./pages/signupPage'));
-const LoginPage = lazy(() => import('./pages/loginPage'));
-const RegisterPage = lazy(()=> import('./pages/registerPage'));
-const HomePage = lazy(()=> import('./pages/homePage'));
+import { Suspense, lazy } from "react";
+import "./App.css";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  // Outlet,
+  // Navigate,
+} from "react-router-dom";
+import LoginHr from "./pages/Login/hrLogin";
+import Settings from "./pages/DashBoard/settings";
+import Chatbot from "./pages/DashBoard/chatbot";
+import Layout from "./components/Layout/layout";
+import DashBoard from "./pages/DashBoard/dashboard";
+const ForgetPasswordPage = lazy(() => import("./pages/Login/forgetPassword"));
+const SignupPages = lazy(() => import("./pages/Login/hrSignupPage"));
+const LoginPage = lazy(() => import("./pages/Login/loginPage"));
+const RegisterPage = lazy(() => import("./pages/Login/registerPage"));
+const HomePage = lazy(() => import("./pages/Login/homePage"));
 
-const RouteGuard = ({children}:any) => {
-  const token = localStorage.getItem('authToken');
-  return token ? children : <Navigate to="/login" />
-}
-const App = () =>{
-  const token = localStorage.getItem('authToken');
+// const RouteGuard = ({ children }: any) => {
+//   const token = localStorage.getItem("authToken");
+//   return token ? children : <Navigate to="/login" />;
+// };
+
+const App = () => {
+  const isTrue = false;
+  // const token = localStorage.getItem("authToken");
   return (
-    <Suspense fallback={ <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>Loading...</div>}>
-    <BrowserRouter>
-     <Routes>
+    <Suspense
+      fallback={
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+          }}
+        >
+          Loading...
+        </div>
+      }
+    >
+      <BrowserRouter>
+        <Routes>
+          {/* <Route path="/*" element={<Navigate to="/" />} />
           <Route path="/" element={<Outlet />}>
-          { token ? (
-           <Route index element={<Navigate to="/home" />} />
-           ) : (
-           <Route index element={<Navigate to="/login" />} />
-           )}
-          </Route>
-           <Route path="/login" element={<LoginPage />} />
-           <Route path="/register" element={<RegisterPage />} />
-           <Route path="/forgetPassword" element={<ForgetPasswordPage />} />
-           <Route path="/signup" element={<SignupPages />} />
-           <Route path="/home" element={<RouteGuard><HomePage /></RouteGuard>} />
-           <Route path="/*" element={<Navigate to = "/" />} />
-      </Routes>
-    </BrowserRouter>
+            {token ? (
+              <Route index element={<Navigate to="/home" />} />
+            ) : (
+              <Route index element={<Navigate to="/login" />} />
+            )}
+          </Route> */}
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/signuphr" element={<SignupPages />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/loginhr" element={<LoginHr />} />
+          <Route path="/forgetPassword" element={<ForgetPasswordPage />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/dashboard" element={<DashBoard />} />
+        </Routes>
+        {isTrue && (
+          <Layout>
+            <Routes>
+              <Route path="/settings" element={<Settings />} />
+              <Route path="/chatbot" element={<Chatbot />} />
+            </Routes>
+          </Layout>
+        )}
+      </BrowserRouter>
     </Suspense>
-  )
-}
+  );
+};
 
-export default App
+export default App;
 
-  {/*
+{
+  /*
 import { Suspense, lazy, useMemo, useState } from "react";
 //import reactLogo from './assets/react.svg'
 
@@ -89,25 +126,28 @@ const App = () => {
       <CssBaseline />
       <BrowserRouter>
       <ToastContainerPopup />
-        {/* {token &&  */}
-        // <Header darkMode={darkMode} setDarkMode={setDarkMode}/>
-        // {/* } */}
-        // <Routes>
-        //   <Route path="/" element={<Outlet />}>
-        //   { token ? (
-        //   <Route index element={<Navigate to="/app/home" />} />
-        //   ) : (
-        //   <Route index element={<Navigate to="/app/auth/login" />} />
-        //   )}
-        //   </Route>
-        //   <Route path="/app/auth/login" element={<Login darkMode={darkMode} />} />
-        //   <Route path="/app/auth/register" element={<Register darkMode={darkMode} />} />
-        //   <Route caseSensitive  path="/app/home" element={<ProtectedRoute Component={HomeComponent} darkMode={darkMode} />} />
-        //   <Route caseSensitive  path="/app/result" element={<ProtectedRoute Component={ResultComponent} />} />
-        //   <Route path="/*" element={<Navigate to = "/" />} />
-        // </Routes>
-        // <ScrollToTopButton />
-        {/* {token && <Footer />} */}
+        {/* {token &&  */
+}
+// <Header darkMode={darkMode} setDarkMode={setDarkMode}/>
+// {/* } */}
+// <Routes>
+//   <Route path="/" element={<Outlet />}>
+//   { token ? (
+//   <Route index element={<Navigate to="/app/home" />} />
+//   ) : (
+//   <Route index element={<Navigate to="/app/auth/login" />} />
+//   )}
+//   </Route>
+//   <Route path="/app/auth/login" element={<Login darkMode={darkMode} />} />
+//   <Route path="/app/auth/register" element={<Register darkMode={darkMode} />} />
+//   <Route caseSensitive  path="/app/home" element={<ProtectedRoute Component={HomeComponent} darkMode={darkMode} />} />
+//   <Route caseSensitive  path="/app/result" element={<ProtectedRoute Component={ResultComponent} />} />
+//   <Route path="/*" element={<Navigate to = "/" />} />
+// </Routes>
+// <ScrollToTopButton />
+{
+  /* {token && <Footer />} */
+}
 //       </BrowserRouter>
 //       </ThemeProvider>
 //     </Suspense>
