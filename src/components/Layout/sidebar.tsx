@@ -8,6 +8,7 @@ import HeadsetMicIcon from "@mui/icons-material/HeadsetMic";
 import NightsStayIcon from "@mui/icons-material/NightsStay";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import VerifiedIcon from "@mui/icons-material/Verified";
+import { useLocation } from "react-router-dom";
 
 let sideBarItems = [
   {
@@ -23,7 +24,7 @@ let sideBarItems = [
   {
     name: "AI Advisor",
     icon: <FaceRetouchingNaturalIcon />,
-    navigateTo: "/advisor",
+    navigateTo: "/chatbot",
   },
   {
     name: "Integrations",
@@ -51,12 +52,12 @@ let bottomSidebarItems = [
 ];
 
 const SideBar = () => {
+  const location = useLocation();
   return (
     <div>
-      {" "}
       <div className="bg-white relative h-full w-72 overflow-y-auto border-r border-[#E2E4E9] flex justify-between flex-col lft-nav">
-        <div className="py-4 px-6">
-          <div className="flex items-center gap-2 border-b pb-5">
+        <div className="py-4">
+          <div className="flex items-center gap-2 border-b pb-5 px-6">
             <div>
               <img
                 src="/assets/images/Logo-favicon.png"
@@ -71,13 +72,35 @@ const SideBar = () => {
           </div>
 
           <div className="mt-6">
-            <div className="font-light">MAIN</div>
-            {sideBarItems.map((item) => (
-              <div className="top px-2 py-2 hover:bg-bg-clr hover:font-medium rounded-lg hover:bg-gray-200 flex items-center gap-2 my-2">
-                {item.icon}
-                {item.name}
-              </div>
-            ))}
+            <div className="font-light px-6">MAIN</div>
+            {sideBarItems.map((item) => {
+              const isActive = item.navigateTo === location.pathname;
+              return (
+                <div
+                  className={`top  hover:bg-bg-clr hover:font-medium rounded-lg  flex items-center gap-2 my-2 relative ${
+                    isActive
+                      ? " font-semibold px-6"
+                      : "py-2 mx-6 hover:bg-gray-200"
+                  }`}
+                >
+                  {isActive && (
+                    <div className="absolute top-2 -left-4">
+                      <div className=" bg-[#375DFB] rounded-md px-2">.</div>
+                    </div>
+                  )}
+                  <div
+                    className={`flex w-full items-center  rounded-lg ${
+                      isActive && "bg-gray-200 py-2"
+                    }`}
+                  >
+                    <div className={`px-2 ${isActive && "text-[#375DFB]"}`}>
+                      {item.icon}
+                    </div>
+                    <div>{item.name}</div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
         {/* ------------------------------------------------------------- */}
