@@ -2,7 +2,7 @@ import Header from "./header";
 import SideBar from "./sidebar";
 
 const Layout = ({ children }: any) => {
-  const isTrue = false;
+  const isTrue = true;
   return (
     <div className="bg-gray-100 text-black main-outerr">
       <div
