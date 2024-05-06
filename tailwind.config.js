@@ -30,6 +30,8 @@ export default {
         "gray-dark": "#525866",
          "span-clr": "#375DFB",
          "red-code" : "#DF1C41",
+         "bggreen": "#2B1664",
+         "bggreen-500": "#6E3FF3",
       },
       padding: {
         100: "100%",
@@ -59,6 +61,8 @@ export default {
         600: "600px",
         700: "700px",
         20: "20px",
+        123: "123px",
+
         
       },
       maxHeight: {
@@ -81,6 +85,8 @@ export default {
       minwidth: {
 
         '168px': '168px',
+        123: "123px", 
+
     },
     },
   },

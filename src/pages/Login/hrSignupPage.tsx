@@ -223,11 +223,11 @@ const SignupPage = () => {
   return (
     <>
       <div className="nav-header flex items-center content-center  justify-between">
-        <div className="logo-head">
+        <div className="logo-head min-w-[123px]">
           <h1>
             <span>
               {" "}
-              <img src="/assets/images/Logo.png" />
+              <img className="w-[123px]" src="/assets/images/Logo1.png" />
             </span>{" "}
           </h1>
         </div>

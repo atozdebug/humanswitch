@@ -11,8 +11,37 @@ const SignupOne = ({ handleSubmit, register, onSubmit, errors }: any) => {
         <p className="gray-dark text-center">
           Use your work email for a better experience
         </p>
-        <form onSubmit={handleSubmit(onSubmit)} className="">
+        <form onSubmit={handleSubmit(onSubmit)} className=" pt-6">
+          {/* -------------------------------------------------------------- */}
+          <div>
           <label
+            className="block text-heading text-sm font-medium mb-2"
+            htmlFor="Email"
+          >
+           Email<span className="text-span-clr">*</span>
+          </label>
+          <div className="relative">
+            <span className="absolute  inset-y-3 inset-x-3">
+              <img src="/assets/images/mail-line.png" />
+            </span>
+            <input
+              className={`lft-space shadow appearance-none border ${
+                errors.password ? "border-red-600" : "border-slate-300"
+              } rounded w-full py-2 pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
+              id="password"
+              type="password"
+              placeholder="hello@humanswitch.ai"
+              {...register("email")}
+            />
+            {errors.password && (
+              <p className="text-[#F04438] text-sm mt-2">
+                {errors.password.message}
+              </p>
+            )}
+          </div>
+        </div>
+          {/* ------------------------------------------------------------- */}
+          {/* <label
             className="block text-heading text-sm font-medium mb-2"
             htmlFor="email"
           >
@@ -31,8 +60,8 @@ const SignupOne = ({ handleSubmit, register, onSubmit, errors }: any) => {
             <p className="text-red-500 text-sm mt-2">
               {errors?.email?.message}
             </p>
-          )}
-          <label className="flex items-center space-x-2 mt-5">
+          )} */}
+          <label className="flex items-center space-x-2 mt-4">
             <input
               type="checkbox"
               className={`form-checkbox rounded text-heading font-medium text-sm border focus:ring focus:ring-blue-300  ${
@@ -65,11 +94,11 @@ const SignupOne = ({ handleSubmit, register, onSubmit, errors }: any) => {
           )}
           <button
             type="submit"
-            className="rounded w-full mt-5 bg-purple-800 hover:bg-dark-purple-700 py-2.5 px-4 text-white font-semibold"
+            className="rounded w-full mt-5 bg-bggreen hover:bg-bggreen-500 shadow-md  py-2.5 px-4 text-white font-semibold"
           >
             Continue with email
           </button>
-          <div className="flex items-center justify-between my-5">
+          <div className="flex items-center justify-between my-6">
             <hr className="border-gray w-40"></hr>
             <p>or</p>
             <hr className="border-gray w-40"></hr>
@@ -83,7 +112,7 @@ const SignupOne = ({ handleSubmit, register, onSubmit, errors }: any) => {
             Sign in with Google
           </button>
 
-          <div className="font-normal my-5 text-sm text-center">
+          <div className="font-normal my-6 text-sm text-center">
             <a href="" className="text-gray-500 text-center">
               Already have an account?{" "}
               <span className="text-gray-dark font-semibold">Login</span>
