@@ -26,19 +26,29 @@ export default {
         lightblue: "#EBEDFF",
         mediumgreen: "#18CBB8",
         success: "#5cb85c",
+        error: "#FDEDF0",
+        "gray-dark": "#525866",
+         "span-clr": "#375DFB",
+         "red-code" : "#DF1C41",
       },
       padding: {
         100: "100%",
         60: "60%",
         50: "50%",
         "11px": "11px",
+       
       },
+      
       backgroundImage: {
         gradient1: "linear-gradient(180deg, #6355F6, #18CBB8)",
         "g-success": "linear-gradient(180deg, #5cb85c, #3d743d)",
       },
       translate: {
         "n1/2": "-50%",
+      },
+      borderRadius: {
+        '20': '20px',
+      
       },
       maxWidth: {
         "250px": "250px",
@@ -48,6 +58,8 @@ export default {
         calc300px: "calc(100% - 300px)",
         600: "600px",
         700: "700px",
+        20: "20px",
+        
       },
       maxHeight: {
         "vw-calc300px": "calc(100vh - 300px)",
@@ -74,3 +86,7 @@ export default {
   },
   plugins: [require("flowbite/plugin")],
 };
+
+
+
+

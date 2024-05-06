@@ -39,10 +39,7 @@
   margin: 0 auto;
   padding: 0px 40px;
 }
-.active {
-  background-color: #375dfb;
-  color: #fff;
-}
+
 .form {
   height: calc(100vh - 155px);
 }
@@ -63,11 +60,15 @@
 .lft-space2 {
   padding-left: 70px !important;
 }
+.lft-space-summery  {
+  padding-left: 60px !important;
+}
 
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
+
 
 @media (prefers-color-scheme: light) {
   :root {
@@ -205,4 +206,12 @@ checkbox {
 
 .support a:hover {
   transform: scale(1.1);
+}
+.pd-bottom {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+.summey-top-space {
+  top: -17px !important;
 }

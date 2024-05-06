@@ -5,11 +5,11 @@ const Settings = () => {
         <div>
             <div className="bg-gray-100 min-h-screen " >
 
-    
+
 
                 <div className=" p-8 bg-[#F6F8FA]">
 
-                
+
                     <div className="">
                         <ul className="links flex gap-3 border-t border-b border-[#E2E4E9] my-3 py-4">
                             <li><a href="" className="text-sm font-medium flex items-center justify-center gap-1"> <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -187,109 +187,161 @@ const Settings = () => {
                                         </li>
                                     </ul>
                                     <div>
-                                    <button className="px-4 py-2.5 text-heading border border-[#E2E4E9] font-semibold rounded-lg  focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 min-w-[168px]">
-                                    Discard  </button>
+                                        <button className="px-4 py-2.5 text-heading border border-[#E2E4E9] font-semibold rounded-lg  focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 min-w-[168px]">
+                                            Discard  </button>
 
-                                    <button className="rounded  mt-5 bg-button-clr hover:bg-purple-700 py-2.5 px-4 text-white font-semibold min-w-[168px] ml-3"
-          >{" "}  Apply Changes</button>
+                                        <button className="rounded  mt-5 bg-span-clr hover:bg-purple-700 py-2.5 px-4 text-white font-semibold min-w-[168px] ml-3"
+                                        >{" "}  Apply Changes</button>
                                     </div>
                                 </form>
 
                                 <form
 
-        className="form-3 flex flex-col max-w-md m-auto my-5"
-      >
-        <h2 className="text-gray-dark text-2xl font-medium ">
-        2FA Security
-        </h2>
-        <p className="gray-dark ">
-        Enable two-factor authentication to your account.
-        </p>
-        <hr className="my-5"></hr>
-        <div
-          className={`flex items-center content-center  justify-between border p-4 rounded-xl`}
-        >
-          <div>
-            <h1 className="text-center flex justify-center">
-              <img src="/assets/images/camra.png" />
-            </h1>
-          </div>
-          <div>
-            <h2 className="font-medium text-sm text-start">SMS Code</h2>
-            <p className="font-normal text-xs text-start">
-            Receive a one-time verification code via SMS to enter during login.
-            </p>
-          </div>
-          <div>
-            <input
-              id="default-radio-1"
-              type="radio"
-              value="Admin"
-              name="default-radio"
-             
-              className="w-4 h-4 text-blue-600 bg-gray-100  dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:bg-gray-700"
-            />
-          </div>
-        </div>
+                                    className="form-3 flex flex-col max-w-md m-auto my-5"
+                                >
+                                    <h2 className="text-gray-dark text-2xl font-medium ">
+                                        2FA Security
+                                    </h2>
+                                    <p className="gray-dark ">
+                                        Enable two-factor authentication to your account.
+                                    </p>
+                                    <hr className="my-5"></hr>
+                                    <div
+                                        className={`flex items-center content-center  justify-between border p-4 rounded-xl`}
+                                    >
+                                        <div>
+                                            <h1 className="text-center flex justify-center">
+                                                <img src="/assets/images/camra.png" />
+                                            </h1>
+                                        </div>
+                                        <div>
+                                            <h2 className="font-medium text-sm text-start">SMS Code</h2>
+                                            <p className="font-normal text-xs text-start">
+                                                Receive a one-time verification code via SMS to enter during login.
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <input
+                                                id="default-radio-1"
+                                                type="radio"
+                                                value="Admin"
+                                                name="default-radio"
 
-        <div
-          className={`flex items-center content-center  justify-between border  p-4 rounded-xl mt-5`}
-        >
-          <div>
-            <h1 className="text-center flex justify-center">
-              <img src="/assets/images/user.png" />
-            </h1>
-          </div>
-          <div>
-            <h2 className="font-medium text-sm text-start">Email Code</h2>
-            <p className="font-normal text-xs text-start">
-            Get a temporary verification code sent to your email for added security.
-            </p>
-          </div>
-          <div>
-            <input
-              id="default-radio-2"
-              type="radio"
-              value="Employee"
-              name="default-radio"
-             
-              className="w-4 h-4 text-blue-600 bg-gray-100   dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:bg-gray-700"
-            />
-          </div>
-        </div>
-        <div
-          className={`flex items-center content-center  justify-between border  p-4 rounded-xl mt-5`}
-        >
-          <div>
-            <h1 className="text-center flex justify-center">
-              <img src="/assets/images/user.png" />
-            </h1>
-          </div>
-          <div>
-            <h2 className="font-medium text-sm text-start">Authenticator App</h2>
-            <p className="font-normal text-xs text-start">
-            Use an authenticator app to generate time-based verification codes for login.
-            </p>
-          </div>
-          <div>
-            <input
-              id="default-radio-2"
-              type="radio"
-              value="Employee"
-              name="default-radio"
-             
-              className="w-4 h-4 text-blue-600 bg-gray-100   dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:bg-gray-700"
-            />
-          </div>
-        </div>
-        <button
-          className="rounded w-full mt-5 bg-button-clr hover:bg-purple-700 py-2.5 px-4 text-white font-semibold"
-          type="submit"
-        >
-          {" "}
-          Enable 2FA Security{" "}
-        </button>
-      </form>
+                                                className="w-4 h-4 text-blue-600 bg-gray-100  dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:bg-gray-700"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        className={`flex items-center content-center  justify-between border  p-4 rounded-xl mt-5`}
+                                    >
+                                        <div>
+                                            <h1 className="text-center flex justify-center">
+                                                <img src="/assets/images/user.png" />
+                                            </h1>
+                                        </div>
+                                        <div>
+                                            <h2 className="font-medium text-sm text-start">Email Code</h2>
+                                            <p className="font-normal text-xs text-start">
+                                                Get a temporary verification code sent to your email for added security.
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <input
+                                                id="default-radio-2"
+                                                type="radio"
+                                                value="Employee"
+                                                name="default-radio"
+
+                                                className="w-4 h-4 text-blue-600 bg-gray-100   dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:bg-gray-700"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        className={`flex items-center content-center  justify-between border  p-4 rounded-xl mt-5`}
+                                    >
+                                        <div>
+                                            <h1 className="text-center flex justify-center">
+                                                <img src="/assets/images/user.png" />
+                                            </h1>
+                                        </div>
+                                        <div>
+                                            <h2 className="font-medium text-sm text-start">Authenticator App</h2>
+                                            <p className="font-normal text-xs text-start">
+                                                Use an authenticator app to generate time-based verification codes for login.
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <input
+                                                id="default-radio-2"
+                                                type="radio"
+                                                value="Employee"
+                                                name="default-radio"
+
+                                                className="w-4 h-4 text-blue-600 bg-gray-100   dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:bg-gray-700"
+                                            />
+                                        </div>
+                                    </div>
+                                    <button
+                                        className="rounded w-full mt-5 bg-button-clr hover:bg-purple-700 py-2.5 px-4 text-white font-semibold"
+                                        type="submit"
+                                    >
+                                        {" "}
+                                        Enable 2FA Security{" "}
+                                    </button>
+                                </form>
+                                <form className="flex flex-col max-w-md m-auto my-5">
+                                    <h2 className="text-gray-dark text-2xl font-medium ">
+                                        Delete Account
+                                    </h2>
+                                    <p className="gray-dark ">
+                                        Manage the process of deleting account.
+                                    </p>
+                                    <hr className="my-5"></hr>
+
+                                    <div className="error rounded-lg">
+                                        <p className="bg-error p-3 flex items-center text-xs font-normal gap-3 "><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M8 14C4.6862 14 2 11.3138 2 8C2 4.6862 4.6862 2 8 2C11.3138 2 14 4.6862 14 8C14 11.3138 11.3138 14 8 14ZM7.4 9.8V11H8.6V9.8H7.4ZM7.4 5V8.6H8.6V5H7.4Z" fill="#DF1C41" />
+                                        </svg> This action cannot be undone.</p>
+                                    </div>
+                                    <p className="text-sm text-gray-dark mt-5">All of your data, including your profile, posts, and personal information, will be permanently removed.</p>
+
+                                    <p className="text-sm text-gray-dark mt-5"> By entering your password, you confirm that you understand and accept the consequences of deleting your account.</p>
+
+                                    <div className="my-5">
+                                        <label
+                                            className="block text-heading text-sm font-medium mb-2"
+                                            htmlFor="password" >
+                                          
+
+                                        </label>
+                                        <div className="relative ">
+                                            <span className="absolute h-2 w-4 inset-y-3 inset-x-3">
+                                                <img src="/assets/images/lock-2-line.png" />
+                                            </span>
+                                            <input
+                                                className={`lft-space shadow appearance-none border  rounded w-full py-2 pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
+                                                id="password"
+                                                type="password"
+                                                placeholder=".........."
+
+                                            />
+                                            <span className="absolute h-2 w-4 inset-y-3 right-2">
+                                                <img src="/assets/images/eye-line.png" />
+                                            </span>
+
+                                        </div>
+
+                                        <div className=""> 
+                                            <button className="px-4 py-2.5 text-heading border border-[#E2E4E9] font-semibold rounded-lg  focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 min-w-[168px]">
+                                                Cancel </button>
+
+                                            <button className="rounded  mt-5 bg-red-code hover:bg-purple-700 py-2.5 px-4 text-white font-semibold min-w-[168px] ml-3"
+                                            >{" "}  Delete Account</button>
+                                        </div>
+                                    </div>
+
+                                </form>
                             </div>
 
 
