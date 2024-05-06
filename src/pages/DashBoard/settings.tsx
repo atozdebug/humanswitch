@@ -80,7 +80,7 @@ const Settings = () => {
                 <div>
                   {menueList.map((item) => (
                     <button
-                      className="flex justify-between gap-8 p-2 mb-2 hover:bg-gray-200 rounded-lg"
+                      className="flex w-[280px] justify-between gap-8 p-2 mb-2 hover:bg-gray-200 rounded-lg"
                       onClick={() => setSelected(item.name)}
                     >
                       <div className="flex gap-2">
