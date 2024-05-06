@@ -8,28 +8,28 @@ const SignupTwo = ({ handleSubmit, register, onSubmit, errors }: any) => {
         <h1 className="text-center flex justify-center">
           <img src="/assets/images/Custom-icon.png" />
         </h1>
-        <h2 className="text-gray-dark text-2xl font-medium text-center">
+        <h2 className="text-main-heading text-2xl font-medium text-center">
           Personal Information
         </h2>
         <p className="gray-dark text-center">
           Provide essential information to proceed.
         </p>
         <hr className="my-5"></hr>
-        <div className="flex items-center content-center  justify-between mb-5 ">
+        <div className="flex items-center content-center gap-10 mb-5 ">
           <div
             className={`${
               errors?.profilePicture ? "border rounded-full border-red-500" : ""
             }`}
           >
             <h1>
-              <img src="/assets/images/Custom-icon.png" />
+              <img src="/assets/images/Avatar1.png" />
             </h1>
           </div>
           <div>
             <h3 className="text-heading font-medium text-start">
               Upload Image:
             </h3>
-            <p className="text-gray-dark font-normal text-start my-2">
+            <p className="text-gray-dark font-normal text-start mt-1">
               Min 400x400px, PNG or JPEG
             </p>
             <input
@@ -54,7 +54,7 @@ const SignupTwo = ({ handleSubmit, register, onSubmit, errors }: any) => {
           First Name*
         </label>
         <input
-          className={`shadow appearance-none border  rounded w-full py-2 px-3 text-input-text leading-tight focus:outline-none focus:shadow-outline ${
+          className={`shadow appearance-none border  rounded-[10px] w-full py-2 px-3 text-input-text leading-tight focus:outline-none focus:shadow-outline ${
             errors.firstName ? "border-[#F04438]" : "border-slate-300"
           }`}
           id="firstName"
@@ -75,7 +75,7 @@ const SignupTwo = ({ handleSubmit, register, onSubmit, errors }: any) => {
             Last Name*
           </label>
           <input
-            className={`shadow appearance-none border  rounded w-full py-2 px-3 text-input-text leading-tight focus:outline-none focus:shadow-outline ${
+            className={`shadow appearance-none border  rounded-[10px] w-full py-2 px-3 text-input-text leading-tight focus:outline-none focus:shadow-outline ${
               errors.lastName ? "border-[#F04438]" : "border-slate-300"
             }`}
             id="lastName"
@@ -97,7 +97,7 @@ const SignupTwo = ({ handleSubmit, register, onSubmit, errors }: any) => {
             Phone Number*
           </label>
           <input
-            className={`shadow appearance-none border  rounded w-full py-2 px-3 text-input-text leading-tight focus:outline-none focus:shadow-outline ${
+            className={`shadow appearance-none border  rounded-[10px] w-full py-2 px-3 text-input-text leading-tight focus:outline-none focus:shadow-outline ${
               errors.phoneNumber ? "border-red-500" : "border-slate-300"
             }`}
             id="phoneNumber"
@@ -113,7 +113,7 @@ const SignupTwo = ({ handleSubmit, register, onSubmit, errors }: any) => {
         </div>
 
         <button
-          className="rounded w-full mt-5 bg-purple-500 hover:bg-purple-700 py-2.5 px-4 text-white font-semibold"
+          className="rounded w-full mt-5 bg-bggreen-500 rounded-[10px] hover:bg-purple-700 py-2.5 px-4 text-white font-semibold "
           type="submit"
         >
           Continue

@@ -5,14 +5,14 @@ const SignupFour = ({ handleSubmit, register, onSubmit, errors }: any) => {
         onSubmit={handleSubmit(onSubmit)}
         className="form-4 flex flex-col max-w-md m-auto justify-center"
       >
-        <h1 className="text-center flex justify-center">
-          <img src="/assets/images/Custom-icon.png" />
+        <h1 className="text-center text-main-heading flex justify-center">
+          <img src="/assets/images/key-icon.png" />
         </h1>
         <h2 className="text-gray-dark text-2xl font-medium text-center">
-          Personal Information
+        Business Information
         </h2>
         <p className="gray-dark text-center">
-          Provide essential information to proceed.
+        Enter general details about your business
         </p>
         <hr className="my-5"></hr>
 
@@ -30,7 +30,7 @@ const SignupFour = ({ handleSubmit, register, onSubmit, errors }: any) => {
           <select
             id="companyName"
             {...register("companyName")}
-            className={`bg-gray-50 border text-gray-text text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
+            className={` border text-gray-text text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
               errors?.companyName ? "border-red-600" : "border-[#E2E4E9]"
             }`}
           >
@@ -60,7 +60,7 @@ const SignupFour = ({ handleSubmit, register, onSubmit, errors }: any) => {
           <select
             id="industry"
             {...register("industry")}
-            className={`bg-gray-50 border text-gray-text text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
+            className={` border text-gray-text text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
               errors?.industry ? "border-red-600" : "border-[#E2E4E9]"
             }`}
           >
@@ -90,7 +90,7 @@ const SignupFour = ({ handleSubmit, register, onSubmit, errors }: any) => {
           <select
             id="sector"
             {...register("sector")}
-            className={`bg-gray-50 border text-gray-text text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
+            className={` border text-gray-text text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
               errors?.sector ? "border-red-600" : "border-[#E2E4E9]"
             }`}
           >
@@ -120,7 +120,7 @@ const SignupFour = ({ handleSubmit, register, onSubmit, errors }: any) => {
           <select
             id="totalEmployees"
             {...register("totalEmployees")}
-            className={`bg-gray-50 border text-gray-text text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
+            className={` border text-gray-text text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
               errors?.totalEmployees ? "border-red-600" : "border-[#E2E4E9]"
             }`}
           >
@@ -150,7 +150,7 @@ const SignupFour = ({ handleSubmit, register, onSubmit, errors }: any) => {
           <select
             id="location"
             {...register("location")}
-            className={`bg-gray-50 border text-gray-text text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
+            className={` border text-gray-text text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
               errors?.location ? "border-red-600" : "border-[#E2E4E9]"
             }`}
           >
@@ -167,7 +167,7 @@ const SignupFour = ({ handleSubmit, register, onSubmit, errors }: any) => {
         </div>
 
         <button
-          className="rounded w-full mt-5 bg-purple-500 hover:bg-purple-700 py-2.5 px-4 text-white font-semibold"
+          className="rounded-[10px] w-full mt-5 bg-bggreen-500 hover:bg-purple-700 py-2.5 px-4 text-white font-semibold"
           type="submit"
         >
           Continue
@@ -175,7 +175,7 @@ const SignupFour = ({ handleSubmit, register, onSubmit, errors }: any) => {
         <div className="font-normal my-5 text-sm text-center">
           <a href="" className="text-gray-500 text-center">
             Want to fill in later?{" "}
-            <span className="text-gray-dark font-semibold">Skip this step</span>
+            <span className="text-gray-dark font-semibold border-b border-slate-700">Skip this step</span>
           </a>
         </div>
       </form>

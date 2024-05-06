@@ -30,6 +30,10 @@ export default {
         "gray-dark": "#525866",
          "span-clr": "#375DFB",
          "red-code" : "#DF1C41",
+         "bggreen": "#2B1664",
+         "bggreen-500": "#6E3FF3",
+         "main-heading": " #0A0D14",
+        
       },
       padding: {
         100: "100%",
@@ -48,6 +52,8 @@ export default {
       },
       borderRadius: {
         '20': '20px',
+        '10': '10px',
+
       
       },
       maxWidth: {
@@ -59,6 +65,9 @@ export default {
         600: "600px",
         700: "700px",
         20: "20px",
+        123: "123px",
+        13: "13px",
+
         
       },
       maxHeight: {
@@ -70,6 +79,7 @@ export default {
       },
       minHeight: {
         "62px": "62px",
+        13: "13px",
       },
       width: {
         60: "60%",
@@ -81,6 +91,8 @@ export default {
       minwidth: {
 
         '168px': '168px',
+        123: "123px", 
+
     },
     },
   },
