@@ -8,6 +8,7 @@ import DoneIcon from "@mui/icons-material/Done";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import SignupSixth from "../../components/HrSignup/signupSixth";
 
 const header = [
   {
@@ -211,7 +212,7 @@ const SignupPage = () => {
   const onSubmit: any = (data: FormData) => {
     console.log("Form data:", data);
     try {
-      if (step < 5) {
+      if (step < 6) {
         setStep((prev) => prev + 1);
       }
     } catch (error) {
@@ -315,12 +316,19 @@ const SignupPage = () => {
           register={register}
           errors={errors}
         />
-      ) : (
+      ) : step === 5 ? (
         <SignupFive
           handleSubmit={handleSubmit}
           onSubmit={onSubmit}
           register={register}
           errors={errors}
+        />
+      ) : (
+        <SignupSixth
+        // handleSubmit={handleSubmit}
+        // onSubmit={onSubmit}
+        // register={register}
+        // errors={errors}
         />
       )}
       <div className="footer flex items-center content-center justify-between">
