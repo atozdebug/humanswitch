@@ -78,29 +78,20 @@ const Settings = () => {
               >
                 <div className="font-semibold px-2 mb-2">Select Menu</div>
                 <div>
-                  {menueList.map((item) => {
-                    const isActive = selected === item.name;
-                    return (
-                      <button
-                        className={`flex w-[280px] items-center justify-between gap-8 p-2 mb-2 hover:bg-gray-200 rounded-lg ${
-                          isActive ? "bg-gray-100" : ""
-                        }`}
-                        onClick={() => setSelected(item.name)}
-                      >
-                        <div className="flex items-center gap-2">
-                          <div className={`${isActive && "text-[#375DFB]"}`}>
-                            {item.icon}
-                          </div>
-                          <div className={`${isActive && "font-semibold"}`}>
-                            {item.name}
-                          </div>
-                        </div>
-                        <div>
-                          <KeyboardArrowRightIcon className="border rounded-full" />
-                        </div>
-                      </button>
-                    );
-                  })}
+                  {menueList.map((item) => (
+                    <button
+                      className="flex w-[280px] justify-between gap-8 p-2 mb-2 hover:bg-gray-200 rounded-lg"
+                      onClick={() => setSelected(item.name)}
+                    >
+                      <div className="flex gap-2">
+                        {item.icon}
+                        {item.name}
+                      </div>
+                      <div>
+                        <KeyboardArrowRightIcon />
+                      </div>
+                    </button>
+                  ))}
                 </div>
               </Card>
             </div>

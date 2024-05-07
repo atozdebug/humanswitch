@@ -4,7 +4,7 @@ const Chatbot = () => {
       <div className="p-8 bg-[#F6F8FA]">
         <div className="main-sec">
           <div className="bg-image">
-            <div className="absolute content-img">
+            <div className="absolute bottom-0 text-center content-img">
               <h2 className="font-semibold text-[32px]">
                 HumanSwitch AI Advisor
               </h2>
@@ -18,7 +18,7 @@ const Chatbot = () => {
           <div className="grid grid-cols-3">
             <div>
               <div className="text-center">
-                <img className="m-auto my-1" src="/assets/images/Chats-r.png" />
+                <img className="m-auto my-1 max-w-8 max-h-8" src="/assets/images/Chats-r.png" />
                 <h2 className="font-semibold text-2xl">Examples</h2>
                 <p className="bg-white p-4 mx-3 rounded-lg mt-6 text-sm font-normal">
                   "Explain quantum computing insimple terms"
@@ -41,7 +41,7 @@ const Chatbot = () => {
               <div>
                 <div className="text-center">
                   <img
-                    className="m-auto my-1 "
+                    className="m-auto my-1 max-w-8 max-h-8 "
                     src="/assets/images/Star-s.png"
                   />
                   <h2 className="font-semibold text-2xl">Capabilities</h2>
@@ -66,7 +66,7 @@ const Chatbot = () => {
               <div>
                 <div className="text-center">
                   <img
-                    className="m-auto my-1"
+                    className="m-auto my-1 max-w-8 max-h-8"
                     src="/assets/images/ShieldWarning-r.png"
                   />
                   <h2 className="font-semibold text-2xl">Limitations</h2>
