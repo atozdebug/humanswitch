@@ -9,17 +9,17 @@ const SignupFour = ({ handleSubmit, register, onSubmit, errors }: any) => {
           <img src="/assets/images/key-icon.png" />
         </h1>
         <h2 className="text-gray-dark text-2xl font-medium text-center">
-        Business Information
+          Business Information
         </h2>
         <p className="gray-dark text-center">
-        Enter general details about your business
+          Enter general details about your business
         </p>
         <hr className="my-5"></hr>
 
         <div className="my-5">
           <label
             className="text-heading text-sm font-medium mb-2 flex items-center"
-            htmlFor="companyName"
+            htmlFor="company_name"
           >
             Company Name<span className="text-span-clr">*</span>
             <img
@@ -28,10 +28,10 @@ const SignupFour = ({ handleSubmit, register, onSubmit, errors }: any) => {
             />
           </label>
           <select
-            id="companyName"
-            {...register("companyName")}
+            id="company_name"
+            {...register("company_name")}
             className={` border text-gray-text text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
-              errors?.companyName ? "border-red-600" : "border-[#E2E4E9]"
+              errors?.company_name ? "border-red-600" : "border-[#E2E4E9]"
             }`}
           >
             <option value="US">United States</option>
@@ -39,9 +39,9 @@ const SignupFour = ({ handleSubmit, register, onSubmit, errors }: any) => {
             <option value="FR">France</option>
             <option value="DE">Germany</option>
           </select>
-          {errors?.companyName && (
+          {errors?.company_name && (
             <p className="text-red-500 text-sm mt-2">
-              {errors?.companyName?.message}
+              {errors?.company_name?.message}
             </p>
           )}
         </div>
@@ -109,7 +109,7 @@ const SignupFour = ({ handleSubmit, register, onSubmit, errors }: any) => {
         <div className="">
           <label
             className=" text-heading text-sm font-medium mb-2 flex items-center"
-            htmlFor="totalEmployees"
+            htmlFor="employees_count"
           >
             Select No. of Employees
             <img
@@ -118,10 +118,10 @@ const SignupFour = ({ handleSubmit, register, onSubmit, errors }: any) => {
             />
           </label>
           <select
-            id="totalEmployees"
-            {...register("totalEmployees")}
+            id="employees_count"
+            {...register("employees_count")}
             className={` border text-gray-text text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
-              errors?.totalEmployees ? "border-red-600" : "border-[#E2E4E9]"
+              errors?.employees_count ? "border-red-600" : "border-[#E2E4E9]"
             }`}
           >
             <option value="US">United States</option>
@@ -129,9 +129,9 @@ const SignupFour = ({ handleSubmit, register, onSubmit, errors }: any) => {
             <option value="FR">France</option>
             <option value="DE">Germany</option>
           </select>
-          {errors?.totalEmployees && (
+          {errors?.employees_count && (
             <p className="text-red-500 text-sm mt-2">
-              {errors?.totalEmployees?.message}
+              {errors?.employees_count?.message}
             </p>
           )}
         </div>
@@ -175,7 +175,9 @@ const SignupFour = ({ handleSubmit, register, onSubmit, errors }: any) => {
         <div className="font-normal my-5 text-sm text-center">
           <a href="" className="text-gray-500 text-center">
             Want to fill in later?{" "}
-            <span className="text-gray-dark font-semibold border-b border-slate-700">Skip this step</span>
+            <span className="text-gray-dark font-semibold border-b border-slate-700">
+              Skip this step
+            </span>
           </a>
         </div>
       </form>
