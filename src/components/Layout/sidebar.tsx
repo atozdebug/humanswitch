@@ -9,6 +9,7 @@ import NightsStayIcon from "@mui/icons-material/NightsStay";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { useLocation } from "react-router-dom";
+import SettingsIcon from "@mui/icons-material/Settings";
 
 let sideBarItems = [
   {
@@ -36,6 +37,11 @@ let sideBarItems = [
     icon: <PeopleAltIcon />,
     navigateTo: "/users",
   },
+  {
+    name: "Settings",
+    icon: <SettingsIcon />,
+    navigateTo: "/settings/profile",
+  },
 ];
 
 let bottomSidebarItems = [
@@ -53,6 +59,10 @@ let bottomSidebarItems = [
 
 const SideBar = () => {
   const location = useLocation();
+  const getBasePath = (pathname: any) => {
+    const parts = pathname.split("/");
+    return `/${parts[1]}`;
+  };
   return (
     <div>
       <div className="bg-white relative h-full w-72 overflow-y-auto border-r border-[#E2E4E9] flex justify-between flex-col lft-nav">
@@ -66,17 +76,21 @@ const SideBar = () => {
               />
             </div>
             <div className="flex flex-col justify-center">
-              <text className="text-lg font-semibold">HumanSwitch.ai</text>
-              <text className="text-sm">HR Management</text>
+              <div className="text-lg font-semibold">HumanSwitch.ai</div>
+              <div className="text-sm">HR Management</div>
             </div>
           </div>
 
           <div className="mt-6">
             <div className="font-light px-6">MAIN</div>
-            {sideBarItems.map((item) => {
-              const isActive = item.navigateTo === location.pathname;
+            {sideBarItems.map((item, index) => {
+              const basePath = getBasePath(location.pathname);
+              const basePathMain = getBasePath(item.navigateTo);
+
+              const isActive = basePathMain === basePath;
               return (
                 <a
+                  key={index}
                   href={`${item.navigateTo}`}
                   className={`top  hover:bg-bg-clr hover:font-medium rounded-lg  flex items-center gap-2 my-2 relative ${
                     isActive
@@ -106,8 +120,11 @@ const SideBar = () => {
         </div>
         {/* ------------------------------------------------------------- */}
         <div className="bottom py-4 px-6">
-          {bottomSidebarItems.map((item) => (
-            <div className="top px-2 py-2 hover:bg-bg-clr hover:font-medium rounded-lg hover:bg-gray-200 flex items-center gap-2 my-2">
+          {bottomSidebarItems.map((item, index) => (
+            <div
+              key={index}
+              className="top px-2 py-2 hover:bg-bg-clr hover:font-medium rounded-lg hover:bg-gray-200 flex items-center gap-2 my-2"
+            >
               {item.icon}
               {item.name}
             </div>

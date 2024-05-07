@@ -4,11 +4,18 @@ import RestorePageIcon from "@mui/icons-material/RestorePage";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import SecurityIcon from "@mui/icons-material/Security";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { Card } from "@mui/material";
+import { Tab, Tabs } from "@mui/material";
 import { useState } from "react";
-import LockIcon from "@mui/icons-material/Lock";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+// import LockIcon from "@mui/icons-material/Lock";
+// import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+// import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import { useNavigate, useParams } from "react-router-dom";
+import ChangePassword from "../../components/Settings/changePassword";
+import PrivacySecurity from "../../components/Settings/privacySecurity";
+import DeleteAccount from "../../components/Settings/deleteAccount";
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const tabs = [
   {
@@ -37,40 +44,163 @@ const tabs = [
   },
 ];
 
-const menueList = [
-  {
-    name: "Change Password",
-    icon: <LockIcon />,
-  },
-  {
-    name: "2FA Security",
-    icon: <SecurityIcon />,
-  },
-  {
-    name: "Delete Account",
-    icon: <DeleteOutlineIcon />,
-  },
-];
+// const menueList = [
+//   {
+//     name: "Change Password",
+//     icon: <LockIcon />,
+//   },
+//   {
+//     name: "2FA Security",
+//     icon: <SecurityIcon />,
+//   },
+//   {
+//     name: "Delete Account",
+//     icon: <DeleteOutlineIcon />,
+//   },
+// ];
+
+const schemaSecond = yup.object().shape({
+  currentPassword: yup
+    .string()
+    .required("Current Password is required")
+    .min(8, "Password must be atleast 8 characters long"),
+  password: yup
+    .string()
+    .required("Password is required")
+    .matches(
+      /^(?=.*[a-z])/,
+      "Password must contain at least one lowercase letter"
+    )
+    .matches(
+      /^(?=.*[A-Z])/,
+      "Password must contain at least one uppercase letter"
+    )
+    .matches(/^(?=.*[0-9])/, "Password must contain at least one number")
+    .matches(
+      /^(?=.*[\W_])/,
+      "Password must contain at least one special character"
+    )
+    .min(8, "Password must be atleast 8 characters long"),
+  confirmPassword: yup
+    .string()
+    .required("Confirm Password is required")
+    .test(
+      "password-match",
+      "Confirm password must match password",
+      function (value) {
+        // Get the password value from the parent form object
+        const { password } = this.parent;
+
+        // Check if confirmPassword matches password
+        return value === password;
+      }
+    ),
+});
+
+const schemaFifth = yup.object().shape({
+  method: yup.string().required("Please select a way to enable 2FA"),
+});
+
+const schemaSixth = yup.object().shape({
+  passwordDelete: yup
+    .string()
+    .required("Current Password is required")
+    .min(8, "Password must be atleast 8 characters long"),
+});
+
+interface FormData {
+  currentPassword: string;
+  password: string;
+  confirmPassword: string;
+  method: string;
+  passwordDelete: string;
+}
+const defaultValues = {
+  currentPassword: "",
+  password: "",
+  confirmPassword: "",
+  method: "",
+  passwordDelete: "",
+};
 
 const Settings = () => {
-  const [selected, setSelected] = useState("Change Password");
+  // const [selected, setSelected] = useState("Change Password");
+  const { tab }: any = useParams();
+  const navigate: any = useNavigate();
+  const tabIndexMap: any = {
+    profile: 0,
+    "change-password": 1,
+    "invoice-history": 2,
+    "notification-settings": 3,
+    "privacy-security": 4,
+    "delete-account": 5,
+  };
+
+  const initialSelectedTab =
+    tabIndexMap[tab] !== undefined ? tabIndexMap[tab] : 0;
+
+  const [selectedTab, setSelectedTab] = useState(initialSelectedTab);
+
+  // Handle tab change
+  const handleChange = (_event: any, newValue: any) => {
+    setSelectedTab(newValue);
+    const tabName = Object.keys(tabIndexMap).find(
+      (key: any) => tabIndexMap[key] === newValue
+    );
+    if (tabName) {
+      navigate(`/settings/${tabName}`);
+    }
+  };
+
+  const schemas = () => {
+    if (selectedTab === 0) {
+    } else if (selectedTab === 1) {
+      return yupResolver(schemaSecond);
+    } else if (selectedTab === 2) {
+    } else if (selectedTab === 3) {
+    } else if (selectedTab === 4) {
+      return yupResolver(schemaFifth);
+    } else if (selectedTab === 5) {
+      return yupResolver(schemaSixth);
+    }
+  };
+
+  const {
+    register,
+    handleSubmit,
+    // reset,
+    formState: { errors },
+  } = useForm<FormData | any>({
+    resolver: schemas(),
+    defaultValues,
+  });
+
+  const onSubmit: any = (data: FormData) => {
+    console.log("Form data:", data);
+    try {
+    } catch (error) {
+      console.error("Submission error:", error);
+    }
+  };
+
   return (
     <div>
       <div className="bg-gray-100 min-h-screen">
-        <div className=" p-8 bg-[#F6F8FA]">
-          <div className="flex gap-6 border-t border-b border-[#E2E4E9] my-3 py-4">
-            {tabs.map((tab) => (
-              <div className="flex justify-center items-center gap-2">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  {tab.icon}
-                </svg>
-                <div>{tab.name}</div>
-              </div>
+        <div className=" bg-[#F6F8FA]">
+          <Tabs value={selectedTab} onChange={handleChange}>
+            {tabs.map((tab, index) => (
+              <Tab
+                sx={{ paddingY: 0 }}
+                key={index}
+                label={tab.name}
+                icon={tab.icon}
+                iconPosition="start"
+              />
             ))}
-          </div>
+          </Tabs>
 
           <div className="flex">
-            <div>
+            {/* <div>
               <Card
                 variant="outlined"
                 className="p-2 mr-8 flex flex-col justify-between"
@@ -94,324 +224,30 @@ const Settings = () => {
                   ))}
                 </div>
               </Card>
-            </div>
-            {selected === "Change Password" && (
-              <form className="form-2 flex flex-col max-w-md">
-                <h2 className="text-gray-dark text-2xl font-medium ">
-                  Password Setup
-                </h2>
-                <p className="gray-dark">
-                  Set up a secure password to protect your account.
-                </p>
-                <hr className="my-5"></hr>
-                <div>
-                  <label
-                    className="block text-heading text-sm font-medium mb-2"
-                    htmlFor="password"
-                  >
-                    Current Password<span className="text-span-clr">*</span>
-                  </label>
-                  <div className="relative">
-                    <span className="absolute h-2 w-4 inset-y-3 inset-x-3">
-                      <img src="/assets/images/lock-2-line.png" />
-                    </span>
-                    <input
-                      className={`lft-space shadow appearance-none border  rounded w-full py-2 pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
-                      id="password"
-                      type="password"
-                      placeholder=".........."
-                    />
-                    <span className="absolute h-2 w-4 inset-y-3 right-2">
-                      <img src="/assets/images/eye-line.png" />
-                    </span>
-                  </div>
-                </div>
-
-                <div>
-                  <label
-                    className="block text-heading text-sm font-medium mb-2"
-                    htmlFor="password"
-                  >
-                    New Password<span className="text-span-clr">*</span>
-                  </label>
-                  <div className="relative">
-                    <span className="absolute h-2 w-4 inset-y-3 inset-x-3">
-                      <img src="/assets/images/lock-2-line.png" />
-                    </span>
-                    <input
-                      className={`lft-space shadow appearance-none border  rounded w-full py-2 pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
-                      id="password"
-                      type="password"
-                      placeholder=".........."
-                    />
-                    <span className="absolute h-2 w-4 inset-y-3 right-2">
-                      <img src="/assets/images/eye-line.png" />
-                    </span>
-                  </div>
-                </div>
-
-                <div className="my-5">
-                  <label
-                    className="block text-heading text-sm font-medium mb-2"
-                    htmlFor="confirmPassword"
-                  >
-                    Confirm New Password
-                    <span className="text-span-clr">*</span>
-                  </label>
-                  <div className="relative">
-                    <span className="absolute h-2 w-4 inset-y-3 inset-x-3">
-                      <img src="/assets/images/lock-2-line.png" />
-                    </span>
-                    <input
-                      className={`lft-space shadow appearance-none border rounded w-full py-2   pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
-                      id="confirmPassword"
-                      type="password"
-                      placeholder=".........."
-                    />
-                    <span className="absolute h-2 w-4 inset-y-3 right-2">
-                      <img src="/assets/images/eye-line.png" />
-                    </span>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between mb-5">
-                  <hr className="border-4 border-[#DF1C41] w-40 "></hr>
-                  <hr className="border-4 border-gray w-40 mx-5"></hr>
-                  <hr className="border-4 border-gray w-40"></hr>
-                </div>
-                <p className="text-sm font-normal text-content">
-                  Weak password. Must contain at least;
-                </p>
-
-                <ul className="p-0 text-xs ">
-                  <li className="my-2 flex items-center font-normal text-xs">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      className="max-w-3 max-h-3 mr-1"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                      />
-                    </svg>
-                    At least 1 uppercase
-                  </li>
-                  <li className="mb-2 flex items-center font-normal text-xs">
-                    {" "}
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      className="max-w-3 max-h-3 mr-1"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                      />
-                    </svg>
-                    At least 1 number
-                  </li>
-                  <li className="mb-2 flex items-center font-normal text-xs">
-                    {" "}
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      className="max-w-3 max-h-3 mr-1"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                      />
-                    </svg>
-                    At least 8 characters
-                  </li>
-                </ul>
-                <div>
-                  <button className="px-4 py-2.5 text-heading border border-[#E2E4E9] font-semibold rounded-lg  focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 min-w-[168px]">
-                    Discard{" "}
-                  </button>
-
-                  <button className="rounded  mt-5 bg-button-clr hover:bg-purple-700 py-2.5 px-4 text-white font-semibold min-w-[168px] ml-3">
-                    Apply Changes
-                  </button>
-                </div>
-              </form>
+            </div> */}
+            {tab === "change-password" && (
+              <ChangePassword
+                handleSubmit={handleSubmit}
+                onSubmit={onSubmit}
+                register={register}
+                errors={errors}
+              />
             )}
-            {selected === "2FA Security" && (
-              <form className="form-3 flex flex-col max-w-md">
-                <h2 className="text-gray-dark text-2xl font-medium ">
-                  2FA Security
-                </h2>
-                <p className="gray-dark ">
-                  Enable two-factor authentication to your account.
-                </p>
-                <hr className="my-5"></hr>
-                <div
-                  className={`flex items-center content-center  justify-between border p-4 rounded-xl`}
-                >
-                  <div>
-                    <h1 className="text-center flex justify-center">
-                      <img src="/assets/images/camra.png" />
-                    </h1>
-                  </div>
-                  <div>
-                    <h2 className="font-medium text-sm text-start">SMS Code</h2>
-                    <p className="font-normal text-xs text-start">
-                      Receive a one-time verification code via SMS to enter
-                      during login.
-                    </p>
-                  </div>
-                  <div>
-                    <input
-                      id="default-radio-1"
-                      type="radio"
-                      value="Admin"
-                      name="default-radio"
-                      className="w-4 h-4 text-blue-600 bg-gray-100  dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:bg-gray-700"
-                    />
-                  </div>
-                </div>
-
-                <div
-                  className={`flex items-center content-center  justify-between border  p-4 rounded-xl mt-5`}
-                >
-                  <div>
-                    <h1 className="text-center flex justify-center">
-                      <img src="/assets/images/user.png" />
-                    </h1>
-                  </div>
-                  <div>
-                    <h2 className="font-medium text-sm text-start">
-                      Email Code
-                    </h2>
-                    <p className="font-normal text-xs text-start">
-                      Get a temporary verification code sent to your email for
-                      added security.
-                    </p>
-                  </div>
-                  <div>
-                    <input
-                      id="default-radio-2"
-                      type="radio"
-                      value="Employee"
-                      name="default-radio"
-                      className="w-4 h-4 text-blue-600 bg-gray-100   dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:bg-gray-700"
-                    />
-                  </div>
-                </div>
-                <div
-                  className={`flex items-center content-center  justify-between border  p-4 rounded-xl mt-5`}
-                >
-                  <div>
-                    <h1 className="text-center flex justify-center">
-                      <img src="/assets/images/user.png" />
-                    </h1>
-                  </div>
-                  <div>
-                    <h2 className="font-medium text-sm text-start">
-                      Authenticator App
-                    </h2>
-                    <p className="font-normal text-xs text-start">
-                      Use an authenticator app to generate time-based
-                      verification codes for login.
-                    </p>
-                  </div>
-                  <div>
-                    <input
-                      id="default-radio-2"
-                      type="radio"
-                      value="Employee"
-                      name="default-radio"
-                      className="w-4 h-4 text-blue-600 bg-gray-100   dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:bg-gray-700"
-                    />
-                  </div>
-                </div>
-                <button
-                  className="rounded w-full mt-5 bg-button-clr bg-purple-600  hover:bg-purple-700 py-2.5 px-4 text-white font-semibold"
-                  type="submit"
-                >
-                  Enable 2FA Security{" "}
-                </button>
-              </form>
+            {tab === "privacy-security" && (
+              <PrivacySecurity
+                handleSubmit={handleSubmit}
+                onSubmit={onSubmit}
+                register={register}
+                errors={errors}
+              />
             )}
-            {selected === "Delete Account" && (
-              <form className="flex flex-col max-w-md m-auto my-5">
-                <h2 className="text-gray-dark text-2xl font-medium ">
-                  Delete Account
-                </h2>
-                <p className="gray-dark ">
-                  Manage the process of deleting account.
-                </p>
-                <hr className="my-5"></hr>
-
-                <div className="error rounded-lg">
-                  <p className="bg-error p-3 flex items-center text-xs font-normal gap-3 ">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 16 16"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M8 14C4.6862 14 2 11.3138 2 8C2 4.6862 4.6862 2 8 2C11.3138 2 14 4.6862 14 8C14 11.3138 11.3138 14 8 14ZM7.4 9.8V11H8.6V9.8H7.4ZM7.4 5V8.6H8.6V5H7.4Z"
-                        fill="#DF1C41"
-                      />
-                    </svg>{" "}
-                    This action cannot be undone.
-                  </p>
-                </div>
-                <p className="text-sm text-gray-dark mt-5">
-                  All of your data, including your profile, posts, and personal
-                  information, will be permanently removed.
-                </p>
-
-                <p className="text-sm text-gray-dark mt-5">
-                  {" "}
-                  By entering your password, you confirm that you understand and
-                  accept the consequences of deleting your account.
-                </p>
-
-                <div className="my-5">
-                  <label
-                    className="block text-heading text-sm font-medium mb-2"
-                    htmlFor="password"
-                  ></label>
-                  <div className="relative ">
-                    <span className="absolute h-2 w-4 inset-y-3 inset-x-3">
-                      <img src="/assets/images/lock-2-line.png" />
-                    </span>
-                    <input
-                      className={`lft-space shadow appearance-none border  rounded w-full py-2 pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
-                      id="password"
-                      type="password"
-                      placeholder=".........."
-                    />
-                    <span className="absolute h-2 w-4 inset-y-3 right-2">
-                      <img src="/assets/images/eye-line.png" />
-                    </span>
-                  </div>
-
-                  <div className="">
-                    <button className="px-4 py-2.5 text-heading border border-[#E2E4E9] font-semibold rounded-lg  focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 min-w-[168px]">
-                      Cancel{" "}
-                    </button>
-
-                    <button className="rounded  mt-5 bg-red-code hover:bg-purple-700 py-2.5 px-4 text-white font-semibold min-w-[168px] ml-3">
-                      {" "}
-                      Delete Account
-                    </button>
-                  </div>
-                </div>
-              </form>
+            {tab === "delete-account" && (
+              <DeleteAccount
+                handleSubmit={handleSubmit}
+                onSubmit={onSubmit}
+                register={register}
+                errors={errors}
+              />
             )}
           </div>
         </div>
