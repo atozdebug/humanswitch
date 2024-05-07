@@ -1,6 +1,9 @@
-const ChangePassword = () => {
+const ChangePassword = ({ handleSubmit, register, onSubmit, errors }: any) => {
   return (
-    <form className="flex flex-col justify-center max-w-md m-auto mt-20">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col justify-center max-w-md m-auto mt-20"
+    >
       <h2 className="text-gray-dark text-2xl font-medium ">Password Setup</h2>
       <p className="gray-dark">
         Set up a secure password to protect your account.
@@ -9,7 +12,7 @@ const ChangePassword = () => {
       <div>
         <label
           className="block text-heading text-sm font-medium mb-2"
-          htmlFor="password"
+          htmlFor="currentPassword"
         >
           Current Password<span className="text-span-clr">*</span>
         </label>
@@ -18,14 +21,22 @@ const ChangePassword = () => {
             <img src="/assets/images/lock-2-line.png" />
           </span>
           <input
-            className={`lft-space shadow appearance-none border  rounded w-full py-2 pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
-            id="password"
+            className={`lft-space shadow appearance-none border ${
+              errors.currentPassword ? "border-red-600" : "border-slate-300"
+            } rounded w-full py-2 pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
+            id="currentPassword"
             type="password"
             placeholder=".........."
+            {...register("currentPassword")}
           />
           <span className="absolute h-2 w-4 inset-y-3 right-2">
             <img src="/assets/images/eye-line.png" />
           </span>
+          {errors.currentPassword && (
+            <p className="text-[#F04438] text-sm mt-2">
+              {errors.currentPassword.message}
+            </p>
+          )}
         </div>
       </div>
 
@@ -41,14 +52,22 @@ const ChangePassword = () => {
             <img src="/assets/images/lock-2-line.png" />
           </span>
           <input
-            className={`lft-space shadow appearance-none border  rounded w-full py-2 pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
+            className={`lft-space shadow appearance-none border ${
+              errors.password ? "border-red-600" : "border-slate-300"
+            } rounded w-full py-2 pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
             id="password"
             type="password"
             placeholder=".........."
+            {...register("password")}
           />
           <span className="absolute h-2 w-4 inset-y-3 right-2">
             <img src="/assets/images/eye-line.png" />
           </span>
+          {errors.password && (
+            <p className="text-[#F04438] text-sm mt-2">
+              {errors.password.message}
+            </p>
+          )}
         </div>
       </div>
 
@@ -65,14 +84,22 @@ const ChangePassword = () => {
             <img src="/assets/images/lock-2-line.png" />
           </span>
           <input
-            className={`lft-space shadow appearance-none border rounded w-full py-2   pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
+            className={`lft-space shadow appearance-none border ${
+              errors.confirmPassword ? "border-red-600" : "border-slate-300"
+            } rounded w-full py-2   pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
             id="confirmPassword"
             type="password"
+            {...register("confirmPassword")}
             placeholder=".........."
           />
           <span className="absolute h-2 w-4 inset-y-3 right-2">
             <img src="/assets/images/eye-line.png" />
           </span>
+          {errors.confirmPassword && (
+            <p className="text-[#F04438] text-sm mt-2">
+              {errors.confirmPassword.message}
+            </p>
+          )}
         </div>
       </div>
       <div className="flex items-center justify-between mb-5">
@@ -137,11 +164,17 @@ const ChangePassword = () => {
         </li>
       </ul>
       <div>
-        <button className="px-4 py-2.5 text-heading border border-[#E2E4E9] font-semibold rounded-lg  focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 min-w-[168px]">
-          Discard{" "}
-        </button>
+        {/* <button
+        
+          className="px-4 py-2.5 text-heading border border-[#E2E4E9] font-semibold rounded-lg  focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 min-w-[168px]"
+        >
+          Discard
+        </button> */}
 
-        <button className="rounded  mt-5 bg-purple-600 hover:bg-purple-700 py-2.5 px-4 text-white font-semibold min-w-[168px] ml-3">
+        <button
+          type="submit"
+          className="rounded mt-5 bg-purple-600 hover:bg-purple-700 py-2.5 px-4 text-white font-semibold min-w-[168px] ml-3"
+        >
           Apply Changes
         </button>
       </div>

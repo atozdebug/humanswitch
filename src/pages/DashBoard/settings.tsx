@@ -13,6 +13,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import ChangePassword from "../../components/Settings/changePassword";
 import PrivacySecurity from "../../components/Settings/privacySecurity";
 import DeleteAccount from "../../components/Settings/deleteAccount";
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const tabs = [
   {
@@ -56,6 +59,70 @@ const tabs = [
 //   },
 // ];
 
+const schemaSecond = yup.object().shape({
+  currentPassword: yup
+    .string()
+    .required("Current Password is required")
+    .min(8, "Password must be atleast 8 characters long"),
+  password: yup
+    .string()
+    .required("Password is required")
+    .matches(
+      /^(?=.*[a-z])/,
+      "Password must contain at least one lowercase letter"
+    )
+    .matches(
+      /^(?=.*[A-Z])/,
+      "Password must contain at least one uppercase letter"
+    )
+    .matches(/^(?=.*[0-9])/, "Password must contain at least one number")
+    .matches(
+      /^(?=.*[\W_])/,
+      "Password must contain at least one special character"
+    )
+    .min(8, "Password must be atleast 8 characters long"),
+  confirmPassword: yup
+    .string()
+    .required("Confirm Password is required")
+    .test(
+      "password-match",
+      "Confirm password must match password",
+      function (value) {
+        // Get the password value from the parent form object
+        const { password } = this.parent;
+
+        // Check if confirmPassword matches password
+        return value === password;
+      }
+    ),
+});
+
+const schemaFifth = yup.object().shape({
+  method: yup.string().required("Please select a way to enable 2FA"),
+});
+
+const schemaSixth = yup.object().shape({
+  passwordDelete: yup
+    .string()
+    .required("Current Password is required")
+    .min(8, "Password must be atleast 8 characters long"),
+});
+
+interface FormData {
+  currentPassword: string;
+  password: string;
+  confirmPassword: string;
+  method: string;
+  passwordDelete: string;
+}
+const defaultValues = {
+  currentPassword: "",
+  password: "",
+  confirmPassword: "",
+  method: "",
+  passwordDelete: "",
+};
+
 const Settings = () => {
   // const [selected, setSelected] = useState("Change Password");
   const { tab }: any = useParams();
@@ -82,6 +149,37 @@ const Settings = () => {
     );
     if (tabName) {
       navigate(`/settings/${tabName}`);
+    }
+  };
+
+  const schemas = () => {
+    if (selectedTab === 0) {
+    } else if (selectedTab === 1) {
+      return yupResolver(schemaSecond);
+    } else if (selectedTab === 2) {
+    } else if (selectedTab === 3) {
+    } else if (selectedTab === 4) {
+      return yupResolver(schemaFifth);
+    } else if (selectedTab === 5) {
+      return yupResolver(schemaSixth);
+    }
+  };
+
+  const {
+    register,
+    handleSubmit,
+    // reset,
+    formState: { errors },
+  } = useForm<FormData | any>({
+    resolver: schemas(),
+    defaultValues,
+  });
+
+  const onSubmit: any = (data: FormData) => {
+    console.log("Form data:", data);
+    try {
+    } catch (error) {
+      console.error("Submission error:", error);
     }
   };
 
@@ -136,9 +234,30 @@ const Settings = () => {
                 </div>
               </Card>
             </div> */}
-            {tab === "change-password" && <ChangePassword />}
-            {tab === "privacy-security" && <PrivacySecurity />}
-            {tab === "delete-account" && <DeleteAccount />}
+            {tab === "change-password" && (
+              <ChangePassword
+                handleSubmit={handleSubmit}
+                onSubmit={onSubmit}
+                register={register}
+                errors={errors}
+              />
+            )}
+            {tab === "privacy-security" && (
+              <PrivacySecurity
+                handleSubmit={handleSubmit}
+                onSubmit={onSubmit}
+                register={register}
+                errors={errors}
+              />
+            )}
+            {tab === "delete-account" && (
+              <DeleteAccount
+                handleSubmit={handleSubmit}
+                onSubmit={onSubmit}
+                register={register}
+                errors={errors}
+              />
+            )}
           </div>
         </div>
       </div>

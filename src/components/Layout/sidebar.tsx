@@ -76,20 +76,21 @@ const SideBar = () => {
               />
             </div>
             <div className="flex flex-col justify-center">
-              <text className="text-lg font-semibold">HumanSwitch.ai</text>
-              <text className="text-sm">HR Management</text>
+              <div className="text-lg font-semibold">HumanSwitch.ai</div>
+              <div className="text-sm">HR Management</div>
             </div>
           </div>
 
           <div className="mt-6">
             <div className="font-light px-6">MAIN</div>
-            {sideBarItems.map((item) => {
+            {sideBarItems.map((item, index) => {
               const basePath = getBasePath(location.pathname);
               const basePathMain = getBasePath(item.navigateTo);
 
               const isActive = basePathMain === basePath;
               return (
                 <a
+                  key={index}
                   href={`${item.navigateTo}`}
                   className={`top  hover:bg-bg-clr hover:font-medium rounded-lg  flex items-center gap-2 my-2 relative ${
                     isActive
@@ -119,8 +120,11 @@ const SideBar = () => {
         </div>
         {/* ------------------------------------------------------------- */}
         <div className="bottom py-4 px-6">
-          {bottomSidebarItems.map((item) => (
-            <div className="top px-2 py-2 hover:bg-bg-clr hover:font-medium rounded-lg hover:bg-gray-200 flex items-center gap-2 my-2">
+          {bottomSidebarItems.map((item, index) => (
+            <div
+              key={index}
+              className="top px-2 py-2 hover:bg-bg-clr hover:font-medium rounded-lg hover:bg-gray-200 flex items-center gap-2 my-2"
+            >
               {item.icon}
               {item.name}
             </div>
