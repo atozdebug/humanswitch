@@ -9,6 +9,7 @@ import NightsStayIcon from "@mui/icons-material/NightsStay";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { useLocation } from "react-router-dom";
+import SettingsIcon from "@mui/icons-material/Settings";
 
 let sideBarItems = [
   {
@@ -36,6 +37,11 @@ let sideBarItems = [
     icon: <PeopleAltIcon />,
     navigateTo: "/users",
   },
+  {
+    name: "Settings",
+    icon: <SettingsIcon />,
+    navigateTo: "/settings/profile",
+  },
 ];
 
 let bottomSidebarItems = [
@@ -53,6 +59,10 @@ let bottomSidebarItems = [
 
 const SideBar = () => {
   const location = useLocation();
+  const getBasePath = (pathname: any) => {
+    const parts = pathname.split("/");
+    return `/${parts[1]}`;
+  };
   return (
     <div>
       <div className="bg-white relative h-full w-72 overflow-y-auto border-r border-[#E2E4E9] flex justify-between flex-col lft-nav">
@@ -74,7 +84,10 @@ const SideBar = () => {
           <div className="mt-6">
             <div className="font-light px-6">MAIN</div>
             {sideBarItems.map((item) => {
-              const isActive = item.navigateTo === location.pathname;
+              const basePath = getBasePath(location.pathname);
+              const basePathMain = getBasePath(item.navigateTo);
+
+              const isActive = basePathMain === basePath;
               return (
                 <a
                   href={`${item.navigateTo}`}

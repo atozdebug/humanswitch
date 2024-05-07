@@ -11,7 +11,11 @@ import LoginHr from "./pages/Login/hrLogin";
 import Settings from "./pages/DashBoard/settings";
 import Chatbot from "./pages/DashBoard/chatbot";
 import Layout from "./components/Layout/layout";
-import DashBoard from "./pages/DashBoard/dashboard";
+import DashBoard from "./pages/Login/pillars";
+import Dashboard from "./pages/DashBoard/dashboard";
+import MyReports from "./pages/DashBoard/myReports";
+import Integration from "./pages/DashBoard/integration";
+import Users from "./pages/DashBoard/users";
 const ForgetPasswordPage = lazy(() => import("./pages/Login/forgetPassword"));
 const SignupPages = lazy(() => import("./pages/Login/hrSignupPage"));
 const LoginPage = lazy(() => import("./pages/Login/loginPage"));
@@ -57,13 +61,17 @@ const App = () => {
           <Route path="/loginhr" element={<LoginHr />} />
           <Route path="/forgetPassword" element={<ForgetPasswordPage />} />
           <Route path="/" element={<HomePage />} />
-          <Route path="/dashboard" element={<DashBoard />} />
+          <Route path="/pillars" element={<DashBoard />} />
         </Routes>
         {isTrue && (
           <Layout>
             <Routes>
-              <Route path="/settings" element={<Settings />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/reports" element={<MyReports />} />
               <Route path="/chatbot" element={<Chatbot />} />
+              <Route path="/integrations" element={<Integration />} />
+              <Route path="/users" element={<Users />} />
+              <Route path="/settings/:tab" element={<Settings />} />
             </Routes>
           </Layout>
         )}
