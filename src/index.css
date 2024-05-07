@@ -99,9 +99,9 @@ hr {
   min-height: 20px;
   display: flex;
 }
-input {
+/* input {
   padding: 10px 12px !important;
-}
+} */
 .space-top {
   top: 3px;
   box-shadow: 0px 2px 2px 0px #1b1c1d1f;

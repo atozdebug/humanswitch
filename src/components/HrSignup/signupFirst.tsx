@@ -27,7 +27,7 @@ const SignupOne = ({ handleSubmit, register, onSubmit, errors }: any) => {
             <input
               className={`lft-space shadow appearance-none border  ${
                 errors.email ? "border-red-600" : "border-slate-300"
-              } rounded-[10px] w-full py-2 pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
+              } rounded-[10px] w-full py-2.5 pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
               id="email"
               type="email"
               placeholder="hello@humanswitch.ai"
@@ -94,7 +94,7 @@ const SignupOne = ({ handleSubmit, register, onSubmit, errors }: any) => {
           )}
           <button
             type="submit"
-            className="rounded-[10px] w-full mt-5 bg-bggreen hover:bg-bggreen-500 shadow-md  py-2.5 px-4 text-white font-semibold"
+            className="rounded-[10px] w-full mt-5 bg-bggreen hover:bg-bggreen-500 shadow-md  py-2.5 px-2.5 text-white font-semibold"
           >
             Continue with email
           </button>
@@ -103,7 +103,7 @@ const SignupOne = ({ handleSubmit, register, onSubmit, errors }: any) => {
             <p>or</p>
             <hr className="border-gray w-40"></hr>
           </div>
-          <button className="rounded-[10px] w-full font-semibold text-base border bg-transparent border-slate-300 outline-none py-2.5 px-4 text-black flex justify-center gap-5  drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400">
+          <button className="rounded-[10px] w-full font-semibold text-base border bg-transparent border-slate-300 outline-none py-2.5 px-2.5 text-black flex justify-center gap-5  drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400">
             {" "}
             <span className="img-size">
               {" "}

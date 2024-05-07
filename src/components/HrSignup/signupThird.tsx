@@ -74,7 +74,7 @@ const SignupThree = ({ handleSubmit, register, onSubmit, errors }: any) => {
           <p className="text-red-500 text-sm mt-2">{errors?.role?.message}</p>
         )}
         <button
-          className="rounded w-full mt-5 bg-purple-500 hover:bg-purple-700 py-2.5 px-4 text-white font-semibold"
+          className="rounded w-full mt-5 bg-purple-500 hover:bg-purple-700 py-2.5 px-2.5 text-white font-semibold"
           type="submit"
         >
           {" "}

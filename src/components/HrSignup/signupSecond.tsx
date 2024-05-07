@@ -54,7 +54,7 @@ const SignupTwo = ({ handleSubmit, register, onSubmit, errors }: any) => {
           First Name*
         </label>
         <input
-          className={`shadow appearance-none border  rounded-[10px] w-full py-2 px-3 text-input-text leading-tight focus:outline-none focus:shadow-outline ${
+          className={`shadow appearance-none border  rounded-[10px] w-full py-2.5 px-2.5 text-input-text leading-tight focus:outline-none focus:shadow-outline ${
             errors.firstName ? "border-[#F04438]" : "border-slate-300"
           }`}
           id="firstName"
@@ -75,7 +75,7 @@ const SignupTwo = ({ handleSubmit, register, onSubmit, errors }: any) => {
             Last Name*
           </label>
           <input
-            className={`shadow appearance-none border  rounded-[10px] w-full py-2 px-3 text-input-text leading-tight focus:outline-none focus:shadow-outline ${
+            className={`shadow appearance-none border  rounded-[10px] w-full py-2.5 px-2.5 text-input-text leading-tight focus:outline-none focus:shadow-outline ${
               errors.lastName ? "border-[#F04438]" : "border-slate-300"
             }`}
             id="lastName"
@@ -97,7 +97,7 @@ const SignupTwo = ({ handleSubmit, register, onSubmit, errors }: any) => {
             Phone Number*
           </label>
           <input
-            className={`shadow appearance-none border  rounded-[10px] w-full py-2 px-3 text-input-text leading-tight focus:outline-none focus:shadow-outline ${
+            className={`shadow appearance-none border  rounded-[10px] w-full py-2.5 px-2.5 text-input-text leading-tight focus:outline-none focus:shadow-outline ${
               errors.phoneNumber ? "border-red-500" : "border-slate-300"
             }`}
             id="phoneNumber"
@@ -113,7 +113,7 @@ const SignupTwo = ({ handleSubmit, register, onSubmit, errors }: any) => {
         </div>
 
         <button
-          className="rounded w-full mt-5 bg-bggreen-500 rounded-[10px] hover:bg-purple-700 py-2.5 px-4 text-white font-semibold "
+          className="rounded w-full mt-5 bg-bggreen-500 rounded-[10px] hover:bg-purple-700 py-2.5 px-2.5 text-white font-semibold "
           type="submit"
         >
           Continue

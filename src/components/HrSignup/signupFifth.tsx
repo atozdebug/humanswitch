@@ -29,7 +29,7 @@ const SignupFive = ({ handleSubmit, register, onSubmit, errors }: any) => {
             <input
               className={`lft-space shadow appearance-none border ${
                 errors.password ? "border-red-600" : "border-slate-300"
-              } rounded w-full py-2 pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
+              } rounded w-full py-2.5 px-2.5text-input-text leading-tight focus:outline-none focus:shadow-outline`}
               id="password"
               type="password"
               placeholder=".........."
@@ -60,7 +60,7 @@ const SignupFive = ({ handleSubmit, register, onSubmit, errors }: any) => {
             <input
               className={`lft-space shadow appearance-none border ${
                 errors.confirmPassword ? "border-red-600" : "border-slate-300"
-              } rounded w-full py-2   pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
+              } rounded w-full py-2.5 px-2.5text-input-text leading-tight focus:outline-none focus:shadow-outline`}
               id="confirmPassword"
               type="password"
               {...register("confirmPassword")}
@@ -139,7 +139,7 @@ const SignupFive = ({ handleSubmit, register, onSubmit, errors }: any) => {
         </ul>
 
         <button
-          className="rounded w-full mt-5 bg-purple-500 hover:bg-purple-700 py-2.5 px-4 text-white font-semibold"
+          className="rounded w-full mt-5 bg-purple-500 hover:bg-purple-700 py-2.5 px-2.5 text-white font-semibold"
           type="submit"
         >
           {" "}

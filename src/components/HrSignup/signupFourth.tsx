@@ -167,7 +167,7 @@ const SignupFour = ({ handleSubmit, register, onSubmit, errors }: any) => {
         </div>
 
         <button
-          className="rounded-[10px] w-full mt-5 bg-bggreen-500 hover:bg-purple-700 py-2.5 px-4 text-white font-semibold"
+          className="rounded-[10px] w-full mt-5 bg-bggreen-500 hover:bg-purple-700 py-2.5 px-2.5 text-white font-semibold"
           type="submit"
         >
           Continue
