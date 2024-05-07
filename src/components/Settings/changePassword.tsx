@@ -1,4 +1,10 @@
+import { useState } from "react";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+
 const ChangePassword = ({ handleSubmit, register, onSubmit, errors }: any) => {
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -25,12 +31,19 @@ const ChangePassword = ({ handleSubmit, register, onSubmit, errors }: any) => {
               errors.currentPassword ? "border-red-600" : "border-slate-300"
             } rounded w-full py-2 pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
             id="currentPassword"
-            type="password"
+            type={showCurrentPassword ? "text" : "password"}
             placeholder=".........."
             {...register("currentPassword")}
           />
-          <span className="absolute h-2 w-4 inset-y-3 right-2">
-            <img src="/assets/images/eye-line.png" />
+          <span
+            className="absolute h-4 w-4 inset-y-3 right-2"
+            onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+          >
+            {showCurrentPassword ? (
+              <VisibilityOffIcon className="pb-3 pr-2" />
+            ) : (
+              <img src="/assets/images/eye-line.png" />
+            )}
           </span>
           {errors.currentPassword && (
             <p className="text-[#F04438] text-sm mt-2">
@@ -56,12 +69,19 @@ const ChangePassword = ({ handleSubmit, register, onSubmit, errors }: any) => {
               errors.password ? "border-red-600" : "border-slate-300"
             } rounded w-full py-2 pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
             id="password"
-            type="password"
+            type={showNewPassword ? "text" : "password"}
             placeholder=".........."
             {...register("password")}
           />
-          <span className="absolute h-2 w-4 inset-y-3 right-2">
-            <img src="/assets/images/eye-line.png" />
+          <span
+            className="absolute h-2 w-4 inset-y-3 right-2"
+            onClick={() => setShowNewPassword(!showNewPassword)}
+          >
+            {showNewPassword ? (
+              <VisibilityOffIcon className="pb-3 pr-2" />
+            ) : (
+              <img src="/assets/images/eye-line.png" />
+            )}
           </span>
           {errors.password && (
             <p className="text-[#F04438] text-sm mt-2">
@@ -88,12 +108,19 @@ const ChangePassword = ({ handleSubmit, register, onSubmit, errors }: any) => {
               errors.confirmPassword ? "border-red-600" : "border-slate-300"
             } rounded w-full py-2   pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
             id="confirmPassword"
-            type="password"
+            type={showConfirmPassword ? "text" : "password"}
             {...register("confirmPassword")}
             placeholder=".........."
           />
-          <span className="absolute h-2 w-4 inset-y-3 right-2">
-            <img src="/assets/images/eye-line.png" />
+          <span
+            className="absolute h-2 w-4 inset-y-3 right-2"
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+          >
+            {showConfirmPassword ? (
+              <VisibilityOffIcon className="pb-3 pr-2" />
+            ) : (
+              <img src="/assets/images/eye-line.png" />
+            )}
           </span>
           {errors.confirmPassword && (
             <p className="text-[#F04438] text-sm mt-2">

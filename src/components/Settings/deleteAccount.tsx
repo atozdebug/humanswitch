@@ -1,4 +1,9 @@
+import { useState } from "react";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+
 const DeleteAccount = ({ handleSubmit, register, onSubmit, errors }: any) => {
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -50,12 +55,19 @@ const DeleteAccount = ({ handleSubmit, register, onSubmit, errors }: any) => {
               errors.passwordDelete ? "border-red-600" : "border-slate-300"
             } rounded w-full py-2 pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
             id="passwordDelete"
-            type="password"
+            type={showCurrentPassword ? "text" : "password"}
             placeholder=".........."
             {...register("passwordDelete")}
           />
-          <span className="absolute h-2 w-4 inset-y-3 right-2">
-            <img src="/assets/images/eye-line.png" />
+          <span
+            className="absolute h-2 w-4 inset-y-3 right-2"
+            onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+          >
+            {showCurrentPassword ? (
+              <VisibilityOffIcon className="pb-3 pr-2" />
+            ) : (
+              <img src="/assets/images/eye-line.png" />
+            )}
           </span>
           {errors.passwordDelete && (
             <p className="text-[#F04438] text-sm mt-2">
