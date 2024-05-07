@@ -95,7 +95,7 @@ const Chatbot = () => {
             <div className="absolute top-0  ">
               <img
                 className="max-w-10 max-h-10 border-r border-[#E2E4E9] mt-1"
-                src="/assets/images/actions-bar.png"
+                src="/assets/images/button-01.png"
               />{" "}
             </div>
             <input

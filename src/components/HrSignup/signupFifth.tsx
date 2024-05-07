@@ -5,9 +5,9 @@ const SignupFive = ({ handleSubmit, register, onSubmit, errors }: any) => {
         onSubmit={handleSubmit(onSubmit)}
         className="form-2 flex flex-col max-w-md m-auto justify-center"
       >
-        <h1 className="text-center flex justify-center">
+        <div className="flex w-full justify-center h-40">
           <img src="/assets/images/Custom-lock.png" />
-        </h1>
+        </div>
         <h2 className="text-gray-dark text-2xl font-medium text-center">
           Password Setup
         </h2>
