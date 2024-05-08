@@ -11,6 +11,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import SignupSixth from "../../components/HrSignup/signupSixth";
 import { useDispatch } from "react-redux";
 import { userSignUp } from "../../services/slices/auth/signUp";
+import { useNavigate } from "react-router-dom";
 
 const header = [
   {
@@ -183,6 +184,7 @@ const defaultValues = {
 };
 
 const SignupPage = () => {
+  const navigate: any = useNavigate();
   const dispatch: any = useDispatch();
   const [step, setStep] = useState<number>(1);
   const [formData, setFormData] = useState<any>(defaultValues);
@@ -221,9 +223,20 @@ const SignupPage = () => {
         console.log("Hit");
         const formData: any = new FormData();
         formData.append("image", data.image);
-        formData.append("data", data);
-
-        dispatch(userSignUp(formData));
+        formData.append("email", data.email);
+        formData.append("first_name", data.first_name);
+        formData.append("last_name", data.last_name);
+        formData.append("phone_no", data.phone_no);
+        formData.append("role", data.role);
+        formData.append("company_name", data.company_name);
+        formData.append("industry", data.industry);
+        formData.append("sector", data.sector);
+        formData.append("employees_count", data.employees_count);
+        formData.append("location", data.location);
+        formData.append("password", data.password);
+        dispatch(userSignUp(formData))
+          .unwrap()
+          .then(() => navigate("/loginhr"));
       }
     } catch (error) {
       console.error("Submission error:", error);
