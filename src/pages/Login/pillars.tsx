@@ -162,19 +162,32 @@ const sideBarItems = [
 const Pillars = () => {
   const [activeSection, setActiveSection] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [stepAnswers, setStepAnswers] = useState<any>({
-    // Each key represents a step number, and the value is an object of question answers
-    0: {},
-    1: {},
-    2: {},
-    3: {},
-    4: {},
-    5: {},
-    6: {},
-    7: {},
-    8: {},
-    9: {},
+  const [stepAnswers, setStepAnswers] = useState<any>(() => {
+    // Try to get the data from cookies
+    const existingData = Cookies.get("questionnaireData");
+    if (existingData) {
+      // If data exists, parse it
+      return JSON.parse(existingData);
+    } else {
+      // Initialize default state structure if no data is found
+      return {
+        0: {},
+        1: {},
+        2: {},
+        3: {},
+        4: {},
+        5: {},
+        6: {},
+        7: {},
+        8: {},
+        9: {},
+      };
+    }
   });
+
+  const value = Cookies.get("questionnaireData");
+
+  console.log("value", value);
 
   const handleInputChange = (
     step: number,
@@ -489,8 +502,9 @@ const Pillars = () => {
                   isActive ? "active" : ""
                 }`}
               >
-                {sideBarItems.map((item: any) => (
+                {sideBarItems.map((item: any, index) => (
                   <div
+                    key={index}
                     className={`flex gap-3 mb-3 chapteritem relative z-10 ${
                       step == item.id ? "" : "items-center"
                     } ${isActive ? "items-start" : "items-center"}`}
@@ -632,7 +646,7 @@ const Pillars = () => {
                   <div className="questions-form">
                     {sideBarItems[step - 1].questions?.map(
                       (question: any, index: number) => (
-                        <div className="form-item mb-6">
+                        <div key={index} className="form-item mb-6">
                           <div className="flex gap-2 items-center justify-between mb-2">
                             <p className="mb-0 flex gap-2 leading-normal items-center">
                               Industry
