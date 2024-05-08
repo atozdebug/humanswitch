@@ -10,7 +10,7 @@ import LightModeIcon from "@mui/icons-material/LightMode";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { useLocation } from "react-router-dom";
 import SettingsIcon from "@mui/icons-material/Settings";
-
+import { useState } from 'react';
 let sideBarItems = [
   {
     name: "Dashboard",
@@ -58,31 +58,39 @@ let bottomSidebarItems = [
 ];
 
 const SideBar = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   const location = useLocation();
   const getBasePath = (pathname: any) => {
     const parts = pathname.split("/");
     return `/${parts[1]}`;
   };
   return (
-    <div>
-      <div className="bg-white relative h-full w-72 overflow-y-auto border-r border-[#E2E4E9] flex justify-between flex-col lft-nav">
-        <div className="py-4">
-          <div className="flex items-center gap-2 border-b pb-5 px-6">
-            <div>
-              <img
-                src="/assets/images/Logo-favicon.png"
-                height={40}
-                width={40}
-              />
-            </div>
-            <div className="flex flex-col justify-center">
-              <div className="text-lg font-semibold">HumanSwitch.ai</div>
-              <div className="text-sm">HR Management</div>
+    <div className={`max-h-100vh w-272px sidebar-main ${isSidebarOpen ? 'menu-open' : 'menu-closed'}`}>
+      <div className="bg-white relative h-full overflow-y-auto border-r border-[#E2E4E9] flex justify-between flex-col lft-nav">
+        <div className="pt-0 pb-4">
+          <div className="px-6">
+            <div className="flex items-center justify-between border-b py-4">
+              <div className="">
+                <img
+                  src="/assets/images/human-logo.png"
+                  width={170}
+                  height={59}
+                />
+              </div>
+              <div className={`menu-bar cursor-pointer ${isSidebarOpen ? 'menu-bar-open' : 'menu-bar-closed'}`} onClick={toggleSidebar}>
+              <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlnsXlink="http://www.w3.org/1999/xlink" width="32" height="32" x="0" y="0" viewBox="0 0 384 384"  xmlSpace="preserve" className={`${isSidebarOpen ? 'hidden' : ''}`}><rect width="384" height="384" rx="76.8" ry="76.8" fill="#375dfb" shapeRendering="rounded" transform="matrix(0.99,0,0,0.99,1.920000000000016,1.920000000000016)"></rect><g transform="matrix(0.6999999999999996,0,0,0.6999999999999996,57.600000000000165,91.5998001098634)"><path d="M368 154.668H16c-8.832 0-16-7.168-16-16s7.168-16 16-16h352c8.832 0 16 7.168 16 16s-7.168 16-16 16zM368 32H16C7.168 32 0 24.832 0 16S7.168 0 16 0h352c8.832 0 16 7.168 16 16s-7.168 16-16 16zM368 277.332H16c-8.832 0-16-7.168-16-16s7.168-16 16-16h352c8.832 0 16 7.168 16 16s-7.168 16-16 16zm0 0" fill="#ffffff" opacity="1" data-original="#000000" ></path></g></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlnsXlink="http://www.w3.org/1999/xlink" width="32" height="32" x="0" y="0" viewBox="0 0 22.88 22.88"  xmlSpace="preserve" className={`${isSidebarOpen ? '' : 'hidden'}`}><rect width="22.88" height="22.88" rx="4.576" ry="4.576" fill="#375dfb" shapeRendering="rounded" transform="matrix(0.99,0,0,0.99,0.11439999580383287,0.11439999580383287)"></rect><g transform="matrix(0.6199999999999998,0,0,0.6199999999999998,4.347049638628961,4.347389466070457)"><path d="M.324 1.909a1.14 1.14 0 0 1 0-1.587 1.14 1.14 0 0 1 1.587 0l9.523 9.539L20.973.322a1.12 1.12 0 0 1 1.571 0 1.112 1.112 0 0 1 0 1.587l-9.523 9.524 9.523 9.539a1.112 1.112 0 0 1 0 1.587 1.12 1.12 0 0 1-1.571 0l-9.539-9.539-9.523 9.539a1.14 1.14 0 0 1-1.587 0c-.429-.444-.429-1.159 0-1.587l9.523-9.539L.324 1.909z" fill="#ffffff" data-original="#1e201d"  opacity="1"></path></g></svg>
+              </div>
             </div>
           </div>
 
-          <div className="mt-6">
-            <div className="font-light px-6">MAIN</div>
+          <div className="pt-20px">
+            <div className="font-light px-20px">MAIN</div>
             {sideBarItems.map((item, index) => {
               const basePath = getBasePath(location.pathname);
               const basePathMain = getBasePath(item.navigateTo);
@@ -92,10 +100,10 @@ const SideBar = () => {
                 <a
                   key={index}
                   href={`${item.navigateTo}`}
-                  className={`top  hover:bg-bg-clr hover:font-medium rounded-lg  flex items-center gap-2 my-2 relative ${
+                  className={`top px-2 hover:bg-bg-clr font-regular rounded-lg hover:text-main-heading text-gray-dark flex items-center gap-2 my-2 relative ${
                     isActive
-                      ? " font-semibold px-6"
-                      : "py-2 mx-6 hover:bg-gray-200"
+                      ? " text-main-heading px-20px"
+                      : "py-2 mx-20px hover:bg-lightgray "
                   }`}
                 >
                   {isActive && (
@@ -104,14 +112,14 @@ const SideBar = () => {
                     </div>
                   )}
                   <div
-                    className={`flex w-full items-center  rounded-lg ${
-                      isActive && "bg-gray-200 py-2"
+                    className={`flex w-full items-center rounded-lg ${
+                      isActive && "bg-lightgray text-main-heading py-2 px-2"
                     }`}
                   >
                     <div className={`px-2 ${isActive && "text-[#375DFB]"}`}>
                       {item.icon}
                     </div>
-                    <div>{item.name}</div>
+                    <div className="menu-item-text">{item.name}</div>
                   </div>
                 </a>
               );
@@ -119,26 +127,26 @@ const SideBar = () => {
           </div>
         </div>
         {/* ------------------------------------------------------------- */}
-        <div className="bottom py-4 px-6">
+        <div className="bottom pt-4 px-20px">
           {bottomSidebarItems.map((item, index) => (
             <div
               key={index}
-              className="top px-2 py-2 hover:bg-bg-clr hover:font-medium rounded-lg hover:bg-gray-200 flex items-center gap-2 my-2"
+              className="top px-20px py-2 hover:bg-lightgray rounded-lg hover:tex-main-heading flex items-center gap-2 my-2"
             >
               {item.icon}
-              {item.name}
+              <div className="menu-item-text">{item.name}</div>
             </div>
           ))}
 
-          <div className="my-5">
+          <div className="my-5 day-night-btns">
             <input type="checkbox" className="checkbox hidden" id="checkbox" />
             <label htmlFor="checkbox" className="checkbox-label">
-              <div className="relative rounded-lg min-w-28 bg-[#cee6ff]">
+              <div className="relative rounded-lg min-w-28  text-center">
                 <span>
                   <LightModeIcon className="m-auto relative z-10" />
                 </span>
               </div>
-              <div className="bg-[#cee6ff] m-auto">
+              <div className=" m-auto">
                 <span>
                   <NightsStayIcon className="m-auto relative z-10" />
                 </span>
@@ -149,11 +157,11 @@ const SideBar = () => {
           </div>
           {/* -------------------------------------------------------------- */}
           {/* -------------------------------------------------------------- */}
-          <div className="flex justify-between items-center p-2">
-            <div>
+          <div className="flex justify-between items-center px-0 py-6 border-t">
+            <div className="profile-imagee">
               <img className="max-w-[40px]" src="/assets/images/Avatar.png" />
             </div>
-            <div className="">
+            <div className="profile-content">
               <div className="flex justify-between items-center">
                 <div>
                   <p className="font-medium md:text-sm">Sophia Williams </p>

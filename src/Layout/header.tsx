@@ -2,13 +2,13 @@ import SmartToyIcon from "@mui/icons-material/SmartToy";
 
 const Header = () => {
   return (
-    <div className="bg-white shadow-md">
+    <div className="bg-white shadow-sm py-4">
       <div className="grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 flex items-center justify-between">
         <div className="flex justify-center items-center ml-6">
           <span className="bg-[#F6F8FA] p-2 rounded-full">
             <SmartToyIcon />
           </span>
-          <div className="p-4">
+          <div className="px-4">
             <h2 className="text-heading text-lg font-medium">ChatBot</h2>
             <p>A short description of the chatbot and its capabilities</p>
           </div>
