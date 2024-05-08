@@ -11,7 +11,7 @@ import LoginHr from "./pages/Login/hrLogin";
 import Settings from "./pages/DashBoard/settings";
 import Chatbot from "./pages/DashBoard/chatbot";
 import Layout from "./Layout/layout";
-import DashBoard from "./pages/Login/pillars";
+import Pillars from "./pages/Login/pillars";
 import Dashboard from "./pages/DashBoard/dashboard";
 import MyReports from "./pages/DashBoard/myReports";
 import Integration from "./pages/DashBoard/integration";
@@ -61,7 +61,7 @@ const App = () => {
           <Route path="/loginhr" element={<LoginHr />} />
           <Route path="/forgetPassword" element={<ForgetPasswordPage />} />
           <Route path="/" element={<HomePage />} />
-          <Route path="/pillars" element={<DashBoard />} />
+          <Route path="/pillars" element={<Pillars />} />
         </Routes>
         {isTrue && (
           <Layout>

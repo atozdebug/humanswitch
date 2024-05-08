@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import PersonIcon from "@mui/icons-material/Person";
 import Modal from "../../components/Pillars/Modal";
+import Cookies from "js-cookie";
 
 const sideBarItems = [
   {
@@ -93,6 +94,18 @@ const sideBarItems = [
         question:
           "Voldoet uw organisatie aan de relevante regelgeving en standaarden met betrekking tot AI-implementatie?",
       },
+      {
+        question:
+          "Welke procedures zijn er om regelmatig de naleving van nieuwe en bestaande AI-regelgeving te beoordelen en te garanderen?",
+      },
+      {
+        question:
+          "Hoe gaat uw organisatie om met gegevensprivacy en ethische kwesties tijdens de AI-implementatie?",
+      },
+      {
+        question:
+          "Beschikt uw organisatie over een gestructureerd raamwerk voor het controleren en beperken van risico’s met betrekking tot AI-compliance?",
+      },
     ],
   },
   {
@@ -146,7 +159,7 @@ const sideBarItems = [
     icon: <PersonIcon />,
   },
 ];
-const DashBoard = () => {
+const Pillars = () => {
   const [activeSection, setActiveSection] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [stepAnswers, setStepAnswers] = useState<any>({
@@ -180,10 +193,9 @@ const DashBoard = () => {
         [questionId]: value,
       },
     }));
-    if (step === 0 && questionId === "question-4") {
-      toggleModal();
-    }
   };
+
+  console.log(stepAnswers);
 
   const section2Ref = useRef(null);
 
@@ -216,7 +228,31 @@ const DashBoard = () => {
     };
   }, []);
 
+  const handleSkip = () => {
+    // Increment the step and update the stepsTick array without saving data to cookies
+    setStep((prev) => prev + 1);
+    setStepsTick((prev: any) => [...prev, step]);
+  };
+
   const handleNext = () => {
+    const currentStepAnswers = stepAnswers[step - 1];
+
+    // Retrieve existing data from the cookies
+    let existingData = Cookies.get("questionnaireData");
+
+    // If there is existing data, parse it as an array, otherwise initialize it as an empty array
+    let data = existingData ? JSON.parse(existingData) : [];
+
+    // Add the current step answers to the data array
+    data.push(currentStepAnswers);
+
+    // Save the updated data array to the cookies as a JSON string
+    Cookies.set("questionnaireData", JSON.stringify(data));
+
+    if (data.length === 3) {
+      toggleModal();
+    }
+
     setStep((prev) => prev + 1);
     setStepsTick((prev: any) => [...prev, step]);
   };
@@ -704,7 +740,7 @@ const DashBoard = () => {
                       type="button"
                       data-ripple-light="true"
                       onClick={() => {
-                        handleNext();
+                        handleSkip();
                       }}
                     >
                       Skip
@@ -902,4 +938,4 @@ const DashBoard = () => {
   );
 };
 
-export default DashBoard;
+export default Pillars;

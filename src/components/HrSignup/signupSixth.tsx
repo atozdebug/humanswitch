@@ -1,7 +1,10 @@
-const SignupSixth = ({ formData }: any) => {
+const SignupSixth = ({ handleSubmit, onSubmit, formData }: any) => {
   return (
     <div>
-      <div className="form flex flex-col max-w-md m-auto justify-center">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="form flex flex-col max-w-md m-auto justify-center"
+      >
         <h1 className="flex justify-center text-center">
           <img src="/assets/images/check.png" />
         </h1>
@@ -129,7 +132,7 @@ const SignupSixth = ({ formData }: any) => {
         >
           Continue
         </button>
-      </div>
+      </form>
     </div>
   );
 };

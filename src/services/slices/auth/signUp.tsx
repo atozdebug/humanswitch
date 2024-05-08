@@ -5,18 +5,16 @@ import {
   stopLoadingActivity,
 } from "../activity/activitySlice.tsx";
 
-export const userSignUp = createAsyncThunk(
+export const userSignUp: any = createAsyncThunk(
   "auth/userSignUp",
-  async ({ data, phone, token, email }: any, { dispatch }) => {
-    const newData = {
-      firstName: data.firstName,
-      lastName: data.lastName,
-      email: email,
-      mobile: phone,
-      password: data.password,
-    };
+  async (data, { dispatch }) => {
     try {
-      const response = await http.post(`/users/updateUser/${token}`, newData);
+      console.log("Datttatatatatta", data);
+      const response = await http.post(`/signup`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       if (response.status === 200) {
         dispatch(startLoadingActivity());
         return response.data;
@@ -52,8 +50,7 @@ export const signUpSlice = createSlice({
         state.loading = true;
       })
       .addCase(userSignUp.fulfilled, (state, action) => {
-        // state.data.agentUser=action.payload;
-        state.data = action.payload.data;
+        state.data = action.payload?.data;
         state.loading = false;
       })
       .addCase(userSignUp.rejected, (state, _action) => {

@@ -9,6 +9,8 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import SignupSixth from "../../components/HrSignup/signupSixth";
+import { useDispatch } from "react-redux";
+import { userSignUp } from "../../services/slices/auth/signUp";
 
 const header = [
   {
@@ -70,7 +72,7 @@ const schemaSecond = yup.object().shape({
         return phoneString.length >= 10 && phoneString.length <= 15;
       }
     ),
-  profilePicture: yup
+  image: yup
     .mixed()
     .required("Profile picture is required")
     .test(
@@ -150,7 +152,7 @@ const schemaFifth = yup.object().shape({
 interface FormData {
   email: string;
   agreeTerms: boolean;
-  profilePicture: Blob;
+  image: Blob;
   first_name: string;
   last_name: string;
   phone_no: number;
@@ -166,7 +168,7 @@ interface FormData {
 const defaultValues = {
   email: "",
   agreeTerms: false,
-  profilePicture: null,
+  image: null,
   first_name: "",
   last_name: "",
   phone_no: 0,
@@ -181,6 +183,7 @@ const defaultValues = {
 };
 
 const SignupPage = () => {
+  const dispatch: any = useDispatch();
   const [step, setStep] = useState<number>(1);
   const [formData, setFormData] = useState<any>(defaultValues);
 
@@ -214,6 +217,13 @@ const SignupPage = () => {
       setFormData(data);
       if (step < 6) {
         setStep((prev) => prev + 1);
+      } else if (step === 6) {
+        console.log("Hit");
+        const formData: any = new FormData();
+        formData.append("image", data.image);
+        formData.append("data", data);
+
+        dispatch(userSignUp(formData));
       }
     } catch (error) {
       console.error("Submission error:", error);
@@ -238,7 +248,7 @@ const SignupPage = () => {
           {header.map((item, index) => (
             <div className="flex" key={index}>
               <div
-                // onClick={() => setStep(item.id)}
+                onClick={() => setStep(item.id)}
                 className={`flex items-center justify-center px-3 py-2 mx-2 gap-2 rounded-lg text-gray-500 bg-white dark:bg-gray-800  dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
               >
                 <div
@@ -265,7 +275,7 @@ const SignupPage = () => {
                   {item.name}
                 </div>
               </div>
-              {item.id < 5 && (
+              {item.id < 6 && (
                 <div className="flex items-center justify-center">
                   <img src="/assets/images/arrow-right-s-line.png" />
                 </div>
@@ -327,8 +337,8 @@ const SignupPage = () => {
         />
       ) : (
         <SignupSixth
-          // handleSubmit={handleSubmit}
-          // onSubmit={onSubmit}
+          handleSubmit={handleSubmit}
+          onSubmit={onSubmit}
           // register={register}
           // errors={errors}
           formData={formData}

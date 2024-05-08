@@ -18,7 +18,7 @@ const SignupTwo = ({ handleSubmit, register, onSubmit, errors }: any) => {
         <div className="flex items-center content-center gap-10 mb-5 ">
           <div
             className={`${
-              errors?.profilePicture ? "border rounded-full border-red-500" : ""
+              errors?.image ? "border rounded-full border-red-500" : ""
             }`}
           >
             <h1>
@@ -36,12 +36,12 @@ const SignupTwo = ({ handleSubmit, register, onSubmit, errors }: any) => {
               type="file"
               id="image-upload"
               accept="image/*"
-              {...register("profilePicture")}
+              {...register("image")}
               className="block w-full text-start  text-sm text-gray-900 bg-gray-50 rounded-lg cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
             />
-            {errors?.profilePicture && (
+            {errors?.image && (
               <p className="text-red-500 text-sm mt-2">
-                {errors?.profilePicture?.message}
+                {errors?.image?.message}
               </p>
             )}
           </div>
