@@ -4,7 +4,7 @@ import SideBar from "./sidebar";
 const Layout = ({ children }: any) => {
   const isTrue = true;
   return (
-    <div className="bg-gray-100 text-black main-outerr">
+    <div className="bg-lightgray text-black main-outerr">
       <div
         style={{
           display: "flex",

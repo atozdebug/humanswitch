@@ -1,5 +1,5 @@
 const Dashboard = () => {
-  return <div className="min-h-screen">Dashboard</div>;
+  return <div className="max-h-vhcalc88px overflow-y-auto min-h-vhcalc88px">Dashboard</div>;
 };
 
 export default Dashboard;
