@@ -76,11 +76,13 @@ const LoginHr = () => {
       <div className="grid grid-cols-3 gap-4">
         <div className="...">
           <div className="flex justify-around items-center mob-view ">
-            <div>
-              <span className="text-center">
-                <img src="/assets/images/Synergy.png" />
-              </span>
-            </div>
+            <span>
+              <img
+                className="text-center h-10 w-10"
+                src="/assets/images/Synergy.png"
+              />
+            </span>
+
             <div>
               <p>
                 Don't have an account?
@@ -215,8 +217,8 @@ const LoginHr = () => {
 
         <div className="col-span-2 bg-[#F6F8FA] py-9">
           <div className="flex items-center justify-center center-box">
-            <span className="text-center">
-              <img src="/assets/images/img1.png" />
+            <span className="text-center h-96 w-96">
+              <img src="/assets/images/widget.png" />
             </span>
           </div>
 
