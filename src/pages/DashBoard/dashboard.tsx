@@ -7,13 +7,19 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { useDispatch } from "react-redux";
-import { createQuestions } from "../../services/slices/dashboard/createQuestions";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  createQuestions,
+  deleteQuestions,
+  filterQuestionsByName,
+  getQuestions,
+  updateQuestions,
+} from "../../services/slices/dashboard/dashboard";
 
 const chapters = [
   {
@@ -26,7 +32,7 @@ const chapters = [
   },
   {
     value: "30",
-    name: "Budget/ROI",
+    name: "Budget-ROI",
   },
   {
     value: "40",
@@ -42,11 +48,58 @@ const chapters = [
   },
   {
     value: "70",
-    name: "Partners/Suppliers",
+    name: "Partners-Suppliers",
   },
   {
     value: "80",
-    name: "Data/ICT",
+    name: "Data-ICT",
+  },
+  {
+    value: "90",
+    name: "Customer Value & Social Impact",
+  },
+  {
+    value: "100",
+    name: "Innovation",
+  },
+];
+
+const filters = [
+  {
+    value: "1",
+    name: "All",
+  },
+  {
+    value: "10",
+    name: "Strategy",
+  },
+  {
+    value: "20",
+    name: "Clientele",
+  },
+  {
+    value: "30",
+    name: "Budget-ROI",
+  },
+  {
+    value: "40",
+    name: "Employees",
+  },
+  {
+    value: "50",
+    name: "Market",
+  },
+  {
+    value: "60",
+    name: "Compliance",
+  },
+  {
+    value: "70",
+    name: "Partners-Suppliers",
+  },
+  {
+    value: "80",
+    name: "Data-ICT",
   },
   {
     value: "90",
@@ -60,13 +113,19 @@ const chapters = [
 
 interface Row {
   id: number;
-  chapter: string;
+  chapters: string;
   question: string;
 }
 
 const Dashboard = () => {
+  const data: Row[] =
+    useSelector((state: any) => state.dashboard?.getData) || [];
+  // console.log(data);
   const dispatch: any = useDispatch();
-  const [rows, setRows] = useState<Row[]>([]);
+
+  useEffect(() => {
+    dispatch(getQuestions());
+  }, []);
 
   const [open, setOpen] = useState(false);
   const [chapter, setChapter] = useState("");
@@ -76,17 +135,19 @@ const Dashboard = () => {
   const [currentRowId, setCurrentRowId] = useState<number | null>(null);
 
   const handleDeleteRow = (id: number) => {
-    setRows((prevRows) => prevRows.filter((row) => row.id !== id));
+    dispatch(deleteQuestions(id))
+      .unwrap()
+      .then(() => dispatch(getQuestions()));
   };
 
   const handleUpdateRow = (id: number) => {
-    const rowToUpdate = rows.find((row) => row.id === id);
+    const rowToUpdate = data.find((row) => row.id === id);
     if (!rowToUpdate) {
       return;
     }
 
     const selectedChapter: any = chapters.find(
-      (ch) => ch.name === rowToUpdate.chapter
+      (ch) => ch.name === rowToUpdate.chapters
     );
 
     setChapter(selectedChapter.value);
@@ -109,23 +170,20 @@ const Dashboard = () => {
     const selectedChapter: any = chapters.find((ch) => ch.value === chapter);
 
     if (isUpdating) {
-      // Updating an existing row
-      setRows((prevRows) =>
-        prevRows.map((row) =>
-          row.id === currentRowId
-            ? { ...row, chapter: selectedChapter.name, question }
-            : row
-        )
-      );
+      dispatch(
+        updateQuestions({
+          chapter: selectedChapter.name,
+          question,
+          id: currentRowId,
+        })
+      )
+        .unwrap()
+        .then(() => dispatch(getQuestions()));
     } else {
       // Creating a new row
-      const newRow = {
-        id: rows.length + 1,
-        chapter: selectedChapter.name,
-        question,
-      };
-      setRows((prevRows) => [...prevRows, newRow]);
-      dispatch(createQuestions({ chapters: selectedChapter.name, question }));
+      dispatch(createQuestions({ chapters: selectedChapter.name, question }))
+        .unwrap()
+        .then(() => dispatch(getQuestions()));
     }
 
     // Reset flags and close the dialog
@@ -135,10 +193,10 @@ const Dashboard = () => {
     setOpen(false);
   };
 
-  const columns: GridColDef<(typeof rows)[number]>[] = [
+  const columns: GridColDef<(typeof data)[number]>[] = [
     { field: "id", headerName: "ID", width: 90 },
     {
-      field: "chapter",
+      field: "chapters",
       headerName: "Chapters",
       width: 200,
     },
@@ -166,7 +224,7 @@ const Dashboard = () => {
             variant="contained"
             color="primary"
             onClick={() => handleUpdateRow(params.row.id)}
-            style={{ marginLeft: "5px" }}
+            style={{ marginLeft: "10px" }}
           >
             Update
           </Button>
@@ -191,6 +249,18 @@ const Dashboard = () => {
     setChapterError(false);
   };
 
+  const [filter, setFilter] = useState("");
+
+  const handleChangeFilter = (event: SelectChangeEvent) => {
+    setFilter(event.target.value as string);
+    console.log(event.target.value);
+    if (event.target.value === "All") {
+      dispatch(getQuestions());
+    } else {
+      dispatch(filterQuestionsByName({ name: event.target.value }));
+    }
+  };
+
   return (
     <div className="max-h-vhcalc88px overflow-y-auto min-h-vhcalc88px p-8">
       <div className="w-full flex justify-end items-start mb-8">
@@ -198,9 +268,29 @@ const Dashboard = () => {
           Create
         </Button>
       </div>
+      <Box className="gap-4 flex w-full justify-end items-center">
+        <div className="text-lg font-semibold">Filters :</div>
+        <FormControl sx={{ minWidth: 200 }}>
+          <InputLabel id="demo-simple-select-filter">Filters</InputLabel>
+          <Select
+            labelId="demo-simple-select-filter"
+            id="demo-simple-filter"
+            value={filter}
+            label="Filter"
+            name="Filter"
+            onChange={handleChangeFilter}
+          >
+            {filters.map((chapter, index) => (
+              <MenuItem key={index} value={chapter.name}>
+                {chapter.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Box>
       <Box sx={{ height: 400, width: "100%" }}>
         <DataGrid
-          rows={rows}
+          rows={data}
           columns={columns}
           initialState={{
             pagination: {
