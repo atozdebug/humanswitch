@@ -1,4 +1,9 @@
+import { useState } from "react";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+
 const SignupFive = ({ handleSubmit, register, onSubmit, errors }: any) => {
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   return (
     <div className="main">
       <form
@@ -31,12 +36,19 @@ const SignupFive = ({ handleSubmit, register, onSubmit, errors }: any) => {
                 errors.password ? "border-red-600" : "border-slate-300"
               } rounded w-full py-2.5 px-2.5text-input-text leading-tight focus:outline-none focus:shadow-outline`}
               id="password"
-              type="password"
+              type={showNewPassword ? "text" : "password"}
               placeholder=".........."
               {...register("password")}
             />
-            <span className="absolute h-2 w-4 inset-y-3 right-2">
-              <img src="/assets/images/eye-line.png" />
+            <span
+              className="absolute h-2 w-4 inset-y-3 right-2"
+              onClick={() => setShowNewPassword(!showNewPassword)}
+            >
+              {showNewPassword ? (
+                <VisibilityOffIcon className="pb-3 pr-2" />
+              ) : (
+                <img src="/assets/images/eye-line.png" />
+              )}
             </span>
             {errors.password && (
               <p className="text-[#F04438] text-sm mt-2">
@@ -62,12 +74,19 @@ const SignupFive = ({ handleSubmit, register, onSubmit, errors }: any) => {
                 errors.confirmPassword ? "border-red-600" : "border-slate-300"
               } rounded w-full py-2.5 px-2.5text-input-text leading-tight focus:outline-none focus:shadow-outline`}
               id="confirmPassword"
-              type="password"
+              type={showConfirmPassword ? "text" : "password"}
               {...register("confirmPassword")}
               placeholder=".........."
             />
-            <span className="absolute h-2 w-4 inset-y-3 right-2">
-              <img src="/assets/images/eye-line.png" />
+            <span
+              className="absolute h-2 w-4 inset-y-3 right-2"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            >
+              {showConfirmPassword ? (
+                <VisibilityOffIcon className="pb-3 pr-2" />
+              ) : (
+                <img src="/assets/images/eye-line.png" />
+              )}
             </span>
             {errors.confirmPassword && (
               <p className="text-[#F04438] text-sm mt-2">

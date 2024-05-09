@@ -1,7 +1,10 @@
-const SignupSixth = () => {
+const SignupSixth = ({ handleSubmit, onSubmit, formData }: any) => {
   return (
     <div>
-      <div className="form flex flex-col max-w-md m-auto justify-center">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="form flex flex-col max-w-md m-auto justify-center"
+      >
         <h1 className="flex justify-center text-center">
           <img src="/assets/images/check.png" />
         </h1>
@@ -24,11 +27,12 @@ const SignupSixth = () => {
                 className={`lft-space-summery text-sm font-medium appearance-none  rounded w-full  pd-bottom  pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
                 id="fname"
                 type="full-nm"
-                value="James Brown"
+                readOnly
+                value={formData.first_name + " " + formData.last_name}
               />
-              <span className="absolute inset-y-3 right-2 summey-top-space">
+              {/* <span className="absolute inset-y-3 right-2 summey-top-space">
                 <img className="max-w-{20px}" src="/assets/images/key2.png" />
-              </span>
+              </span> */}
             </div>
           </div>
 
@@ -45,11 +49,12 @@ const SignupSixth = () => {
                 className={`lft-space-summery text-sm font-medium appearance-none  rounded w-full  pd-bottom  pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
                 id="fname"
                 type="full-nm"
-                value="@jamesbrown"
+                value="james@humanswitch.ai"
+                readOnly
               />
-              <span className="absolute inset-y-3 right-2 summey-top-space ">
+              {/* <span className="absolute inset-y-3 right-2 summey-top-space ">
                 <img className="max-w-{20px}" src="/assets/images/key2.png" />
-              </span>
+              </span> */}
             </div>
           </div>
 
@@ -67,11 +72,12 @@ const SignupSixth = () => {
                 className={`lft-space-summery text-sm font-medium appearance-none rounded w-full  pd-bottom  pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
                 id="fname"
                 type="full-nm"
-                value="james@humanswitch.ai"
+                readOnly
+                value={formData.email}
               />
-              <span className="absolute inset-y-3 right-2 summey-top-space">
+              {/* <span className="absolute inset-y-3 right-2 summey-top-space">
                 <img className="max-w-{20px}" src="/assets/images/key2.png" />
-              </span>
+              </span> */}
             </div>
           </div>
 
@@ -89,11 +95,12 @@ const SignupSixth = () => {
                 className={`lft-space-summery text-sm font-medium appearance-none  rounded w-full  pd-bottom  pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
                 id="fname"
                 type="full-nm"
-                value="Product Manager"
+                readOnly
+                value={formData.role}
               />
-              <span className="absolute inset-y-3 right-2 summey-top-space ">
+              {/* <span className="absolute inset-y-3 right-2 summey-top-space ">
                 <img className="max-w-{20px}" src="/assets/images/key2.png" />
-              </span>
+              </span> */}
             </div>
           </div>
           <hr className="my-4"></hr>
@@ -109,11 +116,12 @@ const SignupSixth = () => {
                 className={`lft-space-summery text-sm font-medium appearance-none  rounded w-full  pd-bottom  pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
                 id="fname"
                 type="full-nm"
-                value="Business Development"
+                readOnly
+                value={formData.sector}
               />
-              <span className="absolute inset-y-3 right-2 max-w-10 max-h-10 summey-top-space">
+              {/* <span className="absolute inset-y-3 right-2 max-w-10 max-h-10 summey-top-space">
                 <img className="max-w-{20px}" src="/assets/images/key2.png" />
-              </span>
+              </span> */}
             </div>
           </div>
         </div>
@@ -124,7 +132,7 @@ const SignupSixth = () => {
         >
           Continue
         </button>
-      </div>
+      </form>
     </div>
   );
 };

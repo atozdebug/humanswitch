@@ -9,6 +9,9 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import SignupSixth from "../../components/HrSignup/signupSixth";
+import { useDispatch } from "react-redux";
+import { userSignUp } from "../../services/slices/auth/signUp";
+import { useNavigate } from "react-router-dom";
 
 const header = [
   {
@@ -52,9 +55,9 @@ const schemaFirst = yup.object().shape({
 });
 
 const schemaSecond = yup.object().shape({
-  firstName: yup.string().required("First name is required"),
-  lastName: yup.string().required("Last name is required"),
-  phoneNumber: yup
+  first_name: yup.string().required("First name is required"),
+  last_name: yup.string().required("Last name is required"),
+  phone_no: yup
     .number()
     .integer("Phone number must be an integer")
     .required("Phone number is required")
@@ -70,7 +73,7 @@ const schemaSecond = yup.object().shape({
         return phoneString.length >= 10 && phoneString.length <= 15;
       }
     ),
-  profilePicture: yup
+  image: yup
     .mixed()
     .required("Profile picture is required")
     .test(
@@ -106,10 +109,10 @@ const schemaThird = yup.object().shape({
 });
 
 const schemaFourth = yup.object().shape({
-  companyName: yup.string().required("Please select a Company Name"),
+  company_name: yup.string().required("Please select a Company Name"),
   industry: yup.string().required("Please select an Industry"),
   sector: yup.string().required("Please select a Sector"),
-  totalEmployees: yup.string().required("Please select Total Employees"),
+  employees_count: yup.string().required("Please select Total Employees"),
   location: yup.string().required("Please select a Location"),
 });
 
@@ -150,15 +153,15 @@ const schemaFifth = yup.object().shape({
 interface FormData {
   email: string;
   agreeTerms: boolean;
-  profilePicture: Blob;
-  firstName: string;
-  lastName: string;
-  phoneNumber: number;
+  image: Blob;
+  first_name: string;
+  last_name: string;
+  phone_no: number;
   role: string;
-  companyName: string;
+  company_name: string;
   industry: string;
   sector: string;
-  totalEmployees: string;
+  employees_count: string;
   location: string;
   password: string;
   confirmPassword: string;
@@ -166,22 +169,25 @@ interface FormData {
 const defaultValues = {
   email: "",
   agreeTerms: false,
-  profilePicture: null,
-  firstName: "",
-  lastName: "",
-  phoneNumber: 0,
+  image: null,
+  first_name: "",
+  last_name: "",
+  phone_no: 0,
   role: "",
-  companyName: "",
+  company_name: "",
   industry: "",
   sector: "",
-  totalEmployees: "",
+  employees_count: "",
   location: "",
   password: "",
   confirmPassword: "",
 };
 
 const SignupPage = () => {
+  const navigate: any = useNavigate();
+  const dispatch: any = useDispatch();
   const [step, setStep] = useState<number>(1);
+  const [formData, setFormData] = useState<any>(defaultValues);
 
   const schemas = () => {
     if (step === 1) {
@@ -197,8 +203,6 @@ const SignupPage = () => {
     }
   };
 
-  console.log(step);
-
   const {
     register,
     handleSubmit,
@@ -212,13 +216,34 @@ const SignupPage = () => {
   const onSubmit: any = (data: FormData) => {
     console.log("Form data:", data);
     try {
+      setFormData(data);
       if (step < 6) {
         setStep((prev) => prev + 1);
+      } else if (step === 6) {
+        console.log("Hit");
+        const formData: any = new FormData();
+        formData.append("image", data.image);
+        formData.append("email", data.email);
+        formData.append("first_name", data.first_name);
+        formData.append("last_name", data.last_name);
+        formData.append("phone_no", data.phone_no);
+        formData.append("role", data.role);
+        formData.append("company_name", data.company_name);
+        formData.append("industry", data.industry);
+        formData.append("sector", data.sector);
+        formData.append("employees_count", data.employees_count);
+        formData.append("location", data.location);
+        formData.append("password", data.password);
+        dispatch(userSignUp(formData))
+          .unwrap()
+          .then(() => navigate("/loginhr"));
       }
     } catch (error) {
       console.error("Submission error:", error);
     }
   };
+
+  console.log("Form", formData);
 
   return (
     <>
@@ -237,7 +262,7 @@ const SignupPage = () => {
             <div className="flex" key={index}>
               <div
                 onClick={() => setStep(item.id)}
-                className={`flex items-center justify-center px-3 py-2 mx-2 gap-2 rounded-lg text-gray-500 bg-white hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800  dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
+                className={`flex items-center justify-center px-3 py-2 mx-2 gap-2 rounded-lg text-gray-500 bg-white dark:bg-gray-800  dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
               >
                 <div
                   className={`flex justify-center items-center border rounded-full h-6 w-6 ${
@@ -263,7 +288,7 @@ const SignupPage = () => {
                   {item.name}
                 </div>
               </div>
-              {item.id < 5 && (
+              {item.id < 6 && (
                 <div className="flex items-center justify-center">
                   <img src="/assets/images/arrow-right-s-line.png" />
                 </div>
@@ -325,10 +350,11 @@ const SignupPage = () => {
         />
       ) : (
         <SignupSixth
-        // handleSubmit={handleSubmit}
-        // onSubmit={onSubmit}
-        // register={register}
-        // errors={errors}
+          handleSubmit={handleSubmit}
+          onSubmit={onSubmit}
+          // register={register}
+          // errors={errors}
+          formData={formData}
         />
       )}
       <div className="footer flex items-center content-center justify-between">

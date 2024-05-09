@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import PersonIcon from "@mui/icons-material/Person";
 import Modal from "../../components/Pillars/Modal";
+import Cookies from "js-cookie";
 
 const sideBarItems = [
   {
@@ -93,6 +94,18 @@ const sideBarItems = [
         question:
           "Voldoet uw organisatie aan de relevante regelgeving en standaarden met betrekking tot AI-implementatie?",
       },
+      {
+        question:
+          "Welke procedures zijn er om regelmatig de naleving van nieuwe en bestaande AI-regelgeving te beoordelen en te garanderen?",
+      },
+      {
+        question:
+          "Hoe gaat uw organisatie om met gegevensprivacy en ethische kwesties tijdens de AI-implementatie?",
+      },
+      {
+        question:
+          "Beschikt uw organisatie over een gestructureerd raamwerk voor het controleren en beperken van risico’s met betrekking tot AI-compliance?",
+      },
     ],
   },
   {
@@ -146,22 +159,35 @@ const sideBarItems = [
     icon: <PersonIcon />,
   },
 ];
-const DashBoard = () => {
+const Pillars = () => {
   const [activeSection, setActiveSection] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [stepAnswers, setStepAnswers] = useState<any>({
-    // Each key represents a step number, and the value is an object of question answers
-    0: {},
-    1: {},
-    2: {},
-    3: {},
-    4: {},
-    5: {},
-    6: {},
-    7: {},
-    8: {},
-    9: {},
+  const [stepAnswers, setStepAnswers] = useState<any>(() => {
+    // Try to get the data from cookies
+    const existingData = Cookies.get("questionnaireData");
+    if (existingData) {
+      // If data exists, parse it
+      return JSON.parse(existingData);
+    } else {
+      // Initialize default state structure if no data is found
+      return {
+        0: {},
+        1: {},
+        2: {},
+        3: {},
+        4: {},
+        5: {},
+        6: {},
+        7: {},
+        8: {},
+        9: {},
+      };
+    }
   });
+
+  const value = Cookies.get("questionnaireData");
+
+  console.log("value", value);
 
   const handleInputChange = (
     step: number,
@@ -180,10 +206,9 @@ const DashBoard = () => {
         [questionId]: value,
       },
     }));
-    if (step === 0 && questionId === "question-4") {
-      toggleModal();
-    }
   };
+
+  console.log(stepAnswers);
 
   const section2Ref = useRef(null);
 
@@ -216,7 +241,31 @@ const DashBoard = () => {
     };
   }, []);
 
+  const handleSkip = () => {
+    // Increment the step and update the stepsTick array without saving data to cookies
+    setStep((prev) => prev + 1);
+    setStepsTick((prev: any) => [...prev, step]);
+  };
+
   const handleNext = () => {
+    const currentStepAnswers = stepAnswers[step - 1];
+
+    // Retrieve existing data from the cookies
+    let existingData = Cookies.get("questionnaireData");
+
+    // If there is existing data, parse it as an array, otherwise initialize it as an empty array
+    let data = existingData ? JSON.parse(existingData) : [];
+
+    // Add the current step answers to the data array
+    data.push(currentStepAnswers);
+
+    // Save the updated data array to the cookies as a JSON string
+    Cookies.set("questionnaireData", JSON.stringify(data));
+
+    if (data.length === 3) {
+      toggleModal();
+    }
+
     setStep((prev) => prev + 1);
     setStepsTick((prev: any) => [...prev, step]);
   };
@@ -453,8 +502,9 @@ const DashBoard = () => {
                   isActive ? "active" : ""
                 }`}
               >
-                {sideBarItems.map((item: any) => (
+                {sideBarItems.map((item: any, index) => (
                   <div
+                    key={index}
                     className={`flex gap-3 mb-3 chapteritem relative z-10 ${
                       step == item.id ? "" : "items-center"
                     } ${isActive ? "items-start" : "items-center"}`}
@@ -596,7 +646,7 @@ const DashBoard = () => {
                   <div className="questions-form">
                     {sideBarItems[step - 1].questions?.map(
                       (question: any, index: number) => (
-                        <div className="form-item mb-6">
+                        <div key={index} className="form-item mb-6">
                           <div className="flex gap-2 items-center justify-between mb-2">
                             <p className="mb-0 flex gap-2 leading-normal items-center">
                               Industry
@@ -704,7 +754,7 @@ const DashBoard = () => {
                       type="button"
                       data-ripple-light="true"
                       onClick={() => {
-                        handleNext();
+                        handleSkip();
                       }}
                     >
                       Skip
@@ -902,4 +952,4 @@ const DashBoard = () => {
   );
 };
 
-export default DashBoard;
+export default Pillars;

@@ -33,6 +33,7 @@ export default {
          "bggreen": "#2B1664",
          "bggreen-500": "#6E3FF3",
          "main-heading": " #0A0D14",
+         'lightgray': '#F6F8FA'
         
       },
       padding: {
@@ -40,7 +41,6 @@ export default {
         60: "60%",
         50: "50%",
         "11px": "11px",
-       
       },
       margin: {
         '-140px': '-140px',
@@ -56,8 +56,6 @@ export default {
       borderRadius: {
         '20': '20px',
         '10': '10px',
-
-      
       },
       maxWidth: {
         "250px": "250px",
@@ -65,16 +63,17 @@ export default {
         "350px": "350px",
         calc350px: "calc(100% - 350px)",
         calc300px: "calc(100% - 300px)",
+        calc40px: "calc(100% - 40px)",
         600: "600px",
         700: "700px",
         20: "20px",
         123: "123px",
         13: "13px",
-
-        
       },
       maxHeight: {
         "vw-calc300px": "calc(100vh - 300px)",
+        vhcalc88px: "calc(100vh - 88px)",
+        "100vh": "100vh",
       },
       height: {
         "vw-calc80px": "calc(100vh - 80px)",
@@ -83,19 +82,26 @@ export default {
       minHeight: {
         "62px": "62px",
         13: "13px",
+        vhcalc88px: "calc(100vh - 88px)",
       },
       width: {
         60: "60%",
         "250px": "250px",
+        '272px': '272px'
       },
       boxShadow: {
         inside: "inset 0 0 15px #6355f64f",
       },
       minwidth: {
-
         '168px': '168px',
         123: "123px", 
-
+    },
+    padding: {
+      '20px': '20px',
+      '18px': '18px'
+    },
+    margin: {
+      '20px': '20px'
     },
     },
   },

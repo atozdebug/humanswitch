@@ -1,6 +1,11 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { userLogin } from "../../services/slices/auth/login";
+import { useState } from "react";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 const schema = yup.object().shape({
   email: yup
@@ -41,10 +46,15 @@ const defaultValues = {
 };
 
 const LoginHr = () => {
+  const navigate: any = useNavigate();
+  const dispatch: any = useDispatch();
+
+  const [showPassword, setShowPassword] = useState(false);
+
   const {
     register,
     handleSubmit,
-    reset,
+    // reset,
     formState: { errors },
   } = useForm<FormData>({
     resolver: yupResolver(schema),
@@ -53,8 +63,12 @@ const LoginHr = () => {
 
   const onSubmit: any = (data: FormData) => {
     console.log("Form data:", data);
-    //reset()
-    // Implement your form submission logic here
+
+    dispatch(userLogin(data))
+      .unwrap()
+      .then((res: any) => {
+        res.access_token && navigate("/pillars");
+      });
   };
 
   return (
@@ -146,12 +160,19 @@ const LoginHr = () => {
                     errors.password ? "border-[#F04438]" : "border-slate-300"
                   }`}
                   id="password"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   placeholder=".........."
                   {...register("password")}
                 />
-                <span className="absolute h-2 w-4 inset-y-3 right-2">
-                  <img src="/assets/images/eye-line.png" />
+                <span
+                  className="absolute h-2 w-4 inset-y-3 right-2"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? (
+                    <VisibilityOffIcon className="pb-3 pr-2" />
+                  ) : (
+                    <img src="/assets/images/eye-line.png" />
+                  )}
                 </span>
                 {errors?.password && (
                   <p className="text-red-500 text-sm mt-2">

@@ -18,7 +18,7 @@ const SignupTwo = ({ handleSubmit, register, onSubmit, errors }: any) => {
         <div className="flex items-center content-center gap-10 mb-5 ">
           <div
             className={`${
-              errors?.profilePicture ? "border rounded-full border-red-500" : ""
+              errors?.image ? "border rounded-full border-red-500" : ""
             }`}
           >
             <h1>
@@ -36,12 +36,12 @@ const SignupTwo = ({ handleSubmit, register, onSubmit, errors }: any) => {
               type="file"
               id="image-upload"
               accept="image/*"
-              {...register("profilePicture")}
+              {...register("image")}
               className="block w-full text-start  text-sm text-gray-900 bg-gray-50 rounded-lg cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
             />
-            {errors?.profilePicture && (
+            {errors?.image && (
               <p className="text-red-500 text-sm mt-2">
-                {errors?.profilePicture?.message}
+                {errors?.image?.message}
               </p>
             )}
           </div>
@@ -49,65 +49,65 @@ const SignupTwo = ({ handleSubmit, register, onSubmit, errors }: any) => {
 
         <label
           className="block text-heading text-sm font-medium mb-2"
-          htmlFor="firstName"
+          htmlFor="first_name"
         >
           First Name*
         </label>
         <input
           className={`shadow appearance-none border  rounded-[10px] w-full py-2.5 px-2.5 text-input-text leading-tight focus:outline-none focus:shadow-outline ${
-            errors.firstName ? "border-[#F04438]" : "border-slate-300"
+            errors.first_name ? "border-[#F04438]" : "border-slate-300"
           }`}
-          id="firstName"
+          id="first_name"
           type="text"
           placeholder="James"
-          {...register("firstName")}
+          {...register("first_name")}
         />
-        {errors?.firstName && (
+        {errors?.first_name && (
           <p className="text-red-500 text-sm mt-2">
-            {errors?.firstName?.message}
+            {errors?.first_name?.message}
           </p>
         )}
         <div className="my-5">
           <label
             className="block text-heading text-sm font-medium mb-2"
-            htmlFor="lastName"
+            htmlFor="last_name"
           >
             Last Name*
           </label>
           <input
             className={`shadow appearance-none border  rounded-[10px] w-full py-2.5 px-2.5 text-input-text leading-tight focus:outline-none focus:shadow-outline ${
-              errors.lastName ? "border-[#F04438]" : "border-slate-300"
+              errors.last_name ? "border-[#F04438]" : "border-slate-300"
             }`}
-            id="lastName"
+            id="last_name"
             type="text"
             placeholder="Brown"
-            {...register("lastName")}
+            {...register("last_name")}
           />
-          {errors?.lastName && (
+          {errors?.last_name && (
             <p className="text-red-500 text-sm mt-2">
-              {errors?.lastName?.message}
+              {errors?.last_name?.message}
             </p>
           )}
         </div>
         <div>
           <label
             className="block text-heading text-sm font-medium mb-2"
-            htmlFor="phoneNumber"
+            htmlFor="phone_no"
           >
             Phone Number*
           </label>
           <input
             className={`shadow appearance-none border  rounded-[10px] w-full py-2.5 px-2.5 text-input-text leading-tight focus:outline-none focus:shadow-outline ${
-              errors.phoneNumber ? "border-red-500" : "border-slate-300"
+              errors.phone_no ? "border-red-500" : "border-slate-300"
             }`}
-            id="phoneNumber"
+            id="phone_no"
             type="number"
             placeholder="(555) 000-0000"
-            {...register("phoneNumber")}
+            {...register("phone_no")}
           />
-          {errors?.phoneNumber && (
+          {errors?.phone_no && (
             <p className="text-red-500 text-sm mt-2">
-              {errors?.phoneNumber?.message}
+              {errors?.phone_no?.message}
             </p>
           )}
         </div>
