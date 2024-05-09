@@ -42,7 +42,10 @@ export default {
         "11px": "11px",
        
       },
-      
+      margin: {
+        '-140px': '-140px',
+      },
+
       backgroundImage: {
         gradient1: "linear-gradient(180deg, #6355F6, #18CBB8)",
         "g-success": "linear-gradient(180deg, #5cb85c, #3d743d)",

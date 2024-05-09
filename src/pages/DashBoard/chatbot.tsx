@@ -4,16 +4,17 @@ const Chatbot = () => {
       <div className="p-8 bg-[#F6F8FA]">
         <div className="main-sec">
           <div className="bg-image">
-            <div className="absolute bottom-0 text-center content-img">
+           
+          </div>
+          <div className=" text-center content-img mt-[-140px] mb-10">
               <h2 className="font-semibold text-[32px]">
                 HumanSwitch AI Advisor
               </h2>
-              <p className="text-base font-normal">
+              <p className="text-base font-normal pt-4">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                 eiusmod tempor incididunt ut labore et dolore magna aliqua.
               </p>
             </div>
-          </div>
 
           <div className="grid grid-cols-3">
             <div>
