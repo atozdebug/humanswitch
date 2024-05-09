@@ -1,6 +1,51 @@
 import SmartToyIcon from "@mui/icons-material/SmartToy";
+import { useLocation } from "react-router-dom";
+
+const headers = [
+  {
+    path: "/dashboard",
+    name: "Dashboard",
+    description: "Dashboard Page",
+  },
+  {
+    path: "/reports",
+    name: "Reports",
+    description: "Reports Page",
+  },
+  {
+    path: "/chatbot",
+    name: "ChatBot",
+    description: "A short description of the chatbot and its capabilities",
+  },
+  {
+    path: "/integrations",
+    name: "Integrations",
+    description: "Integrations Page",
+  },
+  {
+    path: "/users",
+    name: "Users",
+    description: "Users Page",
+  },
+  {
+    path: "/settings",
+    name: "Settings",
+    description: "Settings Page",
+  },
+];
 
 const Header = () => {
+  const location = useLocation();
+
+  const getBasePath = (pathname: any) => {
+    const parts = pathname.split("/");
+    return `/${parts[1]}`;
+  };
+
+  const title = headers.find(
+    (header) => header.path === getBasePath(location.pathname)
+  );
+
   return (
     <div className="bg-white shadow-sm py-4">
       <div className="grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 flex items-center justify-between">
@@ -9,8 +54,8 @@ const Header = () => {
             <SmartToyIcon />
           </span>
           <div className="px-4">
-            <h2 className="text-heading text-lg font-medium">ChatBot</h2>
-            <p>A short description of the chatbot and its capabilities</p>
+            <h2 className="text-heading text-lg font-medium">{title?.name}</h2>
+            <p>{title?.description}</p>
           </div>
         </div>
 

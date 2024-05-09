@@ -152,6 +152,7 @@ const Dashboard = () => {
       headerName: "Actions",
       sortable: false,
       width: 200,
+      resizable: false,
       renderCell: (params: any) => (
         <div>
           <Button
