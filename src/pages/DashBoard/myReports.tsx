@@ -99,6 +99,8 @@ const MyReports = () => {
 
   const [questionIdCounter, setQuestionIdCounter] = useState(1);
 
+  const [answers, setAnswers] = useState<any>({});
+
   console.log(questions);
 
   console.log(options);
@@ -151,6 +153,9 @@ const MyReports = () => {
       ...(selectedQuestionType.name === "Slider" && {
         value: sliderValues[questionIdCounter] || 8,
       }),
+      ...(selectedQuestionType.name === "Short Answer" && {
+        answer: "",
+      }),
     };
 
     // Add the new question to the list of questions
@@ -185,6 +190,21 @@ const MyReports = () => {
       (question) => question.id !== questionId
     );
     setQuestions(updatedQuestions);
+  };
+
+  const onChangeTextArea = (questionId: any, newValue: any) => {
+    setQuestions((prevQuestions) => {
+      return prevQuestions.map((question) => {
+        if (question.id === questionId && question.type === "Short Answer") {
+          return { ...question, answer: newValue };
+        }
+        return question;
+      });
+    });
+    setAnswers((prevAnswers: any) => ({
+      ...prevAnswers,
+      [questionId]: newValue,
+    }));
   };
 
   return (
@@ -231,9 +251,13 @@ const MyReports = () => {
                 {question.type === "Short Answer" && (
                   <div className="mt-2">
                     <textarea
-                      id={`question`}
-                      name={`question`}
+                      id={`question-${question.id}`}
+                      name={`question-${question.id}`}
                       className="bg-white border border-lightblue text-gray-900 text-sm rounded-lg focus:ring-mediumblue focus:border-mediumblue block w-full p-2.5 min-h-62px"
+                      value={answers[question.id] || ""}
+                      onChange={(e) =>
+                        onChangeTextArea(question.id, e.target.value)
+                      }
                     />
                   </div>
                 )}
@@ -295,10 +319,7 @@ const MyReports = () => {
                       alignItems: "center",
                     }}
                   >
-                    <div
-                      onClick={() => handleSliderChange(question.id, 8)}
-                      style={{ cursor: "pointer", fontWeight: "bold" }}
-                    >
+                    <div style={{ cursor: "pointer", fontWeight: "bold" }}>
                       {8}
                     </div>
                     <Slider
@@ -312,10 +333,7 @@ const MyReports = () => {
                         handleSliderChange(question.id, newValue as number)
                       }
                     />
-                    <div
-                      onClick={() => handleSliderChange(question.id, 14)}
-                      style={{ cursor: "pointer", fontWeight: "bold" }}
-                    >
+                    <div style={{ cursor: "pointer", fontWeight: "bold" }}>
                       {14}
                     </div>
                   </Box>
