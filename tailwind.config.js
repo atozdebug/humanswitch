@@ -41,6 +41,9 @@ export default {
         50: "50%",
         "11px": "11px",
       },
+      margin: {
+        "-140px": "-140px",
+      },
 
       backgroundImage: {
         gradient1: "linear-gradient(180deg, #6355F6, #18CBB8)",
