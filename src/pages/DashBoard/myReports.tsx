@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  DialogContentText,
-  Paper,
-  Slider,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Paper, Slider, TextField } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -99,13 +91,15 @@ const MyReports = () => {
   const [question, setQuestion] = useState("");
   const [selectedQuestionType, setSelectedQuestionType] = useState<any>({});
 
-  const [val, setVal] = useState<number>(8);
+  const [sliderValues, setSliderValues] = useState<any>({});
   const [options, setOptions] = useState(initialOptions);
   const [nextId, setNextId] = useState(3);
 
   const [questions, setQuestions] = useState<any[]>([]);
 
   const [questionIdCounter, setQuestionIdCounter] = useState(1);
+
+  console.log(questions);
 
   console.log(options);
 
@@ -121,8 +115,22 @@ const MyReports = () => {
     setOpen(false);
   };
 
-  const handleChange = (_: Event, newValue: number | number[]) => {
-    setVal(newValue as number);
+  const handleSliderChange = (questionId: number, newValue: number) => {
+    console.log("-------------", newValue, questionId);
+    // Update the slider value for the specified question
+    setQuestions((prevQuestions) => {
+      return prevQuestions.map((question) => {
+        if (question.id === questionId && question.type === "Slider") {
+          // Update the value of the slider for the matching question
+          return { ...question, value: newValue };
+        }
+        return question;
+      });
+    });
+    setSliderValues((prevSliderValues: any) => ({
+      ...prevSliderValues,
+      [questionId]: newValue,
+    }));
   };
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -140,7 +148,9 @@ const MyReports = () => {
       ...(selectedQuestionType.name === "Multiple Choice" && {
         options: initialOptions,
       }),
-      ...(selectedQuestionType.name === "Slider" && { value: val }),
+      ...(selectedQuestionType.name === "Slider" && {
+        value: sliderValues[questionIdCounter] || 8,
+      }),
     };
 
     // Add the new question to the list of questions
@@ -153,7 +163,6 @@ const MyReports = () => {
     setOpenQuestion(false);
     setOpen(false);
     setQuestion("");
-    setVal(8);
   };
 
   const handleAddOption = () => {
@@ -287,7 +296,7 @@ const MyReports = () => {
                     }}
                   >
                     <div
-                      onClick={() => setVal(8)}
+                      onClick={() => handleSliderChange(question.id, 8)}
                       style={{ cursor: "pointer", fontWeight: "bold" }}
                     >
                       {8}
@@ -295,14 +304,16 @@ const MyReports = () => {
                     <Slider
                       sx={{ width: 250 }}
                       step={1}
-                      value={val}
+                      value={sliderValues[question.id] || 8}
                       valueLabelDisplay="auto"
                       min={8}
                       max={14}
-                      onChange={handleChange}
+                      onChange={(_, newValue) =>
+                        handleSliderChange(question.id, newValue as number)
+                      }
                     />
                     <div
-                      onClick={() => setVal(14)}
+                      onClick={() => handleSliderChange(question.id, 14)}
                       style={{ cursor: "pointer", fontWeight: "bold" }}
                     >
                       {14}
