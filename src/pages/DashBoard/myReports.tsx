@@ -103,8 +103,6 @@ const MyReports = () => {
   const [maxValueErrors, setMaxValueErrors] = useState<any>({});
 
   // console.log("--------------", questions);
-  // console.log(questions);
-
   // console.log(options);
 
   const handleCloseQuestion = () => {
@@ -120,8 +118,6 @@ const MyReports = () => {
   };
 
   const handleSliderChange = (questionId: number, newValue: number) => {
-    console.log("-------------", newValue, questionId);
-    // Update the slider value for the specified question
     setSliderValues((prevSliderValues: any) => ({
       ...prevSliderValues,
       [questionId]: newValue,
@@ -219,6 +215,10 @@ const MyReports = () => {
         ...prevMinValues,
         [questionId]: false,
       }));
+      setMaxValueErrors((prevMaxValues: any) => ({
+        ...prevMaxValues,
+        [questionId]: false,
+      }));
     } else {
       setMinValueErrors((prevMinValues: any) => ({
         ...prevMinValues,
@@ -246,6 +246,10 @@ const MyReports = () => {
         ...prevMaxValues,
         [questionId]: false,
       }));
+      setMinValueErrors((prevMinValues: any) => ({
+        ...prevMinValues,
+        [questionId]: false,
+      }));
     } else {
       setMaxValueErrors((prevMaxValues: any) => ({
         ...prevMaxValues,
@@ -270,9 +274,6 @@ const MyReports = () => {
     }));
   };
 
-  console.log(minValueErrors);
-  console.log(maxValueErrors);
-
   return (
     <div className="min-h-screen flex">
       <div className="w-64 bg-gray-200">
@@ -292,8 +293,6 @@ const MyReports = () => {
         <Paper sx={{ borderRadius: "16px", py: 4, px: 6 }}>
           <div className="flex flex-col justify-center">
             {questions.map((question, index) => {
-              console.log("maxxxxxx", maxValues[question.id]);
-              console.log("minnnnnn", minValues[question.id]);
               return (
                 <div key={question.id} className="mb-8">
                   <div className="flex justify-between items-center">
