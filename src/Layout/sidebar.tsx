@@ -10,7 +10,7 @@ import LightModeIcon from "@mui/icons-material/LightMode";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { useLocation } from "react-router-dom";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { useState } from 'react';
+import { useState } from "react";
 let sideBarItems = [
   {
     name: "Dashboard",
@@ -70,7 +70,11 @@ const SideBar = () => {
     return `/${parts[1]}`;
   };
   return (
-    <div className={`max-h-100vh w-272px sidebar-main ${isSidebarOpen ? 'menu-open' : 'menu-closed'}`}>
+    <div
+      className={`max-h-100vh w-272px sidebar-main ${
+        isSidebarOpen ? "menu-open" : "menu-closed"
+      }`}
+    >
       <div className="bg-white relative h-full overflow-y-auto border-r border-[#E2E4E9] flex justify-between flex-col lft-nav">
         <div className="pt-0 pb-4">
           <div className="px-6">
@@ -82,9 +86,72 @@ const SideBar = () => {
                   height={59}
                 />
               </div>
-              <div className={`menu-bar cursor-pointer ${isSidebarOpen ? 'menu-bar-open' : 'menu-bar-closed'}`} onClick={toggleSidebar}>
-              <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlnsXlink="http://www.w3.org/1999/xlink" width="32" height="32" x="0" y="0" viewBox="0 0 384 384"  xmlSpace="preserve" className={`${isSidebarOpen ? 'hidden' : ''}`}><rect width="384" height="384" rx="76.8" ry="76.8" fill="#375dfb" shapeRendering="rounded" transform="matrix(0.99,0,0,0.99,1.920000000000016,1.920000000000016)"></rect><g transform="matrix(0.6999999999999996,0,0,0.6999999999999996,57.600000000000165,91.5998001098634)"><path d="M368 154.668H16c-8.832 0-16-7.168-16-16s7.168-16 16-16h352c8.832 0 16 7.168 16 16s-7.168 16-16 16zM368 32H16C7.168 32 0 24.832 0 16S7.168 0 16 0h352c8.832 0 16 7.168 16 16s-7.168 16-16 16zM368 277.332H16c-8.832 0-16-7.168-16-16s7.168-16 16-16h352c8.832 0 16 7.168 16 16s-7.168 16-16 16zm0 0" fill="#ffffff" opacity="1" data-original="#000000" ></path></g></svg>
-            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlnsXlink="http://www.w3.org/1999/xlink" width="32" height="32" x="0" y="0" viewBox="0 0 22.88 22.88"  xmlSpace="preserve" className={`${isSidebarOpen ? '' : 'hidden'}`}><rect width="22.88" height="22.88" rx="4.576" ry="4.576" fill="#375dfb" shapeRendering="rounded" transform="matrix(0.99,0,0,0.99,0.11439999580383287,0.11439999580383287)"></rect><g transform="matrix(0.6199999999999998,0,0,0.6199999999999998,4.347049638628961,4.347389466070457)"><path d="M.324 1.909a1.14 1.14 0 0 1 0-1.587 1.14 1.14 0 0 1 1.587 0l9.523 9.539L20.973.322a1.12 1.12 0 0 1 1.571 0 1.112 1.112 0 0 1 0 1.587l-9.523 9.524 9.523 9.539a1.112 1.112 0 0 1 0 1.587 1.12 1.12 0 0 1-1.571 0l-9.539-9.539-9.523 9.539a1.14 1.14 0 0 1-1.587 0c-.429-.444-.429-1.159 0-1.587l9.523-9.539L.324 1.909z" fill="#ffffff" data-original="#1e201d"  opacity="1"></path></g></svg>
+              <div
+                className={`menu-bar cursor-pointer ${
+                  isSidebarOpen ? "menu-bar-open" : "menu-bar-closed"
+                }`}
+                onClick={toggleSidebar}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  version="1.1"
+                  xmlnsXlink="http://www.w3.org/1999/xlink"
+                  width="32"
+                  height="32"
+                  x="0"
+                  y="0"
+                  viewBox="0 0 384 384"
+                  xmlSpace="preserve"
+                  className={`${isSidebarOpen ? "hidden" : ""}`}
+                >
+                  <rect
+                    width="384"
+                    height="384"
+                    rx="76.8"
+                    ry="76.8"
+                    fill="#375dfb"
+                    shapeRendering="rounded"
+                    transform="matrix(0.99,0,0,0.99,1.920000000000016,1.920000000000016)"
+                  ></rect>
+                  <g transform="matrix(0.6999999999999996,0,0,0.6999999999999996,57.600000000000165,91.5998001098634)">
+                    <path
+                      d="M368 154.668H16c-8.832 0-16-7.168-16-16s7.168-16 16-16h352c8.832 0 16 7.168 16 16s-7.168 16-16 16zM368 32H16C7.168 32 0 24.832 0 16S7.168 0 16 0h352c8.832 0 16 7.168 16 16s-7.168 16-16 16zM368 277.332H16c-8.832 0-16-7.168-16-16s7.168-16 16-16h352c8.832 0 16 7.168 16 16s-7.168 16-16 16zm0 0"
+                      fill="#ffffff"
+                      opacity="1"
+                      data-original="#000000"
+                    ></path>
+                  </g>
+                </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  version="1.1"
+                  xmlnsXlink="http://www.w3.org/1999/xlink"
+                  width="32"
+                  height="32"
+                  x="0"
+                  y="0"
+                  viewBox="0 0 22.88 22.88"
+                  xmlSpace="preserve"
+                  className={`${isSidebarOpen ? "" : "hidden"}`}
+                >
+                  <rect
+                    width="22.88"
+                    height="22.88"
+                    rx="4.576"
+                    ry="4.576"
+                    fill="#375dfb"
+                    shapeRendering="rounded"
+                    transform="matrix(0.99,0,0,0.99,0.11439999580383287,0.11439999580383287)"
+                  ></rect>
+                  <g transform="matrix(0.6199999999999998,0,0,0.6199999999999998,4.347049638628961,4.347389466070457)">
+                    <path
+                      d="M.324 1.909a1.14 1.14 0 0 1 0-1.587 1.14 1.14 0 0 1 1.587 0l9.523 9.539L20.973.322a1.12 1.12 0 0 1 1.571 0 1.112 1.112 0 0 1 0 1.587l-9.523 9.524 9.523 9.539a1.112 1.112 0 0 1 0 1.587 1.12 1.12 0 0 1-1.571 0l-9.539-9.539-9.523 9.539a1.14 1.14 0 0 1-1.587 0c-.429-.444-.429-1.159 0-1.587l9.523-9.539L.324 1.909z"
+                      fill="#ffffff"
+                      data-original="#1e201d"
+                      opacity="1"
+                    ></path>
+                  </g>
+                </svg>
               </div>
             </div>
           </div>

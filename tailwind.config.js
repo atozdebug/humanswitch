@@ -28,13 +28,12 @@ export default {
         success: "#5cb85c",
         error: "#FDEDF0",
         "gray-dark": "#525866",
-         "span-clr": "#375DFB",
-         "red-code" : "#DF1C41",
-         "bggreen": "#2B1664",
-         "bggreen-500": "#6E3FF3",
-         "main-heading": " #0A0D14",
-         'lightgray': '#F6F8FA'
-        
+        "span-clr": "#375DFB",
+        "red-code": "#DF1C41",
+        bggreen: "#2B1664",
+        "bggreen-500": "#6E3FF3",
+        "main-heading": " #0A0D14",
+        lightgray: "#F6F8FA",
       },
       padding: {
         100: "100%",
@@ -42,7 +41,7 @@ export default {
         50: "50%",
         "11px": "11px",
       },
-      
+
       backgroundImage: {
         gradient1: "linear-gradient(180deg, #6355F6, #18CBB8)",
         "g-success": "linear-gradient(180deg, #5cb85c, #3d743d)",
@@ -51,8 +50,8 @@ export default {
         "n1/2": "-50%",
       },
       borderRadius: {
-        '20': '20px',
-        '10': '10px',
+        20: "20px",
+        10: "10px",
       },
       maxWidth: {
         "250px": "250px",
@@ -84,27 +83,23 @@ export default {
       width: {
         60: "60%",
         "250px": "250px",
-        '272px': '272px'
+        "272px": "272px",
       },
       boxShadow: {
         inside: "inset 0 0 15px #6355f64f",
       },
       minwidth: {
-        '168px': '168px',
-        123: "123px", 
-    },
-    padding: {
-      '20px': '20px',
-      '18px': '18px'
-    },
-    margin: {
-      '20px': '20px'
-    },
+        "168px": "168px",
+        123: "123px",
+      },
+      padding: {
+        "20px": "20px",
+        "18px": "18px",
+      },
+      margin: {
+        "20px": "20px",
+      },
     },
   },
   plugins: [require("flowbite/plugin")],
 };
-
-
-
-
