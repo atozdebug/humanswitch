@@ -150,15 +150,12 @@ const MyReports = () => {
       ...prevMaxValues,
       [questionIdCounter]: 14,
     }));
-
     setMinValues((prevMinValues: any) => ({
       ...prevMinValues,
       [questionIdCounter]: 8,
     }));
 
-    // Add the new question to the list of questions
     setQuestions((prevQuestions) => [...prevQuestions, newQuestion]);
-
     setQuestionIdCounter((prevId) => prevId + 1);
 
     setOpenQuestion(false);
@@ -171,7 +168,6 @@ const MyReports = () => {
       id: nextId,
       name: `Option ${nextId}`,
     };
-
     setNextId((prevId) => prevId + 1);
     setOptions((prevOptions) => [...prevOptions, newOption]);
   };
@@ -182,7 +178,6 @@ const MyReports = () => {
   };
 
   const handleRemoveQuestion = (questionId: number) => {
-    // Remove the question with the specified ID from the list
     const updatedQuestions = questions.filter(
       (question) => question.id !== questionId
     );
