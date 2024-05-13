@@ -4,6 +4,7 @@ import Modal from "../../components/Pillars/Modal";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { getQuestions } from "../../services/slices/dashboard/dashboard";
+import { Box, Slider } from "@mui/material";
 
 const sideBarItems = [
   {
@@ -24,7 +25,7 @@ const sideBarItems = [
   },
   {
     id: 3,
-    name: "Budget/ROI",
+    name: "Budget-ROI",
     description:
       "Defining a sharp vision that embraces both business success and social responsibility.",
     icon: <PersonIcon />,
@@ -56,7 +57,7 @@ const sideBarItems = [
   },
   {
     id: 7,
-    name: "Partners/Suppliers",
+    name: "Partners-Suppliers",
     description:
       "Defining a sharp vision that embraces both business success and social responsibility.",
     icon: <PersonIcon />,
@@ -64,7 +65,7 @@ const sideBarItems = [
   },
   {
     id: 8,
-    name: "Data/ICT",
+    name: "Data-ICT",
     description:
       "Defining a sharp vision that embraces both business success and social responsibility.",
     icon: <PersonIcon />,
@@ -110,14 +111,25 @@ const sideBarItems = [
 ];
 
 const Pillars = () => {
-  const data: any = useSelector((state: any) => state.dashboard?.getData) || [];
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getQuestions());
+    dispatch(getQuestions())
+      .unwrap()
+      .then((res: any) => {
+        res.forEach((item: any) => {
+          const chapter: any = sideBarItems.find(
+            (x) => x.name === item.chapters
+          );
+
+          if (chapter) {
+            chapter.questions = [...item.question];
+          }
+        });
+      });
   }, []);
 
-  console.log("----------------", data);
+  console.log("----------------", sideBarItems);
 
   // const [activeSection, setActiveSection] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -627,27 +639,113 @@ const Pillars = () => {
                             htmlFor={`question-${step - 1}-${index}`}
                             className="block text-sm font-medium leading-6 text-gray-900"
                           >
-                            {question.question}
+                            {question.text}
                           </label>
                           <div className="mt-2">
-                            <textarea
-                              id={`question-${step - 1}-${index}`}
-                              name={`question-${step - 1}-${index}`}
-                              className="bg-white border border-lightblue text-gray-900 text-sm rounded-lg focus:ring-mediumblue focus:border-mediumblue block w-full p-2.5 min-h-62px"
-                              // Bind value to the state property for this question
-                              value={
-                                stepAnswers[step - 1]?.[`question-${index}`] ||
-                                ""
-                              }
-                              // Handle input changes to update state
-                              onChange={(e) =>
-                                handleInputChange(
-                                  step - 1,
-                                  `question-${index}`,
-                                  e
-                                )
-                              }
-                            />
+                            {question.type === "Short Answer" && (
+                              <textarea
+                                id={`question-${step - 1}-${index}`}
+                                name={`question-${step - 1}-${index}`}
+                                className="bg-white border border-lightblue text-gray-900 text-sm rounded-lg focus:ring-mediumblue focus:border-mediumblue block w-full p-2.5 min-h-62px"
+                                // Bind value to the state property for this question
+                                value={
+                                  stepAnswers[step - 1]?.[
+                                    `question-${index}`
+                                  ] || ""
+                                }
+                                // Handle input changes to update state
+                                onChange={(e) =>
+                                  handleInputChange(
+                                    step - 1,
+                                    `question-${index}`,
+                                    e
+                                  )
+                                }
+                              />
+                            )}
+                            {question.type === "Multiple Choice" && (
+                              <div className="mt-2">
+                                <div className="flex">
+                                  <div className="mt-2 w-96">
+                                    {question.options.map((option: any) => {
+                                      console.log(option.name);
+                                      return (
+                                        <div
+                                          key={option.id}
+                                          className={`flex items-center content-center gap-4 border p-4 mb-4 rounded-xl`}
+                                        >
+                                          <input
+                                            id="default-radio-1"
+                                            type="radio"
+                                            value={option.name}
+                                            name="default-radio"
+                                            className="w-4 h-4 text-blue-600 bg-gray-100  dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:bg-gray-700"
+                                          />
+                                          <h2 className="font-medium text-sm text-start">
+                                            {option.name}
+                                          </h2>
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+                            {question.type === "Slider" && (
+                              <Box
+                                sx={{
+                                  display: "flex",
+                                  gap: 4,
+                                  mt: 2,
+                                  alignItems: "center",
+                                }}
+                              >
+                                <div
+                                  style={{
+                                    cursor: "pointer",
+                                  }}
+                                >
+                                  <div
+                                    style={{
+                                      cursor: "pointer",
+                                      fontWeight: "bold",
+                                      display: "flex",
+                                      alignItems: "center",
+                                      gap: 4,
+                                    }}
+                                  >
+                                    {question.min}
+                                    <div>Min</div>
+                                  </div>
+                                </div>
+                                <Slider
+                                  sx={{ width: 250 }}
+                                  step={question.steps}
+                                  valueLabelDisplay="auto"
+                                  min={question.min}
+                                  max={question.max}
+                                  marks
+                                />
+                                <div
+                                  style={{
+                                    cursor: "pointer",
+                                  }}
+                                >
+                                  <div
+                                    style={{
+                                      cursor: "pointer",
+                                      fontWeight: "bold",
+                                      display: "flex",
+                                      alignItems: "center",
+                                      gap: 4,
+                                    }}
+                                  >
+                                    {question.max}
+                                    <div>Max</div>
+                                  </div>
+                                </div>
+                              </Box>
+                            )}
                           </div>
                         </div>
                       )
@@ -875,7 +973,7 @@ const Pillars = () => {
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 512 512"
-                        stroke-width="2"
+                        strokeWidth="2"
                         stroke="currentColor"
                         aria-hidden="true"
                         className="h-5 w-5"
