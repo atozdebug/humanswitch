@@ -2,6 +2,8 @@ import { useState, useRef, useEffect } from "react";
 import PersonIcon from "@mui/icons-material/Person";
 import Modal from "../../components/Pillars/Modal";
 import Cookies from "js-cookie";
+import { useDispatch, useSelector } from "react-redux";
+import { getQuestions } from "../../services/slices/dashboard/dashboard";
 
 const sideBarItems = [
   {
@@ -10,36 +12,7 @@ const sideBarItems = [
     description:
       "Defining a sharp vision that embraces both business success and social responsibility.",
     icon: <PersonIcon />,
-    questions: [
-      {
-        question:
-          "In hoeverre is de AI-strategie van uw organisatie afgestemd op de algemene bedrijfsstrategie? Opties: Zeer goed uitgelijnd, Meestal uitgelijnd, Neutraal, Meestal verkeerd uitgelijnd, Helemaal niet uitgelijnd",
-      },
-      {
-        question:
-          "Hoe toegewijd is het leiderschap van uw organisatie aan het implementeren van AI-initiatieven? Opties: Zeer toegewijd, toegewijd, neutraal, enigszins toegewijd, niet toegewijd",
-      },
-      {
-        question:
-          "Hoe is risicobeheer geïntegreerd in de AI-strategie van uw organisatie? Opties: Volledig geïntegreerd, Gedeeltelijk geïntegreerd, Neutraal, Gedeeltelijk niet geïntegreerd, Helemaal niet geïntegreerd",
-      },
-      {
-        question:
-          "Kunt u beschrijven hoe de AI-strategie van uw organisatie momenteel wordt ontwikkeld en geïmplementeerd?",
-      },
-      {
-        question:
-          "Welke obstakels ziet u binnen uw organisatie voor het succesvol implementeren van AI-initiatieven?",
-      },
-      {
-        question:
-          "Hoe denkt u dat AI kan bijdragen aan het behalen van de langetermijndoelstellingen van uw organisatie?",
-      },
-      {
-        question:
-          "Wat zijn volgens u de belangrijkste aspecten waarmee rekening moet worden gehouden bij het ontwikkelen van een AI-strategie?",
-      },
-    ],
+    questions: [],
   },
   {
     id: 2,
@@ -47,6 +20,7 @@ const sideBarItems = [
     description:
       "Defining a sharp vision that embraces both business success and social responsibility.",
     icon: <PersonIcon />,
+    questions: [],
   },
   {
     id: 3,
@@ -54,6 +28,7 @@ const sideBarItems = [
     description:
       "Defining a sharp vision that embraces both business success and social responsibility.",
     icon: <PersonIcon />,
+    questions: [],
   },
   {
     id: 4,
@@ -61,20 +36,7 @@ const sideBarItems = [
     description:
       "Defining a sharp vision that embraces both business success and social responsibility.",
     icon: <PersonIcon />,
-    questions: [
-      {
-        question:
-          "Hoe zou u de organisatiecultuur met betrekking tot de adoptie en innovatie van AI omschrijven?",
-      },
-      {
-        question:
-          "Welke maatregelen zijn er getroffen om top AI-talent binnen uw organisatie aan te trekken en te behouden?",
-      },
-      {
-        question:
-          "Hoe investeert uw organisatie in het opleiden en ontwikkelen van medewerkers in AI-gerelateerde vaardigheden?",
-      },
-    ],
+    questions: [],
   },
   {
     id: 5,
@@ -82,6 +44,7 @@ const sideBarItems = [
     description:
       "Defining a sharp vision that embraces both business success and social responsibility.",
     icon: <PersonIcon />,
+    questions: [],
   },
   {
     id: 6,
@@ -89,24 +52,7 @@ const sideBarItems = [
     description:
       "Defining a sharp vision that embraces both business success and social responsibility.",
     icon: <PersonIcon />,
-    questions: [
-      {
-        question:
-          "Voldoet uw organisatie aan de relevante regelgeving en standaarden met betrekking tot AI-implementatie?",
-      },
-      {
-        question:
-          "Welke procedures zijn er om regelmatig de naleving van nieuwe en bestaande AI-regelgeving te beoordelen en te garanderen?",
-      },
-      {
-        question:
-          "Hoe gaat uw organisatie om met gegevensprivacy en ethische kwesties tijdens de AI-implementatie?",
-      },
-      {
-        question:
-          "Beschikt uw organisatie over een gestructureerd raamwerk voor het controleren en beperken van risico’s met betrekking tot AI-compliance?",
-      },
-    ],
+    questions: [],
   },
   {
     id: 7,
@@ -114,6 +60,7 @@ const sideBarItems = [
     description:
       "Defining a sharp vision that embraces both business success and social responsibility.",
     icon: <PersonIcon />,
+    questions: [],
   },
   {
     id: 8,
@@ -150,6 +97,7 @@ const sideBarItems = [
     description:
       "Defining a sharp vision that embraces both business success and social responsibility.",
     icon: <PersonIcon />,
+    questions: [],
   },
   {
     id: 10,
@@ -157,11 +105,21 @@ const sideBarItems = [
     description:
       "Defining a sharp vision that embraces both business success and social responsibility.",
     icon: <PersonIcon />,
+    questions: [],
   },
 ];
 
 const Pillars = () => {
-  const [activeSection, setActiveSection] = useState(null);
+  const data: any = useSelector((state: any) => state.dashboard?.getData) || [];
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getQuestions());
+  }, []);
+
+  console.log("----------------", data);
+
+  // const [activeSection, setActiveSection] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [stepAnswers, setStepAnswers] = useState<any>(() => {
     // Try to get the data from cookies
@@ -186,10 +144,6 @@ const Pillars = () => {
     }
   });
 
-  const value = Cookies.get("questionnaireData");
-
-  console.log("value", value);
-
   const handleInputChange = (
     step: number,
     questionId: string,
@@ -209,8 +163,6 @@ const Pillars = () => {
     }));
   };
 
-  console.log(stepAnswers);
-
   const section2Ref = useRef(null);
 
   const [isActive, setIsActive] = useState(false);
@@ -223,7 +175,7 @@ const Pillars = () => {
   const observerCallback = (entries: any) => {
     entries.forEach((entry: any) => {
       if (entry.isIntersecting) {
-        setActiveSection(entry.target.id);
+        // setActiveSection(entry.target.id);
       }
     });
   };
