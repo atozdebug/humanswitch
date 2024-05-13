@@ -108,8 +108,6 @@ const Pillars = () => {
       });
   }, []);
 
-  console.log("----------------", sideBarItems);
-
   // const [activeSection, setActiveSection] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [stepAnswers, setStepAnswers] = useState<any>(() => {
@@ -135,24 +133,7 @@ const Pillars = () => {
     }
   });
 
-  const handleInputChange = (
-    step: number,
-    questionId: string,
-    event: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
-  ) => {
-    const { value } = event.target;
-
-    // Update the state with the new value for the corresponding step and question
-    setStepAnswers((prevStepAnswers: any) => ({
-      ...prevStepAnswers,
-      [step]: {
-        ...prevStepAnswers[step],
-        [questionId]: value,
-      },
-    }));
-  };
+  console.log(stepAnswers);
 
   const section2Ref = useRef(null);
 
@@ -218,6 +199,22 @@ const Pillars = () => {
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
+  };
+
+  const handleInputChange = (
+    step: number,
+    questionId: string,
+    value: any // Value will be the selected option in MCQ
+  ) => {
+    // Update the state with the selected option for the corresponding step and question
+    console.log(value);
+    setStepAnswers((prevStepAnswers: any) => ({
+      ...prevStepAnswers,
+      [step]: {
+        ...prevStepAnswers[step],
+        [questionId]: value,
+      },
+    }));
   };
 
   return (
@@ -637,7 +634,7 @@ const Pillars = () => {
                                   handleInputChange(
                                     step - 1,
                                     `question-${index}`,
-                                    e
+                                    e.target.value
                                   )
                                 }
                               />
@@ -647,17 +644,29 @@ const Pillars = () => {
                                 <div className="flex">
                                   <div className="mt-2">
                                     {question.options.map((option: any) => {
-                                      console.log(option.name);
                                       return (
                                         <div
                                           key={option.id}
                                           className={`flex items-center content-center gap-4 border p-4 mb-4 rounded-xl`}
                                         >
                                           <input
-                                            id="default-radio-1"
+                                            id={`question-${step - 1}-${index}`}
                                             type="radio"
-                                            value={option.name}
-                                            name="default-radio"
+                                            value={
+                                              stepAnswers[step - 1]?.[
+                                                `question-${index}`
+                                              ] || option.name
+                                            }
+                                            name={`question-${
+                                              step - 1
+                                            }-${index}`}
+                                            onChange={(e) =>
+                                              handleInputChange(
+                                                step - 1,
+                                                `question-${index}`,
+                                                e.target.value // Pass the selected option value
+                                              )
+                                            }
                                             className="w-4 h-4 text-blue-600 bg-gray-100  dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:bg-gray-700"
                                           />
                                           <h2 className="font-medium text-sm text-start">
@@ -701,9 +710,22 @@ const Pillars = () => {
                                   sx={{ width: 250 }}
                                   step={question.steps}
                                   valueLabelDisplay="auto"
+                                  value={
+                                    stepAnswers[step - 1]?.[
+                                      `question-${index}`
+                                    ] || ""
+                                  }
                                   min={question.min}
                                   max={question.max}
                                   marks
+                                  onChange={
+                                    (_event, value) =>
+                                      handleInputChange(
+                                        step - 1,
+                                        `question-${index}`,
+                                        value
+                                      ) // Pass the selected value
+                                  }
                                 />
                                 <div
                                   style={{
