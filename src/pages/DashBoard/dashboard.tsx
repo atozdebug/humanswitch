@@ -1,4 +1,3 @@
-import { Button } from "@mui/material";
 import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import TextField from "@mui/material/TextField";
@@ -213,21 +212,19 @@ const Dashboard = () => {
       resizable: false,
       renderCell: (params: any) => (
         <div>
-          <Button
-            variant="contained"
-            color="error"
+          <div
+            className="rounded bg-red-500 hover:bg-red-700 py-2 px-4 text-white font-semibold"
             onClick={() => handleDeleteRow(params.row.id)}
           >
             Delete
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
+          </div>
+          <div
+            className="rounded bg-blue-500 hover:bg-blue-700 py-2 px-4 text-white font-semibold"
             onClick={() => handleUpdateRow(params.row.id)}
             style={{ marginLeft: "10px" }}
           >
             Update
-          </Button>
+          </div>
         </div>
       ),
     },
@@ -264,9 +261,12 @@ const Dashboard = () => {
   return (
     <div className="max-h-vhcalc88px overflow-y-auto min-h-vhcalc88px p-8">
       <div className="w-full flex justify-end items-start mb-8">
-        <Button variant="contained" onClick={handleClickOpen}>
+        <div
+          className="rounded bg-green-500 hover:bg-green-700 py-2 px-4 text-white font-semibold"
+          onClick={handleClickOpen}
+        >
           Create
-        </Button>
+        </div>
       </div>
       <Box className="gap-4 flex w-full justify-end items-center">
         <div className="text-lg font-semibold">Filters :</div>
@@ -367,8 +367,18 @@ const Dashboard = () => {
           </div>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit">{isUpdating ? "Update" : "Create"}</Button>
+          <div
+            className="rounded bg-red-500 hover:bg-red-700 py-2 px-4 text-white font-semibold"
+            onClick={handleClose}
+          >
+            Cancel
+          </div>
+          <button
+            className="rounded bg-green-500 hover:bg-green-700 py-2 px-4 text-white font-semibold"
+            type="submit"
+          >
+            {isUpdating ? "Update" : "Create"}
+          </button>
         </DialogActions>
       </Dialog>
     </div>

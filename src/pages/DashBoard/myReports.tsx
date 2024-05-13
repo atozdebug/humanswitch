@@ -1,4 +1,4 @@
-import { Box, Button, Paper, Slider, TextField } from "@mui/material";
+import { Box, Paper, Slider, TextField } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -9,6 +9,7 @@ import ToggleOnIcon from "@mui/icons-material/ToggleOn";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import CancelIcon from "@mui/icons-material/Cancel";
 import DeleteIcon from "@mui/icons-material/Delete";
+import toast from "react-hot-toast";
 
 const chapters = [
   {
@@ -75,7 +76,7 @@ const questionType = [
 ];
 
 const MyReports = () => {
-  const [selectedChapter, setSelectedChapter] = useState("");
+  const [selectedChapter, setSelectedChapter] = useState("Strategy");
   const [open, setOpen] = useState(false);
   const [openQuestion, setOpenQuestion] = useState(false);
   const [question, setQuestion] = useState("");
@@ -90,8 +91,8 @@ const MyReports = () => {
   const [steps, setSteps] = useState<any>({});
   const [minValueErrors, setMinValueErrors] = useState<any>({});
   const [maxValueErrors, setMaxValueErrors] = useState<any>({});
-
-  console.log("--------------", questions);
+  const [chapterQuestions, setChapterQuestions] = useState<any>([]);
+  const [saveVisible, setSaveVisible] = useState<any>(true);
 
   const handleCloseQuestion = () => {
     setOpenQuestion(false);
@@ -128,7 +129,7 @@ const MyReports = () => {
         options: [
           {
             id: nextId,
-            name: `Option ${nextId}`,
+            name: `Option`,
           },
           {
             id: nextId + 1,
@@ -160,6 +161,7 @@ const MyReports = () => {
     setOpenQuestion(false);
     setOpen(false);
     setQuestion("");
+    setSaveVisible(true);
   };
 
   const handleAddOption = (questionId: number) => {
@@ -318,7 +320,29 @@ const MyReports = () => {
     });
   };
 
-  console.log(selectedChapter);
+  console.log(chapterQuestions);
+
+  const handleSaveData = () => {
+    const chapterIndex = chapterQuestions.findIndex(
+      (chapter: any) => chapter.name === selectedChapter
+    );
+
+    const currentQuestions = [...questions];
+
+    if (chapterIndex !== -1) {
+      chapterQuestions[chapterIndex].questions = currentQuestions;
+    } else {
+      chapterQuestions.push({
+        name: selectedChapter,
+        questions: currentQuestions,
+      });
+    }
+    toast.success(
+      "Questions saved successfully! You can continue adding questions to this chapter or select a new chapter to add questions in and the you can click 'Publish Questions' button to save the data!"
+    );
+    setChapterQuestions([...chapterQuestions]);
+    setSaveVisible(false);
+  };
 
   return (
     <div className="min-h-screen flex">
@@ -328,9 +352,18 @@ const MyReports = () => {
           {chapters.map((chapter) => (
             <div
               key={chapter.value}
-              onClick={() => setSelectedChapter(chapter.name)}
+              onClick={() => {
+                setSelectedChapter(chapter.name);
+                setQuestions(() => {
+                  const cht = chapterQuestions.find(
+                    (chap: any) => chap.name === chapter.name
+                  );
+                  console.log("----------------", cht);
+                  return cht?.questions || [];
+                });
+              }}
               className={`px-2 py-2 hover:bg-slate-600 rounded-lg mx-6 my-2 ${
-                selectedChapter === chapter.name ? "bg-slate-600" : ""
+                selectedChapter === chapter.name ? "bg-slate-400" : ""
               }`}
             >
               {chapter.name}
@@ -349,8 +382,8 @@ const MyReports = () => {
             {questions.map((question, index) => {
               return (
                 <div key={question.id} className="mb-8">
-                  <div className="font-semibold mb-2">
-                    Questions for {selectedChapter}
+                  <div className="font-semibold mb-2 flex w-full justify-between items-center">
+                    <div>Questions for {selectedChapter}</div>
                   </div>
                   <div className="flex justify-between items-center">
                     <div>
@@ -364,13 +397,12 @@ const MyReports = () => {
                       <div className="ml-[35px]">{question.text}</div>
                     </div>
                     <div>
-                      <Button
-                        size="small"
-                        color="error"
+                      <div
+                        className="text-red-600 p-2 hover:bg-gray-100 rounded-full"
                         onClick={() => handleRemoveQuestion(question.id)}
                       >
                         <DeleteIcon />
-                      </Button>
+                      </div>
                     </div>
                   </div>
                   {question.type === "Short Answer" && (
@@ -420,15 +452,14 @@ const MyReports = () => {
                               </div>
                               <div>
                                 {question.options.length > 2 && (
-                                  <Button
+                                  <div
                                     onClick={() =>
                                       handleRemoveOption(question.id, option.id)
                                     }
-                                    size="small"
-                                    color="error"
+                                    className="text-red-600 rounded-full hover:bg-gray-100"
                                   >
                                     <CancelIcon />
-                                  </Button>
+                                  </div>
                                 )}
                               </div>
                             </div>
@@ -437,12 +468,12 @@ const MyReports = () => {
                       </div>
                       <div>
                         {question.options.length < 4 && (
-                          <Button
-                            sx={{ fontWeight: "bold" }}
+                          <button
+                            className="text-blue-600 font-semibold hover:bg-gray-200 px-3 py-1 rounded-md"
                             onClick={() => handleAddOption(question.id)}
                           >
                             Add Option
-                          </Button>
+                          </button>
                         )}
                       </div>
                     </div>
@@ -552,10 +583,21 @@ const MyReports = () => {
                 </div>
               );
             })}
-            <div className="flex justify-center items-center mt-4">
-              <Button variant="contained" onClick={handleClickOpen}>
+            <div className="flex gap-4 justify-center items-center mt-4">
+              <div
+                className="rounded bg-blue-500 hover:bg-blue-700 py-2 px-4 text-white font-semibold"
+                onClick={handleClickOpen}
+              >
                 Add Questions
-              </Button>
+              </div>
+              {questions.length !== 0 && saveVisible && (
+                <div
+                  onClick={() => handleSaveData()}
+                  className="rounded bg-purple-500 hover:bg-purple-700 py-2 px-4 text-white font-semibold"
+                >
+                  Save
+                </div>
+              )}
             </div>
           </div>
         </Paper>
@@ -567,7 +609,7 @@ const MyReports = () => {
             {questionType.map((ques) => (
               <div
                 key={ques.id}
-                className="p-4 my-2 rounded-xl hover:bg-blue-200 flex items-center gap-4"
+                className="p-4 mt-2 rounded-xl hover:bg-blue-200 flex items-center gap-4"
                 onClick={() => {
                   setOpenQuestion(true);
                   setSelectedQuestionType(ques);
@@ -580,7 +622,12 @@ const MyReports = () => {
           </div>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Close</Button>
+          <div
+            className="rounded bg-blue-500 hover:bg-blue-700 py-2 px-4 mb-2 mr-2 text-white font-semibold"
+            onClick={handleClose}
+          >
+            Close
+          </div>
         </DialogActions>
       </Dialog>
       <Dialog
@@ -623,10 +670,16 @@ const MyReports = () => {
           </div>
         </DialogContent>
         <DialogActions>
-          <button className="p-4" onClick={handleCloseQuestion}>
+          <button
+            className="px-4 py-2 rounded-md hover:bg-gray-200 text-red-600"
+            onClick={handleCloseQuestion}
+          >
             Cancel
           </button>
-          <button className="p-4" type="submit">
+          <button
+            className="px-4 py-2 rounded-md hover:bg-gray-200 mr-2"
+            type="submit"
+          >
             Create
           </button>
         </DialogActions>
