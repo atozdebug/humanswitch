@@ -159,6 +159,7 @@ const sideBarItems = [
     icon: <PersonIcon />,
   },
 ];
+
 const Pillars = () => {
   const [activeSection, setActiveSection] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -242,7 +243,6 @@ const Pillars = () => {
   }, []);
 
   const handleSkip = () => {
-    // Increment the step and update the stepsTick array without saving data to cookies
     setStep((prev) => prev + 1);
     setStepsTick((prev: any) => [...prev, step]);
   };
@@ -250,16 +250,12 @@ const Pillars = () => {
   const handleNext = () => {
     const currentStepAnswers = stepAnswers[step - 1];
 
-    // Retrieve existing data from the cookies
     let existingData = Cookies.get("questionnaireData");
 
-    // If there is existing data, parse it as an array, otherwise initialize it as an empty array
     let data = existingData ? JSON.parse(existingData) : [];
 
-    // Add the current step answers to the data array
     data.push(currentStepAnswers);
 
-    // Save the updated data array to the cookies as a JSON string
     Cookies.set("questionnaireData", JSON.stringify(data));
 
     if (data.length === 3) {

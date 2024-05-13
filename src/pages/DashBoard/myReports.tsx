@@ -10,6 +10,8 @@ import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import CancelIcon from "@mui/icons-material/Cancel";
 import DeleteIcon from "@mui/icons-material/Delete";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { createQuestions } from "../../services/slices/dashboard/dashboard";
 
 const chapters = [
   {
@@ -76,6 +78,7 @@ const questionType = [
 ];
 
 const MyReports = () => {
+  const dispatch: any = useDispatch();
   const [selectedChapter, setSelectedChapter] = useState("Strategy");
   const [open, setOpen] = useState(false);
   const [openQuestion, setOpenQuestion] = useState(false);
@@ -138,9 +141,9 @@ const MyReports = () => {
         ],
       }),
       ...(selectedQuestionType.name === "Slider" && {
-        min: 8,
-        max: 14,
-        steps: 1,
+        min: 10,
+        max: 20,
+        steps: 5,
       }),
     };
 
@@ -148,11 +151,11 @@ const MyReports = () => {
 
     setMaxValues((prevMaxValues: any) => ({
       ...prevMaxValues,
-      [questionIdCounter]: 14,
+      [questionIdCounter]: 20,
     }));
     setMinValues((prevMinValues: any) => ({
       ...prevMinValues,
-      [questionIdCounter]: 8,
+      [questionIdCounter]: 10,
     }));
 
     setQuestions((prevQuestions) => [...prevQuestions, newQuestion]);
@@ -183,6 +186,7 @@ const MyReports = () => {
         return question;
       });
     });
+    setSaveVisible(true);
   };
 
   const handleRemoveOption = (questionId: number, optionId: number) => {
@@ -200,6 +204,7 @@ const MyReports = () => {
         return question;
       });
     });
+    setSaveVisible(true);
   };
 
   const handleRemoveQuestion = (questionId: number) => {
@@ -207,6 +212,7 @@ const MyReports = () => {
       (question) => question.id !== questionId
     );
     setQuestions(updatedQuestions);
+    setSaveVisible(true);
   };
 
   const onChangeTextArea = (questionId: any, newValue: any) => {
@@ -214,6 +220,7 @@ const MyReports = () => {
       ...prevAnswers,
       [questionId]: newValue,
     }));
+    setSaveVisible(true);
   };
 
   const changeMinValue = (questionId: any, minVal: any) => {
@@ -245,6 +252,7 @@ const MyReports = () => {
         [questionId]: true,
       }));
     }
+    setSaveVisible(true);
   };
 
   const changeMaxValue = (questionId: any, maxVal: any) => {
@@ -276,6 +284,7 @@ const MyReports = () => {
         [questionId]: true,
       }));
     }
+    setSaveVisible(true);
   };
 
   const changeStepsValue = (questionId: any, steps: any) => {
@@ -292,6 +301,7 @@ const MyReports = () => {
       ...prevStepsValues,
       [questionId]: stepsValue,
     }));
+    setSaveVisible(true);
   };
 
   const onChangeOptionText = (
@@ -318,6 +328,7 @@ const MyReports = () => {
         return question;
       });
     });
+    setSaveVisible(true);
   };
 
   console.log(chapterQuestions);
@@ -344,6 +355,18 @@ const MyReports = () => {
     setSaveVisible(false);
   };
 
+  const handlePublish = () => {
+    dispatch(createQuestions(chapterQuestions))
+      .unwrap()
+      .then(() => {
+        try {
+          toast.success("Data published successfully!");
+        } catch (err: any) {
+          toast.error(err);
+        }
+      });
+  };
+
   return (
     <div className="min-h-screen flex">
       <div className="w-64 bg-gray-200">
@@ -353,14 +376,45 @@ const MyReports = () => {
             <div
               key={chapter.value}
               onClick={() => {
-                setSelectedChapter(chapter.name);
-                setQuestions(() => {
-                  const cht = chapterQuestions.find(
-                    (chap: any) => chap.name === chapter.name
-                  );
-                  console.log("----------------", cht);
-                  return cht?.questions || [];
-                });
+                if (saveVisible === true) {
+                  toast((t) => (
+                    <span>
+                      You have still not saved your changes. Are you sure you
+                      want to <b>continue?</b> <br />
+                      <button
+                        className=" border rounded-lg mt-2 px-2"
+                        onClick={() => {
+                          setSelectedChapter(chapter.name);
+                          setQuestions(() => {
+                            const cht = chapterQuestions.find(
+                              (chap: any) => chap.name === chapter.name
+                            );
+
+                            return cht?.questions || [];
+                          });
+                          toast.dismiss(t.id);
+                        }}
+                      >
+                        Yes
+                      </button>
+                      <button
+                        onClick={() => toast.dismiss(t.id)}
+                        className="ml-2 border rounded-lg mt-2 px-2"
+                      >
+                        No
+                      </button>
+                    </span>
+                  ));
+                } else {
+                  setSelectedChapter(chapter.name);
+                  setQuestions(() => {
+                    const cht = chapterQuestions.find(
+                      (chap: any) => chap.name === chapter.name
+                    );
+
+                    return cht?.questions || [];
+                  });
+                }
               }}
               className={`px-2 py-2 hover:bg-slate-600 rounded-lg mx-6 my-2 ${
                 selectedChapter === chapter.name ? "bg-slate-400" : ""
@@ -373,7 +427,11 @@ const MyReports = () => {
       </div>
       <div className="p-6 w-full">
         <div className=" w-full flex justify-end">
-          <button className="rounded bg-purple-500 hover:bg-purple-700 py-2 px-4 mb-4 text-white font-semibold">
+          <button
+            onClick={handlePublish}
+            disabled={saveVisible === true}
+            className="rounded bg-purple-500 hover:bg-purple-700 py-2 px-4 mb-4 text-white font-semibold disabled:bg-gray-400"
+          >
             Publish Questions
           </button>
         </div>
@@ -504,7 +562,7 @@ const MyReports = () => {
                         >
                           <input
                             name="minValue"
-                            value={minValues[question.id] || 8}
+                            value={minValues[question.id] || 10}
                             onChange={(e) =>
                               changeMinValue(question.id, e.target.value)
                             }
@@ -523,11 +581,11 @@ const MyReports = () => {
 
                       <Slider
                         sx={{ width: 250 }}
-                        step={steps[question.id] || 1}
-                        value={sliderValues[question.id] || 8}
+                        step={steps[question.id] || 5}
+                        value={sliderValues[question.id] || 10}
                         valueLabelDisplay="auto"
-                        min={minValues[question.id] || 8}
-                        max={maxValues[question.id] || 14}
+                        min={minValues[question.id] || 10}
+                        max={maxValues[question.id] || 20}
                         onChange={(_, newValue) =>
                           handleSliderChange(question.id, newValue as number)
                         }
@@ -549,7 +607,7 @@ const MyReports = () => {
                         >
                           <input
                             name="maxValue"
-                            value={maxValues[question.id] || 14}
+                            value={maxValues[question.id] || 20}
                             onChange={(e) =>
                               changeMaxValue(question.id, e.target.value)
                             }
@@ -570,7 +628,7 @@ const MyReports = () => {
                         </div>
                         <input
                           name="steps"
-                          defaultValue={steps[question.id] || 1}
+                          defaultValue={steps[question.id] || 5}
                           onChange={(e) =>
                             changeStepsValue(question.id, e.target.value)
                           }
