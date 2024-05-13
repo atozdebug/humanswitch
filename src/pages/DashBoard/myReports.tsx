@@ -76,11 +76,11 @@ const questionType = [
 
 const initialOptions = [
   {
-    id: 1,
+    id: 0,
     name: "Option 1",
   },
   {
-    id: 2,
+    id: 1,
     name: "Option 2",
   },
 ];
@@ -91,8 +91,7 @@ const MyReports = () => {
   const [question, setQuestion] = useState("");
   const [selectedQuestionType, setSelectedQuestionType] = useState<any>({});
   const [sliderValues, setSliderValues] = useState<any>({});
-  const [options, setOptions] = useState(initialOptions);
-  const [nextId, setNextId] = useState(3);
+  const [nextId, setNextId] = useState(0);
   const [questions, setQuestions] = useState<any[]>([]);
   const [questionIdCounter, setQuestionIdCounter] = useState(1);
   const [answers, setAnswers] = useState<any>({});
@@ -102,7 +101,7 @@ const MyReports = () => {
   const [minValueErrors, setMinValueErrors] = useState<any>({});
   const [maxValueErrors, setMaxValueErrors] = useState<any>({});
 
-  // console.log("--------------", questions);
+  console.log("--------------", questions);
   // console.log(options);
 
   const handleCloseQuestion = () => {
@@ -137,7 +136,16 @@ const MyReports = () => {
       text: question,
       color: selectedQuestionType.color,
       ...(selectedQuestionType.name === "Multiple Choice" && {
-        options: initialOptions,
+        options: [
+          {
+            id: nextId,
+            name: `Option ${nextId}`,
+          },
+          {
+            id: nextId + 1,
+            name: `Option ${nextId + 1}`,
+          },
+        ],
       }),
       ...(selectedQuestionType.name === "Slider" && {
         min: 8,
@@ -145,6 +153,8 @@ const MyReports = () => {
         steps: 1,
       }),
     };
+
+    setNextId((prevId) => prevId + 2);
 
     setMaxValues((prevMaxValues: any) => ({
       ...prevMaxValues,
@@ -163,18 +173,42 @@ const MyReports = () => {
     setQuestion("");
   };
 
-  const handleAddOption = () => {
+  const handleAddOption = (questionId: number) => {
     const newOption = {
       id: nextId,
       name: `Option ${nextId}`,
     };
     setNextId((prevId) => prevId + 1);
-    setOptions((prevOptions) => [...prevOptions, newOption]);
+
+    // Add the new option to the specific question's options array
+    setQuestions((prevQuestions) => {
+      return prevQuestions.map((question) => {
+        if (question.id === questionId) {
+          return {
+            ...question,
+            options: [...question.options, newOption],
+          };
+        }
+        return question;
+      });
+    });
   };
 
-  const handleRemoveOption = (optionId: number) => {
-    const updatedOptions = options.filter((option) => option.id !== optionId);
-    setOptions(updatedOptions);
+  const handleRemoveOption = (questionId: number, optionId: number) => {
+    setQuestions((prevQuestions) => {
+      return prevQuestions.map((question) => {
+        if (question.id === questionId) {
+          const updatedOptions = question.options.filter(
+            (option: any) => option.id !== optionId
+          );
+          return {
+            ...question,
+            options: updatedOptions,
+          };
+        }
+        return question;
+      });
+    });
   };
 
   const handleRemoveQuestion = (questionId: number) => {
@@ -328,7 +362,7 @@ const MyReports = () => {
                     <div className="mt-2  ml-[35px]">
                       <div className="flex">
                         <div className="mt-2 w-96">
-                          {options.map((option) => (
+                          {question.options.map((option: any) => (
                             <div
                               key={option.id}
                               className={`flex justify-between items-center content-center border p-4 rounded-xl mb-5`}
@@ -338,7 +372,7 @@ const MyReports = () => {
                                   id={`default-radio-${option.id}`}
                                   type="radio"
                                   value={option.name}
-                                  name={`default-radio`}
+                                  name={`default-radio-${question.id}`}
                                   className="min-w-[13px] text-blue-600 bg-gray-100  dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:bg-gray-700"
                                 />
 
@@ -347,10 +381,10 @@ const MyReports = () => {
                                 </h2>
                               </div>
                               <div>
-                                {options.length > 2 && (
+                                {question.options.length > 2 && (
                                   <Button
                                     onClick={() =>
-                                      handleRemoveOption(option.id)
+                                      handleRemoveOption(question.id, option.id)
                                     }
                                     size="small"
                                     color="error"
@@ -364,10 +398,10 @@ const MyReports = () => {
                         </div>
                       </div>
                       <div>
-                        {options.length < 4 && (
+                        {question.options.length < 4 && (
                           <Button
                             sx={{ fontWeight: "bold" }}
-                            onClick={handleAddOption}
+                            onClick={() => handleAddOption(question.id)}
                           >
                             Add Option
                           </Button>
