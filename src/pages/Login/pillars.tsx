@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import PersonIcon from "@mui/icons-material/Person";
 import Modal from "../../components/Pillars/Modal";
 import Cookies from "js-cookie";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getQuestions } from "../../services/slices/dashboard/dashboard";
 import { Box, Slider } from "@mui/material";
 
@@ -69,28 +69,7 @@ const sideBarItems = [
     description:
       "Defining a sharp vision that embraces both business success and social responsibility.",
     icon: <PersonIcon />,
-    questions: [
-      {
-        question:
-          "Hoe waarborgt uw organisatie de schaalbaarheid van haar data-infrastructuur ter ondersteuning van AI-initiatieven?",
-      },
-      {
-        question:
-          "Welke technologische infrastructuur is aanwezig om databeheer en analyse voor AI-toepassingen te vergemakkelijken?",
-      },
-      {
-        question:
-          "Voldoet uw organisatie aan de relevante dataregelgeving en -normen bij de implementatie van AI-oplossingen?",
-      },
-      {
-        question:
-          "Welke impact heeft de inzet van AI op de operationele capaciteit van uw organisatie?",
-      },
-      {
-        question:
-          "Beschikt uw organisatie over het nodige talent en de expertise om AI-technologieën effectief in te zetten?",
-      },
-    ],
+    questions: [],
   },
   {
     id: 9,
@@ -666,7 +645,7 @@ const Pillars = () => {
                             {question.type === "Multiple Choice" && (
                               <div className="mt-2">
                                 <div className="flex">
-                                  <div className="mt-2 w-96">
+                                  <div className="mt-2">
                                     {question.options.map((option: any) => {
                                       console.log(option.name);
                                       return (
