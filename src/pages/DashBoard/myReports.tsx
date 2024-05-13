@@ -74,18 +74,8 @@ const questionType = [
   },
 ];
 
-const initialOptions = [
-  {
-    id: 0,
-    name: "Option 1",
-  },
-  {
-    id: 1,
-    name: "Option 2",
-  },
-];
-
 const MyReports = () => {
+  const [selectedChapter, setSelectedChapter] = useState("");
   const [open, setOpen] = useState(false);
   const [openQuestion, setOpenQuestion] = useState(false);
   const [question, setQuestion] = useState("");
@@ -102,7 +92,6 @@ const MyReports = () => {
   const [maxValueErrors, setMaxValueErrors] = useState<any>({});
 
   console.log("--------------", questions);
-  // console.log(options);
 
   const handleCloseQuestion = () => {
     setOpenQuestion(false);
@@ -143,7 +132,7 @@ const MyReports = () => {
           },
           {
             id: nextId + 1,
-            name: `Option ${nextId + 1}`,
+            name: `Option`,
           },
         ],
       }),
@@ -176,7 +165,7 @@ const MyReports = () => {
   const handleAddOption = (questionId: number) => {
     const newOption = {
       id: nextId,
-      name: `Option ${nextId}`,
+      name: `Option`,
     };
     setNextId((prevId) => prevId + 1);
 
@@ -303,6 +292,34 @@ const MyReports = () => {
     }));
   };
 
+  const onChangeOptionText = (
+    value: any,
+    questionId: number,
+    optionId: number
+  ) => {
+    setQuestions((prevQuestions) => {
+      return prevQuestions.map((question) => {
+        if (question.id === questionId) {
+          return {
+            ...question,
+            options: question.options.map((option: any) => {
+              if (option.id === optionId) {
+                return {
+                  ...option,
+                  name: value,
+                };
+              }
+              return option;
+            }),
+          };
+        }
+        return question;
+      });
+    });
+  };
+
+  console.log(selectedChapter);
+
   return (
     <div className="min-h-screen flex">
       <div className="w-64 bg-gray-200">
@@ -311,7 +328,10 @@ const MyReports = () => {
           {chapters.map((chapter) => (
             <div
               key={chapter.value}
-              className="px-2 py-2 hover:bg-slate-600 rounded-lg mx-6 my-2"
+              onClick={() => setSelectedChapter(chapter.name)}
+              className={`px-2 py-2 hover:bg-slate-600 rounded-lg mx-6 my-2 ${
+                selectedChapter === chapter.name ? "bg-slate-600" : ""
+              }`}
             >
               {chapter.name}
             </div>
@@ -319,11 +339,19 @@ const MyReports = () => {
         </div>
       </div>
       <div className="p-6 w-full">
+        <div className=" w-full flex justify-end">
+          <button className="rounded bg-purple-500 hover:bg-purple-700 py-2 px-4 mb-4 text-white font-semibold">
+            Publish Questions
+          </button>
+        </div>
         <Paper sx={{ borderRadius: "16px", py: 4, px: 6 }}>
           <div className="flex flex-col justify-center">
             {questions.map((question, index) => {
               return (
                 <div key={question.id} className="mb-8">
+                  <div className="font-semibold mb-2">
+                    Questions for {selectedChapter}
+                  </div>
                   <div className="flex justify-between items-center">
                     <div>
                       <div className="flex items-center gap-2">
@@ -375,10 +403,20 @@ const MyReports = () => {
                                   name={`default-radio-${question.id}`}
                                   className="min-w-[13px] text-blue-600 bg-gray-100  dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:bg-gray-700"
                                 />
-
-                                <h2 className="font-medium text-sm text-start">
-                                  {option.name}
-                                </h2>
+                                <input
+                                  className={`shadow appearance-none border rounded w-full py-2 pl-2 text-input-text leading-tight focus:outline-none focus:shadow-outline border-slate-300`}
+                                  id="option"
+                                  type="text"
+                                  placeholder="Write option here..."
+                                  value={option.name}
+                                  onChange={(e) =>
+                                    onChangeOptionText(
+                                      e.target.value,
+                                      question.id,
+                                      option.id
+                                    )
+                                  }
+                                />
                               </div>
                               <div>
                                 {question.options.length > 2 && (
