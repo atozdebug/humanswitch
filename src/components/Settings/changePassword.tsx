@@ -1,7 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
-const ChangePassword = ({ handleSubmit, register, onSubmit, errors }: any) => {
+const ChangePassword = ({
+  handleSubmit,
+  register,
+  onSubmit,
+  errors,
+  setValue,
+}: any) => {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -12,13 +18,22 @@ const ChangePassword = ({ handleSubmit, register, onSubmit, errors }: any) => {
     minLength: false,
   });
 
-  console.log(passwordRequirements);
+  const [passwordStrength, setPasswordStrength] = useState(0);
+
+  useEffect(() => {
+    let strength = 0;
+    if (passwordRequirements.uppercase) strength += 1;
+    if (passwordRequirements.number) strength += 1;
+    if (passwordRequirements.minLength) strength += 1;
+    setPasswordStrength(strength);
+  }, [passwordRequirements]);
 
   const checkPasswordRequirements = (value: string) => {
     console.log(value);
     const hasUppercase = /[A-Z]/.test(value);
     const hasNumber = /[0-9]/.test(value);
     const hasMinLength = value.length >= 8;
+
     setPasswordRequirements({
       uppercase: hasUppercase,
       number: hasNumber,
@@ -98,12 +113,12 @@ const ChangePassword = ({ handleSubmit, register, onSubmit, errors }: any) => {
             id="new_password"
             type={showNewPassword ? "text" : "password"}
             placeholder=".........."
-            onChange={(e) => {
-              const value: any = e.target.value;
-              handlePasswordChange(value);
-              register("new_password")(value);
+            onChange={(e: any) => {
+              console.log(e);
+              handlePasswordChange(e.target.value);
+              setValue("new_password", e.target.value);
             }}
-            {...register("new_password")}
+            // {...register("new_password")}
           />
           <span
             className="absolute h-2 w-4 inset-y-3 right-2"
@@ -162,9 +177,21 @@ const ChangePassword = ({ handleSubmit, register, onSubmit, errors }: any) => {
         </div>
       </div>
       <div className="flex items-center justify-between mb-5">
-        <hr className="border-4 border-[#DF1C41] w-40 "></hr>
-        <hr className="border-4 border-gray w-40 mx-5"></hr>
-        <hr className="border-4 border-gray w-40"></hr>
+        <hr
+          className={`border-4 ${
+            passwordStrength > 0 ? "border-red-500" : "border-red-200"
+          } w-40 `}
+        ></hr>
+        <hr
+          className={`border-4 ${
+            passwordStrength > 1 ? "border-orange-500" : "border-orange-200"
+          } w-40 mx-5`}
+        ></hr>
+        <hr
+          className={`border-4 ${
+            passwordStrength > 2 ? "border-green-500" : "border-green-200"
+          } w-40`}
+        ></hr>
       </div>
       <p className="text-sm font-normal text-content">
         Weak password. Must contain at least;

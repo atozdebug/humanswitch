@@ -166,6 +166,7 @@ const Settings = () => {
     register,
     handleSubmit,
     // reset,
+    setValue,
     formState: { errors },
   } = useForm<FormData | any>({
     resolver: schemas(),
@@ -247,6 +248,7 @@ const Settings = () => {
                     onSubmit={onSubmit}
                     register={register}
                     errors={errors}
+                    setValue={setValue}
                   />
                 )}
                 {selected === "2FA Security" && (
