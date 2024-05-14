@@ -1,6 +1,6 @@
 const ForgetPasswordThird = ({ backStep }: any) => {
   return (
-    <div className="login-form">
+    <div className="login-form flex flex-col justify-center max-h-vhcalc88px overflow-y-auto min-h-vhcalc88px p-8">
       <h5 className="text-xl flex justify-center gap-5 header font-semibold  ">
         {" "}
         <span>
@@ -23,7 +23,7 @@ const ForgetPasswordThird = ({ backStep }: any) => {
 
       <div className="form-info flex flex-col justify-between items-center mt-4">
         <button className="rounded w-full my-5 bg-purple-500 hover:bg-purple-700 py-2 px-4 text-white font-semibold">
-          <a href="/login">Continue</a>
+          <a href="/loginhr">Continue</a>
         </button>
 
         <button

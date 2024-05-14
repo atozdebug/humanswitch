@@ -5,14 +5,13 @@ import {
   stopLoadingActivity,
 } from "../activity/activitySlice.tsx";
 
-export const userLogin: any = createAsyncThunk(
-  "auth/login",
+export const changePassword: any = createAsyncThunk(
+  "auth/changePassword",
   async (data, { dispatch }) => {
     try {
       console.log("Datttatatatatta", data);
-      const response = await http.post(`/login`, data);
+      const response = await http.post(`/change-password`, data);
       if (response.status === 200) {
-        localStorage?.setItem("token", response.data.access_token);
         dispatch(startLoadingActivity());
         return response.data;
       }
@@ -26,34 +25,33 @@ export const userLogin: any = createAsyncThunk(
   }
 );
 
-export interface Login {
+export interface ChangePassword {
   loading: boolean;
   data: [];
 }
 
-const initialState: Login = {
+const initialState: ChangePassword = {
   loading: false,
   data: [],
 };
 
-export const loginSlice = createSlice({
-  name: "login",
+export const changePasswordSlice = createSlice({
+  name: "changePassword",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // agent registration
-      .addCase(userLogin.pending, (state, _action) => {
+      .addCase(changePassword.pending, (state, _action) => {
         state.loading = true;
       })
-      .addCase(userLogin.fulfilled, (state, action) => {
+      .addCase(changePassword.fulfilled, (state, action) => {
         state.data = action.payload;
         state.loading = false;
       })
-      .addCase(userLogin.rejected, (state, _action) => {
+      .addCase(changePassword.rejected, (state, _action) => {
         state.loading = false;
       });
   },
 });
 
-export default loginSlice.reducer;
+export default changePasswordSlice.reducer;

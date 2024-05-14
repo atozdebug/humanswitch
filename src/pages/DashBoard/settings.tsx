@@ -1,21 +1,20 @@
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
-import PasswordIcon from "@mui/icons-material/Password";
-import RestorePageIcon from "@mui/icons-material/RestorePage";
+import ReceiptIcon from "@mui/icons-material/Receipt";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import SecurityIcon from "@mui/icons-material/Security";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { Tab, Tabs } from "@mui/material";
+import { Card, Tab, Tabs } from "@mui/material";
 import { useState } from "react";
-// import LockIcon from "@mui/icons-material/Lock";
-// import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-// import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import LockIcon from "@mui/icons-material/Lock";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { useNavigate, useParams } from "react-router-dom";
+import CreditCardIcon from "@mui/icons-material/CreditCard";
 import ChangePassword from "../../components/Settings/changePassword";
 import PrivacySecurity from "../../components/Settings/privacySecurity";
 import DeleteAccount from "../../components/Settings/deleteAccount";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 const tabs = [
   {
@@ -23,12 +22,12 @@ const tabs = [
     icon: <AccountBoxIcon />,
   },
   {
-    name: "Change Password",
-    icon: <PasswordIcon />,
+    name: "Manage Subcription",
+    icon: <CreditCardIcon />,
   },
   {
     name: "Invoice History",
-    icon: <RestorePageIcon />,
+    icon: <ReceiptIcon />,
   },
   {
     name: "Notification Settings",
@@ -38,33 +37,29 @@ const tabs = [
     name: "Privacy & Security",
     icon: <SecurityIcon />,
   },
+];
+
+const menueList = [
+  {
+    name: "Change Password",
+    icon: <LockIcon />,
+  },
+  {
+    name: "2FA Security",
+    icon: <SecurityIcon />,
+  },
   {
     name: "Delete Account",
-    icon: <DeleteForeverIcon />,
+    icon: <DeleteOutlineIcon />,
   },
 ];
 
-// const menueList = [
-//   {
-//     name: "Change Password",
-//     icon: <LockIcon />,
-//   },
-//   {
-//     name: "2FA Security",
-//     icon: <SecurityIcon />,
-//   },
-//   {
-//     name: "Delete Account",
-//     icon: <DeleteOutlineIcon />,
-//   },
-// ];
-
-const schemaSecond = yup.object().shape({
-  currentPassword: yup
+const schemaFirst = yup.object().shape({
+  current_password: yup
     .string()
     .required("Current Password is required")
     .min(8, "Password must be atleast 8 characters long"),
-  password: yup
+  new_password: yup
     .string()
     .required("Password is required")
     .matches(
@@ -81,7 +76,7 @@ const schemaSecond = yup.object().shape({
       "Password must contain at least one special character"
     )
     .min(8, "Password must be atleast 8 characters long"),
-  confirmPassword: yup
+  confirm_password: yup
     .string()
     .required("Confirm Password is required")
     .test(
@@ -89,19 +84,19 @@ const schemaSecond = yup.object().shape({
       "Confirm password must match password",
       function (value) {
         // Get the password value from the parent form object
-        const { password } = this.parent;
+        const { new_password } = this.parent;
 
         // Check if confirmPassword matches password
-        return value === password;
+        return value === new_password;
       }
     ),
 });
 
-const schemaFifth = yup.object().shape({
+const schemaSecond = yup.object().shape({
   method: yup.string().required("Please select a way to enable 2FA"),
 });
 
-const schemaSixth = yup.object().shape({
+const schemaThird = yup.object().shape({
   passwordDelete: yup
     .string()
     .required("Current Password is required")
@@ -109,31 +104,30 @@ const schemaSixth = yup.object().shape({
 });
 
 interface FormData {
-  currentPassword: string;
-  password: string;
-  confirmPassword: string;
+  current_password: string;
+  new_password: string;
+  confirm_password: string;
   method: string;
   passwordDelete: string;
 }
 const defaultValues = {
-  currentPassword: "",
-  password: "",
-  confirmPassword: "",
+  current_password: "",
+  new_password: "",
+  confirm_password: "",
   method: "",
   passwordDelete: "",
 };
 
 const Settings = () => {
-  // const [selected, setSelected] = useState("Change Password");
+  const [selected, setSelected] = useState("Change Password");
   const { tab }: any = useParams();
   const navigate: any = useNavigate();
   const tabIndexMap: any = {
     profile: 0,
-    "change-password": 1,
+    "manage-subcription": 1,
     "invoice-history": 2,
     "notification-settings": 3,
     "privacy-security": 4,
-    "delete-account": 5,
   };
 
   const initialSelectedTab =
@@ -141,7 +135,6 @@ const Settings = () => {
 
   const [selectedTab, setSelectedTab] = useState(initialSelectedTab);
 
-  // Handle tab change
   const handleChange = (_event: any, newValue: any) => {
     setSelectedTab(newValue);
     const tabName = Object.keys(tabIndexMap).find(
@@ -155,13 +148,16 @@ const Settings = () => {
   const schemas = () => {
     if (selectedTab === 0) {
     } else if (selectedTab === 1) {
-      return yupResolver(schemaSecond);
     } else if (selectedTab === 2) {
     } else if (selectedTab === 3) {
     } else if (selectedTab === 4) {
-      return yupResolver(schemaFifth);
-    } else if (selectedTab === 5) {
-      return yupResolver(schemaSixth);
+      if (selected === "Change Password") {
+        return yupResolver(schemaFirst);
+      } else if (selected === "2FA Security") {
+        return yupResolver(schemaSecond);
+      } else if (selected === "Delete Account") {
+        return yupResolver(schemaThird);
+      }
     }
   };
 
@@ -199,55 +195,62 @@ const Settings = () => {
             ))}
           </Tabs>
 
-          <div className="flex">
-            {/* <div>
-              <Card
-                variant="outlined"
-                className="p-2 mr-8 flex flex-col justify-between"
-                style={{ borderRadius: "12px" }}
-              >
-                <div className="font-semibold px-2 mb-2">Select Menu</div>
-                <div>
-                  {menueList.map((item) => (
-                    <button
-                      className="flex w-[280px] justify-between gap-8 p-2 mb-2 hover:bg-gray-200 rounded-lg"
-                      onClick={() => setSelected(item.name)}
-                    >
-                      <div className="flex gap-2">
-                        {item.icon}
-                        {item.name}
-                      </div>
-                      <div>
-                        <KeyboardArrowRightIcon />
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </Card>
-            </div> */}
-            {tab === "change-password" && (
-              <ChangePassword
-                handleSubmit={handleSubmit}
-                onSubmit={onSubmit}
-                register={register}
-                errors={errors}
-              />
-            )}
+          <div>
             {tab === "privacy-security" && (
-              <PrivacySecurity
-                handleSubmit={handleSubmit}
-                onSubmit={onSubmit}
-                register={register}
-                errors={errors}
-              />
-            )}
-            {tab === "delete-account" && (
-              <DeleteAccount
-                handleSubmit={handleSubmit}
-                onSubmit={onSubmit}
-                register={register}
-                errors={errors}
-              />
+              <div className="flex">
+                <div>
+                  <Card
+                    variant="outlined"
+                    className="p-2 mr-8 flex flex-col justify-between"
+                    style={{ borderRadius: "12px" }}
+                  >
+                    <div className="font-semibold px-2 mb-2">Select Menu</div>
+                    <div>
+                      {menueList.map((item, index) => (
+                        <button
+                          key={index}
+                          className={`flex w-[280px] justify-between gap-8 p-2 mb-2 hover:bg-gray-400 rounded-lg ${
+                            selected === item.name ? "bg-gray-200" : ""
+                          }`}
+                          onClick={() => setSelected(item.name)}
+                        >
+                          <div className="flex gap-2">
+                            {item.icon}
+                            {item.name}
+                          </div>
+                          <div>
+                            <KeyboardArrowRightIcon />
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </Card>
+                </div>
+                {selected === "Change Password" && (
+                  <ChangePassword
+                    handleSubmit={handleSubmit}
+                    onSubmit={onSubmit}
+                    register={register}
+                    errors={errors}
+                  />
+                )}
+                {selected === "2FA Security" && (
+                  <PrivacySecurity
+                    handleSubmit={handleSubmit}
+                    onSubmit={onSubmit}
+                    register={register}
+                    errors={errors}
+                  />
+                )}
+                {selected === "Delete Account" && (
+                  <DeleteAccount
+                    handleSubmit={handleSubmit}
+                    onSubmit={onSubmit}
+                    register={register}
+                    errors={errors}
+                  />
+                )}
+              </div>
             )}
           </div>
         </div>

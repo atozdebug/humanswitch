@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { userLogin } from "../../services/slices/auth/login";
 import { useState } from "react";
+import Cookies from "js-cookie";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 const schema = yup.object().shape({
@@ -62,12 +63,15 @@ const LoginHr = () => {
   });
 
   const onSubmit: any = (data: FormData) => {
+    const existingData = Cookies.get("questionnaireData");
     console.log("Form data:", data);
 
     dispatch(userLogin(data))
       .unwrap()
       .then((res: any) => {
-        res.access_token && navigate("/pillars");
+        res.access_token && existingData
+          ? navigate("/pillars")
+          : navigate("/dashboard");
       });
   };
 
@@ -84,12 +88,12 @@ const LoginHr = () => {
             </span>
 
             <div>
-              <p>
-                Don't have an account?
-                <button className="px-4 py-2.5 ml-2 text-heading border text-start my-2  border-[#E2E4E9] font-semibold rounded-lg  focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">
+              Don't have an account?
+              <span className="float-right text-content text-sm font-medium ">
+                <a href="/signuphr" className="border-b">
                   Register
-                </button>
-              </p>
+                </a>
+              </span>
             </div>
           </div>
           <form
@@ -97,7 +101,11 @@ const LoginHr = () => {
             className="form-2 flex flex-col max-w-md m-auto justify-center"
           >
             <h1 className="text-center flex justify-center">
-              <img src="/assets/images/Custom-lock.png" />
+              <img
+                src="/assets/images/Custom-lock.png"
+                height={200}
+                width={200}
+              />
             </h1>
             <h2 className="text-gray-dark text-2xl font-medium text-center">
               Password Setup
@@ -195,7 +203,7 @@ const LoginHr = () => {
               </span>{" "}
               accordion
               <span className="float-right text-content text-sm font-medium ">
-                <a href="" className="border-b">
+                <a href="/forgetpassword" className="border-b">
                   Forgot password?
                 </a>
               </span>

@@ -1,4 +1,4 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import "./App.css";
 import {
   BrowserRouter,
@@ -17,20 +17,29 @@ import MyReports from "./pages/DashBoard/myReports";
 import Integration from "./pages/DashBoard/integration";
 import Users from "./pages/DashBoard/users";
 import { Toaster } from "react-hot-toast";
+import { useSelector } from "react-redux";
 const ForgetPasswordPage = lazy(() => import("./pages/Login/forgetPassword"));
 const SignupPages = lazy(() => import("./pages/Login/hrSignupPage"));
 const LoginPage = lazy(() => import("./pages/Login/loginPage"));
 const RegisterPage = lazy(() => import("./pages/Login/registerPage"));
 const HomePage = lazy(() => import("./pages/Login/homePage"));
 
-// const RouteGuard = ({ children }: any) => {
-//   const token = localStorage.getItem("authToken");
-//   return token ? children : <Navigate to="/login" />;
-// };
-
 const App = () => {
-  const isTrue = true;
-  // const token = localStorage.getItem("authToken");
+  const [isTrue, setIsTrue] = useState(false);
+
+  const data = useSelector((state: any) => state.login?.data);
+
+  const RouteGuard = ({ children }: any) => {
+    const token = localStorage.getItem("token");
+    return token ? children : <Navigate to="/loginhr" />;
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    console.log(token);
+    token ? setIsTrue(true) : setIsTrue(false);
+  }, [data]);
+
   return (
     <Suspense
       fallback={
@@ -68,16 +77,58 @@ const App = () => {
         {isTrue && (
           <Layout>
             <Routes>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/reports" element={<MyReports />} />
-              <Route path="/chatbot" element={<Chatbot />} />
-              <Route path="/integrations" element={<Integration />} />
-              <Route path="/users" element={<Users />} />
+              <Route
+                path="/dashboard"
+                element={
+                  <RouteGuard>
+                    <Dashboard />
+                  </RouteGuard>
+                }
+              />
+              <Route
+                path="/reports"
+                element={
+                  <RouteGuard>
+                    <MyReports />
+                  </RouteGuard>
+                }
+              />
+              <Route
+                path="/chatbot"
+                element={
+                  <RouteGuard>
+                    <Chatbot />
+                  </RouteGuard>
+                }
+              />
+              <Route
+                path="/integrations"
+                element={
+                  <RouteGuard>
+                    <Integration />
+                  </RouteGuard>
+                }
+              />
+              <Route
+                path="/users"
+                element={
+                  <RouteGuard>
+                    <Users />
+                  </RouteGuard>
+                }
+              />
               <Route
                 path="/settings"
                 element={<Navigate to="/settings/profile" replace />}
               />
-              <Route path="/settings/:tab" element={<Settings />} />
+              <Route
+                path="/settings/:tab"
+                element={
+                  <RouteGuard>
+                    <Settings />
+                  </RouteGuard>
+                }
+              />
             </Routes>
           </Layout>
         )}
@@ -113,7 +164,7 @@ const Register = lazy(() => import("./components/auth/Register/register"));
 const ProtectedRoute = lazy(() => import('./components/auth/RouteGuard'));
 const ResultComponent = lazy(()=> import("./components/Result/result"));
 const App = () => {
-  const token = localStorage.getItem('authToken');
+  const token = localStorage.getItem('token');
   const [darkMode, setDarkMode] = useState<boolean>(false);
   const theme = useMemo(
     () =>

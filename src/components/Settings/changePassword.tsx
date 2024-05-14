@@ -8,7 +8,7 @@ const ChangePassword = ({ handleSubmit, register, onSubmit, errors }: any) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col justify-center max-w-md m-auto mt-20"
+      className="flex flex-col justify-center max-w-md m-auto mt-6"
     >
       <h2 className="text-gray-dark text-2xl font-medium ">Password Setup</h2>
       <p className="gray-dark">
@@ -18,7 +18,7 @@ const ChangePassword = ({ handleSubmit, register, onSubmit, errors }: any) => {
       <div>
         <label
           className="block text-heading text-sm font-medium mb-2"
-          htmlFor="currentPassword"
+          htmlFor="current_password"
         >
           Current Password<span className="text-span-clr">*</span>
         </label>
@@ -28,12 +28,12 @@ const ChangePassword = ({ handleSubmit, register, onSubmit, errors }: any) => {
           </span>
           <input
             className={`lft-space shadow appearance-none border ${
-              errors.currentPassword ? "border-red-600" : "border-slate-300"
+              errors.current_password ? "border-red-600" : "border-slate-300"
             } rounded w-full py-2 pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
-            id="currentPassword"
+            id="current_password"
             type={showCurrentPassword ? "text" : "password"}
             placeholder=".........."
-            {...register("currentPassword")}
+            {...register("current_password")}
           />
           <span
             className="absolute h-4 w-4 inset-y-3 right-2"
@@ -45,9 +45,9 @@ const ChangePassword = ({ handleSubmit, register, onSubmit, errors }: any) => {
               <img src="/assets/images/eye-line.png" />
             )}
           </span>
-          {errors.currentPassword && (
+          {errors.current_password && (
             <p className="text-[#F04438] text-sm mt-2">
-              {errors.currentPassword.message}
+              {errors.current_password.message}
             </p>
           )}
         </div>
@@ -56,7 +56,7 @@ const ChangePassword = ({ handleSubmit, register, onSubmit, errors }: any) => {
       <div>
         <label
           className="block text-heading text-sm font-medium mb-2"
-          htmlFor="password"
+          htmlFor="new_password"
         >
           New Password<span className="text-span-clr">*</span>
         </label>
@@ -66,12 +66,12 @@ const ChangePassword = ({ handleSubmit, register, onSubmit, errors }: any) => {
           </span>
           <input
             className={`lft-space shadow appearance-none border ${
-              errors.password ? "border-red-600" : "border-slate-300"
+              errors.new_password ? "border-red-600" : "border-slate-300"
             } rounded w-full py-2 pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
-            id="password"
+            id="new_password"
             type={showNewPassword ? "text" : "password"}
             placeholder=".........."
-            {...register("password")}
+            {...register("new_password")}
           />
           <span
             className="absolute h-2 w-4 inset-y-3 right-2"
@@ -83,9 +83,9 @@ const ChangePassword = ({ handleSubmit, register, onSubmit, errors }: any) => {
               <img src="/assets/images/eye-line.png" />
             )}
           </span>
-          {errors.password && (
+          {errors.new_password && (
             <p className="text-[#F04438] text-sm mt-2">
-              {errors.password.message}
+              {errors.new_password.message}
             </p>
           )}
         </div>
@@ -94,7 +94,7 @@ const ChangePassword = ({ handleSubmit, register, onSubmit, errors }: any) => {
       <div className="my-5">
         <label
           className="block text-heading text-sm font-medium mb-2"
-          htmlFor="confirmPassword"
+          htmlFor="confirm_password"
         >
           Confirm New Password
           <span className="text-span-clr">*</span>
@@ -105,11 +105,11 @@ const ChangePassword = ({ handleSubmit, register, onSubmit, errors }: any) => {
           </span>
           <input
             className={`lft-space shadow appearance-none border ${
-              errors.confirmPassword ? "border-red-600" : "border-slate-300"
+              errors.confirm_password ? "border-red-600" : "border-slate-300"
             } rounded w-full py-2   pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
-            id="confirmPassword"
+            id="confirm_password"
             type={showConfirmPassword ? "text" : "password"}
-            {...register("confirmPassword")}
+            {...register("confirm_password")}
             placeholder=".........."
           />
           <span
@@ -122,9 +122,9 @@ const ChangePassword = ({ handleSubmit, register, onSubmit, errors }: any) => {
               <img src="/assets/images/eye-line.png" />
             )}
           </span>
-          {errors.confirmPassword && (
+          {errors.confirm_password && (
             <p className="text-[#F04438] text-sm mt-2">
-              {errors.confirmPassword.message}
+              {errors.confirm_password.message}
             </p>
           )}
         </div>

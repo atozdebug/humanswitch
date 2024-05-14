@@ -7,7 +7,7 @@ const DeleteAccount = ({ handleSubmit, register, onSubmit, errors }: any) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col justify-center max-w-md m-auto mt-20"
+      className="flex flex-col justify-center max-w-md m-auto mt-6"
     >
       <h2 className="text-gray-dark text-2xl font-medium ">Delete Account</h2>
       <p className="gray-dark ">Manage the process of deleting account.</p>
