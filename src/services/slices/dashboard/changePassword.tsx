@@ -13,6 +13,7 @@ export const changePassword: any = createAsyncThunk(
       const response = await http.post(`/change-password`, data);
       if (response.status === 200) {
         dispatch(startLoadingActivity());
+
         return response.data;
       }
     } catch (error: any) {

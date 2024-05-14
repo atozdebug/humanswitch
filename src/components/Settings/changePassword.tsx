@@ -5,6 +5,33 @@ const ChangePassword = ({ handleSubmit, register, onSubmit, errors }: any) => {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const [passwordRequirements, setPasswordRequirements] = useState({
+    uppercase: false,
+    number: false,
+    minLength: false,
+  });
+
+  console.log(passwordRequirements);
+
+  const checkPasswordRequirements = (value: string) => {
+    console.log(value);
+    const hasUppercase = /[A-Z]/.test(value);
+    const hasNumber = /[0-9]/.test(value);
+    const hasMinLength = value.length >= 8;
+    setPasswordRequirements({
+      uppercase: hasUppercase,
+      number: hasNumber,
+      minLength: hasMinLength,
+    });
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e);
+    const newPassword: any = e;
+    checkPasswordRequirements(newPassword);
+  };
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -55,7 +82,7 @@ const ChangePassword = ({ handleSubmit, register, onSubmit, errors }: any) => {
 
       <div>
         <label
-          className="block text-heading text-sm font-medium mb-2"
+          className="block text-heading text-sm font-medium mb-2 mt-4"
           htmlFor="new_password"
         >
           New Password<span className="text-span-clr">*</span>
@@ -71,6 +98,11 @@ const ChangePassword = ({ handleSubmit, register, onSubmit, errors }: any) => {
             id="new_password"
             type={showNewPassword ? "text" : "password"}
             placeholder=".........."
+            onChange={(e) => {
+              const value: any = e.target.value;
+              handlePasswordChange(value);
+              register("new_password")(value);
+            }}
             {...register("new_password")}
           />
           <span
@@ -142,7 +174,7 @@ const ChangePassword = ({ handleSubmit, register, onSubmit, errors }: any) => {
         <li className="my-2 flex items-center font-normal text-xs">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            fill="none"
+            fill={passwordRequirements.uppercase ? "green" : "none"}
             viewBox="0 0 24 24"
             stroke="currentColor"
             className="max-w-3 max-h-3 mr-1"
@@ -156,10 +188,9 @@ const ChangePassword = ({ handleSubmit, register, onSubmit, errors }: any) => {
           At least 1 uppercase
         </li>
         <li className="mb-2 flex items-center font-normal text-xs">
-          {" "}
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            fill="none"
+            fill={passwordRequirements.number ? "green" : "none"}
             className="max-w-3 max-h-3 mr-1"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -176,7 +207,7 @@ const ChangePassword = ({ handleSubmit, register, onSubmit, errors }: any) => {
           {" "}
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            fill="none"
+            fill={passwordRequirements.minLength ? "green" : "none"}
             className="max-w-3 max-h-3 mr-1"
             viewBox="0 0 24 24"
             stroke="currentColor"

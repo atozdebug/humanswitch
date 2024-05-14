@@ -36,7 +36,7 @@ const App = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    console.log(token);
+
     token ? setIsTrue(true) : setIsTrue(false);
   }, [data]);
 

@@ -15,6 +15,9 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import { useDispatch } from "react-redux";
+import { changePassword } from "../../services/slices/dashboard/changePassword";
+import toast from "react-hot-toast";
 
 const tabs = [
   {
@@ -62,19 +65,15 @@ const schemaFirst = yup.object().shape({
   new_password: yup
     .string()
     .required("Password is required")
-    .matches(
-      /^(?=.*[a-z])/,
-      "Password must contain at least one lowercase letter"
+    .notOneOf(
+      [yup.ref("current_password")],
+      "New password must be different from current password"
     )
     .matches(
       /^(?=.*[A-Z])/,
       "Password must contain at least one uppercase letter"
     )
     .matches(/^(?=.*[0-9])/, "Password must contain at least one number")
-    .matches(
-      /^(?=.*[\W_])/,
-      "Password must contain at least one special character"
-    )
     .min(8, "Password must be atleast 8 characters long"),
   confirm_password: yup
     .string()
@@ -110,6 +109,7 @@ interface FormData {
   method: string;
   passwordDelete: string;
 }
+
 const defaultValues = {
   current_password: "",
   new_password: "",
@@ -119,6 +119,7 @@ const defaultValues = {
 };
 
 const Settings = () => {
+  const dispatch: any = useDispatch();
   const [selected, setSelected] = useState("Change Password");
   const { tab }: any = useParams();
   const navigate: any = useNavigate();
@@ -174,6 +175,20 @@ const Settings = () => {
   const onSubmit: any = (data: FormData) => {
     console.log("Form data:", data);
     try {
+      if (selectedTab === 4 && selected === "Change Password") {
+        dispatch(changePassword(data))
+          .unwrap()
+          .then((res: any) => {
+            console.log(res);
+            try {
+              res.message
+                ? toast.success(res.message)
+                : res.error && toast.error(res.error);
+            } catch (err: any) {
+              // toast.error(err);
+            }
+          });
+      }
     } catch (error) {
       console.error("Submission error:", error);
     }
