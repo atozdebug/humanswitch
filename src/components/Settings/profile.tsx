@@ -6,7 +6,40 @@ const Profile = () => {
         <div className="mt-2">Name</div>
         <div className="mt-2">Email</div>
       </div>
-      <div></div>
+      <div className="w-full items-center">
+        <div className="flex justify-center mb-6 text-3xl font-semibold">
+          Profile Settings
+        </div>
+        <div className="flex w-full justify-around">
+          <div className="flex flex-col">
+            <div>First Name</div>
+            <input
+              className={`shadow appearance-none border border-slate-300 rounded w-full py-2 pl-2 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
+              id="current_password"
+              type={"text"}
+              placeholder="John"
+            />
+            <div className="mt-6 flex flex-col">
+              <div className="">Phone No</div>
+              <input
+                className={`shadow appearance-none border border-slate-300 rounded w-full py-2 pl-2 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
+                id="current_password"
+                type={"text"}
+                placeholder="9002033010"
+              />
+            </div>
+          </div>
+          <div className="flex flex-col">
+            <div>Last Name</div>
+            <input
+              className={`shadow appearance-none border border-slate-300 rounded w-full py-2 pl-2 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
+              id="current_password"
+              type={"text"}
+              placeholder="Adams"
+            />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

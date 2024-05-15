@@ -195,10 +195,19 @@ const SignupPage = () => {
     }
   };
 
+  const [imageFile, setImageFile] = useState(null);
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file: any = e.target.files && e.target.files[0];
+    setImageFile(file);
+    console.log(file);
+  };
+
   const {
     register,
     handleSubmit,
     // reset,
+    setValue,
     formState: { errors },
   } = useForm<FormData | any>({
     resolver: schemas(),
@@ -214,7 +223,7 @@ const SignupPage = () => {
       } else if (step === 6) {
         console.log("Hit");
         const formData: any = new FormData();
-        formData.append("image", data.image);
+        formData.append("image", imageFile);
         formData.append("email", data.email);
         formData.append("first_name", data.first_name);
         formData.append("last_name", data.last_name);
@@ -314,10 +323,12 @@ const SignupPage = () => {
         />
       ) : step === 2 ? (
         <SignupTwo
+          handleImageChange={handleImageChange}
           handleSubmit={handleSubmit}
           onSubmit={onSubmit}
           register={register}
           errors={errors}
+          setValue={setValue}
         />
       ) : step === 3 ? (
         <SignupThree
@@ -339,6 +350,7 @@ const SignupPage = () => {
           onSubmit={onSubmit}
           register={register}
           errors={errors}
+          setValue={setValue}
         />
       ) : (
         <SignupSixth

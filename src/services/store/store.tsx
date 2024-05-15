@@ -3,6 +3,7 @@ import signUpSlice from "../slices/auth/signUp";
 import loginSlice from "../slices/auth/login";
 import dashboardSlice from "../slices/dashboard/dashboard";
 import changePasswordSlice from "../slices/dashboard/changePassword";
+import updateProfileSlice from "../slices/dashboard/updateProfile";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     login: loginSlice,
     dashboard: dashboardSlice,
     changePassword: changePasswordSlice,
+    updateProfile: updateProfileSlice,
   },
 });
 

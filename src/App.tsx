@@ -25,7 +25,7 @@ const RegisterPage = lazy(() => import("./pages/Login/registerPage"));
 const HomePage = lazy(() => import("./pages/Login/homePage"));
 
 const App = () => {
-  const [isTrue, setIsTrue] = useState(false);
+  const [isTrue, setIsTrue] = useState(true);
 
   const data = useSelector((state: any) => state.login?.data);
 
@@ -34,11 +34,11 @@ const App = () => {
     return token ? children : <Navigate to="/loginhr" />;
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
 
-    token ? setIsTrue(true) : setIsTrue(false);
-  }, [data]);
+  //   token ? setIsTrue(true) : setIsTrue(false);
+  // }, [data]);
 
   return (
     <Suspense

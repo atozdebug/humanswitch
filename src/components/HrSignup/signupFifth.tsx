@@ -1,9 +1,51 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
-const SignupFive = ({ handleSubmit, register, onSubmit, errors }: any) => {
+const SignupFive = ({
+  handleSubmit,
+  register,
+  onSubmit,
+  errors,
+  setValue,
+}: any) => {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const [passwordRequirements, setPasswordRequirements] = useState({
+    uppercase: false,
+    number: false,
+    minLength: false,
+  });
+
+  const [passwordStrength, setPasswordStrength] = useState(0);
+
+  useEffect(() => {
+    let strength = 0;
+    if (passwordRequirements.uppercase) strength += 1;
+    if (passwordRequirements.number) strength += 1;
+    if (passwordRequirements.minLength) strength += 1;
+    setPasswordStrength(strength);
+  }, [passwordRequirements]);
+
+  const checkPasswordRequirements = (value: string) => {
+    console.log(value);
+    const hasUppercase = /[A-Z]/.test(value);
+    const hasNumber = /[0-9]/.test(value);
+    const hasMinLength = value.length >= 8;
+
+    setPasswordRequirements({
+      uppercase: hasUppercase,
+      number: hasNumber,
+      minLength: hasMinLength,
+    });
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e);
+    const newPassword: any = e;
+    checkPasswordRequirements(newPassword);
+  };
+
   return (
     <div className="main">
       <form
@@ -38,7 +80,11 @@ const SignupFive = ({ handleSubmit, register, onSubmit, errors }: any) => {
               id="password"
               type={showNewPassword ? "text" : "password"}
               placeholder=".........."
-              {...register("password")}
+              onChange={(e: any) => {
+                console.log(e);
+                handlePasswordChange(e.target.value);
+                setValue("password", e.target.value);
+              }}
             />
             <span
               className="absolute h-2 w-4 inset-y-3 right-2"
@@ -96,9 +142,21 @@ const SignupFive = ({ handleSubmit, register, onSubmit, errors }: any) => {
           </div>
         </div>
         <div className="flex items-center justify-between mb-5">
-          <hr className="border-4 border-[#DF1C41] w-40 "></hr>
-          <hr className="border-4 border-gray w-40 mx-5"></hr>
-          <hr className="border-4 border-gray w-40"></hr>
+          <hr
+            className={`border-4 ${
+              passwordStrength > 0 ? "border-red-500" : "border-red-200"
+            } w-40 `}
+          ></hr>
+          <hr
+            className={`border-4 ${
+              passwordStrength > 1 ? "border-orange-500" : "border-orange-200"
+            } w-40 mx-5`}
+          ></hr>
+          <hr
+            className={`border-4 ${
+              passwordStrength > 2 ? "border-green-500" : "border-green-200"
+            } w-40`}
+          ></hr>
         </div>
         <p className="text-sm font-normal text-content">
           Weak password. Must contain at least;
@@ -108,7 +166,7 @@ const SignupFive = ({ handleSubmit, register, onSubmit, errors }: any) => {
           <li className="my-2 flex items-center font-normal text-xs">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              fill="none"
+              fill={passwordRequirements.uppercase ? "green" : "none"}
               viewBox="0 0 24 24"
               stroke="currentColor"
               className="max-w-3 max-h-3 mr-1"
@@ -125,7 +183,7 @@ const SignupFive = ({ handleSubmit, register, onSubmit, errors }: any) => {
             {" "}
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              fill="none"
+              fill={passwordRequirements.number ? "green" : "none"}
               className="max-w-3 max-h-3 mr-1"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -142,7 +200,7 @@ const SignupFive = ({ handleSubmit, register, onSubmit, errors }: any) => {
             {" "}
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              fill="none"
+              fill={passwordRequirements.minLength ? "green" : "none"}
               className="max-w-3 max-h-3 mr-1"
               viewBox="0 0 24 24"
               stroke="currentColor"

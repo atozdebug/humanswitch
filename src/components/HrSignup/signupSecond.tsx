@@ -1,4 +1,11 @@
-const SignupTwo = ({ handleSubmit, register, onSubmit, errors }: any) => {
+const SignupTwo = ({
+  handleImageChange,
+  handleSubmit,
+  register,
+  onSubmit,
+  errors,
+  setValue,
+}: any) => {
   return (
     <div className="main">
       <form
@@ -36,7 +43,10 @@ const SignupTwo = ({ handleSubmit, register, onSubmit, errors }: any) => {
               type="file"
               id="image-upload"
               accept="image/*"
-              {...register("image")}
+              onChange={(e) => {
+                handleImageChange(e);
+                setValue("image", e.target.files);
+              }}
               className="block w-full text-start  text-sm text-gray-900 bg-gray-50 rounded-lg cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
             />
             {errors?.image && (
