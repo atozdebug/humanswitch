@@ -70,6 +70,7 @@ const ForgetPasswordPage = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     // reset,
     formState: { errors },
   } = useForm<FormData | any>({
@@ -102,6 +103,7 @@ const ForgetPasswordPage = () => {
           onSubmit={onSubmit}
           register={register}
           errors={errors}
+          setValue={setValue}
         />
       ) : (
         <ForgetPasswordThird backStep={backStep} />

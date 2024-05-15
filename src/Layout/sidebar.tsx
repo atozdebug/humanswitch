@@ -11,6 +11,8 @@ import VerifiedIcon from "@mui/icons-material/Verified";
 import { useLocation } from "react-router-dom";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { selectTheme } from "../services/slices/activity/activitySlice";
 let sideBarItems = [
   {
     name: "Dashboard",
@@ -58,10 +60,17 @@ let bottomSidebarItems = [
 ];
 
 const SideBar = () => {
+  const dispatch: any = useDispatch();
+  const isDark: any = useSelector((state: any) => state.activity.isDark);
+  console.log("--------", isDark);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  const toggleTheme = () => {
+    dispatch(selectTheme(!isDark));
   };
 
   const location = useLocation();
@@ -75,7 +84,11 @@ const SideBar = () => {
         isSidebarOpen ? "menu-open" : "menu-closed"
       }`}
     >
-      <div className="bg-white relative h-full overflow-y-auto border-r border-[#E2E4E9] flex justify-between flex-col lft-nav">
+      <div
+        className={`${
+          isDark ? "bg-black text-white" : "bg-white"
+        }  relative h-full overflow-y-auto border-r border-[#E2E4E9] flex justify-between flex-col lft-nav`}
+      >
         <div className="pt-0 pb-4">
           <div className="px-6">
             <div className="flex items-center justify-between border-b py-4">
@@ -206,20 +219,41 @@ const SideBar = () => {
           ))}
 
           <div className="my-5 day-night-btns">
-            <input type="checkbox" className="checkbox hidden" id="checkbox" />
-            <label htmlFor="checkbox" className="checkbox-label">
+            <input
+              checked={isDark} // Use checked attribute for checkbox input
+              onChange={toggleTheme}
+              type="checkbox"
+              className="checkbox hidden"
+              id="checkbox"
+            />
+            <label
+              htmlFor="checkbox"
+              className="checkbox-label"
+              style={{ backgroundColor: isDark ? "white" : "black" }}
+            >
               <div className="relative rounded-lg min-w-28  text-center">
                 <span>
-                  <LightModeIcon className="m-auto relative z-10" />
+                  <LightModeIcon
+                    className={`m-auto relative z-10 ${
+                      isDark ? "text-black" : ""
+                    }`}
+                  />
                 </span>
               </div>
               <div className=" m-auto">
                 <span>
-                  <NightsStayIcon className="m-auto relative z-10" />
+                  <NightsStayIcon
+                    className={`m-auto relative z-10 ${
+                      isDark ? "text-white" : "text-white"
+                    }`}
+                  />
                 </span>
               </div>
 
-              <span className="ball"></span>
+              <span
+                className="ball"
+                style={{ backgroundColor: isDark ? "black" : "white" }}
+              ></span>
             </label>
           </div>
           {/* -------------------------------------------------------------- */}

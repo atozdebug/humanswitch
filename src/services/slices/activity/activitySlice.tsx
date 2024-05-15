@@ -17,11 +17,19 @@ export const collapsedSideBar: any = createAsyncThunk(
   }
 );
 
+export const selectTheme: any = createAsyncThunk(
+  "activity/selectTheme",
+  async (data) => {
+    return data;
+  }
+);
+
 export const activitySlice = createSlice({
   name: "activity",
   initialState: {
     loading: false,
     collapsedSidebar: false,
+    isDark: false,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -55,6 +63,16 @@ export const activitySlice = createSlice({
         state.collapsedSidebar = !state.collapsedSidebar;
       })
       .addCase(collapsedSideBar.rejected, (state, _action) => {
+        state.loading = false;
+      })
+      .addCase(selectTheme.pending, (state, _action) => {
+        state.loading = true;
+      })
+      .addCase(selectTheme.fulfilled, (state, action) => {
+        state.isDark = action.payload;
+        state.loading = false;
+      })
+      .addCase(selectTheme.rejected, (state, _action) => {
         state.loading = false;
       });
   },

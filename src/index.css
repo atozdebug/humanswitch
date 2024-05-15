@@ -170,7 +170,7 @@ hr {
 }
 
 .checkbox-label .ball {
-  background-color: #fff;
+  background-color: white;
   width: 50%;
   height: calc(100% - 2px);
   position: absolute;
@@ -219,6 +219,5 @@ hr {
 @media only screen and (max-width: 1200px) {
   .content-img {
     margin-top: -174px;
+  }
 }
-}
-
