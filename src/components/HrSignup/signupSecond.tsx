@@ -113,7 +113,7 @@ const SignupTwo = ({ handleSubmit, register, onSubmit, errors }: any) => {
         </div>
 
         <button
-          className="rounded w-full mt-5 bg-bggreen-500 rounded-[10px] hover:bg-purple-700 py-2.5 px-2.5 text-white font-semibold "
+          className="rounded w-full mt-5 bg-green-500 hover:bg-purple-700 py-2.5 px-2.5 text-white font-semibold "
           type="submit"
         >
           Continue

@@ -18,6 +18,7 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { useDispatch } from "react-redux";
 import { changePassword } from "../../services/slices/dashboard/changePassword";
 import toast from "react-hot-toast";
+import Profile from "../../components/Settings/profile";
 
 const tabs = [
   {
@@ -212,6 +213,7 @@ const Settings = () => {
           </Tabs>
 
           <div>
+            {tab === "profile" && <Profile />}
             {tab === "privacy-security" && (
               <div className="flex">
                 <div>
