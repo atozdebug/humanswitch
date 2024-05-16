@@ -10,7 +10,11 @@ export const updateProfile: any = createAsyncThunk(
   async (data, { dispatch }) => {
     try {
       console.log("Datttatatatatta", data);
-      const response = await http.put(`/update-profile`, data);
+      const response = await http.put(`/update-profile`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       if (response.status === 200) {
         dispatch(startLoadingActivity());
 

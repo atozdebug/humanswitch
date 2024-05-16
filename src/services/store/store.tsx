@@ -5,6 +5,9 @@ import dashboardSlice from "../slices/dashboard/dashboard";
 import changePasswordSlice from "../slices/dashboard/changePassword";
 import updateProfileSlice from "../slices/dashboard/updateProfile";
 import activitySlice from "../slices/activity/activitySlice";
+import getUserSlice from "../slices/dashboard/getUser";
+import forgetPasswordSlice from "../slices/auth/forgotPassword";
+import deleteUserSlice from "../slices/dashboard/deleteUser";
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +17,9 @@ export const store = configureStore({
     changePassword: changePasswordSlice,
     updateProfile: updateProfileSlice,
     activity: activitySlice,
+    getUser: getUserSlice,
+    forgetPassword: forgetPasswordSlice,
+    deleteUser: deleteUserSlice,
   },
 });
 

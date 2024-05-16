@@ -28,12 +28,12 @@ export const getUser: any = createAsyncThunk(
 
 export interface GetUser {
   loading: boolean;
-  data: [];
+  data: null;
 }
 
 const initialState: GetUser = {
   loading: false,
-  data: [],
+  data: null,
 };
 
 export const getUserSlice = createSlice({

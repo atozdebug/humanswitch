@@ -1,17 +1,64 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser } from "../../services/slices/dashboard/getUser";
+import { updateProfile } from "../../services/slices/dashboard/updateProfile";
+import toast from "react-hot-toast";
 
 const Profile = () => {
+  const user = localStorage.getItem("user");
+  const userData = useSelector((state: any) => state.getUser.data);
+  console.log("-------------", userData);
+  const dispatch: any = useDispatch();
+  console.log(user);
+  useEffect(() => {
+    dispatch(getUser(user))
+      .unwrap()
+      .then((res: any) => {
+        setFirstName(res?.first_name);
+        setLastName(res?.last_name);
+        setPhoneNumber(res?.phone_no);
+        setProfilePic(`data:image/jpeg;base64,${res.image}`);
+        setIsDisabled(true);
+      });
+  }, [dispatch]);
   const [profilePic, setProfilePic] = useState<any>(null);
   const [firstName, setFirstName] = useState<any>("");
   const [lastName, setLastName] = useState<any>("");
   const [phoneNumber, setPhoneNumber] = useState<any>("");
   const [isDisabled, setIsDisabled] = useState(true);
+  const [sendImage, setSendImage] = useState(null);
 
   // Function to handle changing profile picture
   const handleChangeProfilePic = (event: any) => {
     const newProfilePic: any = event.target.files[0];
+    setSendImage(newProfilePic);
     setProfilePic(URL.createObjectURL(newProfilePic));
     setIsDisabled(false);
+  };
+
+  const handleReset = () => {
+    setFirstName(userData?.first_name);
+    setLastName(userData?.last_name);
+    setPhoneNumber(userData?.phone_no);
+    setProfilePic(`data:image/jpeg;base64,${userData.image}`);
+    setIsDisabled(true);
+  };
+
+  const saveProfile = () => {
+    const formData: any = new FormData();
+    formData.append("first_name", firstName);
+    formData.append("last_name", lastName);
+    formData.append("phone_no", phoneNumber);
+    formData.append("image", sendImage);
+
+    dispatch(updateProfile(formData))
+      .unwrap()
+      .then((res: any) => {
+        toast.success(res.message);
+        dispatch(getUser(user))
+          .unwrap()
+          .then(() => setIsDisabled(true));
+      });
   };
 
   return (
@@ -47,8 +94,8 @@ const Profile = () => {
             className="bg-gray-200 mx-6 w-72"
           />
         </div>
-        <div className="mt-4 text-xl">Name</div>
-        <div className="mt-4 text-xl">Email</div>
+        <div className="mt-4 text-xl">{firstName + " " + lastName}</div>
+        <div className="mt-4 text-xl">{userData?.email}</div>
       </div>
       <div className="w-full items-center">
         <div className="flex justify-center mb-6 text-3xl font-semibold">
@@ -101,11 +148,16 @@ const Profile = () => {
         <div className="flex justify-center mt-4 gap-x-6">
           <button
             disabled={isDisabled}
+            onClick={handleReset}
             className="rounded bg-red-700 hover:bg-red-900 py-2 px-4 text-white font-semibold disabled:bg-gray-400"
           >
             Discard
           </button>
-          <button className="rounded bg-purple-700 hover:bg-purple-900 py-2 px-4 text-white font-semibold disabled:bg-gray-400">
+          <button
+            disabled={isDisabled}
+            onClick={saveProfile}
+            className="rounded bg-purple-700 hover:bg-purple-900 py-2 px-4 text-white font-semibold disabled:bg-gray-400"
+          >
             Save
           </button>
         </div>

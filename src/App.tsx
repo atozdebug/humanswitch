@@ -10,14 +10,13 @@ import {
 import LoginHr from "./pages/Login/hrLogin";
 import Settings from "./pages/DashBoard/settings";
 import Chatbot from "./pages/DashBoard/chatbot";
-import Layout from "./Layout/layout";
 import Pillars from "./pages/Login/pillars";
 import Dashboard from "./pages/DashBoard/dashboard";
 import MyReports from "./pages/DashBoard/myReports";
 import Integration from "./pages/DashBoard/integration";
 import Users from "./pages/DashBoard/users";
 import { Toaster } from "react-hot-toast";
-import { useSelector } from "react-redux";
+import Layout from "./Layout/layout";
 const ForgetPasswordPage = lazy(() => import("./pages/Login/forgetPassword"));
 const SignupPages = lazy(() => import("./pages/Login/hrSignupPage"));
 const LoginPage = lazy(() => import("./pages/Login/loginPage"));
@@ -25,20 +24,10 @@ const RegisterPage = lazy(() => import("./pages/Login/registerPage"));
 const HomePage = lazy(() => import("./pages/Login/homePage"));
 
 const App = () => {
-  const [isTrue, setIsTrue] = useState(true);
-
-  const data = useSelector((state: any) => state.login?.data);
-
   const RouteGuard = ({ children }: any) => {
     const token = localStorage.getItem("token");
     return token ? children : <Navigate to="/loginhr" />;
   };
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-
-  //   token ? setIsTrue(true) : setIsTrue(false);
-  // }, [data]);
 
   return (
     <Suspense
@@ -57,8 +46,9 @@ const App = () => {
     >
       <Toaster />
       <BrowserRouter>
-        <Routes>
-          {/* <Route path="/*" element={<Navigate to="/" />} />
+        <Layout>
+          <Routes>
+            {/* <Route path="/*" element={<Navigate to="/" />} />
           <Route path="/" element={<Outlet />}>
             {token ? (
               <Route index element={<Navigate to="/home" />} />
@@ -66,72 +56,68 @@ const App = () => {
               <Route index element={<Navigate to="/login" />} />
             )}
           </Route> */}
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/signuphr" element={<SignupPages />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/loginhr" element={<LoginHr />} />
-          <Route path="/forgetPassword" element={<ForgetPasswordPage />} />
-          <Route path="/" element={<HomePage />} />
-          <Route path="/pillars" element={<Pillars />} />
-        </Routes>
-        {isTrue && (
-          <Layout>
-            <Routes>
-              <Route
-                path="/dashboard"
-                element={
-                  <RouteGuard>
-                    <Dashboard />
-                  </RouteGuard>
-                }
-              />
-              <Route
-                path="/reports"
-                element={
-                  <RouteGuard>
-                    <MyReports />
-                  </RouteGuard>
-                }
-              />
-              <Route
-                path="/chatbot"
-                element={
-                  <RouteGuard>
-                    <Chatbot />
-                  </RouteGuard>
-                }
-              />
-              <Route
-                path="/integrations"
-                element={
-                  <RouteGuard>
-                    <Integration />
-                  </RouteGuard>
-                }
-              />
-              <Route
-                path="/users"
-                element={
-                  <RouteGuard>
-                    <Users />
-                  </RouteGuard>
-                }
-              />
-              <Route
-                path="/settings"
-                element={<Navigate to="/settings/profile" replace />}
-              />
-              <Route
-                path="/settings/:tab"
-                element={
-                  <RouteGuard>
-                    <Settings />
-                  </RouteGuard>
-                }
-              />
-            </Routes>
-          </Layout>
-        )}
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/signuphr" element={<SignupPages />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/loginhr" element={<LoginHr />} />
+            <Route path="/forgetPassword" element={<ForgetPasswordPage />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/pillars" element={<Pillars />} />
+
+            <Route
+              path="/dashboard"
+              element={
+                <RouteGuard>
+                  <Dashboard />
+                </RouteGuard>
+              }
+            />
+            <Route
+              path="/reports"
+              element={
+                <RouteGuard>
+                  <MyReports />
+                </RouteGuard>
+              }
+            />
+            <Route
+              path="/chatbot"
+              element={
+                <RouteGuard>
+                  <Chatbot />
+                </RouteGuard>
+              }
+            />
+            <Route
+              path="/integrations"
+              element={
+                <RouteGuard>
+                  <Integration />
+                </RouteGuard>
+              }
+            />
+            <Route
+              path="/users"
+              element={
+                <RouteGuard>
+                  <Users />
+                </RouteGuard>
+              }
+            />
+            <Route
+              path="/settings"
+              element={<Navigate to="/settings/profile" replace />}
+            />
+            <Route
+              path="/settings/:tab"
+              element={
+                <RouteGuard>
+                  <Settings />
+                </RouteGuard>
+              }
+            />
+          </Routes>
+        </Layout>
       </BrowserRouter>
     </Suspense>
   );

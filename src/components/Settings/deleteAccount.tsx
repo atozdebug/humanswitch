@@ -1,8 +1,37 @@
 import { useState } from "react";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { useDispatch } from "react-redux";
+import { deleteUser } from "../../services/slices/dashboard/deleteUser";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
-const DeleteAccount = ({ handleSubmit, register, onSubmit, errors }: any) => {
+const DeleteAccount = ({
+  handleSubmit,
+  // register,
+  onSubmit,
+  errors,
+  setValue,
+}: any) => {
+  const dispatch: any = useDispatch();
+  const navigate: any = useNavigate();
+  const user = localStorage.getItem("user");
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [password, setPassword] = useState("");
+
+  const handleDelete = () => {
+    dispatch(deleteUser({ id: user, password }))
+      .unwrap()
+      .then((res: any) => {
+        console.log("=======", res);
+        if (res?.success === "true") {
+          toast.success(res?.message);
+          localStorage.clear();
+          navigate("/");
+        } else if (res.success === "false") {
+          toast.error(res?.message);
+        }
+      });
+  };
 
   return (
     <form
@@ -26,7 +55,7 @@ const DeleteAccount = ({ handleSubmit, register, onSubmit, errors }: any) => {
               d="M8 14C4.6862 14 2 11.3138 2 8C2 4.6862 4.6862 2 8 2C11.3138 2 14 4.6862 14 8C14 11.3138 11.3138 14 8 14ZM7.4 9.8V11H8.6V9.8H7.4ZM7.4 5V8.6H8.6V5H7.4Z"
               fill="#DF1C41"
             />
-          </svg>{" "}
+          </svg>
           This action cannot be undone.
         </p>
       </div>
@@ -36,7 +65,6 @@ const DeleteAccount = ({ handleSubmit, register, onSubmit, errors }: any) => {
       </p>
 
       <p className="text-sm text-gray-dark mt-5">
-        {" "}
         By entering your password, you confirm that you understand and accept
         the consequences of deleting your account.
       </p>
@@ -57,7 +85,11 @@ const DeleteAccount = ({ handleSubmit, register, onSubmit, errors }: any) => {
             id="passwordDelete"
             type={showCurrentPassword ? "text" : "password"}
             placeholder=".........."
-            {...register("passwordDelete")}
+            onChange={(e: any) => {
+              console.log(e);
+              setPassword(e.target.value);
+              setValue("passwordDelete", e.target.value);
+            }}
           />
           <span
             className="absolute h-2 w-4 inset-y-3 right-2"
@@ -77,15 +109,11 @@ const DeleteAccount = ({ handleSubmit, register, onSubmit, errors }: any) => {
         </div>
 
         <div className="">
-          {/* <button className="px-4 py-2.5 text-heading border border-[#E2E4E9] font-semibold rounded-lg  focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 min-w-[168px]">
-            Cancel{" "}
-          </button> */}
-
           <button
             type="submit"
-            className="rounded  mt-5 bg-red-code hover:bg-purple-700 py-2.5 px-4 text-white font-semibold min-w-[168px] ml-3"
+            onClick={handleDelete}
+            className="rounded  mt-5 bg-red-700 hover:bg-red-900 py-2.5 px-4 text-white font-semibold min-w-[168px] "
           >
-            {" "}
             Delete Account
           </button>
         </div>

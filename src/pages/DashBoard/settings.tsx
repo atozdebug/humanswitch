@@ -100,6 +100,11 @@ const schemaThird = yup.object().shape({
   passwordDelete: yup
     .string()
     .required("Current Password is required")
+    .matches(
+      /^(?=.*[A-Z])/,
+      "Password must contain at least one uppercase letter"
+    )
+    .matches(/^(?=.*[0-9])/, "Password must contain at least one number")
     .min(8, "Password must be atleast 8 characters long"),
 });
 
@@ -267,6 +272,7 @@ const Settings = () => {
                     onSubmit={onSubmit}
                     register={register}
                     errors={errors}
+                    setValue={setValue}
                   />
                 )}
               </div>

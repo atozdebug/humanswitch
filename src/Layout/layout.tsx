@@ -2,7 +2,8 @@ import Header from "./header";
 import SideBar from "./sidebar";
 
 const Layout = ({ children }: any) => {
-  const isTrue = true;
+  const token = localStorage.getItem("token");
+
   return (
     <div className="bg-lightgray text-black main-outerr">
       <div
@@ -13,7 +14,7 @@ const Layout = ({ children }: any) => {
           height: "full",
         }}
       >
-        {isTrue && <SideBar />}
+        {token && <SideBar />}
         <div
           style={{
             display: "flex",
@@ -22,7 +23,7 @@ const Layout = ({ children }: any) => {
           }}
           className="content-right"
         >
-          {isTrue && <Header />}
+          {token && <Header />}
           {children}
         </div>
       </div>
