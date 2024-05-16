@@ -2,9 +2,9 @@ import { useState } from "react";
 
 const Profile = () => {
   const [profilePic, setProfilePic] = useState<any>(null);
-  const [firstName, setFirstName] = useState<any>("John");
+  const [firstName, setFirstName] = useState<any>("");
   const [lastName, setLastName] = useState<any>("");
-  const [phoneNumber, setPhoneNumber] = useState<any>(0);
+  const [phoneNumber, setPhoneNumber] = useState<any>("");
   const [isDisabled, setIsDisabled] = useState(true);
 
   // Function to handle changing profile picture

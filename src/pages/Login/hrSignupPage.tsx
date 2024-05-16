@@ -164,7 +164,7 @@ const defaultValues = {
   image: null,
   first_name: "",
   last_name: "",
-  phone_no: 0,
+  phone_no: "",
   role: "",
   company_name: "",
   industry: "",
