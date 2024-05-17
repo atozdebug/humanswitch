@@ -1,8 +1,18 @@
+import { useEffect, useState } from "react";
 import Header from "./header";
 import SideBar from "./sidebar";
+import { useSelector } from "react-redux";
 
 const Layout = ({ children }: any) => {
-  const token = localStorage.getItem("token");
+  const [isTrue, setIsTrue] = useState(true);
+
+  const data = useSelector((state: any) => state.login?.data);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    token ? setIsTrue(true) : setIsTrue(false);
+  }, [data]);
 
   return (
     <div className="bg-lightgray text-black main-outerr">
@@ -14,7 +24,7 @@ const Layout = ({ children }: any) => {
           height: "full",
         }}
       >
-        {token && <SideBar />}
+        {isTrue && <SideBar />}
         <div
           style={{
             display: "flex",
@@ -23,7 +33,7 @@ const Layout = ({ children }: any) => {
           }}
           className="content-right"
         >
-          {token && <Header />}
+          {isTrue && <Header />}
           {children}
         </div>
       </div>

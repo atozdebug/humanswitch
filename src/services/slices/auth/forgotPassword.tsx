@@ -10,7 +10,11 @@ export const sendResetMail: any = createAsyncThunk(
   async (data, { dispatch }) => {
     try {
       console.log("Datttatatatatta", data);
-      const response = await http.get(`/forgot-password`);
+      const response = await http.post(`/forgot-password`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       if (response.status === 200) {
         dispatch(startLoadingActivity());
 
@@ -28,10 +32,20 @@ export const sendResetMail: any = createAsyncThunk(
 
 export const resetPassword: any = createAsyncThunk(
   "auth/resetPassword",
-  async (data, { dispatch }) => {
+  async (data: any, { dispatch }) => {
     try {
+      const formData: any = new FormData();
+      formData.append("new_password", data.new_password);
       console.log("Datttatatatatta", data);
-      const response = await http.get(`/reset-password`);
+      const response = await http.post(
+        `/reset-password?token=${data.token}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       if (response.status === 200) {
         dispatch(startLoadingActivity());
 

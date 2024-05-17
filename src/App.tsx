@@ -17,6 +17,7 @@ import Integration from "./pages/DashBoard/integration";
 import Users from "./pages/DashBoard/users";
 import { Toaster } from "react-hot-toast";
 import Layout from "./Layout/layout";
+import ForgetPasswordId from "./pages/Login/forgetPasswordId";
 const ForgetPasswordPage = lazy(() => import("./pages/Login/forgetPassword"));
 const SignupPages = lazy(() => import("./pages/Login/hrSignupPage"));
 const LoginPage = lazy(() => import("./pages/Login/loginPage"));
@@ -61,6 +62,7 @@ const App = () => {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/loginhr" element={<LoginHr />} />
             <Route path="/forgetPassword" element={<ForgetPasswordPage />} />
+            <Route path="/reset-password" element={<ForgetPasswordId />} />
             <Route path="/" element={<HomePage />} />
             <Route path="/pillars" element={<Pillars />} />
 

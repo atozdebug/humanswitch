@@ -1,112 +1,110 @@
-import ForgetPasswordFirst from "../../components/ForgetPassword/forgetPasswordFirst";
-import ForgetPasswordSecond from "../../components/ForgetPassword/forgetPasswordSecond";
-import { useState } from "react";
-import ForgetPasswordThird from "../../components/ForgetPassword/forgetPasswordThird";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useDispatch } from "react-redux";
+import { sendResetMail } from "../../services/slices/auth/forgotPassword";
+import { useState } from "react";
+import toast from "react-hot-toast";
 
-const schemaFirst = yup.object().shape({
+const schema = yup.object().shape({
   email: yup
     .string()
     .email("Please enter a valid work email address")
     .required("Email is required"),
 });
 
-const schemaSecond = yup.object().shape({
-  password: yup
-    .string()
-    .required("Password is required")
-    .matches(
-      /^(?=.*[A-Z])/,
-      "Password must contain at least one uppercase letter"
-    )
-    .matches(/^(?=.*[0-9])/, "Password must contain at least one number")
-    .min(8, "Password must be atleast 8 characters long"),
-  confirmPassword: yup
-    .string()
-    .required("Password is required")
-    .matches(
-      /^(?=.*[A-Z])/,
-      "Password must contain at least one uppercase letter"
-    )
-    .matches(/^(?=.*[0-9])/, "Password must contain at least one number")
-    .min(8, "Password must be atleast 8 characters long")
-    .test(
-      "password-match",
-      "Confirm password must match password",
-      function (value) {
-        // Get the password value from the parent form object
-        const { password } = this.parent;
-
-        // Check if confirmPassword matches password
-        return value === password;
-      }
-    ),
-});
-
 interface FormData {
   email: string;
-  password: string;
-  confirmPassword: string;
 }
 const defaultValues = {
   email: "",
-  password: "",
-  confirmPassword: "",
 };
 
 const ForgetPasswordPage = () => {
-  const [step, setStep] = useState<number>(0);
-
-  const schemas = (step: number) => {
-    if (step === 0) {
-      return yupResolver(schemaFirst);
-    } else if (step === 1) {
-      return yupResolver(schemaSecond);
-    }
-  };
-
+  const dispatch: any = useDispatch();
+  const [mailSent, setMailSent] = useState(false);
   const {
     register,
     handleSubmit,
-    setValue,
     // reset,
     formState: { errors },
   } = useForm<FormData | any>({
-    resolver: schemas(step),
+    resolver: yupResolver(schema),
     defaultValues,
   });
 
   const onSubmit: any = (data: FormData) => {
-    console.log("Form data:", data);
-    setStep((prev) => prev + 1);
+    const formData: any = new FormData();
+    formData.append("email", data.email);
+    dispatch(sendResetMail(formData))
+      .unwrap()
+      .then((res: any) => {
+        if (res.success === "true") {
+          setMailSent(true);
+        } else if (res.success === "false") {
+          toast.error(res.message);
+        }
+      });
   };
 
-  const backStep = () => {
-    setStep((prev) => prev - 1);
-  };
   return (
     <>
-      {step === 0 ? (
-        <ForgetPasswordFirst
-          backStep={backStep}
-          handleSubmit={handleSubmit}
-          onSubmit={onSubmit}
-          register={register}
-          errors={errors}
-        />
-      ) : step === 1 ? (
-        <ForgetPasswordSecond
-          backStep={backStep}
-          handleSubmit={handleSubmit}
-          onSubmit={onSubmit}
-          register={register}
-          errors={errors}
-          setValue={setValue}
-        />
+      {mailSent ? (
+        <div>Mail have been sent to help you out with password reset</div>
       ) : (
-        <ForgetPasswordThird backStep={backStep} />
+        <div className="login-form flex flex-col justify-center max-h-vhcalc88px overflow-y-auto min-h-vhcalc88px p-8">
+          <h5 className="text-xl flex justify-center gap-5 header font-semibold  ">
+            <span>
+              <img
+                src="/assets/images/Icon.png"
+                className="borders-[#000000]"
+              />
+            </span>{" "}
+          </h5>
+          <h2 className="text-3xl font-semibold  mt-8 mb-3 text-center">
+            Forgot Password?
+          </h2>
+          <p className="font-normal text-center">
+            No worries, we’ll send you reset instructions.
+          </p>
+
+          <form onSubmit={handleSubmit(onSubmit)} className="form-info mt-4">
+            <label
+              className="block text-gray-700 text-sm font-medium mb-2"
+              htmlFor="email"
+            >
+              Email*
+            </label>
+            <input
+              className={`shadow appearance-none border rounded w-full py-2.5 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                errors.email ? "border-[#F04438]" : ""
+              }`}
+              id="email"
+              type="text"
+              placeholder="Enter your email"
+              {...register("email")}
+            />
+            {errors?.email && (
+              <p className="text-red-500 text-sm mt-2">
+                {errors.email.message}
+              </p>
+            )}
+            <div className="password flex flex-col justify-between items-center my-3">
+              <button
+                type="submit"
+                className="rounded w-full mt-5 bg-purple-500 hover:bg-purple-700 py-2.5 px-4 text-white font-semibold"
+              >
+                Reset Password
+              </button>
+              <button className="mt-3 text-sm font-semibold">
+                <a className="flex gap-5" href="/loginhr">
+                  <img src="/assets/images/arrow-left.png" />
+                  Back to login
+                </a>
+              </button>
+            </div>
+          </form>
+        </div>
       )}
     </>
   );
