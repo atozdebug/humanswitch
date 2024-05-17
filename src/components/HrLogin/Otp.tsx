@@ -84,6 +84,12 @@ function OTP({
     currentIndex: number
   ) => {
     const currentValue = event.target.value;
+    const lastValue = currentValue[currentValue.length - 1];
+
+    if (!/\d/.test(lastValue)) {
+      return;
+    }
+
     let indexToEnter = 0;
 
     while (indexToEnter <= currentIndex) {
@@ -96,12 +102,13 @@ function OTP({
         break;
       }
     }
+
     onChange((prev) => {
       const otpArray = prev.split("");
-      const lastValue = currentValue[currentValue.length - 1];
       otpArray[indexToEnter] = lastValue;
       return otpArray.join("");
     });
+
     if (currentValue !== "") {
       if (currentIndex < length - 1) {
         focusInput(currentIndex + 1);
@@ -126,7 +133,7 @@ function OTP({
     // Check if there is text data in the clipboard
     if (clipboardData.types.includes("text/plain")) {
       let pastedText = clipboardData.getData("text/plain");
-      pastedText = pastedText.substring(0, length).trim();
+      pastedText = pastedText.replace(/\D/g, "").substring(0, length).trim();
       let indexToEnter = 0;
 
       while (indexToEnter <= currentIndex) {
