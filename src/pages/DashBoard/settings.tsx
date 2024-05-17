@@ -264,6 +264,7 @@ const Settings = () => {
                     onSubmit={onSubmit}
                     register={register}
                     errors={errors}
+                    setValue={setValue}
                   />
                 )}
                 {selected === "Delete Account" && (

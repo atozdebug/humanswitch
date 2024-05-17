@@ -7,6 +7,13 @@ import { userLogin } from "../../services/slices/auth/login";
 import { useState } from "react";
 import Cookies from "js-cookie";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import * as React from "react";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import Slide from "@mui/material/Slide";
+import { TransitionProps } from "@mui/material/transitions";
+import { DialogContent } from "@mui/material";
+import OTPInput from "../../components/HrLogin/Otp";
 
 const schema = yup.object().shape({
   email: yup
@@ -38,11 +45,30 @@ const defaultValues = {
   checkBox: false,
 };
 
+const Transition = React.forwardRef(function Transition(
+  props: TransitionProps & {
+    children: React.ReactElement<any, any>;
+  },
+  ref: React.Ref<unknown>
+) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
 const LoginHr = () => {
   const navigate: any = useNavigate();
   const dispatch: any = useDispatch();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [otp, setOtp] = React.useState("");
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const {
     register,
@@ -61,11 +87,17 @@ const LoginHr = () => {
     dispatch(userLogin(data))
       .unwrap()
       .then((res: any) => {
-        res.access_token && existingData
-          ? navigate("/pillars")
-          : navigate("/dashboard");
+        if (res.security) {
+          setOpen(true);
+        } else {
+          res.access_token && existingData
+            ? navigate("/pillars")
+            : navigate("/dashboard");
+        }
       });
   };
+
+  console.log(otp);
 
   return (
     <div className="main my-2 px-5 mob">
@@ -183,7 +215,7 @@ const LoginHr = () => {
                 )}
               </div>
             </div>
-
+            <div onClick={() => setOpen(true)}>dddd</div>
             <label>
               <input
                 type="checkBox"
@@ -238,6 +270,36 @@ const LoginHr = () => {
           </div>
         </div>
       </div>
+      <Dialog
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleClose}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <div className="px-6 pt-6 text-xl font-semibold">
+          Kindly enter the authentication OTP sent to your Mail
+        </div>
+        <DialogContent>
+          <div className="w-full flex justify-center">
+            <OTPInput otp={otp} setOtp={setOtp} />
+          </div>
+        </DialogContent>
+        <DialogActions>
+          <button
+            className="px-4 py-2 rounded-md hover:bg-gray-200 text-red-600"
+            onClick={handleClose}
+          >
+            Cancel
+          </button>
+          <button
+            className="px-4 py-2 rounded-md hover:bg-gray-200 mr-2"
+            onClick={handleClose}
+          >
+            Submit
+          </button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

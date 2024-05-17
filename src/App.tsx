@@ -25,9 +25,19 @@ const RegisterPage = lazy(() => import("./pages/Login/registerPage"));
 const HomePage = lazy(() => import("./pages/Login/homePage"));
 
 const App = () => {
+  const DefaultRoute = () => {
+    const token = localStorage.getItem("token");
+    return token ? <Navigate to="/dashboard" /> : <Navigate to="/home" />;
+  };
+
   const RouteGuard = ({ children }: any) => {
     const token = localStorage.getItem("token");
     return token ? children : <Navigate to="/loginhr" />;
+  };
+
+  const PublicRouteGuard = ({ children }: any) => {
+    const token = localStorage.getItem("token");
+    return token ? <Navigate to="/dashboard" /> : children;
   };
 
   return (
@@ -57,15 +67,57 @@ const App = () => {
               <Route index element={<Navigate to="/login" />} />
             )}
           </Route> */}
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/signuphr" element={<SignupPages />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/loginhr" element={<LoginHr />} />
-            <Route path="/forgetPassword" element={<ForgetPasswordPage />} />
-            <Route path="/reset-password" element={<ForgetPasswordId />} />
-            <Route path="/" element={<HomePage />} />
+            <Route
+              path="/register"
+              element={
+                <PublicRouteGuard>
+                  <RegisterPage />
+                </PublicRouteGuard>
+              }
+            />
+            <Route
+              path="/signuphr"
+              element={
+                <PublicRouteGuard>
+                  <SignupPages />
+                </PublicRouteGuard>
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                <PublicRouteGuard>
+                  <LoginPage />
+                </PublicRouteGuard>
+              }
+            />
+            <Route
+              path="/loginhr"
+              element={
+                <PublicRouteGuard>
+                  <LoginHr />
+                </PublicRouteGuard>
+              }
+            />
+            <Route
+              path="/forgetPassword"
+              element={
+                <PublicRouteGuard>
+                  <ForgetPasswordPage />
+                </PublicRouteGuard>
+              }
+            />
+            <Route
+              path="/reset-password"
+              element={
+                <PublicRouteGuard>
+                  <ForgetPasswordId />
+                </PublicRouteGuard>
+              }
+            />
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/" element={<DefaultRoute />} />;
             <Route path="/pillars" element={<Pillars />} />
-
             <Route
               path="/dashboard"
               element={
