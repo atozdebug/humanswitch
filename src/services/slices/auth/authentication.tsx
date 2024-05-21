@@ -49,6 +49,29 @@ export const verifyEmail: any = createAsyncThunk(
   }
 );
 
+export const verifyQROtp: any = createAsyncThunk(
+  "auth/verifyQROtp",
+  async (data, { dispatch }) => {
+    try {
+      console.log("Datttatatatatta", data);
+      const response = await http.post(`/qr_verification`, data);
+      if (response.status === 200) {
+        if (response.data.access_token && response.data.user.id) {
+          localStorage.setItem("token", response.data.access_token);
+          localStorage.setItem("user", response.data.user.id);
+        }
+        return response.data;
+      }
+    } catch (error: any) {
+      if (error.response && error.response.status === 400) {
+        return { error: "Bad Request" };
+      }
+    } finally {
+      dispatch(stopLoadingActivity());
+    }
+  }
+);
+
 export const generateSecret: any = createAsyncThunk(
   "auth/generateSecret",
   async (data, { dispatch }) => {
@@ -145,6 +168,16 @@ export const authenticationSlice = createSlice({
         state.loading = false;
       })
       .addCase(generateSecret.rejected, (state, _action) => {
+        state.loading = false;
+      })
+      .addCase(verifyQROtp.pending, (state, _action) => {
+        state.loading = true;
+      })
+      .addCase(verifyQROtp.fulfilled, (state, action) => {
+        state.data = action.payload;
+        state.loading = false;
+      })
+      .addCase(verifyQROtp.rejected, (state, _action) => {
         state.loading = false;
       });
   },

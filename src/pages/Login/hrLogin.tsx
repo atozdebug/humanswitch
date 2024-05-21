@@ -19,6 +19,7 @@ import {
   sendEmailVerification,
   sendQRVerification,
   verifyEmail,
+  verifyQROtp,
 } from "../../services/slices/auth/authentication";
 
 const schema = yup.object().shape({
@@ -74,6 +75,7 @@ const LoginHr = () => {
   const [password, setPassword] = useState("");
   const [securityType, setSecurityType] = useState("");
   const [qrCode, setQrCode] = useState<any>(null);
+  const [step, setStep] = useState(0);
 
   console.log("-----------", qrCode);
 
@@ -131,11 +133,19 @@ const LoginHr = () => {
       });
   };
 
-  const handleVerifyOtps = () => {
+  const handleVerifyOtps = (type: any) => {
     if (otp === "") {
       setOtpError(true);
-    } else {
+    } else if (type === "Email Code") {
       dispatch(verifyEmail({ email, password, code: otp }))
+        .unwrap()
+        .then((res: any) => {
+          res.access_token && existingData
+            ? navigate("/pillars")
+            : navigate("/dashboard");
+        });
+    } else if (type === "Authenticator App") {
+      dispatch(verifyQROtp({ email, password, code: otp }))
         .unwrap()
         .then((res: any) => {
           res.access_token && existingData
@@ -322,8 +332,12 @@ const LoginHr = () => {
         keepMounted
         aria-describedby="alert-dialog-slide-description"
       >
-        <div className="px-6 pt-6 text-xl font-semibold">
-          Kindly enter the authentication OTP sent to your Mail
+        <div className="px-6 pt-6 text-xl text-center font-semibold">
+          {securityType === "Email Code" &&
+            "Kindly enter the authentication OTP sent to your Mail"}
+          {securityType === "Authenticator App" && step === 0
+            ? "Kindly scan this qr code on your authenticator app"
+            : "Kindly enter the authentication OTP"}
         </div>
         <DialogContent>
           {securityType === "Email Code" && (
@@ -338,7 +352,7 @@ const LoginHr = () => {
               )}
             </>
           )}
-          {securityType === "Authenticator App" && (
+          {securityType === "Authenticator App" && step === 0 ? (
             <>
               <div className="flex justify-center items-center">
                 {qrCode && (
@@ -346,20 +360,51 @@ const LoginHr = () => {
                 )}
               </div>
             </>
+          ) : (
+            <>
+              <div className="w-full flex justify-center">
+                <OTPInput otp={otp} setOtp={setOtp} setOtpError={setOtpError} />
+              </div>
+              {otpError && (
+                <div className="mt-4 text-sm text-red-600">
+                  *Kindly Enter OTP before submitting
+                </div>
+              )}
+            </>
           )}
         </DialogContent>
         <DialogActions>
           <button
             className="px-4 py-2 rounded-md hover:bg-gray-200 text-red-600"
-            onClick={handleClose}
+            onClick={() => {
+              if (step === 0) {
+                handleClose();
+              } else if (step === 1) {
+                setStep((prev: any) => prev - 1);
+              }
+            }}
           >
-            Cancel
+            {step === 0 ? "Cancel" : "Back"}
           </button>
           <button
             className="px-4 py-2 rounded-md hover:bg-gray-200 mr-2"
-            onClick={handleVerifyOtps}
+            onClick={() => {
+              if (securityType === "Email Code") {
+                handleVerifyOtps("Email Code");
+              } else if (securityType === "Authenticator App") {
+                step === 0
+                  ? setStep((prev: any) => prev + 1)
+                  : handleVerifyOtps("Authenticator App");
+              }
+            }}
           >
-            Submit
+            {securityType === "Email Code" ? (
+              <div>Submit</div>
+            ) : step === 0 ? (
+              <div>Click to Enter OTP</div>
+            ) : (
+              <div>Submit</div>
+            )}
           </button>
         </DialogActions>
       </Dialog>

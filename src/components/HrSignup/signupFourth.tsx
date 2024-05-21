@@ -1,4 +1,11 @@
-const SignupFour = ({ handleSubmit, register, onSubmit, errors }: any) => {
+const SignupFour = ({
+  handleImageChange,
+  handleSubmit,
+  register,
+  onSubmit,
+  errors,
+  setValue,
+}: any) => {
   return (
     <div className="main">
       <form
@@ -19,7 +26,7 @@ const SignupFour = ({ handleSubmit, register, onSubmit, errors }: any) => {
         <div className="flex items-center content-center gap-10 mb-5 ">
           <div
             className={`${
-              errors?.image ? "border rounded-full border-red-500" : ""
+              errors?.businessImage ? "border rounded-full border-red-500" : ""
             }`}
           >
             <h1>
@@ -39,13 +46,13 @@ const SignupFour = ({ handleSubmit, register, onSubmit, errors }: any) => {
               accept="image/*"
               onChange={(e) => {
                 handleImageChange(e);
-                setValue("image", e.target.files);
+                setValue("businessImage", e.target.files);
               }}
               className="block w-full text-start  text-sm text-gray-900 bg-gray-50 rounded-lg cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
             />
-            {errors?.image && (
+            {errors?.businessImage && (
               <p className="text-red-500 text-sm mt-2">
-                {errors?.image?.message}
+                {errors?.businessImage?.message}
               </p>
             )}
           </div>
@@ -208,9 +215,9 @@ const SignupFour = ({ handleSubmit, register, onSubmit, errors }: any) => {
                 <input
                   id="default-radio-1"
                   type="radio"
-                  value="Admin"
+                  value="Yes"
                   name="default-radio"
-                  {...register("role")}
+                  {...register("partners")}
                   className="min-w-[13px] text-blue-600 bg-gray-100  dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:bg-gray-700"
                 />
                 Yes
@@ -219,41 +226,51 @@ const SignupFour = ({ handleSubmit, register, onSubmit, errors }: any) => {
                 <input
                   id="default-radio-1"
                   type="radio"
-                  value="Admin"
+                  value="No"
                   name="default-radio"
-                  {...register("role")}
+                  {...register("partners")}
                   className="min-w-[13px] text-blue-600 bg-gray-100  dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:bg-gray-700"
                 />
                 No
               </div>
             </div>
+            {errors?.partners && (
+              <p className="text-red-500 text-sm mt-2">
+                {errors?.partners?.message}
+              </p>
+            )}
           </div>
           <div>
             <div className="mt-5">Do you work with strategic suppliers?</div>
             <div className="flex gap-6">
               <div className="flex items-center gap-2">
                 <input
-                  id="default-radio-1"
+                  id="default-radio-2"
                   type="radio"
-                  value="Admin"
+                  value="Yes"
                   name="default-radio"
-                  {...register("role")}
+                  {...register("suppliers")}
                   className="min-w-[13px] text-blue-600 bg-gray-100  dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:bg-gray-700"
                 />
                 Yes
               </div>
               <div className="flex items-center gap-2">
                 <input
-                  id="default-radio-1"
+                  id="default-radio-2"
                   type="radio"
-                  value="Admin"
+                  value="No"
                   name="default-radio"
-                  {...register("role")}
+                  {...register("suppliers")}
                   className="min-w-[13px] text-blue-600 bg-gray-100  dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:bg-gray-700"
                 />
                 No
               </div>
             </div>
+            {errors?.suppliers && (
+              <p className="text-red-500 text-sm mt-2">
+                {errors?.suppliers?.message}
+              </p>
+            )}
           </div>
         </div>
         <button

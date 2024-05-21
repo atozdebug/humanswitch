@@ -88,10 +88,10 @@ const SideBar = () => {
     return `/${parts[1]}`;
   };
 
-  const logout = () => {
+  const logout = async () => {
     localStorage.clear();
     navigate("/loginhr");
-    dispatch(handleLogout(true));
+    await dispatch(handleLogout(true));
   };
 
   return (

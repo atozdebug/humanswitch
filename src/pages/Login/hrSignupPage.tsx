@@ -12,6 +12,7 @@ import SignupSixth from "../../components/HrSignup/signupSixth";
 import { useDispatch } from "react-redux";
 import { userSignUp } from "../../services/slices/auth/signUp";
 import { useNavigate } from "react-router-dom";
+import { sendEmailVerification } from "../../services/slices/auth/authentication";
 
 const header = [
   {
@@ -114,6 +115,37 @@ const schemaFourth = yup.object().shape({
   sector: yup.string().required("Please select a Sector"),
   employees_count: yup.string().required("Please select Total Employees"),
   location: yup.string().required("Please select a Location"),
+  partners: yup.string().required("Please select if you work with partners"),
+  suppliers: yup.string().required("Please select if you work with suppliers"),
+  businessImage: yup
+    .mixed()
+    .required("Profile picture is required")
+    .test(
+      "fileType",
+      "Only image files are allowed (jpeg, jpg, png, gif).",
+      function (file: any) {
+        if (!file) {
+          return false;
+        }
+
+        const fileObj = file[0];
+        const supportedFormats = [
+          "image/jpeg",
+          "image/jpg",
+          "image/png",
+          "image/gif",
+        ];
+        return supportedFormats.includes(fileObj?.type);
+      }
+    )
+    .test("fileSize", "File size must be less than 2MB.", function (file: any) {
+      if (!file) {
+        return false;
+      }
+
+      const fileObj = file[0];
+      return fileObj?.size <= 2 * 1024 * 1024;
+    }),
 });
 
 const schemaFifth = yup.object().shape({
@@ -146,6 +178,7 @@ interface FormData {
   email: string;
   agreeTerms: boolean;
   image: Blob;
+  businessImage: Blob;
   first_name: string;
   last_name: string;
   phone_no: number;
@@ -157,10 +190,13 @@ interface FormData {
   location: string;
   password: string;
   confirmPassword: string;
+  partners: string;
+  suppliers: string;
 }
 const defaultValues = {
   email: "",
   agreeTerms: false,
+  businessImage: null,
   image: null,
   first_name: "",
   last_name: "",
@@ -173,6 +209,8 @@ const defaultValues = {
   location: "",
   password: "",
   confirmPassword: "",
+  partners: "",
+  suppliers: "",
 };
 
 const SignupPage = () => {
@@ -196,10 +234,15 @@ const SignupPage = () => {
   };
 
   const [imageFile, setImageFile] = useState(null);
+  const [businessImageFile, setBusinessImageFile] = useState(null);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file: any = e.target.files && e.target.files[0];
-    setImageFile(file);
+    if (step === 2) {
+      setImageFile(file);
+    } else {
+      setBusinessImageFile(file);
+    }
     console.log(file);
   };
 
@@ -214,16 +257,25 @@ const SignupPage = () => {
     defaultValues,
   });
 
+  const [otp, setOtp] = useState("");
+  const [otpError, setOtpError] = useState(false);
+
   const onSubmit: any = (data: FormData) => {
     console.log("Form data:", data);
     try {
       setFormData(data);
-      if (step < 6) {
+      if (step < 5) {
         setStep((prev) => prev + 1);
+      } else if (step === 5) {
+        dispatch(sendEmailVerification({ email: data.email }))
+          .unwrap()
+          .then(() => {
+            setStep((prev) => prev + 1);
+          });
       } else if (step === 6) {
-        console.log("Hit");
         const formData: any = new FormData();
         formData.append("image", imageFile);
+        formData.append("businessImage", businessImageFile);
         formData.append("email", data.email);
         formData.append("first_name", data.first_name);
         formData.append("last_name", data.last_name);
@@ -235,6 +287,10 @@ const SignupPage = () => {
         formData.append("employees_count", data.employees_count);
         formData.append("location", data.location);
         formData.append("password", data.password);
+        formData.append("partners", data.partners);
+        formData.append("suppliers", data.suppliers);
+        formData.append("otp", otp);
+
         dispatch(userSignUp(formData))
           .unwrap()
           .then(() => navigate("/loginhr"));
@@ -249,7 +305,7 @@ const SignupPage = () => {
   return (
     <>
       <div className="nav-header flex items-center content-center  justify-between">
-        <div className="logo-head min-w-[123px]">
+        <div className="logo-head min-w-[123px] mr-6">
           <h1>
             <span>
               {" "}
@@ -263,7 +319,7 @@ const SignupPage = () => {
             <div className="flex" key={index}>
               <div
                 onClick={() => setStep(item.id)}
-                className={`flex items-center justify-center px-3 py-2 mx-2 gap-2 rounded-lg text-gray-500 bg-white dark:bg-gray-800  dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
+                className={`flex items-center justify-center px-3 py-2 mx-2 gap-2 rounded-lg text-gray-500 dark:bg-gray-800  dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
               >
                 <div
                   className={`flex justify-center items-center border rounded-full h-6 w-6 ${
@@ -356,9 +412,10 @@ const SignupPage = () => {
         <SignupSixth
           handleSubmit={handleSubmit}
           onSubmit={onSubmit}
-          // register={register}
-          // errors={errors}
-          formData={formData}
+          otp={otp}
+          setOtp={setOtp}
+          otpError={otpError}
+          setOtpError={setOtpError}
         />
       )}
       <div className="footer flex items-center content-center justify-between">

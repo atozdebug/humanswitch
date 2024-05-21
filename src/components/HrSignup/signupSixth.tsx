@@ -1,10 +1,13 @@
-import { useState } from "react";
 import OTPInput from "../HrLogin/Otp";
 
-const SignupSixth = ({ handleSubmit, onSubmit, formData }: any) => {
-  const [otp, setOtp] = useState("");
-  const [otpError, setOtpError] = useState(false);
-
+const SignupSixth = ({
+  handleSubmit,
+  onSubmit,
+  otp,
+  setOtp,
+  otpError,
+  setOtpError,
+}: any) => {
   return (
     <div>
       <form
@@ -130,8 +133,14 @@ const SignupSixth = ({ handleSubmit, onSubmit, formData }: any) => {
           <div className="w-full flex justify-center">
             <OTPInput otp={otp} setOtp={setOtp} setOtpError={setOtpError} />
           </div>
+          {otpError && (
+            <div className="mt-4 text-sm text-red-600">
+              *Kindly Enter OTP before submitting
+            </div>
+          )}
           <button
-            className="rounded w-full mt-5 bg-bggreen-500 hover:bg-purple-700 py-2.5 px-2.5 text-white font-semibold"
+            disabled={otpError || otp.length < 6}
+            className="disabled:bg-gray-400 rounded w-full mt-5 bg-bggreen-500 hover:bg-purple-700 py-2.5 px-2.5 text-white font-semibold"
             type="submit"
           >
             Continue
