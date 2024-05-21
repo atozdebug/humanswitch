@@ -28,7 +28,7 @@ const header = [
   },
   {
     id: 4,
-    name: "About Company",
+    name: "Business",
   },
   {
     id: 5,

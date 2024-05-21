@@ -24,12 +24,20 @@ export const selectTheme: any = createAsyncThunk(
   }
 );
 
+export const handleLogout: any = createAsyncThunk(
+  "activity/handleLogout",
+  async (data) => {
+    return data;
+  }
+);
+
 export const activitySlice = createSlice({
   name: "activity",
   initialState: {
     loading: false,
     collapsedSidebar: false,
     isDark: false,
+    logout: false,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -73,6 +81,16 @@ export const activitySlice = createSlice({
         state.loading = false;
       })
       .addCase(selectTheme.rejected, (state, _action) => {
+        state.loading = false;
+      })
+      .addCase(handleLogout.pending, (state, _action) => {
+        state.loading = true;
+      })
+      .addCase(handleLogout.fulfilled, (state, action) => {
+        state.logout = action.payload;
+        state.loading = false;
+      })
+      .addCase(handleLogout.rejected, (state, _action) => {
         state.loading = false;
       });
   },

@@ -7,12 +7,14 @@ const Layout = ({ children }: any) => {
   const [isTrue, setIsTrue] = useState(true);
 
   const data = useSelector((state: any) => state.login?.data);
+  const data2 = useSelector((state: any) => state.authentication?.data);
+  const logout = useSelector((state: any) => state.activity?.logout);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
 
     token ? setIsTrue(true) : setIsTrue(false);
-  }, [data]);
+  }, [data, data2, logout]);
 
   return (
     <div className="bg-lightgray text-black main-outerr">

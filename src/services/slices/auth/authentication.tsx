@@ -33,8 +33,10 @@ export const verifyEmail: any = createAsyncThunk(
       console.log("Datttatatatatta", data);
       const response = await http.post(`/login_2fa`, data);
       if (response.status === 200) {
-        dispatch(startLoadingActivity());
-
+        if (response.data.access_token && response.data.user.id) {
+          localStorage.setItem("token", response.data.access_token);
+          localStorage.setItem("user", response.data.user.id);
+        }
         return response.data;
       }
     } catch (error: any) {
@@ -72,8 +74,6 @@ export const sendQRVerification: any = createAsyncThunk(
   "auth/sendQRVerification",
   async (data: any, { dispatch }) => {
     try {
-      const formData: any = new FormData();
-      formData.append("new_password", data.new_password);
       console.log("Datttatatatatta", data);
       const response = await http.get(`/get-qr-code?email=${data.email}`);
       if (response.status === 200) {

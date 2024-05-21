@@ -73,6 +73,9 @@ const LoginHr = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [securityType, setSecurityType] = useState("");
+  const [qrCode, setQrCode] = useState<any>(null);
+
+  console.log("-----------", qrCode);
 
   const handleClose = () => {
     setOpen(false);
@@ -91,7 +94,6 @@ const LoginHr = () => {
   const onSubmit: any = (data: FormData) => {
     setEmail(data.email);
     setPassword(data.password);
-    console.log("Form data:", data);
     dispatch(userLogin(data))
       .unwrap()
       .then((res: any) => {
@@ -115,7 +117,9 @@ const LoginHr = () => {
             .then(() => {
               dispatch(sendQRVerification({ email: data.email }))
                 .unwrap()
-                .then(() => {
+                .then((res: any) => {
+                  console.log(res);
+                  setQrCode(`data:image/jpeg;base64,${res?.qr_code}`);
                   setOpen(true);
                 });
             });
@@ -127,13 +131,17 @@ const LoginHr = () => {
       });
   };
 
-  console.log(otp);
-
   const handleVerifyOtps = () => {
     if (otp === "") {
       setOtpError(true);
     } else {
-      dispatch(verifyEmail({ email, password, code: otp }));
+      dispatch(verifyEmail({ email, password, code: otp }))
+        .unwrap()
+        .then((res: any) => {
+          res.access_token && existingData
+            ? navigate("/pillars")
+            : navigate("/dashboard");
+        });
     }
   };
 
@@ -332,7 +340,11 @@ const LoginHr = () => {
           )}
           {securityType === "Authenticator App" && (
             <>
-              <div>QR Code</div>
+              <div className="flex justify-center items-center">
+                {qrCode && (
+                  <img src={qrCode} alt="qrCode" height={150} width={150} />
+                )}
+              </div>
             </>
           )}
         </DialogContent>

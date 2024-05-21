@@ -16,6 +16,41 @@ const SignupFour = ({ handleSubmit, register, onSubmit, errors }: any) => {
         </p>
         <hr className="my-5"></hr>
 
+        <div className="flex items-center content-center gap-10 mb-5 ">
+          <div
+            className={`${
+              errors?.image ? "border rounded-full border-red-500" : ""
+            }`}
+          >
+            <h1>
+              <img src="/assets/images/Avatar1.png" />
+            </h1>
+          </div>
+          <div>
+            <h3 className="text-heading font-medium text-start">
+              Business Logo:
+            </h3>
+            <p className="text-gray-dark font-normal text-start mt-1">
+              Min 400x400px, PNG or JPEG
+            </p>
+            <input
+              type="file"
+              id="image-upload"
+              accept="image/*"
+              onChange={(e) => {
+                handleImageChange(e);
+                setValue("image", e.target.files);
+              }}
+              className="block w-full text-start  text-sm text-gray-900 bg-gray-50 rounded-lg cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+            />
+            {errors?.image && (
+              <p className="text-red-500 text-sm mt-2">
+                {errors?.image?.message}
+              </p>
+            )}
+          </div>
+        </div>
+
         <div className="my-5">
           <label
             className="text-heading text-sm font-medium mb-2 flex items-center"
@@ -141,7 +176,7 @@ const SignupFour = ({ handleSubmit, register, onSubmit, errors }: any) => {
             className=" text-heading text-sm font-medium mb-2 flex items-center"
             htmlFor="location"
           >
-            Location
+            No.of Locations
             <img
               className="max-w-5 max-h-5 ml-2"
               src="/assets/images/Vector.png"
@@ -165,7 +200,62 @@ const SignupFour = ({ handleSubmit, register, onSubmit, errors }: any) => {
             </p>
           )}
         </div>
-
+        <div className="flex justify-between">
+          <div>
+            <div className="mt-5">Do you work with partners?</div>
+            <div className="flex gap-6">
+              <div className="flex items-center gap-2">
+                <input
+                  id="default-radio-1"
+                  type="radio"
+                  value="Admin"
+                  name="default-radio"
+                  {...register("role")}
+                  className="min-w-[13px] text-blue-600 bg-gray-100  dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:bg-gray-700"
+                />
+                Yes
+              </div>
+              <div className="flex items-center gap-2">
+                <input
+                  id="default-radio-1"
+                  type="radio"
+                  value="Admin"
+                  name="default-radio"
+                  {...register("role")}
+                  className="min-w-[13px] text-blue-600 bg-gray-100  dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:bg-gray-700"
+                />
+                No
+              </div>
+            </div>
+          </div>
+          <div>
+            <div className="mt-5">Do you work with strategic suppliers?</div>
+            <div className="flex gap-6">
+              <div className="flex items-center gap-2">
+                <input
+                  id="default-radio-1"
+                  type="radio"
+                  value="Admin"
+                  name="default-radio"
+                  {...register("role")}
+                  className="min-w-[13px] text-blue-600 bg-gray-100  dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:bg-gray-700"
+                />
+                Yes
+              </div>
+              <div className="flex items-center gap-2">
+                <input
+                  id="default-radio-1"
+                  type="radio"
+                  value="Admin"
+                  name="default-radio"
+                  {...register("role")}
+                  className="min-w-[13px] text-blue-600 bg-gray-100  dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:bg-gray-700"
+                />
+                No
+              </div>
+            </div>
+          </div>
+        </div>
         <button
           className="rounded-[10px] w-full mt-5 bg-bggreen-500 hover:bg-purple-700 py-2.5 px-2.5 text-white font-semibold"
           type="submit"

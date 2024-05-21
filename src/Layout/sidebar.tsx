@@ -8,11 +8,14 @@ import HeadsetMicIcon from "@mui/icons-material/HeadsetMic";
 import NightsStayIcon from "@mui/icons-material/NightsStay";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import VerifiedIcon from "@mui/icons-material/Verified";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectTheme } from "../services/slices/activity/activitySlice";
+import {
+  handleLogout,
+  selectTheme,
+} from "../services/slices/activity/activitySlice";
 let sideBarItems = [
   {
     name: "Dashboard",
@@ -57,10 +60,16 @@ let bottomSidebarItems = [
     icon: <HeadsetMicIcon />,
     navigateTo: "/support",
   },
+  {
+    name: "Log Out",
+    icon: <ManageAccountsIcon />,
+    navigateTo: "/account",
+  },
 ];
 
 const SideBar = () => {
   const dispatch: any = useDispatch();
+  const navigate: any = useNavigate();
   const isDark: any = useSelector((state: any) => state.activity.isDark);
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -78,6 +87,13 @@ const SideBar = () => {
     const parts = pathname.split("/");
     return `/${parts[1]}`;
   };
+
+  const logout = () => {
+    localStorage.clear();
+    navigate("/loginhr");
+    dispatch(handleLogout(true));
+  };
+
   return (
     <div
       className={`max-h-100vh w-272px sidebar-main ${
@@ -212,6 +228,7 @@ const SideBar = () => {
             <div
               key={index}
               className="top px-20px py-2 hover:bg-lightgray rounded-lg hover:tex-main-heading flex items-center gap-2 my-2"
+              onClick={() => logout()}
             >
               {item.icon}
               <div className="menu-item-text">{item.name}</div>

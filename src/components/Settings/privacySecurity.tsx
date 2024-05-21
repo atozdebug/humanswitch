@@ -99,6 +99,7 @@ const PrivacySecurity = ({
               id="default-radio-1"
               type="radio"
               value={method.name}
+              checked={checked === method.name}
               name="default-radio"
               onChange={(e: any) => {
                 console.log(e);

@@ -1,11 +1,17 @@
+import { useState } from "react";
+import OTPInput from "../HrLogin/Otp";
+
 const SignupSixth = ({ handleSubmit, onSubmit, formData }: any) => {
+  const [otp, setOtp] = useState("");
+  const [otpError, setOtpError] = useState(false);
+
   return (
     <div>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="form flex flex-col max-w-md m-auto justify-center"
       >
-        <h1 className="flex justify-center text-center">
+        {/* <h1 className="flex justify-center text-center">
           <img src="/assets/images/check.png" />
         </h1>
         <h2 className="text-gray-dark text-2xl font-medium text-center">
@@ -30,9 +36,6 @@ const SignupSixth = ({ handleSubmit, onSubmit, formData }: any) => {
                 readOnly
                 value={formData.first_name + " " + formData.last_name}
               />
-              {/* <span className="absolute inset-y-3 right-2 summey-top-space">
-                <img className="max-w-{20px}" src="/assets/images/key2.png" />
-              </span> */}
             </div>
           </div>
 
@@ -52,9 +55,6 @@ const SignupSixth = ({ handleSubmit, onSubmit, formData }: any) => {
                 value="james@humanswitch.ai"
                 readOnly
               />
-              {/* <span className="absolute inset-y-3 right-2 summey-top-space ">
-                <img className="max-w-{20px}" src="/assets/images/key2.png" />
-              </span> */}
             </div>
           </div>
 
@@ -75,9 +75,6 @@ const SignupSixth = ({ handleSubmit, onSubmit, formData }: any) => {
                 readOnly
                 value={formData.email}
               />
-              {/* <span className="absolute inset-y-3 right-2 summey-top-space">
-                <img className="max-w-{20px}" src="/assets/images/key2.png" />
-              </span> */}
             </div>
           </div>
 
@@ -98,9 +95,6 @@ const SignupSixth = ({ handleSubmit, onSubmit, formData }: any) => {
                 readOnly
                 value={formData.role}
               />
-              {/* <span className="absolute inset-y-3 right-2 summey-top-space ">
-                <img className="max-w-{20px}" src="/assets/images/key2.png" />
-              </span> */}
             </div>
           </div>
           <hr className="my-4"></hr>
@@ -119,19 +113,34 @@ const SignupSixth = ({ handleSubmit, onSubmit, formData }: any) => {
                 readOnly
                 value={formData.sector}
               />
-              {/* <span className="absolute inset-y-3 right-2 max-w-10 max-h-10 summey-top-space">
-                <img className="max-w-{20px}" src="/assets/images/key2.png" />
-              </span> */}
             </div>
           </div>
+        </div> */}
+        <div className="flex flex-col justify-center text-center border-2 p-4">
+          <h1 className="flex justify-center text-center">
+            <img src="/assets/images/check.png" />
+          </h1>
+          <h2 className="text-gray-dark text-2xl font-medium text-center">
+            Email Verification Code
+          </h2>
+          <p className="gray-dark text-center mb-3">
+            We have sent code to your mail
+          </p>
+          <hr className="my-4"></hr>
+          <div className="w-full flex justify-center">
+            <OTPInput otp={otp} setOtp={setOtp} setOtpError={setOtpError} />
+          </div>
+          <button
+            className="rounded w-full mt-5 bg-bggreen-500 hover:bg-purple-700 py-2.5 px-2.5 text-white font-semibold"
+            type="submit"
+          >
+            Continue
+          </button>
+          <h2 className="text-gray-dark text-sm mt-2 font-medium text-center">
+            Experiencing issues receiving the code?
+          </h2>
+          <p className="gray-dark underline text-center mb-3">Resend code</p>
         </div>
-
-        <button
-          className="rounded w-full mt-5 bg-bggreen-500 hover:bg-purple-700 py-2.5 px-2.5 text-white font-semibold"
-          type="submit"
-        >
-          Continue
-        </button>
       </form>
     </div>
   );
