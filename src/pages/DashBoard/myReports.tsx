@@ -12,6 +12,10 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { createQuestions } from "../../services/slices/dashboard/dashboard";
+import UTurnLeftSharpIcon from '@mui/icons-material/UTurnLeftSharp';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import AddIcon from '@mui/icons-material/Add';
 
 const chapters = [
   {
@@ -368,298 +372,321 @@ const MyReports = () => {
   };
 
   return (
-    <div className="min-h-screen flex">
-      <div className="w-64 bg-gray-200">
-        <div className="text-lg font-semibold mt-6 ml-6">Chapters</div>
-        <div>
-          {chapters.map((chapter) => (
-            <div
-              key={chapter.value}
-              onClick={() => {
-                if (saveVisible === true) {
-                  toast((t) => (
-                    <span>
-                      You have still not saved your changes. Are you sure you
-                      want to <b>continue?</b> <br />
-                      <button
-                        className=" border rounded-lg mt-2 px-2"
-                        onClick={() => {
-                          setSelectedChapter(chapter.name);
-                          setQuestions(() => {
-                            const cht = chapterQuestions.find(
-                              (chap: any) => chap.name === chapter.name
-                            );
+    <div className="">
+      <div className="header-reports w-full">
+        <div className="header-reports-inner flex justify-between px-8 py-6 bg-white shadow">
 
-                            return cht?.questions || [];
-                          });
-                          toast.dismiss(t.id);
-                        }}
-                      >
-                        Yes
-                      </button>
-                      <button
-                        onClick={() => toast.dismiss(t.id)}
-                        className="ml-2 border rounded-lg mt-2 px-2"
-                      >
-                        No
-                      </button>
-                    </span>
-                  ));
-                } else {
-                  setSelectedChapter(chapter.name);
-                  setQuestions(() => {
-                    const cht = chapterQuestions.find(
-                      (chap: any) => chap.name === chapter.name
-                    );
-
-                    return cht?.questions || [];
-                  });
-                }
-              }}
-              className={`px-2 py-2 hover:bg-slate-600 rounded-lg mx-6 my-2 ${
-                selectedChapter === chapter.name ? "bg-slate-400" : ""
-              }`}
-            >
-              {chapter.name}
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="p-6 w-full">
-        <div className=" w-full flex justify-end">
-          <button
-            onClick={handlePublish}
-            disabled={saveVisible === true}
-            className="rounded bg-purple-500 hover:bg-purple-700 py-2 px-4 mb-4 text-white font-semibold disabled:bg-gray-400"
-          >
-            Publish Questions
-          </button>
-        </div>
-        <Paper sx={{ borderRadius: "16px", py: 4, px: 6 }}>
-          <div className="flex flex-col justify-center">
-            {questions.map((question, index) => {
-              return (
-                <div key={question.id} className="mb-8">
-                  <div className="font-semibold mb-2 flex w-full justify-between items-center">
-                    <div>Questions for {selectedChapter}</div>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <div className={question.color}>{question.icon}</div>
-
-                        <div className="text-2xl font-semibold">
-                          Question {index + 1}
-                        </div>
-                      </div>
-                      <div className="ml-[35px]">{question.text}</div>
-                    </div>
-                    <div>
-                      <div
-                        className="text-red-600 p-2 hover:bg-gray-100 rounded-full"
-                        onClick={() => handleRemoveQuestion(question.id)}
-                      >
-                        <DeleteIcon />
-                      </div>
-                    </div>
-                  </div>
-                  {question.type === "Short Answer" && (
-                    <div className="mt-2 ml-[35px]">
-                      <textarea
-                        id={`question-${question.id}`}
-                        name={`question-${question.id}`}
-                        className="bg-white border border-lightblue text-gray-900 text-sm rounded-lg focus:ring-mediumblue focus:border-mediumblue block w-full p-2.5 min-h-62px"
-                        value={answers[question.id] || ""}
-                        onChange={(e) =>
-                          onChangeTextArea(question.id, e.target.value)
-                        }
-                      />
-                    </div>
-                  )}
-                  {question.type === "Multiple Choice" && (
-                    <div className="mt-2  ml-[35px]">
-                      <div className="flex">
-                        <div className="mt-2 w-96">
-                          {question.options.map((option: any) => (
-                            <div
-                              key={option.id}
-                              className={`flex justify-between items-center content-center border p-4 rounded-xl mb-5`}
-                            >
-                              <div className="flex justify-center items-center gap-4">
-                                <input
-                                  id={`default-radio-${option.id}`}
-                                  type="radio"
-                                  value={option.name}
-                                  name={`default-radio-${question.id}`}
-                                  className="min-w-[13px] text-blue-600 bg-gray-100  dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:bg-gray-700"
-                                />
-                                <input
-                                  className={`shadow appearance-none border rounded w-full py-2 pl-2 text-input-text leading-tight focus:outline-none focus:shadow-outline border-slate-300`}
-                                  id="option"
-                                  type="text"
-                                  placeholder="Write option here..."
-                                  value={option.name}
-                                  onChange={(e) =>
-                                    onChangeOptionText(
-                                      e.target.value,
-                                      question.id,
-                                      option.id
-                                    )
-                                  }
-                                />
-                              </div>
-                              <div>
-                                {question.options.length > 2 && (
-                                  <div
-                                    onClick={() =>
-                                      handleRemoveOption(question.id, option.id)
-                                    }
-                                    className="text-red-600 rounded-full hover:bg-gray-100"
-                                  >
-                                    <CancelIcon />
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                      <div>
-                        {question.options.length < 4 && (
-                          <button
-                            className="text-blue-600 font-semibold hover:bg-gray-200 px-3 py-1 rounded-md"
-                            onClick={() => handleAddOption(question.id)}
-                          >
-                            Add Option
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                  )}
-                  {question.type === "Slider" && (
-                    <Box
-                      sx={{
-                        display: "flex",
-                        gap: 6,
-                        mt: 2,
-                        alignItems: "center",
-                        ml: "35px",
-                      }}
-                    >
-                      <div
-                        style={{
-                          cursor: "pointer",
-                        }}
-                      >
-                        <div
-                          style={{
-                            cursor: "pointer",
-                            fontWeight: "bold",
-                            display: "flex",
-                            alignItems: "center",
-                            gap: 8,
-                          }}
-                        >
-                          <input
-                            name="minValue"
-                            value={minValues[question.id] || 10}
-                            onChange={(e) =>
-                              changeMinValue(question.id, e.target.value)
-                            }
-                            type="number"
-                            className="w-28 rounded-lg"
-                          />
-                          <div>Min</div>
-                        </div>
-                        {minValueErrors[question.id] && (
-                          <div className="text-xs text-red-600">
-                            Min value cannot be greater than or equal to Max
-                            value
-                          </div>
-                        )}
-                      </div>
-
-                      <Slider
-                        sx={{ width: 250 }}
-                        step={steps[question.id] || 5}
-                        value={sliderValues[question.id] || 10}
-                        valueLabelDisplay="auto"
-                        min={minValues[question.id] || 10}
-                        max={maxValues[question.id] || 20}
-                        onChange={(_, newValue) =>
-                          handleSliderChange(question.id, newValue as number)
-                        }
-                        marks
-                      />
-                      <div
-                        style={{
-                          cursor: "pointer",
-                        }}
-                      >
-                        <div
-                          style={{
-                            cursor: "pointer",
-                            fontWeight: "bold",
-                            display: "flex",
-                            alignItems: "center",
-                            gap: 8,
-                          }}
-                        >
-                          <input
-                            name="maxValue"
-                            value={maxValues[question.id] || 20}
-                            onChange={(e) =>
-                              changeMaxValue(question.id, e.target.value)
-                            }
-                            type="number"
-                            className="w-28 rounded-lg"
-                          />
-                          <div className="flex w-full justify-center">Max</div>
-                        </div>
-                        {maxValueErrors[question.id] && (
-                          <div className="text-xs text-red-600">
-                            Max value cannot be less than or equal to Min value
-                          </div>
-                        )}
-                      </div>
-                      <div className="flex items-center ml-10">
-                        <div className="font-semibold">
-                          Enter Number of steps :
-                        </div>
-                        <input
-                          name="steps"
-                          defaultValue={steps[question.id] || 5}
-                          onChange={(e) =>
-                            changeStepsValue(question.id, e.target.value)
-                          }
-                          type="number"
-                          className="ml-2 w-28 rounded-lg font-bold"
-                        />
-                      </div>
-                    </Box>
-                  )}
-                </div>
-              );
-            })}
-            <div className="flex gap-4 justify-center items-center mt-4">
-              <div
-                className="rounded bg-blue-500 hover:bg-blue-700 py-2 px-4 text-white font-semibold"
-                onClick={handleClickOpen}
-              >
-                Add Questions
-              </div>
-              {saveVisible && (
-                <div
-                  onClick={() => handleSaveData()}
-                  className="rounded bg-purple-500 hover:bg-purple-700 py-2 px-4 text-white font-semibold"
-                >
-                  Save
-                </div>
-              )}
+          <div className="flex flex-wrap gap-8 items-center w-full">
+            <button className="bg-white border-lightgray3 text-gray-dark border rounded-lg px-3 py-2"><span className="rotate-90 inline-block text-gray-dark"><UTurnLeftSharpIcon /></span> Back to My Reports</button>
+            <div className="text-xl">
+              AI Strategy Readiness
             </div>
           </div>
-        </Paper>
+          <div className="flex gap-3 items-center w-full justify-end">
+            <button className="bg-white border-lightgray3 text-gray-dark border rounded-lg px-6 max-w-172px w-full py-2 text-nowrap">Save Draft</button>
+            <button className="bg-darkblue2 border-darkblue2 text-white border rounded-lg px-6 max-w-172px py-2 w-full">Publish</button>
+          </div>
+        </div>
       </div>
+      <div className="min-h-vhcalc93px flex flex-wrap">
+        <div className="w-272px bg-white shadow">
+          <div className="text-lg font-semibold mt-6 mx-5 flex justify-between gap-2 mb-6">Chapters <span className="w-6 h-6 flex items-center justify-center border border-lightgray3 text-[10px] rounded-md"><AddIcon /></span></div>
+          <div>
+            {chapters.map((chapter) => (
+              <div
+                key={chapter.value}
+                onClick={() => {
+                  if (saveVisible === true) {
+                    toast((t) => (
+                      <span>
+                        You have still not saved your changes. Are you sure you
+                        want to <b>continue?</b> <br />
+                        <button
+                          className=" border rounded-lg mt-2 px-2"
+                          onClick={() => {
+                            setSelectedChapter(chapter.name);
+                            setQuestions(() => {
+                              const cht = chapterQuestions.find(
+                                (chap: any) => chap.name === chapter.name
+                              );
+
+                              return cht?.questions || [];
+                            });
+                            toast.dismiss(t.id);
+                          }}
+                        >
+                          Yes
+                        </button>
+                        <button
+                          onClick={() => toast.dismiss(t.id)}
+                          className="ml-2 border rounded-lg mt-2 px-2"
+                        >
+                          No
+                        </button>
+                      </span>
+                    ));
+                  } else {
+                    setSelectedChapter(chapter.name);
+                    setQuestions(() => {
+                      const cht = chapterQuestions.find(
+                        (chap: any) => chap.name === chapter.name
+                      );
+
+                      return cht?.questions || [];
+                    });
+                  }
+                }}
+                className={`px-3 py-2 flex gap-2 justify-between items-center hover:bg-lightgray rounded-lg mx-5 my-2 relative cursor-pointer ${
+                  selectedChapter === chapter.name ? "bg-lightgray before:content before:absolute before:w-1 before:top-1/2 before:left-[-1.25rem] before:h-5 before:bg-span-clr before:translate-y-[-50%] before:rounded-r-lg" : ""
+                }`}
+              >
+                {chapter.name} <span className="text-success2"><AddCircleOutlineIcon /></span> <span className="text-red2"><RemoveCircleOutlineIcon /></span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="p-6 w-100-272px">
+          <div className=" w-full flex justify-end">
+            <button
+              onClick={handlePublish}
+              disabled={saveVisible === true}
+              className="rounded bg-purple-500 hover:bg-purple-700 py-2 px-4 mb-4 text-white font-semibold disabled:bg-gray-400"
+            >
+              Publish Questions
+            </button>
+          </div>
+          <Paper sx={{ borderRadius: "16px", py: 4, px: 6 }}>
+            <div className="flex flex-col justify-center">
+              {questions.map((question, index) => {
+                return (
+                  <div key={question.id} className="mb-8">
+                    <div className="font-semibold mb-2 flex w-full justify-between items-center">
+                      <div>Questions for {selectedChapter}</div>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <div className={question.color}>{question.icon}</div>
+
+                          <div className="text-xl font-semibold">
+                            Question {index + 1}
+                          </div>
+                        </div>
+                        <div className="ml-[35px] text-gray-dark2">{question.text}</div>
+                      </div>
+                      <div>
+                        <div
+                          className="text-red-600 p-2 hover:bg-gray-100 rounded-full cursor-pointer"
+                          onClick={() => handleRemoveQuestion(question.id)}
+                        >
+                          <DeleteIcon />
+                        </div>
+                      </div>
+                    </div>
+                    {question.type === "Short Answer" && (
+                      <div className="mt-2 ml-[35px]">
+                        <textarea
+                          id={`question-${question.id}`}
+                          name={`question-${question.id}`}
+                          className="bg-lightgray2 border border-lightgray2 text-gray-900 text-sm rounded-lg focus:ring-lightgray2 focus:border-mediumblue block w-full p-2.5 min-h-62px"
+                          value={answers[question.id] || ""}
+                          onChange={(e) =>
+                            onChangeTextArea(question.id, e.target.value)
+                          }
+                        />
+                      </div>
+                    )}
+                    {question.type === "Multiple Choice" && (
+                      <div className="mt-2  ml-[35px]">
+                        <div className="flex">
+                          <div className="mt-2 w-96">
+                            {question.options.map((option: any) => (
+                              <div
+                                key={option.id}
+                                className={`flex justify-between items-center content-center border px-4 py-2 rounded-xl mb-5`}
+                              >
+                                <div className="flex justify-center items-center gap-4">
+                                  <input
+                                    id={`default-radio-${option.id}`}
+                                    type="radio"
+                                    value={option.name}
+                                    name={`default-radio-${question.id}`}
+                                    className="min-w-[13px] text-blue-600 bg-gray-100  dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:bg-gray-700"
+                                  />
+                                  <input
+                                    className={`shadow-none appearance-none border-0 rounded w-full py-2 pl-2 text-input-text leading-tight focus:outline-none focus:shadow-none`}
+                                    id="option"
+                                    type="text"
+                                    placeholder="Write option here..."
+                                    value={option.name}
+                                    onChange={(e) =>
+                                      onChangeOptionText(
+                                        e.target.value,
+                                        question.id,
+                                        option.id
+                                      )
+                                    }
+                                  />
+                                </div>
+                                <div>
+                                  {question.options.length > 2 && (
+                                    <div
+                                      onClick={() =>
+                                        handleRemoveOption(question.id, option.id)
+                                      }
+                                      className="text-mediumgray2 rounded-full hover:bg-gray-100 cursor-pointer"
+                                    >
+                                      <CancelIcon />
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        <div>
+                          {question.options.length < 4 && (
+                            <button
+                              className="text-blue-600 font-semibold hover:bg-gray-200 px-3 py-1 rounded-md"
+                              onClick={() => handleAddOption(question.id)}
+                            >
+                              Add Option
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                    {question.type === "Slider" && (
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          gap: 6,
+                          mt: 2,
+                          alignItems: "center",
+                          ml: "35px",
+                        }}
+                      >
+                        <div className="flex gap-3 items-center">
+                          <div
+                            style={{
+                              cursor: "pointer",
+                            }}
+                          >
+                            <div
+                              style={{
+                                cursor: "pointer",
+                                fontWeight: "bold",
+                                display: "flex",
+                                alignItems: "center",
+                                gap: 8,
+                              }}
+                            >
+                              <input
+                                name="minValue"
+                                value={minValues[question.id] || 10}
+                                onChange={(e) =>
+                                  changeMinValue(question.id, e.target.value)
+                                }
+                                type="number"
+                                className="w-14 rounded-lg text-sm border-0 px-2" 
+                              />
+                              {/* <div>Min</div> */}
+                            </div>
+                            {minValueErrors[question.id] && (
+                              <div className="text-xs text-red-600">
+                                Min value cannot be greater than or equal to Max
+                                value
+                              </div>
+                            )}
+                          </div>
+
+                          <Slider
+                            sx={{ width: 250 }}
+                            step={steps[question.id] || 5}
+                            value={sliderValues[question.id] || 10}
+                            valueLabelDisplay="auto"
+                            min={minValues[question.id] || 10}
+                            max={maxValues[question.id] || 20}
+                            onChange={(_, newValue) =>
+                              handleSliderChange(question.id, newValue as number)
+                            }
+                            marks
+                          />
+                          <div
+                            style={{
+                              cursor: "pointer",
+                            }}
+                          >
+                            <div
+                              style={{
+                                cursor: "pointer",
+                                fontWeight: "bold",
+                                display: "flex",
+                                alignItems: "center",
+                                gap: 8,
+                              }}
+                            >
+                              <input
+                                name="maxValue"
+                                value={maxValues[question.id] || 20}
+                                onChange={(e) =>
+                                  changeMaxValue(question.id, e.target.value)
+                                }
+                                type="number"
+                                className="w-14 border-0 px-2 rounded-lg text-sm"
+                              />
+                              {/* <div className="flex w-full justify-center">Max</div> */}
+                            </div>
+                            {maxValueErrors[question.id] && (
+                              <div className="text-xs text-red-600">
+                                Max value cannot be less than or equal to Min value
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        <div className="flex items-center ml-10">
+                          <div className="font-semibold">
+                            Enter Number of steps :
+                          </div>
+                          <input
+                            name="steps"
+                            defaultValue={steps[question.id] || 5}
+                            onChange={(e) =>
+                              changeStepsValue(question.id, e.target.value)
+                            }
+                            type="number"
+                            className="ml-2 w-28 rounded-lg font-bold"
+                          />
+                        </div>
+                      </Box>
+                    )}
+                  </div>
+                );
+              })}
+              <div className="relative text-center before:content before:absolute before:w-full before:top-1/2 before:left-0 mt-4 before:h-1px before:bg-lightgray3 ">
+                <div className="inline-flex gap-4 justify-center items-center relative bg-white px-3">
+                  <div
+                    className="rounded-lg bg-white hover:bg-blue-700 py-2 px-4 hover:text-white text-gray-dark font-semibold cursor-pointer border border-lighgray3"
+                    onClick={handleClickOpen}
+                  >
+                    Add Questions
+                  </div>
+                  {saveVisible && (
+                    <div
+                      onClick={() => handleSaveData()}
+                      className="rounded bg-purple-500 hover:bg-purple-700 py-2 px-4 text-white font-semibold cursor-pointer"
+                    >
+                      Save
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </Paper>
+        </div>
+      </div>
+
       <Dialog fullWidth={true} maxWidth="xs" open={open} onClose={handleClose}>
         <DialogTitle> Select the type of question</DialogTitle>
         <DialogContent>
@@ -667,7 +694,7 @@ const MyReports = () => {
             {questionType.map((ques) => (
               <div
                 key={ques.id}
-                className="p-4 mt-2 rounded-xl hover:bg-blue-200 flex items-center gap-4"
+                className="p-4 mt-2 rounded-xl hover:bg-blue-200 flex items-center gap-4 cursor-pointer"
                 onClick={() => {
                   setOpenQuestion(true);
                   setSelectedQuestionType(ques);
@@ -681,7 +708,7 @@ const MyReports = () => {
         </DialogContent>
         <DialogActions>
           <div
-            className="rounded bg-blue-500 hover:bg-blue-700 py-2 px-4 mb-2 mr-2 text-white font-semibold"
+            className="rounded bg-blue-500 hover:bg-blue-700 py-2 px-4 mb-2 mr-2 text-white font-semibold cursor-pointer"
             onClick={handleClose}
           >
             Close

@@ -15,25 +15,32 @@ export default {
         // "gray-dark": "#525866",
         // heading: "#0A0D14",
         // "input-text": "#868C98",
-        // "border-clr": "#E2E4E9",
+       
         // "dark-purple": "#2B1664",
         // "span-clr": "#375DFB",
         // content: "#525866",
         // "border-error": "#DF1C41",
-        // success: "#38C793",
+        success2: "#38C793",
         darkblue: "#0F3063",
+        darkblue2: "#335CFF",
         mediumblue: "#6355F6",
         lightblue: "#EBEDFF",
         mediumgreen: "#18CBB8",
+        
         success: "#5cb85c",
         error: "#FDEDF0",
         "gray-dark": "#525866",
+        "gray-dark2": "#3B404F",
         "span-clr": "#375DFB",
         "red-code": "#DF1C41",
         bggreen: "#2B1664",
         "bggreen-500": "#6E3FF3",
         "main-heading": " #0A0D14",
         lightgray: "#F6F8FA",
+        lightgray2: "#F9FAFB",
+        lightgray3: "#E2E4E9",
+        mediumgray2: "#B7C0D0",
+        red2: "#D74B81",
       },
       padding: {
         100: "100%",
@@ -67,6 +74,7 @@ export default {
         700: "700px",
         20: "20px",
         123: "123px",
+        "172px": "172px",
         13: "13px",
       },
       maxHeight: {
@@ -77,16 +85,20 @@ export default {
       height: {
         "vw-calc80px": "calc(100vh - 80px)",
         "vw-calc140px": "calc(100vh - 140px)",
+        "1px": "1px",
       },
       minHeight: {
         "62px": "62px",
         13: "13px",
         vhcalc88px: "calc(100vh - 88px)",
+        vhcalc93px: "calc(100vh - 93px)",
       },
       width: {
         60: "60%",
         "250px": "250px",
         "272px": "272px",
+        "172px": "172px",
+        "100-272px": "calc(100% - 272px)",
       },
       boxShadow: {
         inside: "inset 0 0 15px #6355f64f",
@@ -102,6 +114,15 @@ export default {
       margin: {
         "20px": "20px",
       },
+      translate: {
+        n50: "-50%",
+      },
+      left: {
+        n5: "-1.25rem"
+      },
+      fontSize: {
+        "10px": "10px"
+      }
     },
   },
   plugins: [require("flowbite/plugin")],
