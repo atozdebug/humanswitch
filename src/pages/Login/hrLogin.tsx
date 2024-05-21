@@ -14,6 +14,12 @@ import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import { DialogContent } from "@mui/material";
 import OTPInput from "../../components/HrLogin/Otp";
+import {
+  generateSecret,
+  sendEmailVerification,
+  sendQRVerification,
+  verifyEmail,
+} from "../../services/slices/auth/authentication";
 
 const schema = yup.object().shape({
   email: yup
@@ -58,13 +64,15 @@ const LoginHr = () => {
   const navigate: any = useNavigate();
   const dispatch: any = useDispatch();
 
+  const existingData = Cookies.get("questionnaireData");
+
   const [showPassword, setShowPassword] = useState(false);
   const [otp, setOtp] = React.useState("");
   const [open, setOpen] = useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  const [otpError, setOtpError] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [securityType, setSecurityType] = useState("");
 
   const handleClose = () => {
     setOpen(false);
@@ -81,15 +89,37 @@ const LoginHr = () => {
   });
 
   const onSubmit: any = (data: FormData) => {
-    const existingData = Cookies.get("questionnaireData");
+    setEmail(data.email);
+    setPassword(data.password);
     console.log("Form data:", data);
-
     dispatch(userLogin(data))
       .unwrap()
       .then((res: any) => {
-        if (res.security) {
-          setOpen(true);
-        } else {
+        if (res.security === "SMS Code") {
+          setSecurityType(res.security);
+        } else if (res.security === "Email Code") {
+          setSecurityType(res.security);
+          dispatch(generateSecret({ email: data.email }))
+            .unwrap()
+            .then(() => {
+              dispatch(sendEmailVerification({ email: data.email }))
+                .unwrap()
+                .then(() => {
+                  setOpen(true);
+                });
+            });
+        } else if (res.security === "Authenticator App") {
+          setSecurityType(res.security);
+          dispatch(generateSecret({ email: data.email }))
+            .unwrap()
+            .then(() => {
+              dispatch(sendQRVerification({ email: data.email }))
+                .unwrap()
+                .then(() => {
+                  setOpen(true);
+                });
+            });
+        } else if (!res.security) {
           res.access_token && existingData
             ? navigate("/pillars")
             : navigate("/dashboard");
@@ -98,6 +128,14 @@ const LoginHr = () => {
   };
 
   console.log(otp);
+
+  const handleVerifyOtps = () => {
+    if (otp === "") {
+      setOtpError(true);
+    } else {
+      dispatch(verifyEmail({ email, password, code: otp }));
+    }
+  };
 
   return (
     <div className="main my-2 px-5 mob">
@@ -274,16 +312,29 @@ const LoginHr = () => {
         open={open}
         TransitionComponent={Transition}
         keepMounted
-        onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
       >
         <div className="px-6 pt-6 text-xl font-semibold">
           Kindly enter the authentication OTP sent to your Mail
         </div>
         <DialogContent>
-          <div className="w-full flex justify-center">
-            <OTPInput otp={otp} setOtp={setOtp} />
-          </div>
+          {securityType === "Email Code" && (
+            <>
+              <div className="w-full flex justify-center">
+                <OTPInput otp={otp} setOtp={setOtp} setOtpError={setOtpError} />
+              </div>
+              {otpError && (
+                <div className="mt-4 text-sm text-red-600">
+                  *Kindly Enter OTP before submitting
+                </div>
+              )}
+            </>
+          )}
+          {securityType === "Authenticator App" && (
+            <>
+              <div>QR Code</div>
+            </>
+          )}
         </DialogContent>
         <DialogActions>
           <button
@@ -294,7 +345,7 @@ const LoginHr = () => {
           </button>
           <button
             className="px-4 py-2 rounded-md hover:bg-gray-200 mr-2"
-            onClick={handleClose}
+            onClick={handleVerifyOtps}
           >
             Submit
           </button>

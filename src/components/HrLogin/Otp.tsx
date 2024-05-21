@@ -7,11 +7,13 @@ function OTP({
   length,
   value,
   onChange,
+  setOtpError,
 }: {
   separator: React.ReactNode;
   length: number;
   value: string;
   onChange: React.Dispatch<React.SetStateAction<string>>;
+  setOtpError: any;
 }) {
   const inputRefs = React.useRef<HTMLInputElement[]>(
     new Array(length).fill(null)
@@ -83,6 +85,7 @@ function OTP({
     event: React.ChangeEvent<HTMLInputElement>,
     currentIndex: number
   ) => {
+    setOtpError(false);
     const currentValue = event.target.value;
     const lastValue = currentValue[currentValue.length - 1];
 
@@ -117,7 +120,7 @@ function OTP({
   };
 
   const handleClick = (
-    event: React.MouseEvent<HTMLInputElement, MouseEvent>,
+    _event: React.MouseEvent<HTMLInputElement, MouseEvent>,
     currentIndex: number
   ) => {
     selectInput(currentIndex);
@@ -127,6 +130,7 @@ function OTP({
     event: React.ClipboardEvent<HTMLInputElement>,
     currentIndex: number
   ) => {
+    setOtpError(false);
     event.preventDefault();
     const clipboardData = event.clipboardData;
 
@@ -187,7 +191,7 @@ function OTP({
   );
 }
 
-export default function OTPInput({ otp, setOtp }: any) {
+export default function OTPInput({ otp, setOtp, setOtpError }: any) {
   return (
     <Box
       sx={{
@@ -201,6 +205,7 @@ export default function OTPInput({ otp, setOtp }: any) {
         value={otp}
         onChange={setOtp}
         length={6}
+        setOtpError={setOtpError}
       />
     </Box>
   );

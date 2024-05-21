@@ -1,9 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import http from "../../http/baseUrl.tsx";
-import {
-  startLoadingActivity,
-  stopLoadingActivity,
-} from "../activity/activitySlice.tsx";
+import { stopLoadingActivity } from "../activity/activitySlice.tsx";
 
 export const userLogin: any = createAsyncThunk(
   "auth/login",
@@ -12,11 +9,10 @@ export const userLogin: any = createAsyncThunk(
       console.log("Datttatatatatta", data);
       const response = await http.post(`/login`, data);
       if (response.status === 200) {
-        localStorage?.setItem("token", response.data.access_token);
-        localStorage?.setItem("user", response.data.user.id);
-
-        dispatch(startLoadingActivity());
-        console.log(response.data);
+        if (response.data.access_token && response.data.user.id) {
+          localStorage.setItem("token", response.data.access_token);
+          localStorage.setItem("user", response.data.user.id);
+        }
         return response.data;
       }
     } catch (error: any) {

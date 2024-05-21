@@ -62,7 +62,7 @@ let bottomSidebarItems = [
 const SideBar = () => {
   const dispatch: any = useDispatch();
   const isDark: any = useSelector((state: any) => state.activity.isDark);
-  console.log("--------", isDark);
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
