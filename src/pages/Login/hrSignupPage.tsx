@@ -178,7 +178,7 @@ const schemaFifth = yup.object().shape({
 });
 
 const schemaSixth = yup.object().shape({
-  otp: yup.string().required("otp is required"),
+  otp: yup.string().required("OTP is required"),
 });
 
 interface FormData {
@@ -249,7 +249,7 @@ const SignupPage = () => {
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file: any = e.target.files && e.target.files[0];
-    if (step === 2) {
+    if (step === 3) {
       setImageFile(file);
     } else {
       setBusinessImageFile(file);
@@ -422,6 +422,8 @@ const SignupPage = () => {
       ) : step === 3 ? (
         <SignupTwo
           handleImageChange={handleImageChange}
+          handleSubmit={handleSubmit}
+          onSubmit={onSubmit}
           register={register}
           errors={errors}
           setValue={setValue}
@@ -435,10 +437,12 @@ const SignupPage = () => {
         />
       ) : step === 5 ? (
         <SignupFour
+          handleImageChange={handleImageChange}
           handleSubmit={handleSubmit}
           onSubmit={onSubmit}
           register={register}
           errors={errors}
+          setValue={setValue}
         />
       ) : (
         <SignupFive
