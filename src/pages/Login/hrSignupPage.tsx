@@ -264,28 +264,40 @@ const SignupPage = () => {
       console.log(step);
       if (step === 1) {
         console.log("Step 1");
-        const toastId = toast.loading("Sending Mail...");
-        dispatch(sendEmailVerification({ email: data.email }))
-          .unwrap()
-          .then(() => {
-            setStep(2); // Move to OTP verification step
-            toast.dismiss(toastId);
-          })
-          .catch((error: any) => {
-            console.error("Error sending OTP:", error);
-          });
+
+        toast.promise(
+          dispatch(sendEmailVerification({ email: data.email }))
+            .unwrap()
+            .then(() => {
+              setStep(2); // Move to OTP verification step
+            })
+            .catch((error: any) => {
+              console.error("Error sending OTP:", error);
+            }),
+          {
+            loading: "Sending Email...",
+            success: "Email Sent!",
+            error: "Error while sending email",
+          }
+        );
       } else if (step === 2) {
         console.log(otp);
         // Handle OTP verification logic here
         if (otp.length === 6) {
           dispatch(verifyEmailOtp({ email: formData.email, otp }))
             .unwrap()
-            .then(() => {
-              setStep(3);
+            .then((res: any) => {
+              if (res.success === "true") {
+                toast.success("OTP verified succcessfully");
+                setStep(3);
+              } else {
+                toast.error("Invalid OTP");
+              }
+              setOtp("");
             })
             .catch((error: any) => {
               console.error("Invalid OTP:", error);
-              setOtpError(true);
+              toast.error("Invalid OTP");
             });
         } else {
           setOtpError(true);

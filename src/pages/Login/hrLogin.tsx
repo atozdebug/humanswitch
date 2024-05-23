@@ -21,6 +21,7 @@ import {
   verifyEmail,
   verifyQROtp,
 } from "../../services/slices/auth/authentication";
+import toast from "react-hot-toast";
 
 const schema = yup.object().shape({
   email: yup
@@ -99,6 +100,9 @@ const LoginHr = () => {
     dispatch(userLogin(data))
       .unwrap()
       .then((res: any) => {
+        if (res.error) {
+          toast.error(res.error);
+        }
         if (res.security === "SMS Code") {
           setSecurityType(res.security);
         } else if (res.security === "Email Code") {
@@ -106,11 +110,18 @@ const LoginHr = () => {
           dispatch(generateSecret({ email: data.email }))
             .unwrap()
             .then(() => {
-              dispatch(sendEmailVerification({ email: data.email }))
-                .unwrap()
-                .then(() => {
-                  setOpen(true);
-                });
+              toast.promise(
+                dispatch(sendEmailVerification({ email: data.email }))
+                  .unwrap()
+                  .then(() => {
+                    setOpen(true);
+                  }),
+                {
+                  loading: "Sending Email...",
+                  success: "Email Sent!",
+                  error: "Error while sending email",
+                }
+              );
             });
         } else if (res.security === "Authenticator App") {
           setSecurityType(res.security);

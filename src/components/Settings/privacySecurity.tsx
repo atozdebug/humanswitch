@@ -78,11 +78,18 @@ const PrivacySecurity = ({ handleSubmit, onSubmit, errors, setValue }: any) => {
         dispatch(generateSecret({ email: userData.email }))
           .unwrap()
           .then(() => {
-            dispatch(sendEmailVerification({ email: userData.email }))
-              .unwrap()
-              .then(() => {
-                setOpen(true);
-              });
+            toast.promise(
+              dispatch(sendEmailVerification({ email: userData.email }))
+                .unwrap()
+                .then(() => {
+                  setOpen(true);
+                }),
+              {
+                loading: "Sending Email...",
+                success: "Email Sent!",
+                error: "Error while sending email",
+              }
+            );
           });
       } else if (checked === "Authenticator App") {
         setSecurityType(checked);
@@ -157,6 +164,7 @@ const PrivacySecurity = ({ handleSubmit, onSubmit, errors, setValue }: any) => {
 
   const handleClose = () => {
     setOpen(false);
+    setOtp("");
   };
 
   console.log("checked", checked);
