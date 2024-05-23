@@ -2,9 +2,15 @@ import { useEffect, useState } from "react";
 import Header from "./header";
 import SideBar from "./sidebar";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 const Layout = ({ children }: any) => {
   const [isTrue, setIsTrue] = useState(true);
+  const location = useLocation();
+
+  const allow = location.pathname !== "/pillars";
+
+  const noHeader = location.pathname !== "/reports";
 
   const data = useSelector((state: any) => state.login?.data);
   const data2 = useSelector((state: any) => state.authentication?.data);
@@ -26,7 +32,7 @@ const Layout = ({ children }: any) => {
           height: "full",
         }}
       >
-        {isTrue && <SideBar />}
+        {isTrue && allow && <SideBar />}
         <div
           style={{
             display: "flex",
@@ -35,7 +41,7 @@ const Layout = ({ children }: any) => {
           }}
           className="content-right"
         >
-          {isTrue && <Header />}
+          {isTrue && allow && noHeader && <Header />}
           {children}
         </div>
       </div>
