@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const SignupFour = ({
   handleImageChange,
   handleSubmit,
@@ -6,6 +8,8 @@ const SignupFour = ({
   errors,
   setValue,
 }: any) => {
+  const [profilePic, setProfilePic] = useState<any>(null);
+
   return (
     <div className="main">
       <form
@@ -25,13 +29,27 @@ const SignupFour = ({
 
         <div className="flex items-center content-center gap-10 mb-5 ">
           <div
-            className={`${
-              errors?.businessImage ? "border rounded-full border-red-500" : ""
+            className={`border-4 rounded-full bg-white${
+              errors?.businessImage ? " border-red-500" : "border-gray-400"
             }`}
           >
-            <h1>
-              <img src="/assets/images/Avatar1.png" />
-            </h1>
+            {profilePic ? (
+              <img
+                src={profilePic}
+                alt="Profile"
+                className="rounded-full"
+                height={128}
+                width={128}
+              />
+            ) : (
+              <img
+                src="/assets/images/avatarpic.jpg"
+                alt="Profile"
+                className="rounded-full"
+                height={128}
+                width={128}
+              />
+            )}
           </div>
           <div>
             <h3 className="text-heading font-medium text-start">
@@ -44,8 +62,10 @@ const SignupFour = ({
               type="file"
               id="image-upload"
               accept="image/*"
-              onChange={(e) => {
+              onChange={(e: any) => {
                 handleImageChange(e);
+                const newProfilePic: any = e.target.files[0];
+                setProfilePic(URL.createObjectURL(newProfilePic));
                 setValue("businessImage", e.target.files);
               }}
               className="block w-full text-start  text-sm text-gray-900 bg-gray-50 rounded-lg cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"

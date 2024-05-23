@@ -16,6 +16,7 @@ import {
   sendEmailVerification,
   verifyEmailOtp,
 } from "../../services/slices/auth/authentication";
+import toast from "react-hot-toast";
 
 const header = [
   {
@@ -263,10 +264,12 @@ const SignupPage = () => {
       console.log(step);
       if (step === 1) {
         console.log("Step 1");
+        const toastId = toast.loading("Sending Mail...");
         dispatch(sendEmailVerification({ email: data.email }))
           .unwrap()
           .then(() => {
             setStep(2); // Move to OTP verification step
+            toast.dismiss(toastId);
           })
           .catch((error: any) => {
             console.error("Error sending OTP:", error);
@@ -292,7 +295,7 @@ const SignupPage = () => {
       } else if (step === 6) {
         const formData: any = new FormData();
         formData.append("image", imageFile);
-        formData.append("businessImage", businessImageFile);
+        formData.append("business_image", businessImageFile);
         formData.append("email", data.email);
         formData.append("first_name", data.first_name);
         formData.append("last_name", data.last_name);
@@ -306,7 +309,6 @@ const SignupPage = () => {
         formData.append("password", data.password);
         formData.append("partners", data.partners);
         formData.append("suppliers", data.suppliers);
-        formData.append("otp", otp);
 
         dispatch(userSignUp(formData))
           .unwrap()
