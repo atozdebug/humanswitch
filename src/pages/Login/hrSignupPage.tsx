@@ -61,22 +61,7 @@ const schemaFirst = yup.object().shape({
 const schemaSecond = yup.object().shape({
   first_name: yup.string().required("First name is required"),
   last_name: yup.string().required("Last name is required"),
-  phone_no: yup
-    .number()
-    .integer("Phone number must be an integer")
-    .required("Phone number is required")
-    .typeError("Phone number must be a number")
-    .test(
-      "len",
-      "Phone number must be between 10 and 15 digits",
-      function (val) {
-        if (val === undefined || val === null) {
-          return false;
-        }
-        const phoneString = val.toString();
-        return phoneString.length >= 10 && phoneString.length <= 15;
-      }
-    ),
+  phone_no: yup.string().required("Phone number is required"),
   image: yup
     .mixed()
     .required("Profile picture is required")
@@ -188,7 +173,7 @@ interface FormData {
   businessImage: Blob;
   first_name: string;
   last_name: string;
-  phone_no: number;
+  phone_no: string;
   role: string;
   company_name: string;
   industry: string;

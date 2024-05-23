@@ -337,7 +337,7 @@ const LoginHr = () => {
             "Kindly enter the authentication OTP sent to your Mail"}
           {securityType === "Authenticator App" && step === 0
             ? "Kindly scan this qr code on your authenticator app"
-            : "Kindly enter the authentication OTP"}
+            : step === 1 && "Kindly enter the authentication OTP"}
         </div>
         <DialogContent>
           {securityType === "Email Code" && (
@@ -361,16 +361,22 @@ const LoginHr = () => {
               </div>
             </>
           ) : (
-            <>
-              <div className="w-full flex justify-center">
-                <OTPInput otp={otp} setOtp={setOtp} setOtpError={setOtpError} />
-              </div>
-              {otpError && (
-                <div className="mt-4 text-sm text-red-600">
-                  *Kindly Enter OTP before submitting
+            step === 1 && (
+              <>
+                <div className="w-full flex justify-center">
+                  <OTPInput
+                    otp={otp}
+                    setOtp={setOtp}
+                    setOtpError={setOtpError}
+                  />
                 </div>
-              )}
-            </>
+                {otpError && (
+                  <div className="mt-4 text-sm text-red-600">
+                    *Kindly Enter OTP before submitting
+                  </div>
+                )}
+              </>
+            )
           )}
         </DialogContent>
         <DialogActions>

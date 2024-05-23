@@ -1,3 +1,7 @@
+import { useState } from "react";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+
 const SignupTwo = ({
   handleImageChange,
   handleSubmit,
@@ -6,6 +10,8 @@ const SignupTwo = ({
   errors,
   setValue,
 }: any) => {
+  const [phone, setPhone] = useState<any>("");
+
   return (
     <div className="main">
       <form
@@ -106,14 +112,16 @@ const SignupTwo = ({
           >
             Phone Number*
           </label>
-          <input
-            className={`shadow appearance-none border  rounded-[10px] w-full py-2.5 px-2.5 text-input-text leading-tight focus:outline-none focus:shadow-outline ${
-              errors.phone_no ? "border-red-500" : "border-slate-300"
-            }`}
-            id="phone_no"
-            type="number"
-            placeholder="(555) 000-0000"
-            {...register("phone_no")}
+
+          <PhoneInput
+            country={"us"}
+            enableSearch={true}
+            value={phone}
+            onChange={(phone) => {
+              setPhone(phone);
+              setValue("phone_no", phone);
+            }}
+            placeholder="+1 (545) 674-3543"
           />
           {errors?.phone_no && (
             <p className="text-red-500 text-sm mt-2">

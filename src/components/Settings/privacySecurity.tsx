@@ -3,6 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../services/slices/dashboard/getUser";
 import { updateProfile } from "../../services/slices/dashboard/updateProfile";
 import toast from "react-hot-toast";
+import {
+  generateSecret,
+  sendEmailVerification,
+  sendQRVerification,
+  verifyEmailOtp,
+  verifyQROtp2FA,
+} from "../../services/slices/auth/authentication";
+import { Dialog, DialogActions, DialogContent, Slide } from "@mui/material";
+import { TransitionProps } from "@mui/material/transitions";
+import React from "react";
+import OTPInput from "../HrLogin/Otp";
 
 const methods = [
   {
@@ -25,13 +36,16 @@ const methods = [
   },
 ];
 
-const PrivacySecurity = ({
-  handleSubmit,
-  register,
-  onSubmit,
-  errors,
-  setValue,
-}: any) => {
+const Transition = React.forwardRef(function Transition(
+  props: TransitionProps & {
+    children: React.ReactElement<any, any>;
+  },
+  ref: React.Ref<unknown>
+) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+const PrivacySecurity = ({ handleSubmit, onSubmit, errors, setValue }: any) => {
   const user = localStorage.getItem("user");
   const dispatch: any = useDispatch();
   const userData = useSelector((state: any) => state.getUser.data);
@@ -46,22 +60,103 @@ const PrivacySecurity = ({
 
   const [checked, setChecked] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
+  const [securityType, setSecurityType] = useState("");
+  const [otp, setOtp] = useState("");
+  const [open, setOpen] = useState(false);
+  const [qrCode, setQrCode] = useState<any>(null);
+  const [otpError, setOtpError] = useState(false);
+  const [step, setStep] = useState(0);
 
   const enableAuthentication = (state: any) => {
     const formData: any = new FormData();
+
     if (state === "enabled") {
-      formData.append("security", checked);
+      if (checked === "SMS Code") {
+        setSecurityType(checked);
+      } else if (checked === "Email Code") {
+        setSecurityType(checked);
+        dispatch(generateSecret({ email: userData.email }))
+          .unwrap()
+          .then(() => {
+            dispatch(sendEmailVerification({ email: userData.email }))
+              .unwrap()
+              .then(() => {
+                setOpen(true);
+              });
+          });
+      } else if (checked === "Authenticator App") {
+        setSecurityType(checked);
+        dispatch(generateSecret({ email: userData.email }))
+          .unwrap()
+          .then(() => {
+            dispatch(sendQRVerification({ email: userData.email }))
+              .unwrap()
+              .then((res: any) => {
+                console.log(res);
+                setQrCode(`data:image/jpeg;base64,${res?.qr_code}`);
+                setOpen(true);
+              });
+          });
+      }
     } else {
       formData.append("security", "none");
+      dispatch(updateProfile(formData))
+        .unwrap()
+        .then(() => {
+          toast.success("2FA Disabled Successfully");
+          dispatch(getUser(user))
+            .unwrap()
+            .then(() => {
+              setIsDisabled(true);
+              setChecked("");
+            });
+        });
     }
-    dispatch(updateProfile(formData))
-      .unwrap()
-      .then((res: any) => {
-        toast.success("2FA Enabled Successfully");
-        dispatch(getUser(user))
-          .unwrap()
-          .then(() => setIsDisabled(true));
-      });
+  };
+
+  const handleVerifyOtps = (type: any) => {
+    const formData: any = new FormData();
+    formData.append("security", checked);
+    if (otp === "") {
+      setOtpError(true);
+    } else if (type === "Email Code") {
+      dispatch(verifyEmailOtp({ email: userData.email, otp }))
+        .unwrap()
+        .then(() => {
+          dispatch(updateProfile(formData))
+            .unwrap()
+            .then(() => {
+              toast.success("2FA Enabled Successfully");
+              handleClose();
+              dispatch(getUser(user))
+                .unwrap()
+                .then(() => {
+                  setIsDisabled(true);
+                });
+            });
+        });
+    } else if (type === "Authenticator App") {
+      dispatch(verifyQROtp2FA({ email: userData.email, otp }))
+        .unwrap()
+        .then(() => {
+          dispatch(updateProfile(formData))
+            .unwrap()
+            .then(() => {
+              toast.success("2FA Enabled Successfully");
+              handleClose();
+              setStep(0);
+              dispatch(getUser(user))
+                .unwrap()
+                .then(() => {
+                  setIsDisabled(true);
+                });
+            });
+        });
+    }
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   console.log("checked", checked);
@@ -142,6 +237,94 @@ const PrivacySecurity = ({
       >
         Disable 2FA Security
       </button>
+      <Dialog
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <div className="px-6 pt-6 text-xl text-center font-semibold">
+          {securityType === "Email Code" &&
+            "Kindly enter the authentication OTP sent to your Mail"}
+          {securityType === "Authenticator App" && step === 0
+            ? "Kindly scan this qr code on your authenticator app"
+            : step === 1 && "Kindly enter the authentication OTP"}
+        </div>
+        <DialogContent>
+          {securityType === "Email Code" && (
+            <>
+              <div className="w-full flex justify-center">
+                <OTPInput otp={otp} setOtp={setOtp} setOtpError={setOtpError} />
+              </div>
+              {otpError && (
+                <div className="mt-4 text-sm text-red-600">
+                  *Kindly Enter OTP before submitting
+                </div>
+              )}
+            </>
+          )}
+          {securityType === "Authenticator App" && step === 0 ? (
+            <>
+              <div className="flex justify-center items-center">
+                {qrCode && (
+                  <img src={qrCode} alt="qrCode" height={150} width={150} />
+                )}
+              </div>
+            </>
+          ) : (
+            step === 1 && (
+              <>
+                <div className="w-full flex justify-center">
+                  <OTPInput
+                    otp={otp}
+                    setOtp={setOtp}
+                    setOtpError={setOtpError}
+                  />
+                </div>
+                {otpError && (
+                  <div className="mt-4 text-sm text-red-600">
+                    *Kindly Enter OTP before submitting
+                  </div>
+                )}
+              </>
+            )
+          )}
+        </DialogContent>
+        <DialogActions>
+          <button
+            className="px-4 py-2 rounded-md hover:bg-gray-200 text-red-600"
+            onClick={() => {
+              if (step === 0) {
+                handleClose();
+              } else if (step === 1) {
+                setStep((prev: any) => prev - 1);
+              }
+            }}
+          >
+            {step === 0 ? "Cancel" : "Back"}
+          </button>
+          <button
+            className="px-4 py-2 rounded-md hover:bg-gray-200 mr-2"
+            onClick={() => {
+              if (securityType === "Email Code") {
+                handleVerifyOtps("Email Code");
+              } else if (securityType === "Authenticator App") {
+                step === 0
+                  ? setStep((prev: any) => prev + 1)
+                  : handleVerifyOtps("Authenticator App");
+              }
+            }}
+          >
+            {securityType === "Email Code" ? (
+              <div>Submit</div>
+            ) : step === 0 ? (
+              <div>Click to Enter OTP</div>
+            ) : (
+              <div>Submit</div>
+            )}
+          </button>
+        </DialogActions>
+      </Dialog>
     </form>
   );
 };

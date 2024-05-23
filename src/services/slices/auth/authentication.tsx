@@ -92,6 +92,25 @@ export const verifyQROtp: any = createAsyncThunk(
   }
 );
 
+export const verifyQROtp2FA: any = createAsyncThunk(
+  "auth/verifyQROtp2FA",
+  async (data, { dispatch }) => {
+    try {
+      console.log("Datttatatatatta", data);
+      const response = await http.post(`/qr_verification2fa`, data);
+      if (response.status === 200) {
+        return response.data;
+      }
+    } catch (error: any) {
+      if (error.response && error.response.status === 400) {
+        return { error: "Bad Request" };
+      }
+    } finally {
+      dispatch(stopLoadingActivity());
+    }
+  }
+);
+
 export const generateSecret: any = createAsyncThunk(
   "auth/generateSecret",
   async (data, { dispatch }) => {
@@ -208,6 +227,16 @@ export const authenticationSlice = createSlice({
         state.loading = false;
       })
       .addCase(verifyQROtp.rejected, (state, _action) => {
+        state.loading = false;
+      })
+      .addCase(verifyQROtp2FA.pending, (state, _action) => {
+        state.loading = true;
+      })
+      .addCase(verifyQROtp2FA.fulfilled, (state, action) => {
+        state.data = action.payload;
+        state.loading = false;
+      })
+      .addCase(verifyQROtp2FA.rejected, (state, _action) => {
         state.loading = false;
       });
   },

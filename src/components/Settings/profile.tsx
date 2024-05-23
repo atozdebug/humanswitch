@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../services/slices/dashboard/getUser";
 import { updateProfile } from "../../services/slices/dashboard/updateProfile";
 import toast from "react-hot-toast";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 
 const Profile = () => {
   const user = localStorage.getItem("user");
@@ -117,16 +119,15 @@ const Profile = () => {
             />
             <div className="mt-6 flex flex-col">
               <div className="">Phone No</div>
-              <input
-                className={`shadow appearance-none border border-slate-300 rounded w-full py-2 pl-2 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
-                id="current_password"
-                type={"number"}
-                placeholder="9002033010"
+              <PhoneInput
+                country={"us"}
+                enableSearch={true}
                 value={phoneNumber}
                 onChange={(e) => {
-                  setPhoneNumber(e.target.value);
+                  setPhoneNumber(e);
                   setIsDisabled(false);
                 }}
+                placeholder="+1 (545) 674-3543"
               />
             </div>
           </div>
