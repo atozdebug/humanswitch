@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import OTPInput from "../HrLogin/Otp";
 
 const SignupSixth = ({
@@ -7,7 +8,11 @@ const SignupSixth = ({
   setOtp,
   otpError,
   setOtpError,
+  setValue,
 }: any) => {
+  useEffect(() => {
+    setValue("otp", otp);
+  }, [otp]);
   return (
     <div>
       <form

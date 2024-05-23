@@ -12,7 +12,10 @@ import SignupSixth from "../../components/HrSignup/signupSixth";
 import { useDispatch } from "react-redux";
 import { userSignUp } from "../../services/slices/auth/signUp";
 import { useNavigate } from "react-router-dom";
-import { sendEmailVerification } from "../../services/slices/auth/authentication";
+import {
+  sendEmailVerification,
+  verifyEmailOtp,
+} from "../../services/slices/auth/authentication";
 
 const header = [
   {
@@ -21,23 +24,23 @@ const header = [
   },
   {
     id: 2,
-    name: "Personal",
+    name: "Email Verification",
   },
   {
     id: 3,
-    name: "Role",
+    name: "Personal",
   },
   {
     id: 4,
-    name: "Business",
+    name: "Role",
   },
   {
     id: 5,
-    name: "Password",
+    name: "Business",
   },
   {
     id: 6,
-    name: "Summary",
+    name: "Password",
   },
 ];
 
@@ -174,6 +177,10 @@ const schemaFifth = yup.object().shape({
     ),
 });
 
+const schemaSixth = yup.object().shape({
+  otp: yup.string().required("otp is required"),
+});
+
 interface FormData {
   email: string;
   agreeTerms: boolean;
@@ -192,6 +199,7 @@ interface FormData {
   confirmPassword: string;
   partners: string;
   suppliers: string;
+  otp: string;
 }
 const defaultValues = {
   email: "",
@@ -211,6 +219,7 @@ const defaultValues = {
   confirmPassword: "",
   partners: "",
   suppliers: "",
+  otp: "",
 };
 
 const SignupPage = () => {
@@ -223,12 +232,14 @@ const SignupPage = () => {
     if (step === 1) {
       return yupResolver(schemaFirst);
     } else if (step === 2) {
-      return yupResolver(schemaSecond);
+      return yupResolver(schemaSixth);
     } else if (step === 3) {
-      return yupResolver(schemaThird);
+      return yupResolver(schemaSecond);
     } else if (step === 4) {
-      return yupResolver(schemaFourth);
+      return yupResolver(schemaThird);
     } else if (step === 5) {
+      return yupResolver(schemaFourth);
+    } else if (step === 6) {
       return yupResolver(schemaFifth);
     }
   };
@@ -261,17 +272,38 @@ const SignupPage = () => {
   const [otpError, setOtpError] = useState(false);
 
   const onSubmit: any = (data: FormData) => {
-    console.log("Form data:", data);
+    console.log("Form data9999999999999999999:", data);
     try {
       setFormData(data);
-      if (step < 5) {
-        setStep((prev) => prev + 1);
-      } else if (step === 5) {
+      console.log(step);
+      if (step === 1) {
+        console.log("Step 1");
         dispatch(sendEmailVerification({ email: data.email }))
           .unwrap()
           .then(() => {
-            setStep((prev) => prev + 1);
+            setStep(2); // Move to OTP verification step
+          })
+          .catch((error: any) => {
+            console.error("Error sending OTP:", error);
           });
+      } else if (step === 2) {
+        console.log(otp);
+        // Handle OTP verification logic here
+        if (otp.length === 6) {
+          dispatch(verifyEmailOtp({ email: formData.email, otp }))
+            .unwrap()
+            .then(() => {
+              setStep(3);
+            })
+            .catch((error: any) => {
+              console.error("Invalid OTP:", error);
+              setOtpError(true);
+            });
+        } else {
+          setOtpError(true);
+        }
+      } else if (step >= 3 && step <= 5) {
+        setStep((prev) => prev + 1);
       } else if (step === 6) {
         const formData: any = new FormData();
         formData.append("image", imageFile);
@@ -378,37 +410,6 @@ const SignupPage = () => {
           errors={errors}
         />
       ) : step === 2 ? (
-        <SignupTwo
-          handleImageChange={handleImageChange}
-          handleSubmit={handleSubmit}
-          onSubmit={onSubmit}
-          register={register}
-          errors={errors}
-          setValue={setValue}
-        />
-      ) : step === 3 ? (
-        <SignupThree
-          handleSubmit={handleSubmit}
-          onSubmit={onSubmit}
-          register={register}
-          errors={errors}
-        />
-      ) : step === 4 ? (
-        <SignupFour
-          handleSubmit={handleSubmit}
-          onSubmit={onSubmit}
-          register={register}
-          errors={errors}
-        />
-      ) : step === 5 ? (
-        <SignupFive
-          handleSubmit={handleSubmit}
-          onSubmit={onSubmit}
-          register={register}
-          errors={errors}
-          setValue={setValue}
-        />
-      ) : (
         <SignupSixth
           handleSubmit={handleSubmit}
           onSubmit={onSubmit}
@@ -416,6 +417,36 @@ const SignupPage = () => {
           setOtp={setOtp}
           otpError={otpError}
           setOtpError={setOtpError}
+          setValue={setValue}
+        />
+      ) : step === 3 ? (
+        <SignupTwo
+          handleImageChange={handleImageChange}
+          register={register}
+          errors={errors}
+          setValue={setValue}
+        />
+      ) : step === 4 ? (
+        <SignupThree
+          handleSubmit={handleSubmit}
+          onSubmit={onSubmit}
+          register={register}
+          errors={errors}
+        />
+      ) : step === 5 ? (
+        <SignupFour
+          handleSubmit={handleSubmit}
+          onSubmit={onSubmit}
+          register={register}
+          errors={errors}
+        />
+      ) : (
+        <SignupFive
+          handleSubmit={handleSubmit}
+          onSubmit={onSubmit}
+          register={register}
+          errors={errors}
+          setValue={setValue}
         />
       )}
       <div className="footer flex items-center content-center justify-between">

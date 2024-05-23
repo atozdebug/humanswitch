@@ -7,6 +7,7 @@ import {
 
 export const sendEmailVerification: any = createAsyncThunk(
   "auth/sendEmailVerification",
+
   async (data, { dispatch }) => {
     try {
       console.log("Datttatatatatta", data);
@@ -14,6 +15,25 @@ export const sendEmailVerification: any = createAsyncThunk(
       if (response.status === 200) {
         dispatch(startLoadingActivity());
 
+        return response.data;
+      }
+    } catch (error: any) {
+      if (error.response && error.response.status === 400) {
+        return { error: "Bad Request" };
+      }
+    } finally {
+      dispatch(stopLoadingActivity());
+    }
+  }
+);
+
+export const verifyEmailOtp: any = createAsyncThunk(
+  "auth/verifyEmailOtp",
+  async (data, { dispatch }) => {
+    try {
+      console.log("Datttatatatatta", data);
+      const response = await http.post(`/verify-otp`, data);
+      if (response.status === 200) {
         return response.data;
       }
     } catch (error: any) {
@@ -148,6 +168,16 @@ export const authenticationSlice = createSlice({
         state.loading = false;
       })
       .addCase(sendQRVerification.rejected, (state, _action) => {
+        state.loading = false;
+      })
+      .addCase(verifyEmailOtp.pending, (state, _action) => {
+        state.loading = true;
+      })
+      .addCase(verifyEmailOtp.fulfilled, (state, action) => {
+        state.data = action.payload;
+        state.loading = false;
+      })
+      .addCase(verifyEmailOtp.rejected, (state, _action) => {
         state.loading = false;
       })
       .addCase(verifyEmail.pending, (state, _action) => {
