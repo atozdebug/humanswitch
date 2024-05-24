@@ -3,7 +3,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NotesIcon from "@mui/icons-material/Notes";
 import ToggleOnIcon from "@mui/icons-material/ToggleOn";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
@@ -11,7 +11,10 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import DeleteIcon from "@mui/icons-material/Delete";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
-import { createQuestions } from "../../services/slices/dashboard/dashboard";
+import {
+  createQuestions,
+  getQuestions,
+} from "../../services/slices/dashboard/dashboard";
 import UTurnLeftSharpIcon from "@mui/icons-material/UTurnLeftSharp";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
@@ -60,23 +63,23 @@ const chapters = [
   },
 ];
 
-const questionType = [
+const questionType: any = [
   {
     id: 1,
     name: "Multiple Choice",
-    icon: <RadioButtonCheckedIcon />,
+    icon: { image: <RadioButtonCheckedIcon />, id: 1 },
     color: "text-purple-600",
   },
   {
     id: 2,
     name: "Short Answer",
-    icon: <NotesIcon />,
+    icon: { image: <NotesIcon />, id: 2 },
     color: "text-yellow-600",
   },
   {
     id: 3,
     name: "Slider",
-    icon: <ToggleOnIcon />,
+    icon: { image: <ToggleOnIcon />, id: 3 },
     color: "text-blue-600",
   },
 ];
@@ -89,7 +92,6 @@ const MyReports = () => {
   const [question, setQuestion] = useState("");
   const [selectedQuestionType, setSelectedQuestionType] = useState<any>({});
   const [sliderValues, setSliderValues] = useState<any>({});
-  const [nextId, setNextId] = useState(0);
   const [questions, setQuestions] = useState<any[]>([]);
   const [questionIdCounter, setQuestionIdCounter] = useState(1);
   const [answers, setAnswers] = useState<any>({});
@@ -100,6 +102,28 @@ const MyReports = () => {
   const [maxValueErrors, setMaxValueErrors] = useState<any>({});
   const [chapterQuestions, setChapterQuestions] = useState<any>([]);
   const [saveVisible, setSaveVisible] = useState<any>(false);
+
+  console.log(questions);
+
+  useEffect(() => {
+    dispatch(getQuestions())
+      .unwrap()
+      .then((res: any) => {
+        const filteredQuestions = res.find(
+          (question: any) => question.name === selectedChapter
+        );
+
+        setQuestions(filteredQuestions?.questions || []);
+        // res.forEach((item: any) => {
+        //   const chapter: any = sideBarItems.find(
+        //     (x) => x.name === item.chapters
+        //   );
+        //   if (chapter) {
+        //     chapter.questions = [...item.question];
+        //   }
+        // });
+      });
+  }, [selectedChapter]);
 
   const handleCloseQuestion = () => {
     setOpenQuestion(false);
@@ -129,17 +153,17 @@ const MyReports = () => {
     const newQuestion = {
       id: questionIdCounter,
       type: selectedQuestionType.name,
-      icon: selectedQuestionType.icon,
+      icon: selectedQuestionType.icon.id,
       text: question,
       color: selectedQuestionType.color,
       ...(selectedQuestionType.name === "Multiple Choice" && {
         options: [
           {
-            id: nextId,
+            id: 0,
             name: `Option`,
           },
           {
-            id: nextId + 1,
+            id: 1,
             name: `Option`,
           },
         ],
@@ -150,8 +174,6 @@ const MyReports = () => {
         steps: 5,
       }),
     };
-
-    setNextId((prevId) => prevId + 2);
 
     setMaxValues((prevMaxValues: any) => ({
       ...prevMaxValues,
@@ -171,12 +193,22 @@ const MyReports = () => {
     setSaveVisible(true);
   };
 
-  const handleAddOption = (questionId: number) => {
+  const handleAddOption = (questionId: number, options: any) => {
+    const findNextId = (options: any) => {
+      const usedIds = new Set(options.map((option: any) => option.id));
+      let newId = 0;
+      while (usedIds.has(newId)) {
+        newId++;
+      }
+      return newId;
+    };
+
+    const nextId = findNextId(options);
+
     const newOption = {
       id: nextId,
       name: `Option`,
     };
-    setNextId((prevId) => prevId + 1);
 
     // Add the new option to the specific question's options array
     setQuestions((prevQuestions) => {
@@ -227,8 +259,8 @@ const MyReports = () => {
     setSaveVisible(true);
   };
 
-  const changeMinValue = (questionId: any, minVal: any) => {
-    if (minVal < maxValues[questionId]) {
+  const changeMinValue = (questionId: any, minVal: any, max: any) => {
+    if (minVal < maxValues[questionId] || minVal < max) {
       const minValue = parseInt(minVal, 10);
       setQuestions((prevQuestions) => {
         return prevQuestions.map((question) => {
@@ -259,8 +291,8 @@ const MyReports = () => {
     setSaveVisible(true);
   };
 
-  const changeMaxValue = (questionId: any, maxVal: any) => {
-    if (maxVal > minValues[questionId]) {
+  const changeMaxValue = (questionId: any, maxVal: any, min: any) => {
+    if (maxVal > minValues[questionId] || maxVal > min) {
       const maxValue = parseInt(maxVal, 10);
       setQuestions((prevQuestions) => {
         return prevQuestions.map((question) => {
@@ -335,8 +367,6 @@ const MyReports = () => {
     setSaveVisible(true);
   };
 
-  console.log(chapterQuestions);
-
   const handleSaveData = () => {
     const chapterIndex = chapterQuestions.findIndex(
       (chapter: any) => chapter.name === selectedChapter
@@ -353,7 +383,7 @@ const MyReports = () => {
       });
     }
     toast.success(
-      "Questions saved successfully! You can continue adding questions to this chapter or select a new chapter to add questions in and the you can click 'Publish Questions' button to save the data!"
+      "Questions saved successfully!\n You can continue adding questions to this chapter or select a new chapter to add questions in and the you can click\n'Publish Questions' button to save the data!"
     );
     setChapterQuestions([...chapterQuestions]);
     setSaveVisible(false);
@@ -473,7 +503,10 @@ const MyReports = () => {
         <div className="p-6 w-100-272px">
           <Paper sx={{ borderRadius: "16px", py: 4, px: 6 }}>
             <div className="flex flex-col justify-center">
-              {questions.map((question, index) => {
+              {questions?.map((question, index) => {
+                const displayIcon = questionType.find(
+                  (type: any) => type.icon.id === question.icon
+                );
                 return (
                   <div key={question.id} className="mb-8">
                     <div className="font-semibold mb-2 flex w-full justify-between items-center">
@@ -482,7 +515,9 @@ const MyReports = () => {
                     <div className="flex justify-between items-center">
                       <div>
                         <div className="flex items-center gap-2">
-                          <div className={question.color}>{question.icon}</div>
+                          <div className={question.color}>
+                            {displayIcon?.icon.image}
+                          </div>
 
                           <div className="text-xl font-semibold">
                             Question {index + 1}
@@ -569,7 +604,9 @@ const MyReports = () => {
                           {question.options.length < 4 && (
                             <button
                               className="text-blue-600 font-semibold hover:bg-gray-200 px-3 py-1 rounded-md"
-                              onClick={() => handleAddOption(question.id)}
+                              onClick={() =>
+                                handleAddOption(question.id, question.options)
+                              }
                             >
                               Add Option
                             </button>
@@ -605,9 +642,15 @@ const MyReports = () => {
                             >
                               <input
                                 name="minValue"
-                                value={minValues[question.id] || 10}
+                                value={
+                                  minValues[question.id] || question.min || 10
+                                }
                                 onChange={(e) =>
-                                  changeMinValue(question.id, e.target.value)
+                                  changeMinValue(
+                                    question.id,
+                                    e.target.value,
+                                    question.max
+                                  )
                                 }
                                 type="number"
                                 className="w-14 rounded-lg text-sm border-0 px-2"
@@ -624,11 +667,11 @@ const MyReports = () => {
 
                           <Slider
                             sx={{ width: 250 }}
-                            step={steps[question.id] || 5}
+                            step={steps[question.id] || question.steps || 5}
                             value={sliderValues[question.id] || 10}
                             valueLabelDisplay="auto"
-                            min={minValues[question.id] || 10}
-                            max={maxValues[question.id] || 20}
+                            min={minValues[question.id] || question.min || 10}
+                            max={maxValues[question.id] || question.max || 20}
                             onChange={(_, newValue) =>
                               handleSliderChange(
                                 question.id,
@@ -653,9 +696,15 @@ const MyReports = () => {
                             >
                               <input
                                 name="maxValue"
-                                value={maxValues[question.id] || 20}
+                                value={
+                                  maxValues[question.id] || question.max || 20
+                                }
                                 onChange={(e) =>
-                                  changeMaxValue(question.id, e.target.value)
+                                  changeMaxValue(
+                                    question.id,
+                                    e.target.value,
+                                    question.min
+                                  )
                                 }
                                 type="number"
                                 className="w-14 border-0 px-2 rounded-lg text-sm"
@@ -676,7 +725,9 @@ const MyReports = () => {
                           </div>
                           <input
                             name="steps"
-                            defaultValue={steps[question.id] || 5}
+                            defaultValue={
+                              steps[question.id] || question.steps || 5
+                            }
                             onChange={(e) =>
                               changeStepsValue(question.id, e.target.value)
                             }
@@ -716,7 +767,7 @@ const MyReports = () => {
         <DialogTitle> Select the type of question</DialogTitle>
         <DialogContent>
           <div>
-            {questionType.map((ques) => (
+            {questionType.map((ques: any) => (
               <div
                 key={ques.id}
                 className="p-4 mt-2 rounded-xl hover:bg-blue-200 flex items-center gap-4 cursor-pointer"
@@ -725,7 +776,7 @@ const MyReports = () => {
                   setSelectedQuestionType(ques);
                 }}
               >
-                <div className={ques.color}>{ques.icon}</div>
+                <div className={ques.color}>{ques.icon?.image}</div>
                 {ques.name}
               </div>
             ))}
@@ -758,7 +809,7 @@ const MyReports = () => {
           <div className="flex gap-2 mt-2 items-center">
             <div className="font-semibold text-lg">Question type :</div>
             <div className={selectedQuestionType.color}>
-              {selectedQuestionType.icon}
+              {selectedQuestionType.icon?.image}
             </div>
             <div className="font-semibold">{selectedQuestionType.name}</div>
           </div>

@@ -97,12 +97,10 @@ const Pillars = () => {
       .unwrap()
       .then((res: any) => {
         res.forEach((item: any) => {
-          const chapter: any = sideBarItems.find(
-            (x) => x.name === item.chapters
-          );
+          const chapter: any = sideBarItems.find((x) => x.name === item.name);
 
           if (chapter) {
-            chapter.questions = [...item.question];
+            chapter.questions = [...item.questions];
           }
         });
       });
