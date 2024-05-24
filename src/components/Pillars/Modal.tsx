@@ -15,7 +15,7 @@ const Modal = ({ isOpen, onClose }: any) => {
           >
             Close
           </button>
-          <a href="/signuphr">
+          <a href="/signup">
             <button
               onClick={onClose}
               className="mt-4 bg-gradient1 text-white py-2 px-4 rounded"

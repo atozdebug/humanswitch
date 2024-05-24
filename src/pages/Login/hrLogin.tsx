@@ -182,7 +182,7 @@ const LoginHr = () => {
             <div>
               Don't have an account?
               <span className="float-right text-content text-sm font-medium ">
-                <a href="/signuphr" className="border-b">
+                <a href="/signup" className="border-b">
                   Register
                 </a>
               </span>
@@ -206,7 +206,7 @@ const LoginHr = () => {
               Enter your details to login.
             </p>
             {/* <hr className="my-6"></hr> */}
-            
+
             <div>
               <label
                 className="block text-heading text-sm font-medium mb-2"
@@ -272,7 +272,7 @@ const LoginHr = () => {
                 )}
               </div>
             </div>
-            <div onClick={() => setOpen(true)}>dddd</div>
+            {/* <div onClick={() => setOpen(true)}>dddd</div> */}
             <label>
               <input
                 type="checkBox"

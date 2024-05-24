@@ -54,7 +54,10 @@ const ForgetPasswordPage = () => {
       ) : (
         <div className="login-form flex flex-col justify-center bg-[url(../assets/images/Pattern.png)] bg-no-repeat bg-top px-4">
           <div className="mt-8 text-sm font-semibold text-start md:px-44px px-4">
-            <a className="px-3 inline-flex py-2 justify-center rounded-[10px] items-center gap-2 text-gray-dark border border-[#E2E4E9] font-semibold focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75" href="/loginhr">
+            <a
+              className="px-3 inline-flex py-2 justify-center rounded-[10px] items-center gap-2 text-gray-dark border border-[#E2E4E9] font-semibold focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
+              href="/login"
+            >
               <div className="rotate-180">
                 <img src="/assets/images/arrow-right-s-line.png" />
               </div>
@@ -64,21 +67,32 @@ const ForgetPasswordPage = () => {
           <div className="max-w-392px mx-auto w-full pt-10 min-h-vhcalc225px flex justify-center flex-col">
             <h5 className="text-xl flex justify-center gap-5 header font-semibold  ">
               <span>
-                <img src="/assets/images/reset-icon.png" className="" width={88} height={88}/>
+                <img
+                  src="/assets/images/reset-icon.png"
+                  className=""
+                  width={88}
+                  height={88}
+                />
               </span>{" "}
             </h5>
             <h2 className="text-2xl font-semibold mt-8 mb-1 text-center text-main-heading">
               Reset Password
             </h2>
-            <p className="font-normal text-center text-gray-dark">No worries, we’ll send you reset instructions.</p>
+            <p className="font-normal text-center text-gray-dark">
+              No worries, we’ll send you reset instructions.
+            </p>
             <hr className="my-6"></hr>
             <form onSubmit={handleSubmit(onSubmit)} className="form-info mt-0">
-              <label className="block text-main-heading text-sm font-medium mb-2" htmlFor="email">
+              <label
+                className="block text-main-heading text-sm font-medium mb-2"
+                htmlFor="email"
+              >
                 Email*
               </label>
               <input
                 className={`shadow appearance-none border rounded-[10px] w-full py-2.5 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-                  errors.email ? "border-[#F04438]" : ""}`}
+                  errors.email ? "border-[#F04438]" : ""
+                }`}
                 id="email"
                 type="text"
                 placeholder="Enter your email"
@@ -96,12 +110,13 @@ const ForgetPasswordPage = () => {
                 >
                   Reset Password
                 </button>
-                
               </div>
               <h2 className="text-gray-dark text-sm mt-6 font-medium text-center mb-1">
                 Don’t have access anymore?
               </h2>
-              <p className="text-main-heading underline text-center mb-3">Try another method</p>
+              <p className="text-main-heading underline text-center mb-3">
+                Try another method
+              </p>
             </form>
           </div>
         </div>

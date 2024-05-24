@@ -32,7 +32,7 @@ const App = () => {
 
   const RouteGuard = ({ children }: any) => {
     const token = localStorage.getItem("token");
-    return token ? children : <Navigate to="/loginhr" />;
+    return token ? children : <Navigate to="/login" />;
   };
 
   const PublicRouteGuard = ({ children }: any) => {
@@ -76,7 +76,7 @@ const App = () => {
               }
             />
             <Route
-              path="/signuphr"
+              path="/signup"
               element={
                 <PublicRouteGuard>
                   <SignupPages />
@@ -84,7 +84,7 @@ const App = () => {
               }
             />
             <Route
-              path="/login"
+              path="/loginhr"
               element={
                 <PublicRouteGuard>
                   <LoginPage />
@@ -92,7 +92,7 @@ const App = () => {
               }
             />
             <Route
-              path="/loginhr"
+              path="/login"
               element={
                 <PublicRouteGuard>
                   <LoginHr />

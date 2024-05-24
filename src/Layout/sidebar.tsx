@@ -90,7 +90,7 @@ const SideBar = () => {
 
   const logout = async () => {
     localStorage.clear();
-    navigate("/loginhr");
+    navigate("/login");
     await dispatch(handleLogout(true));
   };
 

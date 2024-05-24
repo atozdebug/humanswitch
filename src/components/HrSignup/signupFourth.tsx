@@ -42,26 +42,28 @@ const SignupFour = ({
               className={`border-4 rounded-full bg-white${
                 errors?.businessImage ? " border-red-500" : "border-gray-400"
               }`}
+              style={{ width: "110px", height: "110px", overflow: "hidden" }}
             >
               {profilePic ? (
                 <img
                   src={profilePic}
                   alt="Profile"
                   className="rounded-full"
-                  height={128}
-                  width={128}
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
                 />
               ) : (
                 <img
                   src="/assets/images/avatarpic.jpg"
                   alt="Profile"
                   className="rounded-full"
-                  height={128}
-                  width={128}
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
                 />
               )}
             </div>
-            <div className="flex items-center justify-between w-full">
+            <div
+              className="flex items-center justify-between"
+              style={{ width: "calc(100% - 156px)" }}
+            >
               <div>
                 <h3 className="text-main-heading text-base font-medium text-start">
                   Business Logo:

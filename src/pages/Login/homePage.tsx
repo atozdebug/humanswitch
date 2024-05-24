@@ -266,7 +266,7 @@ const HomePage = () => {
                       placeholder="Business Email"
                     />
                   </div>
-                  <a href="/signuphr">
+                  <a href="/signup">
                     <button
                       className="flex items-center gap-2 justify-center rounded-lg bg-gradient1 w-full py-3 px-6 text-center align-middle font-sans text-sm font-bold text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                       type="button"

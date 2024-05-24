@@ -22,7 +22,11 @@ const SignupTwo = ({
         <div className="flex items-center gap-2">
           <div>
             <h1 className="text-center flex justify-center">
-              <img src="/assets/images/Custom-icon.png" width={'88px'} height={'88px'} />
+              <img
+                src="/assets/images/Custom-icon.png"
+                width={"88px"}
+                height={"88px"}
+              />
             </h1>
           </div>
           <div>
@@ -37,24 +41,24 @@ const SignupTwo = ({
         <hr className="my-6"></hr>
         <div className="flex items-start content-center gap-5 mb-6">
           <div
-            className={`border-4 rounded-full bg-white${errors?.image ? " border-red-500" : "border-gray-400"
-              }`}
+            className={`border-4 rounded-full bg-white${
+              errors?.image ? " border-red-500" : "border-gray-400"
+            }`}
+            style={{ width: "128px", height: "128px", overflow: "hidden" }}
           >
             {profilePic ? (
               <img
                 src={profilePic}
                 alt="Profile"
                 className="rounded-full"
-                height={128}
-                width={128}
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
               />
             ) : (
               <img
                 src="/assets/images/avatarpic.jpg"
                 alt="Profile"
                 className="rounded-full"
-                height={128}
-                width={128}
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
               />
             )}
           </div>
@@ -65,17 +69,22 @@ const SignupTwo = ({
             <p className="text-gray-dark font-normal text-start mt-1">
               Min 400x400px, PNG or JPEG
             </p>
-            <div className="relative flex mt-3"><input
-              type="file"
-              id="image-upload"
-              accept="image/*"
-              onChange={(e: any) => {
-                handleImageChange(e);
-                const newProfilePic: any = e.target.files[0];
-                setProfilePic(URL.createObjectURL(newProfilePic));
-                setValue("image", e.target.files);
-              }}
-              className="relative z-10 w-20 opacity-0 block"/><div className="border absolute top-0 left-0 p-2 leading-5 text-gray-dark rounded-lg text-sm">Upload</div>
+            <div className="relative flex mt-3">
+              <input
+                type="file"
+                id="image-upload"
+                accept="image/*"
+                onChange={(e: any) => {
+                  handleImageChange(e);
+                  const newProfilePic: any = e.target.files[0];
+                  setProfilePic(URL.createObjectURL(newProfilePic));
+                  setValue("image", e.target.files);
+                }}
+                className="relative z-10 w-20 opacity-0 block"
+              />
+              <div className="border absolute top-0 left-0 p-2 leading-5 text-gray-dark rounded-lg text-sm">
+                Upload
+              </div>
             </div>
             {errors?.image && (
               <p className="text-red-500 text-sm mt-2">
@@ -92,8 +101,9 @@ const SignupTwo = ({
           First Name*
         </label>
         <input
-          className={`shadow appearance-none border  rounded-[10px] w-full py-2.5 px-2.5 text-input-text leading-tight focus:outline-none focus:shadow-outline ${errors.first_name ? "border-[#F04438]" : "border-slate-300"
-            }`}
+          className={`shadow appearance-none border  rounded-[10px] w-full py-2.5 px-2.5 text-input-text leading-tight focus:outline-none focus:shadow-outline ${
+            errors.first_name ? "border-[#F04438]" : "border-slate-300"
+          }`}
           id="first_name"
           type="text"
           placeholder="James"
@@ -112,8 +122,9 @@ const SignupTwo = ({
             Last Name*
           </label>
           <input
-            className={`shadow appearance-none border  rounded-[10px] w-full py-2.5 px-2.5 text-input-text leading-tight focus:outline-none focus:shadow-outline ${errors.last_name ? "border-[#F04438]" : "border-slate-300"
-              }`}
+            className={`shadow appearance-none border  rounded-[10px] w-full py-2.5 px-2.5 text-input-text leading-tight focus:outline-none focus:shadow-outline ${
+              errors.last_name ? "border-[#F04438]" : "border-slate-300"
+            }`}
             id="last_name"
             type="text"
             placeholder="Brown"
