@@ -335,63 +335,71 @@ const SignupPage = () => {
 
   return (
     <>
-      <div className="nav-header flex items-center content-center  justify-between">
-        <div className="logo-head min-w-[123px] mr-6">
-          <h1>
+      <div className="nav-header flex items-center justify-center relative md:!px-44px !px-4">
+        <div className="logo-head min-w-[123px] mr-6 absolute top-1/2 translate-y-n50 left-11 lg:block hidden">
+          <h1 className="">
             <span>
               {" "}
-              <img className="w-[123px]" src="/assets/images/Logo1.png" />
+              <img className="" src="/assets/images/Logo1.png" width={'136px'} />
             </span>{" "}
           </h1>
         </div>
 
-        <div className="flex text-sm">
+        <div className="flex text-sm lg:flex-nowrap flex-wrap justify-center">
           {header.map((item, index) => (
             <div className="flex" key={index}>
               <div
                 onClick={() => setStep(item.id)}
-                className={`flex items-center justify-center px-3 py-2 mx-2 gap-2 rounded-lg text-gray-500 dark:bg-gray-800  dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
+                className={`flex items-center justify-center py-2 gap-2 rounded-lg text-gray-500 dark:bg-gray-800  dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
               >
                 <div
-                  className={`flex justify-center items-center border rounded-full h-6 w-6 ${
+                  className={`flex justify-center items-center border rounded-full h-5 w-5 ${
                     item.id < step
-                      ? "bg-green-400"
+                      ? "bg-green-400 text-white"
                       : `${step === item.id ? "bg-blue-600 text-white" : ""}`
                   }`}
                 >
                   {item.id < step ? (
-                    <DoneIcon
-                      className="text-black"
-                      style={{ height: "16px" }}
-                    />
+                    // <DoneIcon
+                    //   className=""
+                    //   style={{ height: "20px" }}
+                    // />
+                    <>
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M0 10C0 4.47715 4.47715 0 10 0C15.5228 0 20 4.47715 20 10C20 15.5228 15.5228 20 10 20C4.47715 20 0 15.5228 0 10Z" fill="#38C793"/>
+                      <path d="M15.1817 7.2726L8.8187 13.6365L5 9.8178L6.2726 8.5452L8.8187 11.0913L13.9091 6L15.1817 7.2726Z" fill="white"/>
+                    </svg>
+                    </>
+                    
+
                   ) : (
                     item.id
                   )}
                 </div>
                 <div
                   className={`${
-                    step === item.id ? "font-bold text-black" : ""
+                    step === item.id ? "font-medium text-black" : ""
                   }`}
                 >
                   {item.name}
                 </div>
               </div>
               {item.id < 6 && (
-                <div className="flex items-center justify-center">
-                  <img src="/assets/images/arrow-right-s-line.png" />
+                <div className="flex items-center justify-center mx-4 min-w-4">
+                  <img src="/assets/images/arrow-right-s-line.png" width={'20px'} height={'20px'} />
                 </div>
               )}
             </div>
           ))}
         </div>
 
-        <div className="h-10 w-10"></div>
+        {/* <div className="h-10 w-10"></div> */}
       </div>
       <hr className="border-color: gray;"></hr>
       {step > 1 && (
-        <div className="text-start my-2 back-btnn">
+        <div className="text-start back-btnn md:px-44px px-4 py-6 bg-[url(../assets/images/Pattern.png)] bg-no-repeat bg-top">
           <button
-            className="px-3 flex py-2 justify-center items-center gap-2 text-heading border border-[#E2E4E9] font-semibold rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
+            className="px-3 flex py-2 justify-center rounded-[10px] items-center gap-2 text-gray-dark border border-[#E2E4E9] font-semibold focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
             onClick={() => setStep((prev: number) => prev - 1)}
           >
             <div className="rotate-180">
@@ -452,13 +460,16 @@ const SignupPage = () => {
           setValue={setValue}
         />
       )}
-      <div className="footer flex items-center content-center justify-between">
+      <div className="xl:px-[44px] px-4 w-full mx-auto footer flex items-center content-center justify-between">
         <div>© 2024 HumanSwitch.ai</div>
-        <div className="">
+        <div className="flex gap-0 items-center">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 17.5C5.85775 17.5 2.5 14.1422 2.5 10C2.5 5.85775 5.85775 2.5 10 2.5C14.1422 2.5 17.5 5.85775 17.5 10C17.5 14.1422 14.1422 17.5 10 17.5ZM8.2825 15.7502C7.54256 14.1807 7.1139 12.4827 7.02025 10.75H4.0465C4.19244 11.9042 4.67044 12.9911 5.42243 13.8788C6.17441 14.7664 7.16801 15.4166 8.2825 15.7502ZM8.5225 10.75C8.63575 12.5792 9.1585 14.2975 10 15.814C10.8642 14.2574 11.3691 12.5271 11.4775 10.75H8.5225ZM15.9535 10.75H12.9797C12.8861 12.4827 12.4574 14.1807 11.7175 15.7502C12.832 15.4166 13.8256 14.7664 14.5776 13.8788C15.3296 12.9911 15.8076 11.9042 15.9535 10.75ZM4.0465 9.25H7.02025C7.1139 7.51734 7.54256 5.81926 8.2825 4.24975C7.16801 4.58341 6.17441 5.23356 5.42243 6.12122C4.67044 7.00888 4.19244 8.09583 4.0465 9.25ZM8.52325 9.25H11.4767C11.3686 7.47295 10.864 5.74265 10 4.186C9.13576 5.74259 8.63092 7.47289 8.5225 9.25H8.52325ZM11.7175 4.24975C12.4574 5.81926 12.8861 7.51734 12.9797 9.25H15.9535C15.8076 8.09583 15.3296 7.00888 14.5776 6.12122C13.8256 5.23356 12.832 4.58341 11.7175 4.24975Z" fill="#868C98"/>
+          </svg>
           <select
             id="country"
             name="country"
-            className="block text-gray-dark font-normal  mt-1"
+            className="block text-gray-dark text-sm font-normal mt-0 border-0 !bg-transparent focus:!border-0 focus:ring-0"
           >
             <option value="">Select a country</option>
             <option value="us">United States</option>

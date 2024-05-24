@@ -24,36 +24,29 @@
   max-width: none;
 }
 .nav-header {
-  max-width: calc(1440px - 40px);
-  margin: 0 auto;
-  padding: 34px 40px;
+  /* max-width: calc(1440px - 40px); */
+  /* margin: 0 auto; */
+  padding: 25px 44px;
 }
-.back-btnn {
+/* .back-btnn {
   max-width: calc(1440px - 40px);
   margin: 11px auto;
   padding: 0px 40px;
-}
+} */
 
-.footer {
-  max-width: calc(1440px - 40px);
-  margin: 0 auto;
-  padding: 0px 40px;
-}
 
-.form {
-  height: calc(100vh - 155px);
-}
-.form-2 {
+
+/* .form-2 {
   height: calc(100vh - 226px);
-}
-.form-3 {
+} */
+/* .form-3 {
   height: calc(100vh - 280px);
-}
-.login-form {
+} */
+/* .login-form {
   max-width: 400px;
   margin: 0 auto;
   padding: 70px 0;
-}
+} */
 
 body {
   font-family: "Outfit", sans-serif;
