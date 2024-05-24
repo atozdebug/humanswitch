@@ -1,3 +1,5 @@
+import { Pattern } from '@mui/icons-material';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -14,7 +16,7 @@ export default {
         // "gray-text": "#667085",
         // "gray-dark": "#525866",
         // heading: "#0A0D14",
-        // "input-text": "#868C98",
+        "grayMedium1": "#868C98",
        
         // "dark-purple": "#2B1664",
         // "span-clr": "#375DFB",
@@ -26,7 +28,7 @@ export default {
         mediumblue: "#6355F6",
         lightblue: "#EBEDFF",
         mediumgreen: "#18CBB8",
-        
+        'blue-600': 'rgb(99 85 246 / var(--tw-bg-opacity))',
         success: "#5cb85c",
         error: "#FDEDF0",
         "gray-dark": "#525866",
@@ -41,12 +43,17 @@ export default {
         lightgray3: "#E2E4E9",
         mediumgray2: "#B7C0D0",
         red2: "#D74B81",
+        'slate-300': '#E2E4E9',
+      },
+      backgroundImage: {
+        'pattern': 'url(../assets/images/Pattern.png)',
       },
       padding: {
         100: "100%",
         60: "60%",
         50: "50%",
         "11px": "11px",
+        "108px": "108px",
       },
       margin: {
         "-140px": "-140px",
@@ -67,11 +74,13 @@ export default {
         "250px": "250px",
         "300px": "300px",
         "350px": "350px",
+        "392px": "392px",
         calc350px: "calc(100% - 350px)",
         calc300px: "calc(100% - 300px)",
         calc40px: "calc(100% - 40px)",
         600: "600px",
         700: "700px",
+        808: "808px",
         20: "20px",
         123: "123px",
         "172px": "172px",
@@ -91,6 +100,9 @@ export default {
         "62px": "62px",
         13: "13px",
         vhcalc88px: "calc(100vh - 88px)",
+        vhcalc155px: "calc(100vh - 155px)",
+        vhcalc135px: "calc(100vh - 135px)",
+        vhcalc225px: "calc(100vh - 225px)",
         vhcalc93px: "calc(100vh - 93px)",
       },
       width: {
@@ -110,6 +122,7 @@ export default {
       padding: {
         "20px": "20px",
         "18px": "18px",
+        "44px": "44px",
       },
       margin: {
         "20px": "20px",
@@ -122,7 +135,13 @@ export default {
       },
       fontSize: {
         "10px": "10px"
-      }
+      },
+      borderRadius: {
+        '20px': '20px'
+      },
+      gap: {
+        '14px': '14px',
+      },
     },
   },
   plugins: [require("flowbite/plugin")],

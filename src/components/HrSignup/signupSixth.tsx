@@ -14,10 +14,10 @@ const SignupSixth = ({
     setValue("otp", otp);
   }, [otp]);
   return (
-    <div>
+    <div className="bg-[url(../assets/images/Pattern.png)] bg-no-repeat bg-top min-h-vhcalc225px px-4">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="form flex flex-col max-w-md m-auto justify-center"
+        className="form flex flex-col max-w-md m-auto justify-center mb-10 "
       >
         {/* <h1 className="flex justify-center text-center">
           <img src="/assets/images/check.png" />
@@ -124,17 +124,17 @@ const SignupSixth = ({
             </div>
           </div>
         </div> */}
-        <div className="flex flex-col justify-center text-center border-2 p-4">
-          <h1 className="flex justify-center text-center">
-            <img src="/assets/images/check.png" />
+        <div className="flex flex-col justify-center text-center border rounded-20px p-4 bg-white">
+          <h1 className="flex justify-center text-center mb-4">
+            <img src="/assets/images/email-verify-icon.png" width={'88px'} height={'88px'} />
           </h1>
-          <h2 className="text-gray-dark text-2xl font-medium text-center">
+          <h2 className="text-main-heading text-2xl font-medium text-center mb-1">
             Email Verification Code
           </h2>
-          <p className="gray-dark text-center mb-3">
+          <p className="text-gray-dark text-center mb-0">
             We have sent code to your mail
           </p>
-          <hr className="my-4"></hr>
+          <hr className="my-6"></hr>
           <div className="w-full flex justify-center">
             <OTPInput otp={otp} setOtp={setOtp} setOtpError={setOtpError} />
           </div>
@@ -145,15 +145,15 @@ const SignupSixth = ({
           )}
           <button
             disabled={otpError || otp.length < 6}
-            className="disabled:bg-gray-400 rounded w-full mt-5 bg-bggreen-500 hover:bg-purple-700 py-2.5 px-2.5 text-white font-semibold"
+            className="disabled:bg-blue-300 rounded-lg w-full mt-5 bg-blue-600 hover:bg-purple-700 py-2.5 px-2.5 text-white font-semibold"
             type="submit"
           >
             Continue
           </button>
-          <h2 className="text-gray-dark text-sm mt-2 font-medium text-center">
+          <h2 className="text-gray-dark text-sm mt-6 font-medium text-center mb-1">
             Experiencing issues receiving the code?
           </h2>
-          <p className="gray-dark underline text-center mb-3">Resend code</p>
+          <p className="text-main-heading underline text-center mb-3">Resend code</p>
         </div>
       </form>
     </div>

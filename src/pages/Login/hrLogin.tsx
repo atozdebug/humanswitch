@@ -156,10 +156,11 @@ const LoginHr = () => {
   };
 
   return (
-    <div className="main my-2 px-5 mob">
-      <div className="grid grid-cols-3 gap-4">
+    <div className="main min-h-vhcalc225px bg-[url(../assets/images/Pattern.png)] bg-no-repeat bg-top px-4">
+      {/* <div className="grid grid-cols-3 gap-4"> */}
+      <div className="">
         <div className="...">
-          <div className="flex justify-around items-center mob-view ">
+          {/* <div className="flex justify-around items-center mob-view ">
             <span>
               <img
                 className="text-center h-10 w-10"
@@ -175,37 +176,26 @@ const LoginHr = () => {
                 </a>
               </span>
             </div>
-          </div>
+          </div> */}
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="form-2 flex flex-col max-w-md m-auto justify-center"
           >
-            <h1 className="text-center flex justify-center">
+            <h1 className="text-center flex justify-center mb-4">
               <img
                 src="/assets/images/Custom-lock.png"
-                height={200}
-                width={200}
+                height={88}
+                width={88}
               />
             </h1>
-            <h2 className="text-gray-dark text-2xl font-medium text-center">
-              Password Setup
+            <h2 className="text-main-heading text-2xl font-medium text-center mb-1">
+              Login to your account
             </h2>
-            <p className="gray-dark text-center">
-              Set up a secure password to protect your account.
+            <p className="text-gray-dark text-center mb-6">
+              Enter your details to login.
             </p>
-            <hr className="my-5"></hr>
-            <button className="rounded w-full font-semibold text-base border bg-transparent border-slate-300 outline-none py-2.5 px-4 text-black flex justify-center gap-5  drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400">
-              {" "}
-              <span className="img-size">
-                {" "}
-                <img src="/assets/images/google.png" />
-              </span>{" "}
-            </button>
-            <div className="flex items-center justify-between my-5">
-              <hr className="border-gray w-40"></hr>
-              <p>or</p>
-              <hr className="border-gray w-40"></hr>
-            </div>
+            {/* <hr className="my-6"></hr> */}
+            
             <div>
               <label
                 className="block text-heading text-sm font-medium mb-2"
@@ -218,7 +208,7 @@ const LoginHr = () => {
                   <img src="/assets/images/mail-line.png" />
                 </span>
                 <input
-                  className={`shadow appearance-none lft-space bg-transparent  border rounded w-full py-2 px-3 text-input-text leading-tight focus:outline-none focus:shadow-outline ${
+                  className={`shadow appearance-none lft-space bg-transparent  border rounded-[10px] w-full py-2 px-3 text-input-text leading-tight focus:outline-none focus:shadow-outline ${
                     errors.email ? "border-[#F04438]" : " border-slate-300 "
                   }`}
                   id="email"
@@ -246,12 +236,12 @@ const LoginHr = () => {
                   <img src="/assets/images/lock-2-line.png" />
                 </span>
                 <input
-                  className={`lft-space shadow appearance-none border  rounded w-full py-2   pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline ${
+                  className={`lft-space shadow appearance-none border rounded-[10px] w-full py-2 pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline ${
                     errors.password ? "border-[#F04438]" : "border-slate-300"
                   }`}
                   id="password"
                   type={showPassword ? "text" : "password"}
-                  placeholder=".........."
+                  placeholder="🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄"
                   {...register("password")}
                 />
                 <span
@@ -276,13 +266,12 @@ const LoginHr = () => {
               <input
                 type="checkBox"
                 {...register("checkBox")}
-                className="form-checkbox text-indigo-600 border-transparent  border-none  relative space-top "
+                className="form-checkbox text-indigo-600 border border-slate-300 rounded relative space-top "
               />
-              <span className="ml-2 text-heading font-normal text-sm">
-                Checkbox Label
+              <span className="ml-2 text-main-heading font-normal text-sm ">
+                Keep me logged in
               </span>{" "}
-              accordion
-              <span className="float-right text-content text-sm font-medium ">
+              <span className="float-right text-content text-sm font-medium text-gray-dark underline">
                 <a href="/forgetpassword" className="border-b">
                   Forgot password?
                 </a>
@@ -296,14 +285,27 @@ const LoginHr = () => {
 
             <button
               type="submit"
-              className="rounded w-full mt-5 bg-purple-500 hover:bg-purple-700 py-2.5 px-4 text-white font-semibold"
+              className="rounded-[10px] w-full mt-5 bg-blue-600 hover:bg-purple-700 py-2.5 px-4 text-white font-semibold"
             >
               Login
+            </button>
+            <div className="flex items-center justify-between my-6">
+              <hr className="border-gray w-1/2"></hr>
+              <p className="my-0 text-grayMedium1 px-5">OR</p>
+              <hr className="border-gray w-1/2"></hr>
+            </div>
+            <button className="rounded-[10px] w-full font-medium text-sm border bg-transparent border-slate-300 outline-none py-2.5 px-4 text-black flex justify-center gap-2 items-center drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400">
+              {" "}
+              <span className="img-size">
+                {" "}
+                <img src="/assets/images/google.png" width={15} height={15} />
+              </span>{" "}
+              Sign in with Google
             </button>
           </form>
         </div>
 
-        <div className="col-span-2 bg-[#F6F8FA] py-9">
+        {/* <div className="col-span-2 bg-[#F6F8FA] py-9">
           <div className="flex items-center justify-center center-box">
             <span className="text-center h-96 w-96">
               <img src="/assets/images/widget.png" />
@@ -324,7 +326,7 @@ const LoginHr = () => {
               <span className="">.</span>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
       <Dialog
         open={open}

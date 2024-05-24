@@ -17,7 +17,7 @@ const Layout = ({ children }: any) => {
   }, [data, data2, logout]);
 
   return (
-    <div className="bg-lightgray text-black main-outerr">
+    <div className="bg-white text-black main-outerr">
       <div
         style={{
           display: "flex",
