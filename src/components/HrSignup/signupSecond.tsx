@@ -1,3 +1,7 @@
+import { useState } from "react";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+
 const SignupTwo = ({
   handleImageChange,
   handleSubmit,
@@ -6,6 +10,9 @@ const SignupTwo = ({
   errors,
   setValue,
 }: any) => {
+  const [phone, setPhone] = useState<any>("");
+  const [profilePic, setProfilePic] = useState<any>(null);
+
   return (
     <div className="main min-h-vhcalc225px bg-[url(../assets/images/Pattern.png)] bg-no-repeat bg-top px-4">
       <form
@@ -30,13 +37,26 @@ const SignupTwo = ({
         <hr className="my-6"></hr>
         <div className="flex items-start content-center gap-5 mb-6">
           <div
-            className={`${
-              errors?.image ? "border rounded-full border-red-500" : ""
-            }`}
+            className={`border-4 rounded-full bg-white${errors?.image ? " border-red-500" : "border-gray-400"
+              }`}
           >
-            <h1>
-              <img src="/assets/images/Avatar1.png" />
-            </h1>
+            {profilePic ? (
+              <img
+                src={profilePic}
+                alt="Profile"
+                className="rounded-full"
+                height={128}
+                width={128}
+              />
+            ) : (
+              <img
+                src="/assets/images/avatarpic.jpg"
+                alt="Profile"
+                className="rounded-full"
+                height={128}
+                width={128}
+              />
+            )}
           </div>
           <div>
             <h3 className="text-main-heading font-medium text-start">
@@ -45,18 +65,17 @@ const SignupTwo = ({
             <p className="text-gray-dark font-normal text-start mt-1">
               Min 400x400px, PNG or JPEG
             </p>
-            <div className="relative flex mt-3">
-              <input
-                type="file"
-                id="image-upload"
-                accept="image/*"
-                onChange={(e) => {
-                  handleImageChange(e);
-                  setValue("image", e.target.files);
-                }}
-                className="relative z-10 w-20 opacity-0 block"
-              />
-              <div className="border absolute top-0 left-0 p-2 leading-5 text-gray-dark rounded-lg text-sm">Upload</div>
+            <div className="relative flex mt-3"><input
+              type="file"
+              id="image-upload"
+              accept="image/*"
+              onChange={(e: any) => {
+                handleImageChange(e);
+                const newProfilePic: any = e.target.files[0];
+                setProfilePic(URL.createObjectURL(newProfilePic));
+                setValue("image", e.target.files);
+              }}
+              className="relative z-10 w-20 opacity-0 block"/><div className="border absolute top-0 left-0 p-2 leading-5 text-gray-dark rounded-lg text-sm">Upload</div>
             </div>
             {errors?.image && (
               <p className="text-red-500 text-sm mt-2">
@@ -73,9 +92,8 @@ const SignupTwo = ({
           First Name*
         </label>
         <input
-          className={`shadow appearance-none border  rounded-[10px] w-full py-2.5 px-2.5 text-input-text leading-tight focus:outline-none focus:shadow-outline ${
-            errors.first_name ? "border-[#F04438]" : "border-slate-300"
-          }`}
+          className={`shadow appearance-none border  rounded-[10px] w-full py-2.5 px-2.5 text-input-text leading-tight focus:outline-none focus:shadow-outline ${errors.first_name ? "border-[#F04438]" : "border-slate-300"
+            }`}
           id="first_name"
           type="text"
           placeholder="James"
@@ -94,9 +112,8 @@ const SignupTwo = ({
             Last Name*
           </label>
           <input
-            className={`shadow appearance-none border  rounded-[10px] w-full py-2.5 px-2.5 text-input-text leading-tight focus:outline-none focus:shadow-outline ${
-              errors.last_name ? "border-[#F04438]" : "border-slate-300"
-            }`}
+            className={`shadow appearance-none border  rounded-[10px] w-full py-2.5 px-2.5 text-input-text leading-tight focus:outline-none focus:shadow-outline ${errors.last_name ? "border-[#F04438]" : "border-slate-300"
+              }`}
             id="last_name"
             type="text"
             placeholder="Brown"
@@ -115,14 +132,16 @@ const SignupTwo = ({
           >
             Phone Number*
           </label>
-          <input
-            className={`shadow appearance-none border  rounded-[10px] w-full py-2.5 px-2.5 text-input-text leading-tight focus:outline-none focus:shadow-outline ${
-              errors.phone_no ? "border-red-500" : "border-slate-300"
-            }`}
-            id="phone_no"
-            type="number"
-            placeholder="(555) 000-0000"
-            {...register("phone_no")}
+
+          <PhoneInput
+            country={"us"}
+            enableSearch={true}
+            value={phone}
+            onChange={(phone) => {
+              setPhone(phone);
+              setValue("phone_no", phone);
+            }}
+            placeholder="+1 (545) 674-3543"
           />
           {errors?.phone_no && (
             <p className="text-red-500 text-sm mt-2">

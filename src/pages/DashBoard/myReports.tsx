@@ -12,10 +12,10 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { createQuestions } from "../../services/slices/dashboard/dashboard";
-import UTurnLeftSharpIcon from '@mui/icons-material/UTurnLeftSharp';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
-import AddIcon from '@mui/icons-material/Add';
+import UTurnLeftSharpIcon from "@mui/icons-material/UTurnLeftSharp";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
+import AddIcon from "@mui/icons-material/Add";
 
 const chapters = [
   {
@@ -375,22 +375,37 @@ const MyReports = () => {
     <div className="">
       <div className="header-reports w-full">
         <div className="header-reports-inner flex justify-between px-8 py-6 bg-white shadow">
-
           <div className="flex flex-wrap gap-8 items-center w-full">
-            <button className="bg-white border-lightgray3 text-gray-dark border rounded-lg px-3 py-2"><span className="rotate-90 inline-block text-gray-dark"><UTurnLeftSharpIcon /></span> Back to My Reports</button>
-            <div className="text-xl">
-              AI Strategy Readiness
-            </div>
+            <button className="bg-white border-lightgray3 text-gray-dark border rounded-lg px-3 py-2">
+              <span className="rotate-90 inline-block text-gray-dark">
+                <UTurnLeftSharpIcon />
+              </span>{" "}
+              Back to My Reports
+            </button>
+            <div className="text-xl">AI Strategy Readiness</div>
           </div>
           <div className="flex gap-3 items-center w-full justify-end">
-            <button className="bg-white border-lightgray3 text-gray-dark border rounded-lg px-6 max-w-172px w-full py-2 text-nowrap">Save Draft</button>
-            <button className="bg-darkblue2 border-darkblue2 text-white border rounded-lg px-6 max-w-172px py-2 w-full">Publish</button>
+            <button className="bg-white border-lightgray3 text-gray-dark border rounded-lg px-6 max-w-172px w-full py-2 text-nowrap">
+              Save Draft
+            </button>
+            <button
+              onClick={handlePublish}
+              disabled={saveVisible === true}
+              className="bg-darkblue2 border-darkblue2 text-white border rounded-lg px-6 max-w-172px py-2 w-full"
+            >
+              Publish
+            </button>
           </div>
         </div>
       </div>
       <div className="min-h-vhcalc93px flex flex-wrap">
         <div className="w-272px bg-white shadow">
-          <div className="text-lg font-semibold mt-6 mx-5 flex justify-between gap-2 mb-6">Chapters <span className="w-6 h-6 flex items-center justify-center border border-lightgray3 text-[10px] rounded-md"><AddIcon /></span></div>
+          <div className="text-lg font-semibold mt-6 mx-5 flex justify-between gap-2 mb-6">
+            Chapters{" "}
+            <span className="w-6 h-6 flex items-center justify-center border border-lightgray3 text-[10px] rounded-md">
+              <AddIcon />
+            </span>
+          </div>
           <div>
             {chapters.map((chapter) => (
               <div
@@ -399,8 +414,10 @@ const MyReports = () => {
                   if (saveVisible === true) {
                     toast((t) => (
                       <span>
-                        You have still not saved your changes. Are you sure you
-                        want to <b>continue?</b> <br />
+                        {
+                          "You have still not saved your changes.\nAre you sure you want to"
+                        }{" "}
+                        <b>continue?</b> <br />
                         <button
                           className=" border rounded-lg mt-2 px-2"
                           onClick={() => {
@@ -437,24 +454,23 @@ const MyReports = () => {
                   }
                 }}
                 className={`px-3 py-2 flex gap-2 justify-between items-center hover:bg-lightgray rounded-lg mx-5 my-2 relative cursor-pointer ${
-                  selectedChapter === chapter.name ? "bg-lightgray before:content before:absolute before:w-1 before:top-1/2 before:left-[-1.25rem] before:h-5 before:bg-span-clr before:translate-y-[-50%] before:rounded-r-lg" : ""
+                  selectedChapter === chapter.name
+                    ? "bg-lightgray before:content before:absolute before:w-1 before:top-1/2 before:left-[-1.25rem] before:h-5 before:bg-span-clr before:translate-y-[-50%] before:rounded-r-lg"
+                    : ""
                 }`}
               >
-                {chapter.name} <span className="text-success2"><AddCircleOutlineIcon /></span> <span className="text-red2"><RemoveCircleOutlineIcon /></span>
+                {chapter.name}{" "}
+                <span className="text-success2">
+                  <AddCircleOutlineIcon />
+                </span>{" "}
+                <span className="text-red2">
+                  <RemoveCircleOutlineIcon />
+                </span>
               </div>
             ))}
           </div>
         </div>
         <div className="p-6 w-100-272px">
-          <div className=" w-full flex justify-end">
-            <button
-              onClick={handlePublish}
-              disabled={saveVisible === true}
-              className="rounded bg-purple-500 hover:bg-purple-700 py-2 px-4 mb-4 text-white font-semibold disabled:bg-gray-400"
-            >
-              Publish Questions
-            </button>
-          </div>
           <Paper sx={{ borderRadius: "16px", py: 4, px: 6 }}>
             <div className="flex flex-col justify-center">
               {questions.map((question, index) => {
@@ -472,7 +488,9 @@ const MyReports = () => {
                             Question {index + 1}
                           </div>
                         </div>
-                        <div className="ml-[35px] text-gray-dark2">{question.text}</div>
+                        <div className="ml-[35px] text-gray-dark2">
+                          {question.text}
+                        </div>
                       </div>
                       <div>
                         <div
@@ -532,7 +550,10 @@ const MyReports = () => {
                                   {question.options.length > 2 && (
                                     <div
                                       onClick={() =>
-                                        handleRemoveOption(question.id, option.id)
+                                        handleRemoveOption(
+                                          question.id,
+                                          option.id
+                                        )
                                       }
                                       className="text-mediumgray2 rounded-full hover:bg-gray-100 cursor-pointer"
                                     >
@@ -589,7 +610,7 @@ const MyReports = () => {
                                   changeMinValue(question.id, e.target.value)
                                 }
                                 type="number"
-                                className="w-14 rounded-lg text-sm border-0 px-2" 
+                                className="w-14 rounded-lg text-sm border-0 px-2"
                               />
                               {/* <div>Min</div> */}
                             </div>
@@ -609,7 +630,10 @@ const MyReports = () => {
                             min={minValues[question.id] || 10}
                             max={maxValues[question.id] || 20}
                             onChange={(_, newValue) =>
-                              handleSliderChange(question.id, newValue as number)
+                              handleSliderChange(
+                                question.id,
+                                newValue as number
+                              )
                             }
                             marks
                           />
@@ -640,7 +664,8 @@ const MyReports = () => {
                             </div>
                             {maxValueErrors[question.id] && (
                               <div className="text-xs text-red-600">
-                                Max value cannot be less than or equal to Min value
+                                Max value cannot be less than or equal to Min
+                                value
                               </div>
                             )}
                           </div>

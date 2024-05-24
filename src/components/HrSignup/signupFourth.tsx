@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const SignupFour = ({
   handleImageChange,
   handleSubmit,
@@ -6,6 +8,8 @@ const SignupFour = ({
   errors,
   setValue,
 }: any) => {
+  const [profilePic, setProfilePic] = useState<any>(null);
+
   return (
     <div className="main min-h-vhcalc225px bg-[url(../assets/images/Pattern.png)] bg-no-repeat bg-top px-4">
       <form
@@ -15,7 +19,7 @@ const SignupFour = ({
           <div className="flex items-center gap-2">
             <div>
               <h1 className="text-center text-main-heading flex justify-center">
-                <img src="/assets/images/busi-info.png" width={'88px'} height={'88px'} />
+                <img src="/assets/images/busi-info.png" width={'88px'} height={'88px'}/>
               </h1>
             </div>
             <div>
@@ -28,15 +32,29 @@ const SignupFour = ({
             </div>
           </div>
           <hr className="my-6"></hr>
+
           <div className="flex items-center content-center gap-5 mb-5 ">
             <div
-              className={`${
-                errors?.businessImage ? "border rounded-full border-red-500" : ""
-              }`}
+              className={`border-4 rounded-full bg-white ${errors?.businessImage ? " border-red-500" : ""
+                }`}
             >
-              <h1>
-                <img src="/assets/images/Avatar1.png" width={64} height={64} />
-              </h1>
+              {profilePic ? (
+                <img
+                  src={profilePic}
+                  alt="Profile"
+                  className="rounded-full"
+                  height={128}
+                  width={128}
+                />
+              ) : (
+                <img
+                  src="/assets/images/avatarpic.jpg"
+                  alt="Profile"
+                  className="rounded-full"
+                  height={128}
+                  width={128}
+                />
+              )}
             </div>
             <div className="flex items-center justify-between w-full">
               <div>
@@ -55,68 +73,82 @@ const SignupFour = ({
                     accept="image/*"
                     onChange={(e) => {
                       handleImageChange(e);
+                      const newProfilePic: any = e.target.files[0];
+                      setProfilePic(URL.createObjectURL(newProfilePic));
                       setValue("businessImage", e.target.files);
                     }}
                     className="relative z-10 w-16 opacity-0 block"
                   />
-                  <div className="text-gray-dark border absolute top-0 left-0 p-2 leading-5 rounded-lg text-sm">Upload</div>
+                   <div className="text-gray-dark border absolute top-0 left-0 p-2 leading-5 rounded-lg text-sm">Upload</div>
                 </div>
-                {errors?.businessImage && (
-                  <p className="text-red-500 text-sm mt-2">
-                    {errors?.businessImage?.message}
-                  </p>
-                )}
+                  {errors?.businessImage && (
+                    <p className="text-red-500 text-sm mt-2">
+                      {errors?.businessImage?.message}
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="grid md:grid-cols-2 grid-cols-1 md:gap-5 pt-5">
-          <div className="mt-5">
-            <label className="text-main-heading text-sm font-medium mb-2 flex items-center" htmlFor="company_name">Company Name<span className="text-span-clr">*</span>
-              <img className="max-w-5 max-h-5 ml-2" src="/assets/images/Vector.png" />
-            </label>
-            <select id="company_name" {...register("company_name")} className={` border text-gray-text text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
-                errors?.company_name ? "border-red-600" : "border-[#E2E4E9]"}`}>
-              <option value="US">United States</option>
-              <option value="CA">Canada</option>
-              <option value="FR">France</option>
-              <option value="DE">Germany</option>
-            </select>
-            {errors?.company_name && (
-              <p className="text-red-500 text-sm mt-2">
-                {errors?.company_name?.message}
-              </p>
-            )}
-          </div>
+          <div className="grid md:grid-cols-2 grid-cols-1 md:gap-5 pt-5">
+            <div className="mt-5">
 
-          <div className="mt-5">
-            <label
-              className=" text-main-heading text-sm font-medium mb-2 flex items-center"
-              htmlFor="industry"
-            >
-              Select Industry<span className="text-span-clr">*</span>
-              <img
-                className="max-w-5 max-h-5 ml-2"
-                src="/assets/images/Vector.png"
-              />
-            </label>
-            <select
-              id="industry"
-              {...register("industry")}
-              className={` border text-gray-text text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
-                errors?.industry ? "border-red-600" : "border-[#E2E4E9]"
-              }`}
-            >
-              <option value="US">United States</option>
-              <option value="CA">Canada</option>
-              <option value="FR">France</option>
-              <option value="DE">Germany</option>
-            </select>
-            {errors?.industry && (
-              <p className="text-red-500 text-sm mt-2">
-                {errors?.industry?.message}
-              </p>
-            )}
+              <label
+                className="text--main-heading text-sm font-medium mb-2 flex items-center"
+                htmlFor="company_name"
+              >
+                Company Name<span className="text-span-clr">*</span>
+                <img
+                  className="max-w-5 max-h-5 ml-2"
+                  src="/assets/images/Vector.png"
+                />
+              </label>
+              <select
+                id="company_name"
+                {...register("company_name")}
+                className={` border text-gray-text text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${errors?.company_name ? "border-red-600" : "border-[#E2E4E9]"
+                  }`}
+              >
+                <option value="US">United States</option>
+                <option value="CA">Canada</option>
+                <option value="FR">France</option>
+                <option value="DE">Germany</option>
+              </select>
+              {errors?.company_name && (
+                <p className="text-red-500 text-sm mt-2">
+                  {errors?.company_name?.message}
+                </p>
+              )}
+            </div>
+
+            <div className="mt-5">
+              <label
+                className=" text-main-heading text-sm font-medium mb-2 flex items-center"
+                htmlFor="industry"
+              >
+                Select Industry<span className="text-span-clr">*</span>
+                <img
+                  className="max-w-5 max-h-5 ml-2"
+                  src="/assets/images/Vector.png"
+                />
+              </label>
+              <select
+                id="industry"
+                {...register("industry")}
+                className={` border text-gray-text text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${errors?.industry ? "border-red-600" : "border-[#E2E4E9]"
+                  }`}
+              >
+                <option value="US">United States</option>
+                <option value="CA">Canada</option>
+                <option value="FR">France</option>
+                <option value="DE">Germany</option>
+              </select>
+              {errors?.industry && (
+                <p className="text-red-500 text-sm mt-2">
+                  {errors?.industry?.message}
+                </p>
+              )}
+            </div>
           </div>
         </div>
         <div className="grid md:grid-cols-2 grid-cols-1 md:gap-5">
@@ -134,9 +166,8 @@ const SignupFour = ({
             <select
               id="sector"
               {...register("sector")}
-              className={` border text-gray-text text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
-                errors?.sector ? "border-red-600" : "border-[#E2E4E9]"
-              }`}
+              className={` border text-gray-text text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${errors?.sector ? "border-red-600" : "border-[#E2E4E9]"
+                }`}
             >
               <option value="US">United States</option>
               <option value="CA">Canada</option>
@@ -163,9 +194,8 @@ const SignupFour = ({
             <select
               id="employees_count"
               {...register("employees_count")}
-              className={` border text-gray-text text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
-                errors?.employees_count ? "border-red-600" : "border-[#E2E4E9]"
-              }`}
+              className={` border text-gray-text text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${errors?.employees_count ? "border-red-600" : "border-[#E2E4E9]"
+                }`}
             >
               <option value="US">United States</option>
               <option value="CA">Canada</option>
@@ -194,9 +224,8 @@ const SignupFour = ({
             <select
               id="location"
               {...register("location")}
-              className={` border text-gray-text text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
-                errors?.location ? "border-red-600" : "border-[#E2E4E9]"
-              }`}
+              className={` border text-gray-text text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${errors?.location ? "border-red-600" : "border-[#E2E4E9]"
+                }`}
             >
               <option value="US">United States</option>
               <option value="CA">Canada</option>
@@ -213,7 +242,7 @@ const SignupFour = ({
 
 
 
-        
+
         <div className="grid md:grid-cols-2 grid-cols-1 md:gap-5">
           <div className=" text-main-heading">
             <div className="mt-5 mb-2 text-main-heading">Do you work with partners?</div>
