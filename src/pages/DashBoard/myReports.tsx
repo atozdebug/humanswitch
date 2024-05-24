@@ -164,7 +164,7 @@ const MyReports = () => {
           },
           {
             id: 1,
-            name: `Option`,
+            name: `Option2`,
           },
         ],
       }),

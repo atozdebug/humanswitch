@@ -99,8 +99,11 @@ const SideBar = () => {
 
   const logout = async () => {
     localStorage.clear();
-    navigate("/login");
-    await dispatch(handleLogout(true));
+    dispatch(handleLogout(true))
+      .unwrap()
+      .then(() => {
+        navigate("/login");
+      });
   };
 
   return (
