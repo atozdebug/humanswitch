@@ -25,10 +25,13 @@ const DeleteAccount = ({
       .then((res: any) => {
         console.log("=======", res);
         if (res.success === "true") {
-          toast.success(res?.message);
           localStorage.clear();
-          navigate("/login");
-          dispatch(handleLogout(true));
+          dispatch(handleLogout(true))
+            .unwrap()
+            .then(() => {
+              toast.success(res?.message);
+              navigate("/login");
+            });
         } else if (res.success === "false") {
           toast.error(res?.message);
         }
