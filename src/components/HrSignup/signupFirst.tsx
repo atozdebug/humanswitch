@@ -18,16 +18,15 @@ const SignupOne = ({ handleSubmit, register, onSubmit, errors }: any) => {
               className="block text-heading text-sm font-medium mb-2"
               htmlFor="Email"
             >
-            Email<span className="text-span-clr ">*</span>
+              Email<span className="text-span-clr ">*</span>
             </label>
             <div className="relative">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="absolute top-1/2 translate-y-n50 left-3">
-                <path d="M3.25 3.75H16.75C16.9489 3.75 17.1397 3.82902 17.2803 3.96967C17.421 4.11032 17.5 4.30109 17.5 4.5V15.5C17.5 15.6989 17.421 15.8897 17.2803 16.0303C17.1397 16.171 16.9489 16.25 16.75 16.25H3.25C3.05109 16.25 2.86032 16.171 2.71967 16.0303C2.57902 15.8897 2.5 15.6989 2.5 15.5V4.5C2.5 4.30109 2.57902 4.11032 2.71967 3.96967C2.86032 3.82902 3.05109 3.75 3.25 3.75ZM16 6.9285L10.054 12.2535L4 6.912V14.75H16V6.9285ZM4.38325 5.25L10.0457 10.2465L15.6265 5.25H4.38325Z" fill="#868C98"/>
+                <path d="M3.25 3.75H16.75C16.9489 3.75 17.1397 3.82902 17.2803 3.96967C17.421 4.11032 17.5 4.30109 17.5 4.5V15.5C17.5 15.6989 17.421 15.8897 17.2803 16.0303C17.1397 16.171 16.9489 16.25 16.75 16.25H3.25C3.05109 16.25 2.86032 16.171 2.71967 16.0303C2.57902 15.8897 2.5 15.6989 2.5 15.5V4.5C2.5 4.30109 2.57902 4.11032 2.71967 3.96967C2.86032 3.82902 3.05109 3.75 3.25 3.75ZM16 6.9285L10.054 12.2535L4 6.912V14.75H16V6.9285ZM4.38325 5.25L10.0457 10.2465L15.6265 5.25H4.38325Z" fill="#868C98" />
               </svg>
               <input
-                className={`pl-10 shadow appearance-none border  ${
-                  errors.email ? "border-red-600" : "border-slate-300"
-                } rounded-[10px] w-full py-2.5 pr-2.5 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
+                className={`pl-10 shadow appearance-none border  ${errors.email ? "border-red-600" : "border-slate-300"
+                  } rounded-[10px] w-full py-2.5 pr-2.5 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
                 id="email"
                 type="email"
                 placeholder="hello@humanswitch.ai"
@@ -64,9 +63,8 @@ const SignupOne = ({ handleSubmit, register, onSubmit, errors }: any) => {
           <label className="flex items-center space-x-2 mt-4">
             <input
               type="checkbox"
-              className={`form-checkbox rounded text-heading font-medium text-sm border focus:ring focus:ring-blue-300  ${
-                errors.agreeTerms ? "border-red-500" : ""
-              }`}
+              className={`form-checkbox rounded text-heading font-medium text-sm border focus:ring focus:ring-blue-300  ${errors.agreeTerms ? "border-red-500" : ""
+                }`}
               {...register("agreeTerms")}
             />
             <span className="text-gray-dark text-sm">

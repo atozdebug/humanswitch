@@ -14,12 +14,17 @@ const SignupFour = ({
     <div className="main min-h-vhcalc225px bg-[url(../assets/images/Pattern.png)] bg-no-repeat bg-top px-4">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="form-4 flex flex-col m-auto justify-center max-w-808">
+        className="form-4 flex flex-col m-auto justify-center max-w-808"
+      >
         <div className="max-w-md mx-auto">
           <div className="flex items-center gap-2">
             <div>
               <h1 className="text-center text-main-heading flex justify-center">
-                <img src="/assets/images/busi-info.png" width={'88px'} height={'88px'}/>
+                <img
+                  src="/assets/images/busi-info.png"
+                  width={"88px"}
+                  height={"88px"}
+                />
               </h1>
             </div>
             <div>
@@ -32,11 +37,11 @@ const SignupFour = ({
             </div>
           </div>
           <hr className="my-6"></hr>
-
           <div className="flex items-center content-center gap-5 mb-5 ">
             <div
-              className={`border-4 rounded-full bg-white ${errors?.businessImage ? " border-red-500" : ""
-                }`}
+              className={`border-4 rounded-full bg-white${
+                errors?.businessImage ? " border-red-500" : "border-gray-400"
+              }`}
             >
               {profilePic ? (
                 <img
@@ -71,7 +76,7 @@ const SignupFour = ({
                     type="file"
                     id="image-upload"
                     accept="image/*"
-                    onChange={(e) => {
+                    onChange={(e: any) => {
                       handleImageChange(e);
                       const newProfilePic: any = e.target.files[0];
                       setProfilePic(URL.createObjectURL(newProfilePic));
@@ -79,76 +84,78 @@ const SignupFour = ({
                     }}
                     className="relative z-10 w-16 opacity-0 block"
                   />
-                   <div className="text-gray-dark border absolute top-0 left-0 p-2 leading-5 rounded-lg text-sm">Upload</div>
+                  <div className="text-gray-dark border absolute top-0 left-0 p-2 leading-5 rounded-lg text-sm">
+                    Upload
+                  </div>
                 </div>
-                  {errors?.businessImage && (
-                    <p className="text-red-500 text-sm mt-2">
-                      {errors?.businessImage?.message}
-                    </p>
-                  )}
-                </div>
+                {errors?.businessImage && (
+                  <p className="text-red-500 text-sm mt-2">
+                    {errors?.businessImage?.message}
+                  </p>
+                )}
               </div>
             </div>
           </div>
-          <div className="grid md:grid-cols-2 grid-cols-1 md:gap-5 pt-5">
-            <div className="mt-5">
+        </div>
+        <div className="grid md:grid-cols-2 grid-cols-1 md:gap-5 pt-5">
+          <div className="mt-5">
+            <label
+              className="text-main-heading text-sm font-medium mb-2 flex items-center"
+              htmlFor="company_name"
+            >
+              Company Name<span className="text-span-clr">*</span>
+              <img
+                className="max-w-5 max-h-5 ml-2"
+                src="/assets/images/Vector.png"
+              />
+            </label>
+            <select
+              id="company_name"
+              {...register("company_name")}
+              className={` border text-gray-text text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
+                errors?.company_name ? "border-red-600" : "border-[#E2E4E9]"
+              }`}
+            >
+              <option value="US">United States</option>
+              <option value="CA">Canada</option>
+              <option value="FR">France</option>
+              <option value="DE">Germany</option>
+            </select>
+            {errors?.company_name && (
+              <p className="text-red-500 text-sm mt-2">
+                {errors?.company_name?.message}
+              </p>
+            )}
+          </div>
 
-              <label
-                className="text--main-heading text-sm font-medium mb-2 flex items-center"
-                htmlFor="company_name"
-              >
-                Company Name<span className="text-span-clr">*</span>
-                <img
-                  className="max-w-5 max-h-5 ml-2"
-                  src="/assets/images/Vector.png"
-                />
-              </label>
-              <select
-                id="company_name"
-                {...register("company_name")}
-                className={` border text-gray-text text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${errors?.company_name ? "border-red-600" : "border-[#E2E4E9]"
-                  }`}
-              >
-                <option value="US">United States</option>
-                <option value="CA">Canada</option>
-                <option value="FR">France</option>
-                <option value="DE">Germany</option>
-              </select>
-              {errors?.company_name && (
-                <p className="text-red-500 text-sm mt-2">
-                  {errors?.company_name?.message}
-                </p>
-              )}
-            </div>
-
-            <div className="mt-5">
-              <label
-                className=" text-main-heading text-sm font-medium mb-2 flex items-center"
-                htmlFor="industry"
-              >
-                Select Industry<span className="text-span-clr">*</span>
-                <img
-                  className="max-w-5 max-h-5 ml-2"
-                  src="/assets/images/Vector.png"
-                />
-              </label>
-              <select
-                id="industry"
-                {...register("industry")}
-                className={` border text-gray-text text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${errors?.industry ? "border-red-600" : "border-[#E2E4E9]"
-                  }`}
-              >
-                <option value="US">United States</option>
-                <option value="CA">Canada</option>
-                <option value="FR">France</option>
-                <option value="DE">Germany</option>
-              </select>
-              {errors?.industry && (
-                <p className="text-red-500 text-sm mt-2">
-                  {errors?.industry?.message}
-                </p>
-              )}
-            </div>
+          <div className="mt-5">
+            <label
+              className=" text-main-heading text-sm font-medium mb-2 flex items-center"
+              htmlFor="industry"
+            >
+              Select Industry<span className="text-span-clr">*</span>
+              <img
+                className="max-w-5 max-h-5 ml-2"
+                src="/assets/images/Vector.png"
+              />
+            </label>
+            <select
+              id="industry"
+              {...register("industry")}
+              className={` border text-gray-text text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
+                errors?.industry ? "border-red-600" : "border-[#E2E4E9]"
+              }`}
+            >
+              <option value="US">United States</option>
+              <option value="CA">Canada</option>
+              <option value="FR">France</option>
+              <option value="DE">Germany</option>
+            </select>
+            {errors?.industry && (
+              <p className="text-red-500 text-sm mt-2">
+                {errors?.industry?.message}
+              </p>
+            )}
           </div>
         </div>
         <div className="grid md:grid-cols-2 grid-cols-1 md:gap-5">
@@ -166,8 +173,9 @@ const SignupFour = ({
             <select
               id="sector"
               {...register("sector")}
-              className={` border text-gray-text text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${errors?.sector ? "border-red-600" : "border-[#E2E4E9]"
-                }`}
+              className={` border text-gray-text text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
+                errors?.sector ? "border-red-600" : "border-[#E2E4E9]"
+              }`}
             >
               <option value="US">United States</option>
               <option value="CA">Canada</option>
@@ -194,8 +202,9 @@ const SignupFour = ({
             <select
               id="employees_count"
               {...register("employees_count")}
-              className={` border text-gray-text text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${errors?.employees_count ? "border-red-600" : "border-[#E2E4E9]"
-                }`}
+              className={` border text-gray-text text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
+                errors?.employees_count ? "border-red-600" : "border-[#E2E4E9]"
+              }`}
             >
               <option value="US">United States</option>
               <option value="CA">Canada</option>
@@ -224,8 +233,9 @@ const SignupFour = ({
             <select
               id="location"
               {...register("location")}
-              className={` border text-gray-text text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${errors?.location ? "border-red-600" : "border-[#E2E4E9]"
-                }`}
+              className={` border text-gray-text text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
+                errors?.location ? "border-red-600" : "border-[#E2E4E9]"
+              }`}
             >
               <option value="US">United States</option>
               <option value="CA">Canada</option>
@@ -240,12 +250,11 @@ const SignupFour = ({
           </div>
         </div>
 
-
-
-
         <div className="grid md:grid-cols-2 grid-cols-1 md:gap-5">
           <div className=" text-main-heading">
-            <div className="mt-5 mb-2 text-main-heading">Do you work with partners?</div>
+            <div className="mt-5 mb-2 text-main-heading">
+              Do you work with partners?
+            </div>
             <div className="flex gap-6">
               <div className="flex items-center gap-2">
                 <input
@@ -277,7 +286,9 @@ const SignupFour = ({
             )}
           </div>
           <div className=" text-main-heading">
-            <div className="mt-5 mb-2 text-main-heading">Do you work with strategic suppliers?</div>
+            <div className="mt-5 mb-2 text-main-heading">
+              Do you work with strategic suppliers?
+            </div>
             <div className="flex gap-6">
               <div className="flex items-center gap-2">
                 <input
