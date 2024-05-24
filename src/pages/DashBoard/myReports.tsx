@@ -80,7 +80,7 @@ const questionType: any = [
     id: 3,
     name: "Slider",
     icon: { image: <ToggleOnIcon />, id: 3 },
-    color: "text-blue-600",
+    color: "text-pink-600",
   },
 ];
 

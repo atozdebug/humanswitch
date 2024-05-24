@@ -10,12 +10,13 @@ import LightModeIcon from "@mui/icons-material/LightMode";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { useLocation, useNavigate } from "react-router-dom";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   handleLogout,
   selectTheme,
 } from "../services/slices/activity/activitySlice";
+import { getUser } from "../services/slices/dashboard/getUser";
 let sideBarItems = [
   {
     name: "Dashboard",
@@ -71,6 +72,14 @@ const SideBar = () => {
   const dispatch: any = useDispatch();
   const navigate: any = useNavigate();
   const isDark: any = useSelector((state: any) => state.activity.isDark);
+
+  const user = localStorage.getItem("user");
+  const userData = useSelector((state: any) => state.getUser.data);
+  console.log(user);
+
+  useEffect(() => {
+    dispatch(getUser(user));
+  }, []);
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -276,19 +285,38 @@ const SideBar = () => {
           {/* -------------------------------------------------------------- */}
           {/* -------------------------------------------------------------- */}
           <div className="flex justify-between items-center px-0 py-6 border-t">
-            <div className="profile-imagee">
-              <img className="max-w-[40px]" src="/assets/images/Avatar.png" />
+            <div
+              className="rounded-full border border-gray-400 bg-white"
+              style={{ width: "50px", height: "50px", overflow: "hidden" }}
+            >
+              {userData?.image ? (
+                <img
+                  src={`data:image/jpeg;base64,${userData?.image}`}
+                  alt="Profile"
+                  className="rounded-full"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
+              ) : (
+                <img
+                  src="/assets/images/avatarpic.jpg"
+                  alt="Profile"
+                  className="rounded-full"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
+              )}
             </div>
             <div className="profile-content">
               <div className="flex justify-between items-center">
                 <div>
-                  <p className="font-medium md:text-sm">Sophia Williams </p>
+                  <p className="font-medium md:text-sm">
+                    {userData?.first_name + " " + userData?.last_name}
+                  </p>
                 </div>
                 <div>
                   <VerifiedIcon className="text-blue-600" />
                 </div>
               </div>
-              <p className=" font-normal md:text-xs ">sophia@humanswitch.ai</p>
+              <p className=" font-normal md:text-xs ">{userData?.email}</p>
             </div>
             <div>
               <img src="/assets/images/arrow-right-s-line.png" />

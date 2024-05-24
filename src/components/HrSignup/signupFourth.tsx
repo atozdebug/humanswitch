@@ -37,12 +37,12 @@ const SignupFour = ({
             </div>
           </div>
           <hr className="my-6"></hr>
-          <div className="flex items-center content-center gap-5 mb-5 ">
+          <div className="flex items-center content-center gap-4 mb-5 ">
             <div
               className={`border-4 rounded-full bg-white${
                 errors?.businessImage ? " border-red-500" : "border-gray-400"
               }`}
-              style={{ width: "110px", height: "110px", overflow: "hidden" }}
+              style={{ width: "76px", height: "76px", overflow: "hidden" }}
             >
               {profilePic ? (
                 <img
@@ -60,10 +60,7 @@ const SignupFour = ({
                 />
               )}
             </div>
-            <div
-              className="flex items-center justify-between"
-              style={{ width: "calc(100% - 156px)" }}
-            >
+            <div className="flex items-center justify-between gap-4">
               <div>
                 <h3 className="text-main-heading text-base font-medium text-start">
                   Business Logo:

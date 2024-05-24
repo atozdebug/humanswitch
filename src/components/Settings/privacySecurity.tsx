@@ -151,10 +151,10 @@ const PrivacySecurity = ({ handleSubmit, onSubmit, errors, setValue }: any) => {
             .then(() => {
               toast.success("2FA Enabled Successfully");
               handleClose();
-              setStep(0);
               dispatch(getUser(user))
                 .unwrap()
                 .then(() => {
+                  setStep(0);
                   setIsDisabled(true);
                 });
             });

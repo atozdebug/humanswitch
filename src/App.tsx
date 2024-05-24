@@ -115,7 +115,14 @@ const App = () => {
                 </PublicRouteGuard>
               }
             />
-            <Route path="/home" element={<HomePage />} />
+            <Route
+              path="/home"
+              element={
+                <PublicRouteGuard>
+                  <HomePage />
+                </PublicRouteGuard>
+              }
+            />
             <Route path="/" element={<DefaultRoute />} />;
             <Route path="/pillars" element={<Pillars />} />
             <Route

@@ -32,6 +32,7 @@ const Profile = () => {
 
   // Function to handle changing profile picture
   const handleChangeProfilePic = (event: any) => {
+    console.log("first");
     const newProfilePic: any = event.target.files[0];
     setSendImage(newProfilePic);
     setProfilePic(URL.createObjectURL(newProfilePic));

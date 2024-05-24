@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { deleteUser } from "../../services/slices/dashboard/deleteUser";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { handleLogout } from "../../services/slices/activity/activitySlice";
 
 const DeleteAccount = ({
   handleSubmit,
@@ -18,15 +19,16 @@ const DeleteAccount = ({
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [password, setPassword] = useState("");
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     dispatch(deleteUser({ id: user, password }))
       .unwrap()
       .then((res: any) => {
         console.log("=======", res);
-        if (res?.success === "true") {
+        if (res.success === "true") {
           toast.success(res?.message);
           localStorage.clear();
-          navigate("/");
+          navigate("/login");
+          dispatch(handleLogout(true));
         } else if (res.success === "false") {
           toast.error(res?.message);
         }
