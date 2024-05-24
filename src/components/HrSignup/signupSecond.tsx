@@ -1,6 +1,7 @@
 import { useState } from "react";
 import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
+
+import "react-phone-input-2/lib/bootstrap.css";
 
 const SignupTwo = ({
   handleImageChange,
@@ -153,6 +154,33 @@ const SignupTwo = ({
               setValue("phone_no", phone);
             }}
             placeholder="+1 (545) 674-3543"
+            inputStyle={{
+              paddingTop: 8,
+              paddingBottom: 8,
+              width: "100%",
+              border: 0,
+              boxShadow:
+                "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)",
+              color: "black",
+              background: "#fff",
+              borderRadius: "10px",
+              height: "40px",
+            }}
+            buttonStyle={{
+              borderTopLeftRadius: "10px",
+              borderBottomLeftRadius: "10px",
+            }}
+            containerStyle={{
+              border: "1px solid #e5e7eb",
+              borderRadius: "10px",
+              boxShadow:
+                "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)",
+            }}
+            inputProps={{
+              id: "mobile",
+              name: "mobile",
+              required: true,
+            }}
           />
           {errors?.phone_no && (
             <p className="text-red-500 text-sm mt-2">

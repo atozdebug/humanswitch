@@ -4,7 +4,7 @@ import { getUser } from "../../services/slices/dashboard/getUser";
 import { updateProfile } from "../../services/slices/dashboard/updateProfile";
 import toast from "react-hot-toast";
 import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
+import "react-phone-input-2/lib/bootstrap.css";
 
 const Profile = () => {
   const user = localStorage.getItem("user");
@@ -66,22 +66,23 @@ const Profile = () => {
   return (
     <div className="flex">
       <div className="w-[400px] flex flex-col justify-center items-center pt-10 border-r-2">
-        <div className="rounded-full border-4 border-gray-400 bg-white mb-6">
+        <div
+          className="rounded-full border-4 border-gray-400 bg-white mb-6"
+          style={{ width: "128px", height: "128px", overflow: "hidden" }}
+        >
           {profilePic ? (
             <img
               src={profilePic}
               alt="Profile"
               className="rounded-full"
-              height={128}
-              width={128}
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
           ) : (
             <img
               src="/assets/images/avatarpic.jpg"
               alt="Profile"
               className="rounded-full"
-              height={128}
-              width={128}
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
           )}
         </div>
@@ -128,6 +129,32 @@ const Profile = () => {
                   setIsDisabled(false);
                 }}
                 placeholder="+1 (545) 674-3543"
+                inputStyle={{
+                  paddingTop: 8,
+                  paddingBottom: 8,
+                  width: "100%",
+                  border: 0,
+                  boxShadow:
+                    "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)",
+                  color: "black",
+                  background: "#fff",
+                  borderRadius: "4px",
+                }}
+                buttonStyle={{
+                  borderTopLeftRadius: "10px",
+                  borderBottomLeftRadius: "10px",
+                }}
+                containerStyle={{
+                  border: "1px solid #e5e7eb",
+                  borderRadius: "4px",
+                  boxShadow:
+                    "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)",
+                }}
+                inputProps={{
+                  id: "mobile",
+                  name: "mobile",
+                  required: true,
+                }}
               />
             </div>
           </div>
