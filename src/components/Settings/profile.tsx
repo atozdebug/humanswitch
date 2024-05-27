@@ -62,12 +62,9 @@ const Profile = () => {
   };
 
   return (
-    <div className="flex">
-      <div className="w-[400px] flex flex-col justify-center items-center pt-10 border-r-2">
-        <div
-          className="rounded-full border-4 border-gray-400 bg-white mb-6"
-          style={{ width: "128px", height: "128px", overflow: "hidden" }}
-        >
+    <div className="flex flex-wrap">
+      <div className="flex flex-wrap flex-col justify-center items-center md:border-r py-4 md:pr-4 w-full md:max-w-250px">
+        <div className="rounded-full border bg-white mb-6 w-28 h-28">
           {profilePic ? (
             <img
               src={profilePic}
@@ -88,36 +85,70 @@ const Profile = () => {
           <div className="text-xs mb-2">
             Click below to change your profile picture
           </div>
-          <input
+          {/* <input
             type="file"
             onChange={handleChangeProfilePic}
             accept="image/*"
-            className="bg-gray-200 mx-6 w-72"
-          />
+            className="hidden"
+          /> */}
+          <label
+            htmlFor="uploadFile1"
+            className="flex bg-blue-600 hover:bg-purple-700 text-white text-base px-5 py-2 outline-none rounded-[10px] cursor-pointer mx-auto font-[sans-serif]"
+          >
+            <input
+              type="file"
+              onChange={handleChangeProfilePic}
+              accept="image/*"
+              className="hidden"
+              id="uploadFile1"
+            />
+            <span>Upload image</span>
+          </label>
         </div>
         <div className="mt-4 text-xl">{firstName + " " + lastName}</div>
         <div className="mt-4 text-xl">{userData?.email}</div>
       </div>
-      <div className="w-full items-center">
-        <div className="flex justify-center mb-6 text-3xl font-semibold">
-          Profile Settings
-        </div>
-        <div className="flex w-full justify-around">
-          <div className="flex flex-col">
-            <div>First Name</div>
-            <input
-              className={`shadow appearance-none border border-slate-300 rounded w-full py-2 pl-2 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
-              id="current_password"
-              type={"text"}
-              placeholder="John"
-              value={firstName}
-              onChange={(e) => {
-                setFirstName(e.target.value);
-                setIsDisabled(false);
-              }}
-            />
-            <div className="mt-6 flex flex-col">
-              <div className="">Phone No</div>
+      <div className="w-full items-center md:max-w-350px mx-auto pl-0">
+        <div className="flex mb-6 text-2xl font-semibold">Profile Settings</div>
+        <div className="w-full grid grid-cols-1 gap-4">
+          <div className="grid-item">
+            <div className="grid-item-inner">
+              <label className="mb-1 block text-sm">First Name</label>
+              <input
+                className={`appearance-none border border-slate-300 rounded-[10px] w-full py-2 pl-2 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
+                id="current_password"
+                type={"text"}
+                placeholder="John"
+                value={firstName}
+                onChange={(e) => {
+                  setFirstName(e.target.value);
+                  setIsDisabled(false);
+                }}
+              />
+            </div>
+          </div>
+
+          {/* =================================== */}
+          <div className="grid-item">
+            <div className="grid-item-inner">
+              <label className="mb-1 block text-sm">Last Name</label>
+              <input
+                className={`appearance-none border border-slate-300 rounded-[10px] w-full py-2 pl-2 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
+                id="current_password"
+                type={"text"}
+                placeholder="Adams"
+                value={lastName}
+                onChange={(e) => {
+                  setLastName(e.target.value);
+                  setIsDisabled(false);
+                }}
+              />
+            </div>
+          </div>
+          {/* =================================== */}
+          <div className="grid-item">
+            <div className="grid-item-inner">
+              <label className="mb-1 block text-sm">Phone No</label>
               <PhoneInput
                 country={"us"}
                 enableSearch={true}
@@ -128,15 +159,15 @@ const Profile = () => {
                 }}
                 placeholder="+1 (545) 674-3543"
                 inputStyle={{
-                  paddingTop: 8,
-                  paddingBottom: 8,
+                  paddingTop: 7,
+                  paddingBottom: 7,
                   width: "100%",
                   border: 0,
-                  boxShadow:
-                    "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)",
+                  // boxShadow:
+                  //   "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)",
                   color: "black",
                   background: "#fff",
-                  borderRadius: "4px",
+                  borderRadius: "10px",
                 }}
                 buttonStyle={{
                   borderTopLeftRadius: "10px",
@@ -144,9 +175,9 @@ const Profile = () => {
                 }}
                 containerStyle={{
                   border: "1px solid #e5e7eb",
-                  borderRadius: "4px",
-                  boxShadow:
-                    "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)",
+                  borderRadius: "10px",
+                  // boxShadow:
+                  //   "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)",
                 }}
                 inputProps={{
                   id: "mobile",
@@ -156,33 +187,20 @@ const Profile = () => {
               />
             </div>
           </div>
-          <div className="flex flex-col">
-            <div>Last Name</div>
-            <input
-              className={`shadow appearance-none border border-slate-300 rounded w-full py-2 pl-2 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
-              id="current_password"
-              type={"text"}
-              placeholder="Adams"
-              value={lastName}
-              onChange={(e) => {
-                setLastName(e.target.value);
-                setIsDisabled(false);
-              }}
-            />
-          </div>
+          {/* =================================== */}
         </div>
-        <div className="flex justify-center mt-4 gap-x-6">
+        <div className="flex justify-center mt-4 gap-4">
           <button
             disabled={isDisabled}
             onClick={handleReset}
-            className="rounded bg-red-700 hover:bg-red-900 py-2 px-4 text-white font-semibold disabled:bg-gray-400"
+            className="w-full rounded-[10px] bg-white border hover:bg-red-500 hover:border-red-500 py-2 px-4 hover:text-white text-gray-dark font-medium disabled:bg-gray-400 disabled:border-gray-400 disabled:text-gray-dark"
           >
             Discard
           </button>
           <button
             disabled={isDisabled}
             onClick={saveProfile}
-            className="rounded bg-purple-700 hover:bg-purple-900 py-2 px-4 text-white font-semibold disabled:bg-gray-400"
+            className="w-full rounded-[10px] bg-blue-600 border border-blue-600 hover:bg-purple-700 hover:border-purple-700 py-2 px-4 hover:text-white text-white font-medium disabled:bg-gray-400 disabled:border-gray-400 disabled:text-gray-dark"
           >
             Save
           </button>

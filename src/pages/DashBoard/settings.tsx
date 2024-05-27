@@ -1,13 +1,13 @@
-import AccountBoxIcon from "@mui/icons-material/AccountBox";
-import ReceiptIcon from "@mui/icons-material/Receipt";
-import NotificationsIcon from "@mui/icons-material/Notifications";
+// import AccountBoxIcon from "@mui/icons-material/AccountBox";
+// import ReceiptIcon from "@mui/icons-material/Receipt";
+// import NotificationsIcon from "@mui/icons-material/Notifications";
 import SecurityIcon from "@mui/icons-material/Security";
 import { Card, Tab, Tabs } from "@mui/material";
 import { useState } from "react";
 import LockIcon from "@mui/icons-material/Lock";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { useNavigate, useParams } from "react-router-dom";
-import CreditCardIcon from "@mui/icons-material/CreditCard";
+// import CreditCardIcon from "@mui/icons-material/CreditCard";
 import ChangePassword from "../../components/Settings/changePassword";
 import PrivacySecurity from "../../components/Settings/privacySecurity";
 import DeleteAccount from "../../components/Settings/deleteAccount";
@@ -23,23 +23,36 @@ import Profile from "../../components/Settings/profile";
 const tabs = [
   {
     name: "Profile",
-    icon: <AccountBoxIcon />,
+    img: (
+      <img src="../../../public/assets/images/profile-tab-icon.svg" alt="" />
+    ),
   },
   {
     name: "Manage Subcription",
-    icon: <CreditCardIcon />,
+    img: (
+      <img
+        src="../../../public/assets/images/subscription-tab-icon.svg"
+        alt=""
+      />
+    ),
   },
   {
     name: "Invoice History",
-    icon: <ReceiptIcon />,
+    img: (
+      <img src="../../../public/assets/images/invoice-tabs-icon.svg" alt="" />
+    ),
   },
   {
     name: "Notification Settings",
-    icon: <NotificationsIcon />,
+    img: (
+      <img src="../../../public/assets/images/setting-tabs-icon.svg" alt="" />
+    ),
   },
   {
     name: "Privacy & Security",
-    icon: <SecurityIcon />,
+    img: (
+      <img src="../../../public/assets/images/privacy-tabs-icon.svg" alt="" />
+    ),
   },
 ];
 
@@ -200,29 +213,34 @@ const Settings = () => {
   };
 
   return (
-    <div>
-      <div className="bg-gray-100 min-h-screen">
-        <div className=" bg-[#F6F8FA]">
-          <Tabs value={selectedTab} onChange={handleChange}>
+    <div className="bg-white md:px-8 md:pb-6 px-4 pb-4 min-h-vhcalc135px">
+      <div className="border-t">
+        <div className=" bg-white">
+          <Tabs
+            value={selectedTab}
+            onChange={handleChange}
+            className="border-b settings-tabs"
+          >
             {tabs.map((tab, index) => (
               <Tab
                 sx={{ paddingY: 0 }}
                 key={index}
                 label={tab.name}
-                icon={tab.icon}
+                icon={tab.img}
                 iconPosition="start"
+                className={`!normal-case !text-sm !min-h-48px !font-medium  ${selectedTab === index ? "!text-main-heading" : "!text-gray-dark image-color-changed"}`}
               />
             ))}
           </Tabs>
 
-          <div>
+          <div className="pt-8">
             {tab === "profile" && <Profile />}
             {tab === "privacy-security" && (
-              <div className="flex">
-                <div>
+              <div className="flex flex-wrap">
+                <div className="md:max-w-258px w-full">
                   <Card
                     variant="outlined"
-                    className="p-2 mr-8 flex flex-col justify-between"
+                    className="p-10px flex flex-col justify-between"
                     style={{ borderRadius: "12px" }}
                   >
                     <div className="font-semibold px-2 mb-2">Select Menu</div>
@@ -230,8 +248,8 @@ const Settings = () => {
                       {menueList.map((item, index) => (
                         <button
                           key={index}
-                          className={`flex w-[280px] justify-between gap-8 p-2 mb-2 hover:bg-gray-400 rounded-lg ${
-                            selected === item.name ? "bg-gray-200" : ""
+                          className={`flex w-full justify-between items-center gap-8 p-2 mb-2 hover:bg-lightgray rounded-lg ${
+                            selected === item.name ? "bg-lightgray" : ""
                           }`}
                           onClick={() => setSelected(item.name)}
                         >
@@ -239,41 +257,47 @@ const Settings = () => {
                             {item.icon}
                             {item.name}
                           </div>
-                          <div>
-                            <KeyboardArrowRightIcon />
+                          <div className="">
+                            <KeyboardArrowRightIcon
+                              className={`!h-5 !w-5 !bg-white !rounded-full !shadow ${
+                                selected === item.name ? "!block" : "!hidden"
+                              }`}
+                            />
                           </div>
                         </button>
                       ))}
                     </div>
                   </Card>
                 </div>
-                {selected === "Change Password" && (
-                  <ChangePassword
-                    handleSubmit={handleSubmit}
-                    onSubmit={onSubmit}
-                    register={register}
-                    errors={errors}
-                    setValue={setValue}
-                  />
-                )}
-                {selected === "2FA Security" && (
-                  <PrivacySecurity
-                    handleSubmit={handleSubmit}
-                    onSubmit={onSubmit}
-                    register={register}
-                    errors={errors}
-                    setValue={setValue}
-                  />
-                )}
-                {selected === "Delete Account" && (
-                  <DeleteAccount
-                    handleSubmit={handleSubmit}
-                    onSubmit={onSubmit}
-                    register={register}
-                    errors={errors}
-                    setValue={setValue}
-                  />
-                )}
+                <div className="md:max-w-calc258px w-full md:px-4">
+                  {selected === "Change Password" && (
+                    <ChangePassword
+                      handleSubmit={handleSubmit}
+                      onSubmit={onSubmit}
+                      register={register}
+                      errors={errors}
+                      setValue={setValue}
+                    />
+                  )}
+                  {selected === "2FA Security" && (
+                    <PrivacySecurity
+                      handleSubmit={handleSubmit}
+                      onSubmit={onSubmit}
+                      register={register}
+                      errors={errors}
+                      setValue={setValue}
+                    />
+                  )}
+                  {selected === "Delete Account" && (
+                    <DeleteAccount
+                      handleSubmit={handleSubmit}
+                      onSubmit={onSubmit}
+                      register={register}
+                      errors={errors}
+                      setValue={setValue}
+                    />
+                  )}
+                </div>
               </div>
             )}
           </div>

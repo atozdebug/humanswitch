@@ -112,8 +112,8 @@ const SideBar = () => {
     >
       <div className="dark:bg-black dark:text-white bg-white relative h-full overflow-y-auto border-r border-[#E2E4E9] flex justify-between flex-col lft-nav">
         <div className="pt-0 pb-4">
-          <div className="px-6">
-            <div className="flex items-center justify-between border-b py-4">
+          <div className="px-6 logo-hamburg">
+            <div className="logo-hamburg-inner flex items-center justify-between border-b py-4">
               <div className="">
                 <img
                   src="/assets/images/human-logo.png"
@@ -192,7 +192,7 @@ const SideBar = () => {
           </div>
 
           <div className="pt-20px">
-            <div className="font-light px-20px">MAIN</div>
+            <div className="font-light px-20px label-menu-top">MAIN</div>
             {sideBarItems.map((item, index) => {
               const basePath = getBasePath(location.pathname);
               const basePathMain = getBasePath(item.navigateTo);
@@ -202,9 +202,9 @@ const SideBar = () => {
                 <a
                   key={index}
                   href={`${item.navigateTo}`}
-                  className={`top px-2 hover:bg-bg-clr font-regular rounded-lg hover:text-main-heading text-gray-dark flex items-center gap-2 my-2 relative ${
+                  className={`menu-link-a top px-2 hover:bg-bg-clr font-regular rounded-lg hover:text-main-heading text-gray-dark flex items-center gap-2 my-2 relative ${
                     isActive
-                      ? " text-main-heading px-20px"
+                      ? " text-main-heading px-20px active-linkk-memnu"
                       : "py-2 mx-20px hover:bg-lightgray "
                   }`}
                 >
@@ -214,11 +214,13 @@ const SideBar = () => {
                     </div>
                   )}
                   <div
-                    className={`flex w-full items-center rounded-lg ${
+                    className={`flex w-full items-center rounded-lg active-menu-linkk ${
                       isActive && "bg-lightgray text-main-heading py-2 px-2"
                     }`}
                   >
-                    <div className={`px-2 ${isActive && "text-[#375DFB]"}`}>
+                    <div
+                      className={`px-2 menu-icon ${isActive && "text-[#375DFB]"}`}
+                    >
                       {item.icon}
                     </div>
                     <div className="menu-item-text">{item.name}</div>
@@ -229,11 +231,11 @@ const SideBar = () => {
           </div>
         </div>
         {/* ------------------------------------------------------------- */}
-        <div className="bottom pt-4 px-20px">
+        <div className="bottom pt-4 px-20px bottom-menuu">
           {bottomSidebarItems.map((item, index) => (
             <div
               key={index}
-              className="top px-20px py-2 hover:bg-lightgray rounded-lg hover:tex-main-heading flex items-center gap-2 my-2"
+              className="top px-20px py-2 hover:bg-lightgray rounded-lg hover:tex-main-heading flex items-center gap-2 my-2 menu-icon"
               onClick={() => logout()}
             >
               {item.icon}
@@ -241,7 +243,7 @@ const SideBar = () => {
             </div>
           ))}
 
-          <div className="my-5 day-night-btns">
+          <div className="my-5 day-night-btns ">
             <input
               checked={dark} // Use checked attribute for checkbox input
               onChange={toggleTheme}
@@ -273,7 +275,7 @@ const SideBar = () => {
           </div>
           {/* -------------------------------------------------------------- */}
           {/* -------------------------------------------------------------- */}
-          <div className="flex justify-between items-center px-0 py-6 border-t">
+          <div className="flex justify-between items-center px-0 py-6 border-t profile-infoo-side">
             <div
               className="rounded-full border border-gray-400 bg-white"
               style={{ width: "50px", height: "50px", overflow: "hidden" }}

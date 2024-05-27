@@ -20,19 +20,19 @@ const methods = [
     name: "SMS Code",
     description:
       "Receive a one-time verification code via SMS to enter during login.",
-    image: "/assets/images/camra.png",
+    image: "/assets/images/chat-smile-line.png",
   },
   {
     name: "Email Code",
     description:
       "Get a temporary verification code sent to your email for added security.",
-    image: "/assets/images/user.png",
+    image: "/assets/images/mail-line1.png",
   },
   {
     name: "Authenticator App",
     description:
       "Use an authenticator app to generate time-based verification codes for login.",
-    image: "/assets/images/user.png",
+    image: "/assets/images/shield-keyhole-line.png",
   },
 ];
 
@@ -169,28 +169,37 @@ const PrivacySecurity = ({ handleSubmit, onSubmit, errors, setValue }: any) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col justify-center max-w-md m-auto mt-6"
+      className="flex flex-col justify-center max-w-350px m-auto mt-8 md:mt-0"
     >
-      <h2 className="text-gray-dark text-2xl font-medium ">2FA Security</h2>
-      <p className="gray-dark ">
+      <h2 className="text-main-heading text-2xl font-medium mb-1">
+        2FA Security
+      </h2>
+      <p className="text-sm text-gray-dark ">
         Enable two-factor authentication to your account.
       </p>
       <hr className="my-5"></hr>
       {methods.map((method, index) => (
         <div
           key={index}
-          className={`flex items-center content-center justify-between border ${
+          className={`flex items-start gap-14px content-center justify-between border ${
             errors?.method ? "border-red-600" : "border-[#E2E4E9]"
           } p-4 mb-4 rounded-xl`}
         >
           <div>
-            <h1 className="text-center flex justify-center">
-              <img src={method.image} />
+            <h1 className="text-center flex justify-center w-10 h-10 border rounded-full">
+              <img
+                src={method.image}
+                width={20}
+                height={20}
+                className="object-contain "
+              />
             </h1>
           </div>
           <div>
-            <h2 className="font-medium text-sm text-start">{method.name}</h2>
-            <p className="font-normal text-xs text-start">
+            <h2 className="font-medium text-sm text-start text-main-heading mb-1">
+              {method.name}
+            </h2>
+            <p className="font-normal text-xs text-start text-gray-dark">
               {method.description}
             </p>
           </div>
@@ -206,7 +215,7 @@ const PrivacySecurity = ({ handleSubmit, onSubmit, errors, setValue }: any) => {
                 setIsDisabled(false);
                 setValue("method", e.target.value);
               }}
-              className="w-4 h-4 text-blue-600 bg-gray-100  dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:bg-gray-700"
+              className="w-4 h-4 text-span-clr bg-gray-100  dark:focus:ring-span-clr dark:ring-offset-gray-800  dark:bg-gray-700"
             />
           </div>
         </div>
@@ -215,7 +224,7 @@ const PrivacySecurity = ({ handleSubmit, onSubmit, errors, setValue }: any) => {
         <p className="text-red-500 text-sm mt-2">{errors?.method?.message}</p>
       )}
       <button
-        className="rounded w-full disabled:bg-gray-400 mt-5 bg-button-clr bg-purple-600  hover:bg-purple-700 py-2.5 px-4 text-white font-semibold"
+        className="rounded-[10px] w-full disabled:bg-gray-400 mt-5 bg-button-clr bg-span-clr  hover:bg-purple-700 py-2.5 px-4 text-white font-semibold "
         type="submit"
         disabled={isDisabled}
         onClick={() => {
@@ -225,7 +234,7 @@ const PrivacySecurity = ({ handleSubmit, onSubmit, errors, setValue }: any) => {
         Enable 2FA Security
       </button>
       <button
-        className="rounded w-full mt-5 disabled:bg-gray-400 bg-button-clr bg-red-600  hover:bg-red-700 py-2.5 px-4 text-white font-semibold"
+        className="rounded-[10px] w-full border mt-5 disabled:bg-gray-400 bg-button-clr bg-white hover:border-red-700 hover:bg-red-700 py-2.5 px-4 hover:text-white text-gray-dark font-semibold "
         onClick={() => {
           setIsDisabled(true);
           setChecked(userData.security || "");
@@ -234,7 +243,7 @@ const PrivacySecurity = ({ handleSubmit, onSubmit, errors, setValue }: any) => {
         Cancel
       </button>
       <button
-        className="rounded w-full mt-5 disabled:bg-gray-400 bg-button-clr bg-red-600  hover:bg-red-700 py-2.5 px-4 text-white font-semibold"
+        className="rounded-[10px] w-full mt-5 disabled:bg-gray-400 bg-button-clr bg-red-600  hover:bg-red-700 py-2.5 px-4 text-white font-semibold "
         onClick={() => {
           enableAuthentication("disabled");
         }}

@@ -33,14 +33,7 @@ const Layout = ({ children }: any) => {
         }}
       >
         {isTrue && allow && <SideBar />}
-        <div
-          style={{
-            display: "flex",
-            flex: "1 1 auto",
-            flexDirection: "column",
-          }}
-          className="content-right"
-        >
+        <div className="content-right w-100-272px">
           {isTrue && allow && noHeader && <Header />}
           {children}
         </div>
