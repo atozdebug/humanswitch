@@ -180,13 +180,11 @@ const Settings = () => {
   });
 
   const onSubmit: any = (data: FormData) => {
-    console.log("Form data:", data);
     try {
       if (selectedTab === 4 && selected === "Change Password") {
         dispatch(changePassword(data))
           .unwrap()
           .then((res: any) => {
-            console.log(res);
             try {
               res.message
                 ? toast.success(res.message)

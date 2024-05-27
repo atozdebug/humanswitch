@@ -10,7 +10,6 @@ export const sendEmailVerification: any = createAsyncThunk(
 
   async (data, { dispatch }) => {
     try {
-      console.log("Datttatatatatta", data);
       const response = await http.post(`/send-code`, data);
       if (response.status === 200) {
         dispatch(startLoadingActivity());
@@ -31,7 +30,6 @@ export const verifyEmailOtp: any = createAsyncThunk(
   "auth/verifyEmailOtp",
   async (data, { dispatch }) => {
     try {
-      console.log("Datttatatatatta", data);
       const response = await http.post(`/verify-otp`, data);
       if (response.status === 200) {
         return response.data;
@@ -50,7 +48,6 @@ export const verifyEmail: any = createAsyncThunk(
   "auth/verifyEmail",
   async (data, { dispatch }) => {
     try {
-      console.log("Datttatatatatta", data);
       const response = await http.post(`/login_2fa`, data);
       if (response.status === 200) {
         if (response.data.access_token && response.data.user.id) {
@@ -73,7 +70,6 @@ export const verifyQROtp: any = createAsyncThunk(
   "auth/verifyQROtp",
   async (data, { dispatch }) => {
     try {
-      console.log("Datttatatatatta", data);
       const response = await http.post(`/qr_verification`, data);
       if (response.status === 200) {
         if (response.data.access_token && response.data.user.id) {
@@ -96,7 +92,6 @@ export const verifyQROtp2FA: any = createAsyncThunk(
   "auth/verifyQROtp2FA",
   async (data, { dispatch }) => {
     try {
-      console.log("Datttatatatatta", data);
       const response = await http.post(`/qr_verification2fa`, data);
       if (response.status === 200) {
         return response.data;
@@ -115,7 +110,6 @@ export const generateSecret: any = createAsyncThunk(
   "auth/generateSecret",
   async (data, { dispatch }) => {
     try {
-      console.log("Datttatatatatta", data);
       const response = await http.post(`/generate-secret`, data);
       if (response.status === 200) {
         dispatch(startLoadingActivity());
@@ -136,7 +130,6 @@ export const sendQRVerification: any = createAsyncThunk(
   "auth/sendQRVerification",
   async (data: any, { dispatch }) => {
     try {
-      console.log("Datttatatatatta", data);
       const response = await http.get(`/get-qr-code?email=${data.email}`);
       if (response.status === 200) {
         dispatch(startLoadingActivity());

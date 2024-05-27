@@ -47,8 +47,7 @@ const LoginPage: React.FC = () => {
   });
 
   // Function to handle form submission
-  const onSubmit: any = (data: FormData) => {
-    console.log("Form data:", data);
+  const onSubmit: any = () => {
     //reset()
     // Implement your form submission logic here
   };

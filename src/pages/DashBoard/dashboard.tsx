@@ -119,7 +119,6 @@ interface Row {
 const Dashboard = () => {
   const data: Row[] =
     useSelector((state: any) => state.dashboard?.getData) || [];
-  // console.log(data);
   const dispatch: any = useDispatch();
 
   useEffect(() => {
@@ -250,7 +249,6 @@ const Dashboard = () => {
 
   const handleChangeFilter = (event: SelectChangeEvent) => {
     setFilter(event.target.value as string);
-    console.log(event.target.value);
     if (event.target.value === "All") {
       dispatch(getQuestions());
     } else {

@@ -9,7 +9,6 @@ export const createQuestions: any = createAsyncThunk(
   "auth/createQuestions",
   async (data, { dispatch }) => {
     try {
-      console.log("Datttatatatatta", data);
       const response = await http.post(`/createQuestions`, data);
       if (response.status === 200) {
         dispatch(startLoadingActivity());

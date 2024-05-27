@@ -9,7 +9,6 @@ export const changePassword: any = createAsyncThunk(
   "auth/changePassword",
   async (data, { dispatch }) => {
     try {
-      console.log("Datttatatatatta", data);
       const response = await http.post(`/change-password`, data);
       if (response.status === 200) {
         dispatch(startLoadingActivity());

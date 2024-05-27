@@ -71,7 +71,6 @@ const SideBar = () => {
 
   const user = localStorage.getItem("user");
   const userData = useSelector((state: any) => state.getUser.data);
-  console.log(user);
 
   useEffect(() => {
     dispatch(getUser(user));

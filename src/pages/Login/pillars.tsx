@@ -131,8 +131,6 @@ const Pillars = () => {
     }
   });
 
-  console.log(stepAnswers);
-
   const section2Ref = useRef(null);
 
   const [isActive, setIsActive] = useState(false);
@@ -205,7 +203,6 @@ const Pillars = () => {
     value: any // Value will be the selected option in MCQ
   ) => {
     // Update the state with the selected option for the corresponding step and question
-    console.log(value);
     setStepAnswers((prevStepAnswers: any) => ({
       ...prevStepAnswers,
       [step]: {

@@ -239,7 +239,6 @@ const SignupPage = () => {
     } else {
       setBusinessImageFile(file);
     }
-    console.log(file);
   };
 
   const {
@@ -257,13 +256,9 @@ const SignupPage = () => {
   const [otpError, setOtpError] = useState(false);
 
   const onSubmit: any = (data: FormData) => {
-    console.log("Form data9999999999999999999:", data);
     try {
       setFormData(data);
-      console.log(step);
       if (step === 1) {
-        console.log("Step 1");
-
         toast.promise(
           dispatch(sendEmailVerification({ email: data.email }))
             .unwrap()
@@ -280,7 +275,6 @@ const SignupPage = () => {
           }
         );
       } else if (step === 2) {
-        console.log(otp);
         // Handle OTP verification logic here
         if (otp.length === 6) {
           dispatch(verifyEmailOtp({ email: formData.email, otp }))
@@ -329,8 +323,6 @@ const SignupPage = () => {
       console.error("Submission error:", error);
     }
   };
-
-  console.log("Form", formData);
 
   return (
     <>

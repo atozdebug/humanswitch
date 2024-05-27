@@ -29,7 +29,6 @@ const ChangePassword = ({
   }, [passwordRequirements]);
 
   const checkPasswordRequirements = (value: string) => {
-    console.log(value);
     const hasUppercase = /[A-Z]/.test(value);
     const hasNumber = /[0-9]/.test(value);
     const hasMinLength = value.length >= 8;
@@ -42,7 +41,6 @@ const ChangePassword = ({
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e);
     const newPassword: any = e;
     checkPasswordRequirements(newPassword);
   };
@@ -114,7 +112,6 @@ const ChangePassword = ({
             type={showNewPassword ? "text" : "password"}
             placeholder=".........."
             onChange={(e: any) => {
-              console.log(e);
               handlePasswordChange(e.target.value);
               setValue("new_password", e.target.value);
             }}

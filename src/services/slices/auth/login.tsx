@@ -6,7 +6,6 @@ export const userLogin: any = createAsyncThunk(
   "auth/login",
   async (data, { dispatch }) => {
     try {
-      console.log("Datttatatatatta", data);
       const response = await http.post(`/login`, data);
       if (response.status === 200) {
         if (response.data.access_token && response.data.user.id) {

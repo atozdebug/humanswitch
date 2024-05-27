@@ -9,7 +9,6 @@ export const userSignUp: any = createAsyncThunk(
   "auth/userSignUp",
   async (data, { dispatch }) => {
     try {
-      console.log("Datttatatatatta", data);
       const response = await http.post(`/signup`, data, {
         headers: {
           "Content-Type": "multipart/form-data",

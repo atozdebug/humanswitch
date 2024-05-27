@@ -68,7 +68,6 @@ const ForgetPasswordId = () => {
 
   // Call getTokenFromUrl to get the token
   const token = getTokenFromUrl();
-  console.log(token);
 
   const [passwordReset, setPasswordReset] = useState(false);
 
@@ -92,7 +91,6 @@ const ForgetPasswordId = () => {
   }, [passwordRequirements]);
 
   const checkPasswordRequirements = (value: string) => {
-    console.log(value);
     const hasUppercase = /[A-Z]/.test(value);
     const hasNumber = /[0-9]/.test(value);
     const hasMinLength = value.length >= 8;
@@ -105,13 +103,11 @@ const ForgetPasswordId = () => {
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e);
     const newPassword: any = e;
     checkPasswordRequirements(newPassword);
   };
 
   const onSubmit: any = (data: FormData) => {
-    console.log("Form data:", data);
     dispatch(resetPassword({ token, new_password: data.password }))
       .unwrap()
       .then((res: any) => {
@@ -201,7 +197,6 @@ const ForgetPasswordId = () => {
                   type={showNewPassword ? "text" : "password"}
                   placeholder="Create a password"
                   onChange={(e: any) => {
-                    console.log(e);
                     handlePasswordChange(e.target.value);
                     setValue("password", e.target.value);
                   }}

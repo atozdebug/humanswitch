@@ -102,8 +102,6 @@ const MyReports = () => {
   const [chapterQuestions, setChapterQuestions] = useState<any>([]);
   const [saveVisible, setSaveVisible] = useState<any>(false);
 
-  console.log(questions);
-
   useEffect(() => {
     dispatch(getQuestions())
       .unwrap()

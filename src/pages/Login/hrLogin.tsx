@@ -78,8 +78,6 @@ const LoginHr = () => {
   const [qrCode, setQrCode] = useState<any>(null);
   const [step, setStep] = useState(0);
 
-  console.log("-----------", qrCode);
-
   const handleClose = () => {
     setOpen(false);
   };
@@ -131,7 +129,6 @@ const LoginHr = () => {
               dispatch(sendQRVerification({ email: data.email }))
                 .unwrap()
                 .then((res: any) => {
-                  console.log(res);
                   setQrCode(`data:image/jpeg;base64,${res?.qr_code}`);
                   setOpen(true);
                 });

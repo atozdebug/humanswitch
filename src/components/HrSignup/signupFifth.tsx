@@ -28,7 +28,6 @@ const SignupFive = ({
   }, [passwordRequirements]);
 
   const checkPasswordRequirements = (value: string) => {
-    console.log(value);
     const hasUppercase = /[A-Z]/.test(value);
     const hasNumber = /[0-9]/.test(value);
     const hasMinLength = value.length >= 8;
@@ -41,7 +40,6 @@ const SignupFive = ({
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e);
     const newPassword: any = e;
     checkPasswordRequirements(newPassword);
   };
@@ -81,7 +79,6 @@ const SignupFive = ({
               type={showNewPassword ? "text" : "password"}
               placeholder="🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄"
               onChange={(e: any) => {
-                console.log(e);
                 handlePasswordChange(e.target.value);
                 setValue("password", e.target.value);
               }}
@@ -164,11 +161,35 @@ const SignupFive = ({
 
         <ul className="p-0 text-xs text-gray-dark">
           <li className="my-2 flex items-center font-normal text-xs">
-            <svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" fill="none" className={`mr-1 ${passwordRequirements.uppercase ? "" : "hidden"}`}>
-              <path d="M6 12C2.6862 12 0 9.3138 0 6C0 2.6862 2.6862 0 6 0C9.3138 0 12 2.6862 12 6C12 9.3138 9.3138 12 6 12ZM5.4018 8.4L9.6438 4.1574L8.7954 3.309L5.4018 6.7032L3.7044 5.0058L2.856 5.8542L5.4018 8.4Z" fill="#38C793" />
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              className={`mr-1 ${
+                passwordRequirements.uppercase ? "" : "hidden"
+              }`}
+            >
+              <path
+                d="M6 12C2.6862 12 0 9.3138 0 6C0 2.6862 2.6862 0 6 0C9.3138 0 12 2.6862 12 6C12 9.3138 9.3138 12 6 12ZM5.4018 8.4L9.6438 4.1574L8.7954 3.309L5.4018 6.7032L3.7044 5.0058L2.856 5.8542L5.4018 8.4Z"
+                fill="#38C793"
+              />
             </svg>
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" className={`mr-1 ${passwordRequirements.uppercase ? "hidden" : ""}`}>
-              <path d="M6 12C2.6862 12 0 9.3138 0 6C0 2.6862 2.6862 0 6 0C9.3138 0 12 2.6862 12 6C12 9.3138 9.3138 12 6 12ZM6 5.1516L4.3032 3.4542L3.4542 4.3032L5.1516 6L3.4542 7.6968L4.3032 8.5458L6 6.8484L7.6968 8.5458L8.5458 7.6968L6.8484 6L8.5458 4.3032L7.6968 3.4542L6 5.1516Z" fill="#868C98" />
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className={`mr-1 ${
+                passwordRequirements.uppercase ? "hidden" : ""
+              }`}
+            >
+              <path
+                d="M6 12C2.6862 12 0 9.3138 0 6C0 2.6862 2.6862 0 6 0C9.3138 0 12 2.6862 12 6C12 9.3138 9.3138 12 6 12ZM6 5.1516L4.3032 3.4542L3.4542 4.3032L5.1516 6L3.4542 7.6968L4.3032 8.5458L6 6.8484L7.6968 8.5458L8.5458 7.6968L6.8484 6L8.5458 4.3032L7.6968 3.4542L6 5.1516Z"
+                fill="#868C98"
+              />
             </svg>
             {/* <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -187,13 +208,32 @@ const SignupFive = ({
           </li>
           <li className="mb-2 flex items-center font-normal text-xs">
             {" "}
-            <svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" fill="none" className={`mr-1 ${passwordRequirements.number ? "" : "hidden"}`}>
-              <path d="M6 12C2.6862 12 0 9.3138 0 6C0 2.6862 2.6862 0 6 0C9.3138 0 12 2.6862 12 6C12 9.3138 9.3138 12 6 12ZM5.4018 8.4L9.6438 4.1574L8.7954 3.309L5.4018 6.7032L3.7044 5.0058L2.856 5.8542L5.4018 8.4Z" fill="#38C793" />
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              className={`mr-1 ${passwordRequirements.number ? "" : "hidden"}`}
+            >
+              <path
+                d="M6 12C2.6862 12 0 9.3138 0 6C0 2.6862 2.6862 0 6 0C9.3138 0 12 2.6862 12 6C12 9.3138 9.3138 12 6 12ZM5.4018 8.4L9.6438 4.1574L8.7954 3.309L5.4018 6.7032L3.7044 5.0058L2.856 5.8542L5.4018 8.4Z"
+                fill="#38C793"
+              />
             </svg>
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" className={`mr-1 ${passwordRequirements.number ? "hidden" : ""}`}>
-              <path d="M6 12C2.6862 12 0 9.3138 0 6C0 2.6862 2.6862 0 6 0C9.3138 0 12 2.6862 12 6C12 9.3138 9.3138 12 6 12ZM6 5.1516L4.3032 3.4542L3.4542 4.3032L5.1516 6L3.4542 7.6968L4.3032 8.5458L6 6.8484L7.6968 8.5458L8.5458 7.6968L6.8484 6L8.5458 4.3032L7.6968 3.4542L6 5.1516Z" fill="#868C98" />
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className={`mr-1 ${passwordRequirements.number ? "hidden" : ""}`}
+            >
+              <path
+                d="M6 12C2.6862 12 0 9.3138 0 6C0 2.6862 2.6862 0 6 0C9.3138 0 12 2.6862 12 6C12 9.3138 9.3138 12 6 12ZM6 5.1516L4.3032 3.4542L3.4542 4.3032L5.1516 6L3.4542 7.6968L4.3032 8.5458L6 6.8484L7.6968 8.5458L8.5458 7.6968L6.8484 6L8.5458 4.3032L7.6968 3.4542L6 5.1516Z"
+                fill="#868C98"
+              />
             </svg>
-
             {/* <svg
               xmlns="http://www.w3.org/2000/svg"
               fill={passwordRequirements.number ? "green" : "#868C98"}
@@ -211,11 +251,35 @@ const SignupFive = ({
           </li>
           <li className="mb-2 flex items-center font-normal text-xs">
             {" "}
-            <svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" fill="none" className={`mr-1 ${passwordRequirements.minLength ? "" : "hidden"}`}>
-              <path d="M6 12C2.6862 12 0 9.3138 0 6C0 2.6862 2.6862 0 6 0C9.3138 0 12 2.6862 12 6C12 9.3138 9.3138 12 6 12ZM5.4018 8.4L9.6438 4.1574L8.7954 3.309L5.4018 6.7032L3.7044 5.0058L2.856 5.8542L5.4018 8.4Z" fill="#38C793" />
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              className={`mr-1 ${
+                passwordRequirements.minLength ? "" : "hidden"
+              }`}
+            >
+              <path
+                d="M6 12C2.6862 12 0 9.3138 0 6C0 2.6862 2.6862 0 6 0C9.3138 0 12 2.6862 12 6C12 9.3138 9.3138 12 6 12ZM5.4018 8.4L9.6438 4.1574L8.7954 3.309L5.4018 6.7032L3.7044 5.0058L2.856 5.8542L5.4018 8.4Z"
+                fill="#38C793"
+              />
             </svg>
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" className={`mr-1 ${passwordRequirements.minLength ? "hidden" : ""}`}>
-              <path d="M6 12C2.6862 12 0 9.3138 0 6C0 2.6862 2.6862 0 6 0C9.3138 0 12 2.6862 12 6C12 9.3138 9.3138 12 6 12ZM6 5.1516L4.3032 3.4542L3.4542 4.3032L5.1516 6L3.4542 7.6968L4.3032 8.5458L6 6.8484L7.6968 8.5458L8.5458 7.6968L6.8484 6L8.5458 4.3032L7.6968 3.4542L6 5.1516Z" fill="#868C98" />
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className={`mr-1 ${
+                passwordRequirements.minLength ? "hidden" : ""
+              }`}
+            >
+              <path
+                d="M6 12C2.6862 12 0 9.3138 0 6C0 2.6862 2.6862 0 6 0C9.3138 0 12 2.6862 12 6C12 9.3138 9.3138 12 6 12ZM6 5.1516L4.3032 3.4542L3.4542 4.3032L5.1516 6L3.4542 7.6968L4.3032 8.5458L6 6.8484L7.6968 8.5458L8.5458 7.6968L6.8484 6L8.5458 4.3032L7.6968 3.4542L6 5.1516Z"
+                fill="#868C98"
+              />
             </svg>
             {/* <svg
               xmlns="http://www.w3.org/2000/svg"

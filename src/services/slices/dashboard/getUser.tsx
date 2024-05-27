@@ -9,7 +9,6 @@ export const getUser: any = createAsyncThunk(
   "auth/getUser",
   async (data, { dispatch }) => {
     try {
-      console.log("Datttatatatatta", data);
       const response = await http.get(`/users/${data}`);
       if (response.status === 200) {
         dispatch(startLoadingActivity());

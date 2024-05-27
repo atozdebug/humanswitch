@@ -9,9 +9,7 @@ import "react-phone-input-2/lib/bootstrap.css";
 const Profile = () => {
   const user = localStorage.getItem("user");
   const userData = useSelector((state: any) => state.getUser.data);
-  console.log("-------------", userData);
   const dispatch: any = useDispatch();
-  console.log(user);
   useEffect(() => {
     dispatch(getUser(user))
       .unwrap()
@@ -32,7 +30,6 @@ const Profile = () => {
 
   // Function to handle changing profile picture
   const handleChangeProfilePic = (event: any) => {
-    console.log("first");
     const newProfilePic: any = event.target.files[0];
     setSendImage(newProfilePic);
     setProfilePic(URL.createObjectURL(newProfilePic));

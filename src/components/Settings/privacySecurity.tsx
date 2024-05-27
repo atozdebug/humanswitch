@@ -99,7 +99,6 @@ const PrivacySecurity = ({ handleSubmit, onSubmit, errors, setValue }: any) => {
             dispatch(sendQRVerification({ email: userData.email }))
               .unwrap()
               .then((res: any) => {
-                console.log(res);
                 setQrCode(`data:image/jpeg;base64,${res?.qr_code}`);
                 setOpen(true);
               });
@@ -167,8 +166,6 @@ const PrivacySecurity = ({ handleSubmit, onSubmit, errors, setValue }: any) => {
     setOtp("");
   };
 
-  console.log("checked", checked);
-
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -205,7 +202,6 @@ const PrivacySecurity = ({ handleSubmit, onSubmit, errors, setValue }: any) => {
               checked={checked === method.name}
               name="default-radio"
               onChange={(e: any) => {
-                console.log(e);
                 setChecked(e.target.value);
                 setIsDisabled(false);
                 setValue("method", e.target.value);

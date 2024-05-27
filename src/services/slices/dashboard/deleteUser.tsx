@@ -9,7 +9,6 @@ export const deleteUser: any = createAsyncThunk(
   "auth/deleteUser",
   async (data: any, { dispatch }) => {
     try {
-      console.log("Datttatatatatta", data);
       const response = await http.post(`/users/deleteAccount`, data);
       if (response.status === 200) {
         dispatch(startLoadingActivity());

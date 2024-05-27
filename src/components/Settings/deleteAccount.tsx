@@ -23,7 +23,6 @@ const DeleteAccount = ({
     dispatch(deleteUser({ id: user, password }))
       .unwrap()
       .then((res: any) => {
-        console.log("=======", res);
         if (res.success === "true") {
           localStorage.clear();
           dispatch(handleLogout(true))
@@ -91,7 +90,6 @@ const DeleteAccount = ({
             type={showCurrentPassword ? "text" : "password"}
             placeholder=".........."
             onChange={(e: any) => {
-              console.log(e);
               setPassword(e.target.value);
               setValue("passwordDelete", e.target.value);
             }}
