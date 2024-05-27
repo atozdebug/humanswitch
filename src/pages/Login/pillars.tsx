@@ -212,6 +212,31 @@ const Pillars = () => {
     }));
   };
 
+  const handleSubmit = () => {
+    // Clear the cookie
+    Cookies.remove("questionnaireData");
+
+    // Optionally, you can reset the state
+    setStepAnswers({
+      0: {},
+      1: {},
+      2: {},
+      3: {},
+      4: {},
+      5: {},
+      6: {},
+      7: {},
+      8: {},
+      9: {},
+    });
+
+    // Reset the step if necessary
+    setStep(1);
+
+    // Optionally, handle modal state or other necessary actions
+    setIsModalOpen(false);
+  };
+
   return (
     <>
       <header className="bg-white shadow-md relative">
@@ -964,6 +989,7 @@ const Pillars = () => {
                         className="ms-auto flex items-center gap-2 justify-center rounded-lg bg-gradient1 py-11px px-6 text-center align-middle font-sans text-sm font-bold text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:shadow-none focus:oulite-none"
                         type="button"
                         data-ripple-light="true"
+                        onClick={handleSubmit}
                       >
                         Submit{" "}
                         <svg
