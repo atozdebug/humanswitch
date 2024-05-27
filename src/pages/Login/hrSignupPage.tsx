@@ -4,7 +4,6 @@ import SignupTwo from "../../components/HrSignup/signupSecond";
 import SignupThree from "../../components/HrSignup/signupThird";
 import SignupFour from "../../components/HrSignup/signupFourth";
 import SignupFive from "../../components/HrSignup/signupFifth";
-import DoneIcon from "@mui/icons-material/Done";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";

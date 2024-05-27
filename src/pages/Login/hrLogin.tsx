@@ -167,7 +167,25 @@ const LoginHr = () => {
   };
 
   return (
-    <div className="main min-h-vhcalc225px bg-[url(../assets/images/Pattern.png)] bg-no-repeat bg-top px-4">
+    <div className="main min-h-vhcalc225px bg-[url(../assets/images/Pattern.png)] bg-no-repeat bg-top">
+      <div className="nav-header flex items-center justify-center relative md:!px-44px !px-4 bg-white">
+        <div className="logo-head min-w-[123px] mr-6 absolute top-1/2 translate-y-n50 left-11 lg:block hidden">
+          <h1 className="">
+            <span>
+              <img
+                className=""
+                src="/assets/images/Logo1.png"
+                width={"136px"}
+              />
+            </span>{" "}
+          </h1>
+        </div>
+
+        <div className="flex text-sm lg:flex-nowrap flex-wrap justify-center"></div>
+
+        {/* <div className="h-10 w-10"></div> */}
+      </div>
+      <hr className="border-color: gray;"></hr>
       {/* <div className="grid grid-cols-3 gap-4"> */}
       <div className="">
         <div className="...">
