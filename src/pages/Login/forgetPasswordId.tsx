@@ -11,6 +11,7 @@ const schema = yup.object().shape({
   password: yup
     .string()
     .required("Password is required")
+    .matches(/^[^\s]*$/, "Password must not contain spaces")
     .matches(
       /^(?=.*[A-Z])/,
       "Password must contain at least one uppercase letter"
@@ -206,9 +207,9 @@ const ForgetPasswordId = () => {
                   onClick={() => setShowNewPassword(!showNewPassword)}
                 >
                   {showNewPassword ? (
-                    <VisibilityOffIcon className="pb-3 pr-2" />
-                  ) : (
                     <img src="/assets/images/eye-line.png" />
+                  ) : (
+                    <VisibilityOffIcon className="pb-3 pr-2" />
                   )}
                 </span>
                 {errors.password && (
@@ -239,9 +240,9 @@ const ForgetPasswordId = () => {
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 >
                   {showConfirmPassword ? (
-                    <VisibilityOffIcon className="pb-3 pr-2" />
-                  ) : (
                     <img src="/assets/images/eye-line.png" />
+                  ) : (
+                    <VisibilityOffIcon className="pb-3 pr-2" />
                   )}
                 </span>
                 {errors.confirmPassword && (

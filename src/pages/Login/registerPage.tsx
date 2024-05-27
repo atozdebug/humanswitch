@@ -17,6 +17,7 @@ const schema2 = yup.object().shape({
   password: yup
     .string()
     .required("Password is required")
+    .matches(/^[^\s]*$/, "Password must not contain spaces")
     .matches(
       /^(?=.*[A-Z])/,
       "Password must contain at least one uppercase letter"

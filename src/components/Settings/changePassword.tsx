@@ -82,9 +82,9 @@ const ChangePassword = ({
             onClick={() => setShowCurrentPassword(!showCurrentPassword)}
           >
             {showCurrentPassword ? (
-              <VisibilityOffIcon className="pb-3 pr-2" />
-            ) : (
               <img src="/assets/images/eye-line.png" />
+            ) : (
+              <VisibilityOffIcon className="pb-3 pr-2" />
             )}
           </span>
           {errors.current_password && (
@@ -124,9 +124,9 @@ const ChangePassword = ({
             onClick={() => setShowNewPassword(!showNewPassword)}
           >
             {showNewPassword ? (
-              <VisibilityOffIcon className="pb-3 pr-2" />
-            ) : (
               <img src="/assets/images/eye-line.png" />
+            ) : (
+              <VisibilityOffIcon className="pb-3 pr-2" />
             )}
           </span>
           {errors.new_password && (
@@ -163,9 +163,9 @@ const ChangePassword = ({
             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
           >
             {showConfirmPassword ? (
-              <VisibilityOffIcon className="pb-3 pr-2" />
-            ) : (
               <img src="/assets/images/eye-line.png" />
+            ) : (
+              <VisibilityOffIcon className="pb-3 pr-2" />
             )}
           </span>
           {errors.confirm_password && (

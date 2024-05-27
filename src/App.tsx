@@ -20,8 +20,6 @@ import Layout from "./Layout/layout";
 import ForgetPasswordId from "./pages/Login/forgetPasswordId";
 const ForgetPasswordPage = lazy(() => import("./pages/Login/forgetPassword"));
 const SignupPages = lazy(() => import("./pages/Login/hrSignupPage"));
-const LoginPage = lazy(() => import("./pages/Login/loginPage"));
-const RegisterPage = lazy(() => import("./pages/Login/registerPage"));
 const HomePage = lazy(() => import("./pages/Login/homePage"));
 
 const App = () => {
@@ -68,26 +66,10 @@ const App = () => {
             )}
           </Route> */}
             <Route
-              path="/register"
-              element={
-                <PublicRouteGuard>
-                  <RegisterPage />
-                </PublicRouteGuard>
-              }
-            />
-            <Route
               path="/signup"
               element={
                 <PublicRouteGuard>
                   <SignupPages />
-                </PublicRouteGuard>
-              }
-            />
-            <Route
-              path="/loginhr"
-              element={
-                <PublicRouteGuard>
-                  <LoginPage />
                 </PublicRouteGuard>
               }
             />

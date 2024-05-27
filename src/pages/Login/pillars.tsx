@@ -93,9 +93,48 @@ const Pillars = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    !token && Cookies.remove("questionnaireData");
+  }, []);
+
+  useEffect(() => {
     dispatch(getQuestions())
       .unwrap()
       .then((res: any) => {
+        const questionsMap = new Map();
+
+        res.forEach((item) => {
+          questionsMap.set(item.name, item.questions);
+        });
+
+        // Initialize stepAnswers object
+        const initialStepAnswers = {};
+
+        // Loop through sideBarItems to create stepAnswers
+        sideBarItems.forEach((item, index) => {
+          // Change here
+          // Find questions for this item by name
+          const questions = questionsMap.get(item.name) || [];
+
+          // Create chapter object
+          const chapter = questions.reduce((acc, question, questionIndex) => {
+            // Change here
+            acc[`question-${questionIndex}`] = "";
+            return acc;
+          }, {});
+
+          // Add chapter to initialStepAnswers
+          initialStepAnswers[index] = chapter; // Change here
+
+          // Update questions array for this item in sideBarItems
+          item.questions = questions;
+        });
+
+        // Set the state with the updated sideBarItems and initialStepAnswers
+
+        setStepAnswers(initialStepAnswers);
+
         res.forEach((item: any) => {
           const chapter: any = sideBarItems.find((x) => x.name === item.name);
 
@@ -131,11 +170,15 @@ const Pillars = () => {
     }
   });
 
+  console.log(stepAnswers);
+
   const section2Ref = useRef(null);
 
   const [isActive, setIsActive] = useState(false);
   const [step, setStep] = useState(1);
   const [stepsTick, setStepsTick] = useState<any>([]);
+  const [questionAnswered, setQuestionAnswered] = useState(false);
+
   const toggleActive = () => {
     setIsActive(!isActive);
   };
@@ -168,22 +211,33 @@ const Pillars = () => {
   };
 
   const handleNext = () => {
-    const currentStepAnswers = stepAnswers[step - 1];
+    if (questionAnswered) {
+      const currentStepAnswers = stepAnswers[step - 1];
 
-    let existingData = Cookies.get("questionnaireData");
+      console.log(currentStepAnswers);
 
-    let data = existingData ? JSON.parse(existingData) : [];
+      // Check if all fields in currentStepAnswers are filled
+      const allFieldsFilled = Object.values(currentStepAnswers).every(
+        (value) => value !== undefined && value !== null && value !== ""
+      );
 
-    data.push(currentStepAnswers);
+      if (allFieldsFilled) {
+        let existingData = Cookies.get("questionnaireData");
+        let data = existingData ? JSON.parse(existingData) : [];
+        data.push(currentStepAnswers);
+        Cookies.set("questionnaireData", JSON.stringify(data));
 
-    Cookies.set("questionnaireData", JSON.stringify(data));
+        if (data.length === 3) {
+          toggleModal();
+        }
 
-    if (data.length === 3) {
-      toggleModal();
+        setStep((prev) => prev + 1);
+        setStepsTick((prev: any) => [...prev, step]);
+      } else {
+        // Show a message or take any other appropriate action to indicate that all fields need to be filled
+        console.log("Please fill all fields before proceeding.");
+      }
     }
-
-    setStep((prev) => prev + 1);
-    setStepsTick((prev: any) => [...prev, step]);
   };
 
   const handlePrev = () => {
@@ -203,6 +257,7 @@ const Pillars = () => {
     value: any // Value will be the selected option in MCQ
   ) => {
     // Update the state with the selected option for the corresponding step and question
+    setQuestionAnswered(true);
     setStepAnswers((prevStepAnswers: any) => ({
       ...prevStepAnswers,
       [step]: {
@@ -210,6 +265,31 @@ const Pillars = () => {
         [questionId]: value,
       },
     }));
+  };
+
+  const handleSubmit = () => {
+    // Clear the cookie
+    Cookies.remove("questionnaireData");
+
+    // Optionally, you can reset the state
+    setStepAnswers({
+      0: {},
+      1: {},
+      2: {},
+      3: {},
+      4: {},
+      5: {},
+      6: {},
+      7: {},
+      8: {},
+      9: {},
+    });
+
+    // Reset the step if necessary
+    setStep(1);
+
+    // Optionally, handle modal state or other necessary actions
+    setIsModalOpen(false);
   };
 
   return (
@@ -923,14 +1003,17 @@ const Pillars = () => {
                     ></span>
                   </div>
                   <div
-                    className={`button-next w-full text-right ${
+                    className={`button-next w-full text-right disabled:disabled ${
                       step == 10 ? "hidden" : ""
-                    } ${isActive ? "" : "disabled"}`}
+                    } ${isActive ? "" : "disabled"} ${
+                      !questionAnswered ? "disabled" : ""
+                    }`}
                   >
                     <button
                       className="ms-auto flex select-none items-center gap-3 bg-white py-2 px-0 text-center text-md text-black  active:shadow-none focus:outline-0"
                       type="button"
                       data-ripple-light="true"
+                      disabled={!questionAnswered}
                       onClick={() => {
                         handleNext();
                       }}
@@ -964,6 +1047,7 @@ const Pillars = () => {
                         className="ms-auto flex items-center gap-2 justify-center rounded-lg bg-gradient1 py-11px px-6 text-center align-middle font-sans text-sm font-bold text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:shadow-none focus:oulite-none"
                         type="button"
                         data-ripple-light="true"
+                        onClick={handleSubmit}
                       >
                         Submit{" "}
                         <svg

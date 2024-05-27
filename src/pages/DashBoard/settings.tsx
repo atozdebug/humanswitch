@@ -83,6 +83,7 @@ const schemaFirst = yup.object().shape({
       [yup.ref("current_password")],
       "New password must be different from current password"
     )
+    .matches(/^[^\s]*$/, "Password must not contain spaces")
     .matches(
       /^(?=.*[A-Z])/,
       "Password must contain at least one uppercase letter"

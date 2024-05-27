@@ -7,6 +7,8 @@ const SignupFour = ({
   onSubmit,
   errors,
   setValue,
+  skipStep,
+  trigger,
 }: any) => {
   const [profilePic, setProfilePic] = useState<any>(null);
 
@@ -75,11 +77,14 @@ const SignupFour = ({
                     type="file"
                     id="image-upload"
                     accept="image/*"
-                    onChange={(e: any) => {
+                    onChange={async (e: any) => {
                       handleImageChange(e);
                       const newProfilePic: any = e.target.files[0];
                       setProfilePic(URL.createObjectURL(newProfilePic));
-                      setValue("businessImage", e.target.files);
+                      setValue("businessImage", e.target.files, {
+                        shouldValidate: true,
+                      });
+                      await trigger("businessImage");
                     }}
                     className="relative z-10 w-16 opacity-0 block"
                   />
@@ -326,12 +331,15 @@ const SignupFour = ({
           Continue
         </button>
         <div className="font-normal my-5 text-sm text-center">
-          <a href="" className="text-gray-500 text-center">
+          <div className="text-gray-500 text-center">
             Want to fill in later?{" "}
-            <span className="text-gray-dark font-semibold border-b border-slate-700">
+            <span
+              onClick={skipStep}
+              className="text-gray-dark font-semibold border-b border-slate-700 hover:cursor-pointer"
+            >
               Skip this step
             </span>
-          </a>
+          </div>
         </div>
       </form>
     </div>

@@ -9,6 +9,7 @@ const SignupSixth = ({
   otpError,
   setOtpError,
   setValue,
+  resendOTP,
 }: any) => {
   useEffect(() => {
     setValue("otp", otp);
@@ -126,7 +127,11 @@ const SignupSixth = ({
         </div> */}
         <div className="flex flex-col justify-center text-center border rounded-20px p-4 bg-white">
           <h1 className="flex justify-center text-center mb-4">
-            <img src="/assets/images/email-verify-icon.png" width={'88px'} height={'88px'} />
+            <img
+              src="/assets/images/email-verify-icon.png"
+              width={"88px"}
+              height={"88px"}
+            />
           </h1>
           <h2 className="text-main-heading text-2xl font-medium text-center mb-1">
             Email Verification Code
@@ -153,7 +158,12 @@ const SignupSixth = ({
           <h2 className="text-gray-dark text-sm mt-6 font-medium text-center mb-1">
             Experiencing issues receiving the code?
           </h2>
-          <p className="text-main-heading underline text-center mb-3">Resend code</p>
+          <div
+            onClick={() => resendOTP()}
+            className="text-main-heading underline text-center mb-3 hover:cursor-pointer hover:text-blue-400"
+          >
+            Resend code
+          </div>
         </div>
       </form>
     </div>

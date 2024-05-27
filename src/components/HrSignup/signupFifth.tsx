@@ -7,6 +7,7 @@ const SignupFive = ({
   onSubmit,
   errors,
   setValue,
+  trigger,
 }: any) => {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -39,9 +40,10 @@ const SignupFive = ({
     });
   };
 
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newPassword: any = e;
-    checkPasswordRequirements(newPassword);
+  const handlePasswordChange = async (value: string) => {
+    checkPasswordRequirements(value);
+    setValue("password", value, { shouldValidate: true });
+    await trigger("password");
   };
 
   return (
@@ -80,7 +82,6 @@ const SignupFive = ({
               placeholder="🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄"
               onChange={(e: any) => {
                 handlePasswordChange(e.target.value);
-                setValue("password", e.target.value);
               }}
             />
             <span
@@ -88,9 +89,9 @@ const SignupFive = ({
               onClick={() => setShowNewPassword(!showNewPassword)}
             >
               {showNewPassword ? (
-                <VisibilityOffIcon className="pb-3 pr-2" />
-              ) : (
                 <img src="/assets/images/eye-line.png" />
+              ) : (
+                <VisibilityOffIcon className="pb-3 pr-2" />
               )}
             </span>
             {errors.password && (
@@ -126,9 +127,9 @@ const SignupFive = ({
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
             >
               {showConfirmPassword ? (
-                <VisibilityOffIcon className="pb-3 pr-2" />
-              ) : (
                 <img src="/assets/images/eye-line.png" />
+              ) : (
+                <VisibilityOffIcon className="pb-3 pr-2" />
               )}
             </span>
             {errors.confirmPassword && (
