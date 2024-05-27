@@ -93,7 +93,6 @@ const MyReports = () => {
   const [selectedQuestionType, setSelectedQuestionType] = useState<any>({});
   const [sliderValues, setSliderValues] = useState<any>({});
   const [questions, setQuestions] = useState<any[]>([]);
-  const [questionIdCounter, setQuestionIdCounter] = useState(1);
   const [answers, setAnswers] = useState<any>({});
   const [minValues, setMinValues] = useState<any>({});
   const [maxValues, setMaxValues] = useState<any>({});
@@ -114,14 +113,6 @@ const MyReports = () => {
         );
 
         setQuestions(filteredQuestions?.questions || []);
-        // res.forEach((item: any) => {
-        //   const chapter: any = sideBarItems.find(
-        //     (x) => x.name === item.chapters
-        //   );
-        //   if (chapter) {
-        //     chapter.questions = [...item.question];
-        //   }
-        // });
       });
   }, [selectedChapter]);
 
@@ -150,8 +141,19 @@ const MyReports = () => {
     const formJson = Object.fromEntries(formData);
     const question = formJson.question as string;
 
+    const findNextId = (options: any) => {
+      const usedIds = new Set(options.map((option: any) => option.id));
+      let newId = 0;
+      while (usedIds.has(newId)) {
+        newId++;
+      }
+      return newId;
+    };
+
+    const nextId = findNextId(questions);
+
     const newQuestion = {
-      id: questionIdCounter,
+      id: nextId,
       type: selectedQuestionType.name,
       icon: selectedQuestionType.icon.id,
       text: question,
@@ -177,15 +179,14 @@ const MyReports = () => {
 
     setMaxValues((prevMaxValues: any) => ({
       ...prevMaxValues,
-      [questionIdCounter]: 20,
+      [nextId]: 20,
     }));
     setMinValues((prevMinValues: any) => ({
       ...prevMinValues,
-      [questionIdCounter]: 10,
+      [nextId]: 10,
     }));
 
     setQuestions((prevQuestions) => [...prevQuestions, newQuestion]);
-    setQuestionIdCounter((prevId) => prevId + 1);
 
     setOpenQuestion(false);
     setOpen(false);
@@ -530,12 +531,14 @@ const MyReports = () => {
                         </div>
                       </div>
                       <div>
-                        <div
-                          className="text-red-600 p-2 hover:bg-gray-100 rounded-full cursor-pointer"
-                          onClick={() => handleRemoveQuestion(question.id)}
-                        >
-                          <DeleteIcon />
-                        </div>
+                        {questions.length > 1 && (
+                          <div
+                            className="text-red-600 p-2 hover:bg-gray-100 rounded-full cursor-pointer"
+                            onClick={() => handleRemoveQuestion(question.id)}
+                          >
+                            <DeleteIcon />
+                          </div>
+                        )}
                       </div>
                     </div>
                     {question.type === "Short Answer" && (
