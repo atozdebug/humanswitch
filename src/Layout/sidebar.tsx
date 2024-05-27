@@ -12,10 +12,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  handleLogout,
-  selectTheme,
-} from "../services/slices/activity/activitySlice";
+import { handleLogout } from "../services/slices/activity/activitySlice";
 import { getUser } from "../services/slices/dashboard/getUser";
 let sideBarItems = [
   {
@@ -71,7 +68,6 @@ let bottomSidebarItems = [
 const SideBar = () => {
   const dispatch: any = useDispatch();
   const navigate: any = useNavigate();
-  const isDark: any = useSelector((state: any) => state.activity.isDark);
 
   const user = localStorage.getItem("user");
   const userData = useSelector((state: any) => state.getUser.data);
@@ -83,12 +79,15 @@ const SideBar = () => {
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+  const [dark, setDark] = useState(false);
+
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
   const toggleTheme = () => {
-    dispatch(selectTheme(!isDark));
+    setDark(!dark);
+    document.body.classList.toggle("dark");
   };
 
   const location = useLocation();
@@ -112,11 +111,7 @@ const SideBar = () => {
         isSidebarOpen ? "menu-open" : "menu-closed"
       }`}
     >
-      <div
-        className={`${
-          isDark ? "bg-black text-white" : "bg-white"
-        }  relative h-full overflow-y-auto border-r border-[#E2E4E9] flex justify-between flex-col lft-nav`}
-      >
+      <div className="dark:bg-black dark:text-white bg-white relative h-full overflow-y-auto border-r border-[#E2E4E9] flex justify-between flex-col lft-nav">
         <div className="pt-0 pb-4">
           <div className="px-6">
             <div className="flex items-center justify-between border-b py-4">
@@ -249,7 +244,7 @@ const SideBar = () => {
 
           <div className="my-5 day-night-btns">
             <input
-              checked={isDark} // Use checked attribute for checkbox input
+              checked={dark} // Use checked attribute for checkbox input
               onChange={toggleTheme}
               type="checkbox"
               className="checkbox hidden"
@@ -258,30 +253,22 @@ const SideBar = () => {
             <label
               htmlFor="checkbox"
               className="checkbox-label"
-              style={{ backgroundColor: isDark ? "white" : "black" }}
+              style={{ backgroundColor: dark ? "white" : "black" }}
             >
               <div className="relative rounded-lg min-w-28  text-center">
                 <span>
-                  <LightModeIcon
-                    className={`m-auto relative z-10 ${
-                      isDark ? "text-black" : ""
-                    }`}
-                  />
+                  <LightModeIcon className="m-auto relative z-10 dark:text-black" />
                 </span>
               </div>
               <div className=" m-auto">
                 <span>
-                  <NightsStayIcon
-                    className={`m-auto relative z-10 ${
-                      isDark ? "text-white" : "text-white"
-                    }`}
-                  />
+                  <NightsStayIcon className="m-auto relative z-10 dark:text-white text-white" />
                 </span>
               </div>
 
               <span
                 className="ball"
-                style={{ backgroundColor: isDark ? "black" : "white" }}
+                style={{ backgroundColor: dark ? "black" : "white" }}
               ></span>
             </label>
           </div>

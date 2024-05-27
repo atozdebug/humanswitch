@@ -160,11 +160,11 @@ const MyReports = () => {
         options: [
           {
             id: 0,
-            name: `Option`,
+            name: `Enter Option Value`,
           },
           {
             id: 1,
-            name: `Option2`,
+            name: `Enter Option Value`,
           },
         ],
       }),
@@ -207,7 +207,7 @@ const MyReports = () => {
 
     const newOption = {
       id: nextId,
-      name: `Option`,
+      name: `Enter Option Value`,
     };
 
     // Add the new option to the specific question's options array
@@ -383,7 +383,8 @@ const MyReports = () => {
       });
     }
     toast.success(
-      "Questions saved successfully!\n You can continue adding questions to this chapter or select a new chapter to add questions in and the you can click\n'Publish Questions' button to save the data!"
+      "Questions saved successfully!\n\nYou can continue adding questions to this chapter or select a new chapter to add questions in and then you can click 'Publish Questions' button to save the data!",
+      { duration: 6000 }
     );
     setChapterQuestions([...chapterQuestions]);
     setSaveVisible(false);
@@ -451,6 +452,7 @@ const MyReports = () => {
                         <button
                           className=" border rounded-lg mt-2 px-2"
                           onClick={() => {
+                            setSaveVisible(false);
                             setSelectedChapter(chapter.name);
                             setQuestions(() => {
                               const cht = chapterQuestions.find(

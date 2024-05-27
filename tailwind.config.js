@@ -1,4 +1,4 @@
-import { Pattern } from '@mui/icons-material';
+import { Pattern } from "@mui/icons-material";
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -16,8 +16,8 @@ export default {
         // "gray-text": "#667085",
         // "gray-dark": "#525866",
         // heading: "#0A0D14",
-        "grayMedium1": "#868C98",
-       
+        grayMedium1: "#868C98",
+
         // "dark-purple": "#2B1664",
         // "span-clr": "#375DFB",
         // content: "#525866",
@@ -28,7 +28,7 @@ export default {
         mediumblue: "#6355F6",
         lightblue: "#EBEDFF",
         mediumgreen: "#18CBB8",
-        'blue-600': 'rgb(99 85 246 / var(--tw-bg-opacity))',
+        "blue-600": "rgb(99 85 246 / var(--tw-bg-opacity))",
         success: "#5cb85c",
         error: "#FDEDF0",
         "gray-dark": "#525866",
@@ -43,10 +43,10 @@ export default {
         lightgray3: "#E2E4E9",
         mediumgray2: "#B7C0D0",
         red2: "#D74B81",
-        'slate-300': '#E2E4E9',
+        "slate-300": "#E2E4E9",
       },
       backgroundImage: {
-        'pattern': 'url(../assets/images/Pattern.png)',
+        pattern: "url(../assets/images/Pattern.png)",
       },
       padding: {
         100: "100%",
@@ -131,18 +131,19 @@ export default {
         n50: "-50%",
       },
       left: {
-        n5: "-1.25rem"
+        n5: "-1.25rem",
       },
       fontSize: {
-        "10px": "10px"
+        "10px": "10px",
       },
       borderRadius: {
-        '20px': '20px'
+        "20px": "20px",
       },
       gap: {
-        '14px': '14px',
+        "14px": "14px",
       },
     },
   },
+  darkMode: "class",
   plugins: [require("flowbite/plugin")],
 };
