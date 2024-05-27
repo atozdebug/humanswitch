@@ -99,9 +99,9 @@ const DeleteAccount = ({
             onClick={() => setShowCurrentPassword(!showCurrentPassword)}
           >
             {showCurrentPassword ? (
-              <VisibilityOffIcon className="pb-3 pr-2" />
-            ) : (
               <img src="/assets/images/eye-line.png" />
+            ) : (
+              <VisibilityOffIcon className="pb-3 pr-2" />
             )}
           </span>
           {errors.passwordDelete && (

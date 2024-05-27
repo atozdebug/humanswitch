@@ -149,6 +149,12 @@ const Pillars = () => {
   };
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    !token && Cookies.remove("questionnaireData");
+  }, []);
+
+  useEffect(() => {
     const observer = new IntersectionObserver(observerCallback, {
       root: null,
       rootMargin: "0px",

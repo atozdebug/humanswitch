@@ -140,6 +140,7 @@ const schemaFifth = yup.object().shape({
   password: yup
     .string()
     .required("Password is required")
+    .matches(/^[^\s]*$/, "Password must not contain spaces")
     .matches(
       /^(?=.*[A-Z])/,
       "Password must contain at least one uppercase letter"
@@ -212,6 +213,7 @@ const SignupPage = () => {
   const dispatch: any = useDispatch();
   const [step, setStep] = useState<number>(1);
   const [formData, setFormData] = useState<any>(defaultValues);
+  const [email, setMail] = useState("");
 
   const schemas = () => {
     if (step === 1) {
@@ -246,6 +248,7 @@ const SignupPage = () => {
     handleSubmit,
     // reset,
     setValue,
+    trigger,
     formState: { errors },
   } = useForm<FormData | any>({
     resolver: schemas(),
@@ -259,6 +262,7 @@ const SignupPage = () => {
     try {
       setFormData(data);
       if (step === 1) {
+        setMail(data.email);
         toast.promise(
           dispatch(sendEmailVerification({ email: data.email }))
             .unwrap()
@@ -322,6 +326,18 @@ const SignupPage = () => {
     } catch (error) {
       console.error("Submission error:", error);
     }
+  };
+
+  const skipStep = () => {
+    setStep((prev) => prev + 1);
+  };
+
+  const resendOTP = () => {
+    toast.promise(dispatch(sendEmailVerification({ email })), {
+      loading: "Sending Email...",
+      success: "Email Sent!",
+      error: "Error while sending email",
+    });
   };
 
   return (
@@ -434,6 +450,7 @@ const SignupPage = () => {
           otpError={otpError}
           setOtpError={setOtpError}
           setValue={setValue}
+          resendOTP={resendOTP}
         />
       ) : step === 3 ? (
         <SignupTwo
@@ -459,6 +476,7 @@ const SignupPage = () => {
           register={register}
           errors={errors}
           setValue={setValue}
+          skipStep={skipStep}
         />
       ) : (
         <SignupFive
@@ -467,6 +485,7 @@ const SignupPage = () => {
           register={register}
           errors={errors}
           setValue={setValue}
+          trigger={trigger}
         />
       )}
       <div className="xl:px-[44px] px-4 w-full mx-auto footer flex items-center content-center justify-between">

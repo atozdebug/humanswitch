@@ -7,6 +7,7 @@ const SignupFour = ({
   onSubmit,
   errors,
   setValue,
+  skipStep,
 }: any) => {
   const [profilePic, setProfilePic] = useState<any>(null);
 
@@ -326,12 +327,15 @@ const SignupFour = ({
           Continue
         </button>
         <div className="font-normal my-5 text-sm text-center">
-          <a href="" className="text-gray-500 text-center">
+          <div className="text-gray-500 text-center">
             Want to fill in later?{" "}
-            <span className="text-gray-dark font-semibold border-b border-slate-700">
+            <span
+              onClick={skipStep}
+              className="text-gray-dark font-semibold border-b border-slate-700 hover:cursor-pointer"
+            >
               Skip this step
             </span>
-          </a>
+          </div>
         </div>
       </form>
     </div>
