@@ -10,6 +10,7 @@ const SignupTwo = ({
   onSubmit,
   errors,
   setValue,
+  trigger,
 }: any) => {
   const [phone, setPhone] = useState<any>("");
   const [profilePic, setProfilePic] = useState<any>(null);
@@ -75,11 +76,12 @@ const SignupTwo = ({
                 type="file"
                 id="image-upload"
                 accept="image/*"
-                onChange={(e: any) => {
+                onChange={async (e: any) => {
                   handleImageChange(e);
                   const newProfilePic: any = e.target.files[0];
                   setProfilePic(URL.createObjectURL(newProfilePic));
-                  setValue("image", e.target.files);
+                  setValue("image", e.target.files, { shouldValidate: true });
+                  await trigger("image");
                 }}
                 className="relative z-10 w-20 opacity-0 block"
               />

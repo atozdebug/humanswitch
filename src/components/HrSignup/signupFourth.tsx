@@ -8,6 +8,7 @@ const SignupFour = ({
   errors,
   setValue,
   skipStep,
+  trigger,
 }: any) => {
   const [profilePic, setProfilePic] = useState<any>(null);
 
@@ -76,11 +77,14 @@ const SignupFour = ({
                     type="file"
                     id="image-upload"
                     accept="image/*"
-                    onChange={(e: any) => {
+                    onChange={async (e: any) => {
                       handleImageChange(e);
                       const newProfilePic: any = e.target.files[0];
                       setProfilePic(URL.createObjectURL(newProfilePic));
-                      setValue("businessImage", e.target.files);
+                      setValue("businessImage", e.target.files, {
+                        shouldValidate: true,
+                      });
+                      await trigger("businessImage");
                     }}
                     className="relative z-10 w-16 opacity-0 block"
                   />
