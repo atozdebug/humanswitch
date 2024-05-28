@@ -14,6 +14,10 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { handleLogout } from "../services/slices/activity/activitySlice";
 import { getUser } from "../services/slices/dashboard/getUser";
+import PublicIcon from "@mui/icons-material/Public";
+import GroupsIcon from "@mui/icons-material/Groups";
+import ApartmentIcon from "@mui/icons-material/Apartment";
+
 let sideBarItems = [
   {
     name: "Dashboard",
@@ -26,9 +30,24 @@ let sideBarItems = [
     navigateTo: "/reports",
   },
   {
-    name: "AI Advisor",
+    name: "AI Advisor Settings",
     icon: <FaceRetouchingNaturalIcon />,
     navigateTo: "/chatbot",
+  },
+  {
+    name: "Manage Plans",
+    icon: <PublicIcon />,
+    navigateTo: "/manage-plans",
+  },
+  {
+    name: "Manage Roles",
+    icon: <GroupsIcon />,
+    navigateTo: "/manage-roles",
+  },
+  {
+    name: "Companies",
+    icon: <ApartmentIcon />,
+    navigateTo: "/companies",
   },
   {
     name: "Integrations",

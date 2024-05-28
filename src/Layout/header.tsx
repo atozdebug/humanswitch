@@ -1,11 +1,23 @@
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 import { useLocation } from "react-router-dom";
+import CreateButton from "../components/Home/createButton";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField,
+} from "@mui/material";
+import { useState } from "react";
 
 const headers = [
   {
     path: "/dashboard",
     name: "Dashboard",
     description: "Dashboard Page",
+    buttonName: "Report",
+    buttonDescription:
+      "Create a new report from scratch or start with one of our templates.",
   },
   {
     path: "/reports",
@@ -16,6 +28,29 @@ const headers = [
     path: "/chatbot",
     name: "ChatBot",
     description: "A short description of the chatbot and its capabilities",
+  },
+  {
+    path: "/manage-plans",
+    name: "Manage Plans",
+    description: "Manage Plans Page",
+    buttonName: "Plan",
+    buttonDescription:
+      "Create a new report from scratch or start with one of our templates.",
+  },
+  {
+    path: "/manage-roles",
+    name: "Manage Roles",
+    description: "Manage Roles Page",
+    buttonName: "Role",
+    buttonDescription:
+      "Create a new report from scratch or start with one of our templates.",
+  },
+  {
+    path: "/companies",
+    name: "Companies",
+    description: "Companies Page",
+    buttonDescription:
+      "Create a new report from scratch or start with one of our templates.",
   },
   {
     path: "/integrations",
@@ -46,6 +81,32 @@ const Header = () => {
     (header) => header.path === getBasePath(location.pathname)
   );
 
+  const [open, setOpen] = useState(false);
+
+  const onClick = () => {
+    handleClickOpen();
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (title?.buttonName === "Report") {
+      console.log("Report");
+    } else if (title?.buttonName === "Plan") {
+      console.log("Plan");
+    } else if (title?.buttonName === "Role") {
+      console.log("Role");
+    }
+    handleClose();
+  };
+
   return (
     <div className="bg-white shadow-sm md:py-5 md:px-8 px-4 py-4">
       <div className="grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 flex items-center justify-between">
@@ -59,22 +120,64 @@ const Header = () => {
           </div>
         </div>
         <div className="rounded-lg flex justify-end">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+          {title?.buttonName && (
+            <CreateButton
+              text={`Create New ${title?.buttonName}`}
+              onClick={onClick}
+              className=""
             />
-          </svg>
+          )}
         </div>
       </div>
+      <Dialog
+        fullWidth={true}
+        maxWidth="md"
+        open={open}
+        onClose={handleClose}
+        PaperProps={{
+          component: "form",
+          onSubmit: handleFormSubmit,
+        }}
+      >
+        <div className="p-4">
+          <div className="font-semibold text-xl">
+            Create New {title?.buttonName}
+          </div>
+
+          <div>{title?.buttonDescription}</div>
+        </div>
+        <DialogContent>
+          {title?.buttonName === "Report" && <div>Create New Report</div>}
+          {title?.buttonName === "Plan" && <div>Create New Plan</div>}
+          {title?.buttonName === "Role" && <div>Create New Role</div>}
+
+          {/* <TextField
+            autoFocus
+            required
+            margin="dense"
+            id="name"
+            name="email"
+            label="Email Address"
+            type="email"
+            fullWidth
+            variant="standard"
+          /> */}
+        </DialogContent>
+        <DialogActions>
+          <button
+            className="m-2 w-full px-4 py-2 rounded-md hover:bg-gray-200 text-red-600"
+            onClick={handleClose}
+          >
+            Cancel
+          </button>
+          <button
+            className="m-2 w-full px-4 py-2 rounded-md hover:bg-gray-200 mr-2 text-blue-800"
+            type="submit"
+          >
+            Subscribe
+          </button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
