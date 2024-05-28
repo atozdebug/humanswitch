@@ -545,6 +545,7 @@ const MyReports = () => {
                     {question.type === "Short Answer" && (
                       <div className="mt-2 ml-[35px]">
                         <textarea
+                          disabled
                           id={`question-${question.id}`}
                           name={`question-${question.id}`}
                           className="bg-lightgray2 border border-lightgray2 text-gray-900 text-sm rounded-lg focus:ring-lightgray2 focus:border-mediumblue block w-full p-2.5 min-h-62px"
@@ -566,6 +567,7 @@ const MyReports = () => {
                               >
                                 <div className="flex justify-center items-center gap-4">
                                   <input
+                                    disabled
                                     id={`default-radio-${option.id}`}
                                     type="radio"
                                     value={option.name}
@@ -672,6 +674,7 @@ const MyReports = () => {
                           </div>
 
                           <Slider
+                            disabled
                             sx={{ width: 250 }}
                             step={steps[question.id] || question.steps || 5}
                             value={sliderValues[question.id] || 10}
@@ -734,9 +737,12 @@ const MyReports = () => {
                             defaultValue={
                               steps[question.id] || question.steps || 5
                             }
-                            onChange={(e) =>
-                              changeStepsValue(question.id, e.target.value)
-                            }
+                            onChange={(e: any) => {
+                              if (e.target.value > 0) {
+                                changeStepsValue(question.id, e.target.value);
+                              }
+                            }}
+                            min={1}
                             type="number"
                             className="ml-2 w-28 rounded-lg font-bold"
                           />

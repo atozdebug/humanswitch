@@ -92,6 +92,7 @@ const sideBarItems = [
 
 const Pillars = () => {
   const dispatch = useDispatch();
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -103,41 +104,43 @@ const Pillars = () => {
     dispatch(getQuestions())
       .unwrap()
       .then((res: any) => {
-        const questionsMap = new Map();
+        if (!token) {
+          const questionsMap = new Map();
 
-        res.forEach((item: any) => {
-          questionsMap.set(item.name, item.questions);
-        });
+          res.forEach((item: any) => {
+            questionsMap.set(item.name, item.questions);
+          });
 
-        // Initialize stepAnswers object
-        const initialStepAnswers: any = {};
+          // Initialize stepAnswers object
+          const initialStepAnswers: any = {};
 
-        // Loop through sideBarItems to create stepAnswers
-        sideBarItems.forEach((item, index) => {
-          // Change here
-          // Find questions for this item by name
-          const questions = questionsMap.get(item.name) || [];
+          // Loop through sideBarItems to create stepAnswers
+          sideBarItems.forEach((item, index) => {
+            // Change here
+            // Find questions for this item by name
+            const questions = questionsMap.get(item.name) || [];
 
-          // Create chapter object
-          const chapter = questions.reduce(
-            (acc: any, _question: any, questionIndex: any) => {
-              // Change here
-              acc[`question-${questionIndex}`] = "";
-              return acc;
-            },
-            {}
-          );
+            // Create chapter object
+            const chapter = questions.reduce(
+              (acc: any, _question: any, questionIndex: any) => {
+                // Change here
+                acc[`question-${questionIndex}`] = "";
+                return acc;
+              },
+              {}
+            );
 
-          // Add chapter to initialStepAnswers
-          initialStepAnswers[index] = chapter; // Change here
+            // Add chapter to initialStepAnswers
+            initialStepAnswers[index] = chapter; // Change here
 
-          // Update questions array for this item in sideBarItems
-          item.questions = questions;
-        });
+            // Update questions array for this item in sideBarItems
+            item.questions = questions;
+          });
 
-        // Set the state with the updated sideBarItems and initialStepAnswers
+          // Set the state with the updated sideBarItems and initialStepAnswers
 
-        setStepAnswers(initialStepAnswers);
+          setStepAnswers(initialStepAnswers);
+        }
 
         res.forEach((item: any) => {
           const chapter: any = sideBarItems.find((x) => x.name === item.name);
@@ -231,7 +234,7 @@ const Pillars = () => {
         let data = existingData ? JSON.parse(existingData) : [];
 
         data.push(currentStepAnswers);
-        if (data.length === 3) {
+        if (data.length === 3 && !token) {
           return toggleModal();
         }
         Cookies.set("questionnaireData", JSON.stringify(data));
