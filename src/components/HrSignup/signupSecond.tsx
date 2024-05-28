@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PhoneInput from "react-phone-input-2";
 
 import "react-phone-input-2/lib/bootstrap.css";
@@ -10,8 +10,13 @@ const SignupTwo = ({
   onSubmit,
   errors,
   setValue,
-  trigger,
+  imageFile,
+  phoneNo,
 }: any) => {
+  useEffect(() => {
+    setProfilePic(imageFile ? URL.createObjectURL(imageFile) : null);
+    setPhone(phoneNo);
+  }, []);
   const [phone, setPhone] = useState<any>("");
   const [profilePic, setProfilePic] = useState<any>(null);
 
@@ -81,7 +86,6 @@ const SignupTwo = ({
                   const newProfilePic: any = e.target.files[0];
                   setProfilePic(URL.createObjectURL(newProfilePic));
                   setValue("image", e.target.files, { shouldValidate: true });
-                  await trigger("image");
                 }}
                 className="relative z-10 w-20 opacity-0 block"
               />

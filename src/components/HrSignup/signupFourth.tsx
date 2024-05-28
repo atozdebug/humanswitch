@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const SignupFour = ({
   handleImageChange,
@@ -9,7 +9,13 @@ const SignupFour = ({
   setValue,
   skipStep,
   trigger,
+  businessImageFile,
 }: any) => {
+  useEffect(() => {
+    setProfilePic(
+      businessImageFile ? URL.createObjectURL(businessImageFile) : null
+    );
+  }, []);
   const [profilePic, setProfilePic] = useState<any>(null);
 
   return (

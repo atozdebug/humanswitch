@@ -62,6 +62,7 @@ const ForgetPasswordId = () => {
     resolver: yupResolver(schema),
     defaultValues,
   });
+
   const getTokenFromUrl = () => {
     const urlSearchParams = new URLSearchParams(window.location.search);
     return urlSearchParams.get("token");
@@ -104,6 +105,7 @@ const ForgetPasswordId = () => {
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e);
     const newPassword: any = e;
     checkPasswordRequirements(newPassword);
   };

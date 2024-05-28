@@ -233,6 +233,7 @@ const SignupPage = () => {
 
   const [imageFile, setImageFile] = useState(null);
   const [businessImageFile, setBusinessImageFile] = useState(null);
+  const [phoneNo, setPhoneNo] = useState("");
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file: any = e.target.files && e.target.files[0];
@@ -259,6 +260,8 @@ const SignupPage = () => {
   const [otpError, setOtpError] = useState(false);
 
   const onSubmit: any = (data: FormData) => {
+    setPhoneNo(data?.phone_no);
+    console.log(data);
     toast.dismiss();
     try {
       setFormData(data);
@@ -462,6 +465,8 @@ const SignupPage = () => {
           register={register}
           errors={errors}
           setValue={setValue}
+          imageFile={imageFile}
+          phoneNo={phoneNo}
         />
       ) : step === 4 ? (
         <SignupThree
@@ -479,6 +484,7 @@ const SignupPage = () => {
           errors={errors}
           setValue={setValue}
           skipStep={skipStep}
+          businessImageFile={businessImageFile}
         />
       ) : (
         <SignupFive
