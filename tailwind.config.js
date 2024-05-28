@@ -47,6 +47,8 @@ export default {
       },
       backgroundImage: {
         pattern: "url(../assets/images/Pattern.png)",
+        gradient1: "linear-gradient(180deg, #6355F6, #18CBB8)",
+        "g-success": "linear-gradient(180deg, #5cb85c, #3d743d)",
       },
       padding: {
         100: "100%",
@@ -54,17 +56,18 @@ export default {
         50: "50%",
         "11px": "11px",
         "108px": "108px",
+        "20px": "20px",
+        "10px": "10px",
+        "18px": "18px",
+        "44px": "44px",
       },
       margin: {
         "-140px": "-140px",
-      },
-
-      backgroundImage: {
-        gradient1: "linear-gradient(180deg, #6355F6, #18CBB8)",
-        "g-success": "linear-gradient(180deg, #5cb85c, #3d743d)",
+        "20px": "20px",
       },
       translate: {
         "n1/2": "-50%",
+        n50: "-50%",
       },
       borderRadius: {
         20: "20px",
@@ -72,11 +75,13 @@ export default {
       },
       maxWidth: {
         "250px": "250px",
+        "258px": "258px",
         "300px": "300px",
         "350px": "350px",
         "392px": "392px",
         calc350px: "calc(100% - 350px)",
         calc300px: "calc(100% - 300px)",
+        calc258px: "calc(100% - 258px)",
         calc40px: "calc(100% - 40px)",
         600: "600px",
         700: "700px",
@@ -90,6 +95,8 @@ export default {
         "vw-calc300px": "calc(100vh - 300px)",
         vhcalc88px: "calc(100vh - 88px)",
         "100vh": "100vh",
+        vhcalc135px: "calc(100vh - 135px)",
+        vhcalc92px: "calc(100vh - 92px)",
       },
       height: {
         "vw-calc80px": "calc(100vh - 80px)",
@@ -98,12 +105,16 @@ export default {
       },
       minHeight: {
         "62px": "62px",
+        "48px": "48px",
         13: "13px",
         vhcalc88px: "calc(100vh - 88px)",
         vhcalc155px: "calc(100vh - 155px)",
         vhcalc135px: "calc(100vh - 135px)",
+        vhcalc92px: "calc(100vh - 92px)",
         vhcalc225px: "calc(100vh - 225px)",
         vhcalc93px: "calc(100vh - 93px)",
+        "150px": "150px",
+        "250px": "250px",
       },
       width: {
         60: "60%",
@@ -118,17 +129,6 @@ export default {
       minwidth: {
         "168px": "168px",
         123: "123px",
-      },
-      padding: {
-        "20px": "20px",
-        "18px": "18px",
-        "44px": "44px",
-      },
-      margin: {
-        "20px": "20px",
-      },
-      translate: {
-        n50: "-50%",
       },
       left: {
         n5: "-1.25rem",

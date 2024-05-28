@@ -47,9 +47,9 @@ const Header = () => {
   );
 
   return (
-    <div className="bg-white shadow-sm py-4">
+    <div className="bg-white shadow-sm md:py-5 md:px-8 px-4 py-4">
       <div className="grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 flex items-center justify-between">
-        <div className="flex justify-center items-center ml-6">
+        <div className="flex justify-center items-center">
           <span className="bg-[#F6F8FA] p-2 rounded-full">
             <SmartToyIcon />
           </span>
@@ -58,8 +58,7 @@ const Header = () => {
             <p>{title?.description}</p>
           </div>
         </div>
-
-        <div className=" rounded-lg p-4 mr-6 flex justify-end">
+        <div className="rounded-lg flex justify-end">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

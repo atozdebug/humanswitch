@@ -257,38 +257,238 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="max-h-vhcalc88px overflow-y-auto min-h-vhcalc88px p-8">
-      <div className="w-full flex justify-end items-start mb-8">
+    <div className="min-h-vhcalc92px overflow-y-auto max-h-vhcalc92px lg:px-8 px-4 md:py-6 py-4 bg-lightgray">
+      <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-4 mb-4">
+        <div className="grid-item">
+          <div className="grid-item-inner p-4 rounded-[10px] bg-white shadow flex flex-wrap flex-col justify-between min-h-150px">
+            <h2 className="text-3xl font-bold">$ 189050.99</h2>
+            <div className="flex gap-2 items-end justify-between pt-4">
+              <p className="text-gray-500 mb-0">Monthly Revenue</p>
+              <p className="text-green-500 mb-0 flex items-center gap-1">
+                <small>10.05%</small>
+                <span>
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g clip-path="url(#clip0_1829_1483)">
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M14 0C15.1046 0 16 0.895431 16 2L16 14C16 15.1046 15.1046 16 14 16L2 16C0.895431 16 0 15.1046 0 14L0 2C0 0.895431 0.895431 0 2 0L14 0Z"
+                        fill="currentColor"
+                      />
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M4.70017 12.2426L10.4372 6.50564L10.4372 11.7759L11.7712 11.7712L11.7712 4.22876L4.22877 4.22876V5.55812L9.49436 5.56283L3.75736 11.2998L4.70017 12.2426Z"
+                        fill="white"
+                      />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_1829_1483">
+                        <rect width="16" height="16" fill="white" />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+        {/* =================== */}
+        <div className="grid-item">
+          <div className="grid-item-inner p-4 rounded-[10px] bg-white shadow flex flex-wrap flex-col justify-between min-h-150px">
+            <h2 className="text-3xl font-bold">$ 189050.99</h2>
+            <div className="flex gap-2 items-end justify-between pt-4">
+              <p className="text-gray-500 mb-0">Net Revenue</p>
+              <p className="text-red-500 mb-0 flex items-center gap-1">
+                <small>10.05%</small>
+                <span>
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g clip-path="url(#clip0_1829_1561)">
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M2 0C0.895431 0 0 0.895431 0 2L0 14C0 15.1046 0.895431 16 2 16L14 16C15.1046 16 16 15.1046 16 14L16 2C16 0.895431 15.1046 0 14 0L2 0Z"
+                        fill="currentColor"
+                      />
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M4.00004 4.94285L9.73703 10.6798L4.46673 10.6798L4.47144 12.0139L12.0139 12.0139L12.0139 4.47144L10.6846 4.47144L10.6798 9.73703L4.94285 4.00004L4.00004 4.94285Z"
+                        fill="white"
+                      />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_1829_1561">
+                        <rect width="16" height="16" fill="white" />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+        {/* =================== */}
+        <div className="grid-item">
+          <div className="grid-item-inner p-4 rounded-[10px] bg-white shadow flex flex-wrap flex-col justify-between min-h-150px">
+            <h2 className="text-3xl font-bold">$ 189050.99</h2>
+            <div className="flex gap-2 items-end justify-between pt-4">
+              <p className="text-gray-500 mb-0">Active Subscriptions</p>
+              <p className="text-green-500 mb-0 flex items-center gap-1">
+                <small>10.05%</small>
+                <span>
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g clip-path="url(#clip0_1829_1483)">
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M14 0C15.1046 0 16 0.895431 16 2L16 14C16 15.1046 15.1046 16 14 16L2 16C0.895431 16 0 15.1046 0 14L0 2C0 0.895431 0.895431 0 2 0L14 0Z"
+                        fill="currentColor"
+                      />
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M4.70017 12.2426L10.4372 6.50564L10.4372 11.7759L11.7712 11.7712L11.7712 4.22876L4.22877 4.22876V5.55812L9.49436 5.56283L3.75736 11.2998L4.70017 12.2426Z"
+                        fill="white"
+                      />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_1829_1483">
+                        <rect width="16" height="16" fill="white" />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+        {/* =================== */}
+        <div className="grid-item">
+          <div className="grid-item-inner p-4 rounded-[10px] bg-white shadow flex flex-wrap flex-col justify-between min-h-150px">
+            <h2 className="text-3xl font-bold">$ 189050.99</h2>
+            <div className="flex gap-2 items-end justify-between pt-4">
+              <p className="text-gray-500 mb-0">Active Subscribers</p>
+              <p className="text-red-500 mb-0 flex items-center gap-1">
+                <small>10.05%</small>
+                <span>
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g clip-path="url(#clip0_1829_1561)">
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M2 0C0.895431 0 0 0.895431 0 2L0 14C0 15.1046 0.895431 16 2 16L14 16C15.1046 16 16 15.1046 16 14L16 2C16 0.895431 15.1046 0 14 0L2 0Z"
+                        fill="currentColor"
+                      />
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M4.00004 4.94285L9.73703 10.6798L4.46673 10.6798L4.47144 12.0139L12.0139 12.0139L12.0139 4.47144L10.6846 4.47144L10.6798 9.73703L4.94285 4.00004L4.00004 4.94285Z"
+                        fill="white"
+                      />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_1829_1561">
+                        <rect width="16" height="16" fill="white" />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+        {/* =================== */}
+      </div>
+      <div className="grid md:grid-cols-4 grid-cols-1 gap-4 mb-4">
+        <div className="grid-item md:col-span-3">
+          <div className="grid-item-inner p-4 rounded-[10px] bg-white shadow flex items-center justify-center min-h-250px">
+            <h2 className="text-3xl font-bold text-gray-500">Coming Soon...</h2>
+          </div>
+        </div>
+        <div className="grid-item md:col-span-1">
+          <div className="grid-item-inner p-4 rounded-[10px] bg-white shadow flex items-center justify-center min-h-250px">
+            <h2 className="text-3xl font-bold text-gray-500">Coming Soon...</h2>
+          </div>
+        </div>
+      </div>
+      <div className="grid grid-cols-1 gap-4 mb-4">
+        <div className="grid-item">
+          <div className="grid-item-inner p-4 rounded-[10px] bg-white shadow flex items-center justify-center min-h-250px">
+            <h2 className="text-3xl font-bold text-gray-500">Coming Soon...</h2>
+          </div>
+        </div>
+      </div>
+      <div className="grid md:grid-cols-4 grid-cols-1 gap-4 mb-4">
+        <div className="grid-item md:col-span-2">
+          <div className="grid-item-inner p-4 rounded-[10px] bg-white shadow flex items-center justify-center min-h-250px">
+            <h2 className="text-3xl font-bold text-gray-500">Coming Soon...</h2>
+          </div>
+        </div>
+        <div className="grid-item md:col-span-2">
+          <div className="grid-item-inner p-4 rounded-[10px] bg-white shadow flex items-center justify-center min-h-250px">
+            <h2 className="text-3xl font-bold text-gray-500">Coming Soon...</h2>
+          </div>
+        </div>
+      </div>
+      <div className="w-full flex justify-end items-center mb-4 p-4 bg-white rounded-[10px] shadow">
+        <Box className="gap-4 flex w-full justify-end items-center ">
+          <div className="text-lg font-semibold">Filters :</div>
+          <FormControl sx={{ minWidth: 200 }}>
+            <InputLabel id="demo-simple-select-filter">Filters</InputLabel>
+            <Select
+              labelId="demo-simple-select-filter"
+              id="demo-simple-filter"
+              value={filter}
+              label="Filter"
+              name="Filter"
+              onChange={handleChangeFilter}
+              className="form-control !rounded-[10px] p-2 filter-drop"
+            >
+              {filters.map((chapter, index) => (
+                <MenuItem key={index} value={chapter.name}>
+                  {chapter.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Box>
         <div
-          className="rounded bg-green-500 hover:bg-green-700 py-2 px-4 text-white font-semibold"
+          className="rounded-[10px] bg-green-500 hover:bg-green-700 py-2 px-4 text-white font-semibold ml-4"
           onClick={handleClickOpen}
         >
           Create
         </div>
       </div>
-      <Box className="gap-4 flex w-full justify-end items-center">
-        <div className="text-lg font-semibold">Filters :</div>
-        <FormControl sx={{ minWidth: 200 }}>
-          <InputLabel id="demo-simple-select-filter">Filters</InputLabel>
-          <Select
-            labelId="demo-simple-select-filter"
-            id="demo-simple-filter"
-            value={filter}
-            label="Filter"
-            name="Filter"
-            onChange={handleChangeFilter}
-          >
-            {filters.map((chapter, index) => (
-              <MenuItem key={index} value={chapter.name}>
-                {chapter.name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </Box>
+
       <Box sx={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={data}
+          className="bg-white !rounded-[10px] shadow !border-0"
           columns={columns}
           initialState={{
             pagination: {
@@ -379,6 +579,7 @@ const Dashboard = () => {
           </button>
         </DialogActions>
       </Dialog>
+      <div></div>
     </div>
   );
 };
