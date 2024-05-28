@@ -73,7 +73,7 @@ const SideBar = () => {
   const userData = useSelector((state: any) => state.getUser.data);
 
   useEffect(() => {
-    dispatch(getUser(user));
+    user && dispatch(getUser(user));
   }, []);
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -219,7 +219,9 @@ const SideBar = () => {
                     }`}
                   >
                     <div
-                      className={`px-2 menu-icon ${isActive && "text-[#375DFB]"}`}
+                      className={`px-2 menu-icon ${
+                        isActive && "text-[#375DFB]"
+                      }`}
                     >
                       {item.icon}
                     </div>
