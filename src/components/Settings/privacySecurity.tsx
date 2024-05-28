@@ -169,7 +169,7 @@ const PrivacySecurity = ({ handleSubmit, onSubmit, errors, setValue }: any) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col justify-center max-w-350px m-auto mt-8 md:mt-0"
+      className="flex flex-col justify-center w-full md:max-w-350px m-auto mt-8 md:mt-0"
     >
       <h2 className="text-main-heading text-2xl font-medium mb-1">
         2FA Security
@@ -181,7 +181,7 @@ const PrivacySecurity = ({ handleSubmit, onSubmit, errors, setValue }: any) => {
       {methods.map((method, index) => (
         <div
           key={index}
-          className={`flex items-start gap-14px content-center justify-between border ${
+          className={`flex items-start gap-14px content-center justify-between border minor-shadow ${
             errors?.method ? "border-red-600" : "border-[#E2E4E9]"
           } p-4 mb-4 rounded-xl`}
         >
@@ -215,7 +215,8 @@ const PrivacySecurity = ({ handleSubmit, onSubmit, errors, setValue }: any) => {
                 setIsDisabled(false);
                 setValue("method", e.target.value);
               }}
-              className="w-4 h-4 text-span-clr bg-gray-100  dark:focus:ring-span-clr dark:ring-offset-gray-800  dark:bg-gray-700"
+              // className="w-4 h-4 text-span-clr bg-gray-100  dark:focus:ring-span-clr dark:ring-offset-gray-800  dark:bg-gray-700"
+              className="w-4 h-4  border border-slate-300 space-top"
             />
           </div>
         </div>

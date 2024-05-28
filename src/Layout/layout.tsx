@@ -33,7 +33,11 @@ const Layout = ({ children }: any) => {
         }}
       >
         {isTrue && allow && <SideBar />}
-        <div className="content-right w-100-272px">
+        <div
+          className={`${
+            isTrue && allow ? "content-right w-100-272px" : "w-full"
+          }`}
+        >
           {isTrue && allow && noHeader && <Header />}
           {children}
         </div>

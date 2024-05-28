@@ -257,8 +257,8 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-vhcalc92px overflow-y-auto max-h-vhcalc92px lg:px-8 px-4 md:py-6 py-4 bg-lightgray">
-      <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-4 mb-4">
+    <div className="content-right-inner min-h-vhcalc92px overflow-y-auto max-h-vhcalc92px lg:px-8 px-4 md:py-6 py-4 bg-lightgray">
+      <div className="grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 mb-4">
         <div className="grid-item">
           <div className="grid-item-inner p-4 rounded-[10px] bg-white shadow flex flex-wrap flex-col justify-between min-h-150px">
             <h2 className="text-3xl font-bold">$ 189050.99</h2>
@@ -424,13 +424,13 @@ const Dashboard = () => {
         </div>
         {/* =================== */}
       </div>
-      <div className="grid md:grid-cols-4 grid-cols-1 gap-4 mb-4">
-        <div className="grid-item md:col-span-3">
+      <div className="grid xl:grid-cols-4 grid-cols-1 gap-4 mb-4">
+        <div className="grid-item xl:col-span-3">
           <div className="grid-item-inner p-4 rounded-[10px] bg-white shadow flex items-center justify-center min-h-250px">
             <h2 className="text-3xl font-bold text-gray-500">Coming Soon...</h2>
           </div>
         </div>
-        <div className="grid-item md:col-span-1">
+        <div className="grid-item xl:col-span-1">
           <div className="grid-item-inner p-4 rounded-[10px] bg-white shadow flex items-center justify-center min-h-250px">
             <h2 className="text-3xl font-bold text-gray-500">Coming Soon...</h2>
           </div>
@@ -443,7 +443,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <div className="grid md:grid-cols-4 grid-cols-1 gap-4 mb-4">
+      <div className="grid xl:grid-cols-4 grid-cols-1 gap-4 mb-4">
         <div className="grid-item md:col-span-2">
           <div className="grid-item-inner p-4 rounded-[10px] bg-white shadow flex items-center justify-center min-h-250px">
             <h2 className="text-3xl font-bold text-gray-500">Coming Soon...</h2>
@@ -478,7 +478,7 @@ const Dashboard = () => {
           </FormControl>
         </Box>
         <div
-          className="rounded-[10px] bg-green-500 hover:bg-green-700 py-2 px-4 text-white font-semibold ml-4"
+          className="rounded-[10px] bg-green-500 hover:bg-green-700 py-3 px-6 text-white font-semibold ml-4 text-sm"
           onClick={handleClickOpen}
         >
           Create

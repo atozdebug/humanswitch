@@ -28,7 +28,17 @@ const HomePage = () => {
 
   return (
     <>
-      <section className="banner bg-lightblue py-10 flex items-center relative min-h-screen ">
+      <header className="absolute top-0 left-0 w-full z-10">
+        <div className="flex justify-end gap-4 z-1 pt-6 md:px-8 px-4">
+          <button className="text-span-clr text-lg font-bold bg-white rounded-[10px] py-3 shadow px-8 ">
+            Register
+          </button>
+          <button className="text-span-clr text-lg font-bold bg-white rounded-[10px] py-3 shadow px-8">
+            Login
+          </button>
+        </div>
+      </header>
+      <section className="banner bg-lightblue pb-10 pt-20 flex items-center relative min-h-screen ">
         <img
           src="assets/images/circle.png"
           className="circle-shape absolute bottom-0 left-0"
@@ -266,31 +276,33 @@ const HomePage = () => {
                       placeholder="Business Email"
                     />
                   </div>
-                  <a href="/signup">
-                    <button
-                      className="flex items-center gap-2 justify-center rounded-lg bg-gradient1 w-full py-3 px-6 text-center align-middle font-sans text-sm font-bold text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                      type="button"
-                      data-ripple-light="true"
-                    >
-                      Register Now{" "}
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 512 512"
-                        stroke-width="2"
-                        stroke="currentColor"
-                        aria-hidden="true"
-                        className="h-5 w-5"
+                  <div className="md:ms-6 ms-0 w-full">
+                    <a href="/signup">
+                      <button
+                        className="flex items-center gap-2 justify-center rounded-lg bg-gradient1 w-full py-3 px-6 text-center align-middle font-sans text-sm font-bold text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                        type="button"
+                        data-ripple-light="true"
                       >
-                        <path
-                          d="M256 0C114.837 0 0 114.837 0 256s114.837 256 256 256 256-114.837 256-256S397.163 0 256 0zm79.083 271.083L228.416 377.749A21.275 21.275 0 0 1 213.333 384a21.277 21.277 0 0 1-15.083-6.251c-8.341-8.341-8.341-21.824 0-30.165L289.835 256l-91.584-91.584c-8.341-8.341-8.341-21.824 0-30.165s21.824-8.341 30.165 0l106.667 106.667c8.341 8.341 8.341 21.823 0 30.165z"
-                          fill="currentColor"
-                          opacity="1"
-                          data-original="currentColor"
-                        ></path>
-                      </svg>
-                    </button>
-                  </a>
+                        Register Now{" "}
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 512 512"
+                          stroke-width="2"
+                          stroke="currentColor"
+                          aria-hidden="true"
+                          className="h-5 w-5"
+                        >
+                          <path
+                            d="M256 0C114.837 0 0 114.837 0 256s114.837 256 256 256 256-114.837 256-256S397.163 0 256 0zm79.083 271.083L228.416 377.749A21.275 21.275 0 0 1 213.333 384a21.277 21.277 0 0 1-15.083-6.251c-8.341-8.341-8.341-21.824 0-30.165L289.835 256l-91.584-91.584c-8.341-8.341-8.341-21.824 0-30.165s21.824-8.341 30.165 0l106.667 106.667c8.341 8.341 8.341 21.823 0 30.165z"
+                            fill="currentColor"
+                            opacity="1"
+                            data-original="currentColor"
+                          ></path>
+                        </svg>
+                      </button>
+                    </a>
+                  </div>
                 </form>
               </div>
             </div>
@@ -434,7 +446,8 @@ const HomePage = () => {
                   </g>
                 </svg>
                 <h3 className="xl:text-2xl text-xl font-bold mb-3 leading-6">
-                  Integration of our registered Human Centrix AI Business Model®
+                  Integration of our registered Human Centrix AI Business
+                  Model®
                 </h3>
                 <p className="mb-0 leading-relaxed md:text-base text-sm">
                   We help your SME effectively integrate our registered Human

@@ -115,7 +115,7 @@ const Profile = () => {
             <div className="grid-item-inner">
               <label className="mb-1 block text-sm">First Name</label>
               <input
-                className={`appearance-none border border-slate-300 rounded-[10px] w-full py-2 pl-2 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
+                className={`appearance-none border border-slate-300 minor-shadow rounded-[10px] w-full py-2 pl-2 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
                 id="current_password"
                 type={"text"}
                 placeholder="John"
@@ -133,7 +133,7 @@ const Profile = () => {
             <div className="grid-item-inner">
               <label className="mb-1 block text-sm">Last Name</label>
               <input
-                className={`appearance-none border border-slate-300 rounded-[10px] w-full py-2 pl-2 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
+                className={`appearance-none border border-slate-300 minor-shadow rounded-[10px] w-full py-2 pl-2 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
                 id="current_password"
                 type={"text"}
                 placeholder="Adams"

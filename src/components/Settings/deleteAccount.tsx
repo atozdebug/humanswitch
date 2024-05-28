@@ -40,7 +40,7 @@ const DeleteAccount = ({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col justify-center max-w-350px m-auto mt-8 md:mt-0"
+      className="flex flex-col justify-center w-full md:max-w-350px m-auto mt-8 md:mt-0"
     >
       <h2 className="text-main-heading mb-1 text-2xl font-medium ">
         Delete Account
@@ -103,7 +103,7 @@ const DeleteAccount = ({
             <img src="/assets/images/lock-2-line.png" />
           </span>
           <input
-            className={`lft-space appearance-none border ${
+            className={`lft-space appearance-none border minor-shadow ${
               errors.passwordDelete ? "border-red-600" : "border-slate-300"
             } rounded-[10px] w-full py-2 pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
             id="passwordDelete"

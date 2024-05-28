@@ -428,81 +428,83 @@ const MyReports = () => {
           </div>
         </div>
       </div>
-      <div className="min-h-vhcalc93px flex flex-wrap">
-        <div className="w-272px bg-white shadow">
-          <div className="text-lg font-semibold mt-6 mx-5 flex justify-between gap-2 mb-6">
-            Chapters{" "}
-            <span className="w-6 h-6 flex items-center justify-center border border-lightgray3 text-[10px] rounded-md">
-              <AddIcon />
-            </span>
-          </div>
-          <div>
-            {chapters.map((chapter) => (
-              <div
-                key={chapter.value}
-                onClick={() => {
-                  if (saveVisible === true) {
-                    toast((t) => (
-                      <span>
-                        {
-                          "You have still not saved your changes.\nAre you sure you want to"
-                        }{" "}
-                        <b>continue?</b> <br />
-                        <button
-                          className=" border rounded-lg mt-2 px-2"
-                          onClick={() => {
-                            setSaveVisible(false);
-                            setSelectedChapter(chapter.name);
-                            setQuestions(() => {
-                              const cht = chapterQuestions.find(
-                                (chap: any) => chap.name === chapter.name
-                              );
+      <div className="min-h-vhcalc93px max-h-vhcalc93px overflow-y-auto flex flex-wrap">
+        <div className="md:w-272px w-full px-4 md:px-0 my-6 md:mb-0 md:mt-6 md:sticky h-full md:top-6">
+          <div className="w-full bg-white shadow  md:rounded-l-0 rounded-[10px] pb-4">
+            <div className="text-lg font-semibold pt-6 px-5 flex justify-between gap-2 pb-6">
+              Chapters{" "}
+              <span className="w-6 h-6 flex items-center justify-center border border-lightgray3 text-[10px] rounded-md">
+                <AddIcon />
+              </span>
+            </div>
+            <div>
+              {chapters.map((chapter) => (
+                <div
+                  key={chapter.value}
+                  onClick={() => {
+                    if (saveVisible === true) {
+                      toast((t) => (
+                        <span>
+                          {
+                            "You have still not saved your changes.\nAre you sure you want to"
+                          }{" "}
+                          <b>continue?</b> <br />
+                          <button
+                            className=" border rounded-lg mt-2 px-2"
+                            onClick={() => {
+                              setSaveVisible(false);
+                              setSelectedChapter(chapter.name);
+                              setQuestions(() => {
+                                const cht = chapterQuestions.find(
+                                  (chap: any) => chap.name === chapter.name
+                                );
 
-                              return cht?.questions || [];
-                            });
-                            toast.dismiss(t.id);
-                          }}
-                        >
-                          Yes
-                        </button>
-                        <button
-                          onClick={() => toast.dismiss(t.id)}
-                          className="ml-2 border rounded-lg mt-2 px-2"
-                        >
-                          No
-                        </button>
-                      </span>
-                    ));
-                  } else {
-                    setSelectedChapter(chapter.name);
-                    setQuestions(() => {
-                      const cht = chapterQuestions.find(
-                        (chap: any) => chap.name === chapter.name
-                      );
+                                return cht?.questions || [];
+                              });
+                              toast.dismiss(t.id);
+                            }}
+                          >
+                            Yes
+                          </button>
+                          <button
+                            onClick={() => toast.dismiss(t.id)}
+                            className="ml-2 border rounded-lg mt-2 px-2"
+                          >
+                            No
+                          </button>
+                        </span>
+                      ));
+                    } else {
+                      setSelectedChapter(chapter.name);
+                      setQuestions(() => {
+                        const cht = chapterQuestions.find(
+                          (chap: any) => chap.name === chapter.name
+                        );
 
-                      return cht?.questions || [];
-                    });
-                  }
-                }}
-                className={`px-3 py-2 flex gap-2 justify-between items-center hover:bg-lightgray rounded-lg mx-5 my-2 relative cursor-pointer ${
-                  selectedChapter === chapter.name
-                    ? "bg-lightgray before:content before:absolute before:w-1 before:top-1/2 before:left-[-1.25rem] before:h-5 before:bg-span-clr before:translate-y-[-50%] before:rounded-r-lg"
-                    : ""
-                }`}
-              >
-                {chapter.name}{" "}
-                <span className="text-success2">
-                  <AddCircleOutlineIcon />
-                </span>{" "}
-                <span className="text-red2">
-                  <RemoveCircleOutlineIcon />
-                </span>
-              </div>
-            ))}
+                        return cht?.questions || [];
+                      });
+                    }
+                  }}
+                  className={`px-3 py-2 flex gap-2 justify-between items-center hover:bg-lightgray rounded-lg mx-5 my-2 relative cursor-pointer ${
+                    selectedChapter === chapter.name
+                      ? "bg-lightgray before:content before:absolute before:w-1 before:top-1/2 before:left-[-1.25rem] before:h-5 before:bg-span-clr before:translate-y-[-50%] before:rounded-r-lg"
+                      : ""
+                  }`}
+                >
+                  {chapter.name}{" "}
+                  <span className="text-success2">
+                    <AddCircleOutlineIcon />
+                  </span>{" "}
+                  <span className="text-red2">
+                    <RemoveCircleOutlineIcon />
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-        <div className="p-6 w-100-272px">
-          <Paper sx={{ borderRadius: "16px", py: 4, px: 6 }}>
+        <div className="md:p-6 p-4 md:w-100-272px w-full">
+          <Paper sx={{ borderRadius: "16px", py: 4 }} className="md:px-6 px-4">
             <div className="flex flex-col justify-center">
               {questions?.map((question, index) => {
                 const displayIcon = questionType.find(
