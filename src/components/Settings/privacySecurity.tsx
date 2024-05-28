@@ -215,7 +215,7 @@ const PrivacySecurity = ({ handleSubmit, onSubmit, errors, setValue }: any) => {
               onChange={(e: any) => {
                 setChecked(e.target.value);
                 setIsDisabled(false);
-                setValue("method", e.target.value);
+                setValue("method", e.target.value, { shouldValidate: true });
               }}
               className="w-4 h-4 text-span-clr bg-gray-100  dark:focus:ring-span-clr dark:ring-offset-gray-800  dark:bg-gray-700"
             />

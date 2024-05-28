@@ -12,7 +12,7 @@ const SignupSixth = ({
   resendOTP,
 }: any) => {
   useEffect(() => {
-    setValue("otp", otp);
+    setValue("otp", otp, { shouldValidate: true });
   }, [otp]);
   return (
     <div className="bg-[url(../assets/images/Pattern.png)] bg-no-repeat bg-top min-h-vhcalc225px px-4">

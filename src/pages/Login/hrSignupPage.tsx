@@ -365,7 +365,6 @@ const SignupPage = () => {
           {header.map((item, index) => (
             <div className="flex" key={index}>
               <div
-                onClick={() => setStep(item.id)}
                 className={`flex items-center justify-center py-2 gap-2 rounded-lg text-gray-500 dark:bg-gray-800  dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
               >
                 <div
@@ -426,7 +425,7 @@ const SignupPage = () => {
         {/* <div className="h-10 w-10"></div> */}
       </div>
       <hr className="border-color: gray;"></hr>
-      {step > 1 && (
+      {step > 1 && step !== 3 && (
         <div className="text-start back-btnn md:px-44px px-4 py-6 bg-[url(../assets/images/Pattern.png)] bg-no-repeat bg-top">
           <button
             className="px-3 flex py-2 justify-center rounded-[10px] items-center gap-2 text-gray-dark border border-[#E2E4E9] font-semibold focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"

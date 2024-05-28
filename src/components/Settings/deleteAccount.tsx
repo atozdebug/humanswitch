@@ -112,7 +112,9 @@ const DeleteAccount = ({
             placeholder="🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄"
             onChange={(e: any) => {
               setPassword(e.target.value);
-              setValue("passwordDelete", e.target.value);
+              setValue("passwordDelete", e.target.value, {
+                shouldValidate: true,
+              });
             }}
           />
           <span

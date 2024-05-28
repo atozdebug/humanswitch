@@ -204,7 +204,9 @@ const ForgetPasswordId = () => {
                   placeholder="Create a password"
                   onChange={(e: any) => {
                     handlePasswordChange(e.target.value);
-                    setValue("password", e.target.value);
+                    setValue("password", e.target.value, {
+                      shouldValidate: true,
+                    });
                   }}
                 />
                 <span

@@ -24,7 +24,7 @@ const SignupTwo = ({
     <div className="main min-h-vhcalc225px bg-[url(../assets/images/Pattern.png)] bg-no-repeat bg-top px-4">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="form-2 pb-10 flex flex-col max-w-md m-auto justify-center "
+        className="form-2 pb-10 flex flex-col max-w-md m-auto justify-center min-h-vhcalc135px"
       >
         <div className="flex items-center gap-2">
           <div>
@@ -157,7 +157,7 @@ const SignupTwo = ({
             value={phone}
             onChange={(phone) => {
               setPhone(phone);
-              setValue("phone_no", phone);
+              setValue("phone_no", phone, { shouldValidate: true });
             }}
             placeholder="+1 (545) 674-3543"
             inputStyle={{
