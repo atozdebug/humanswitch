@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch } from "react-redux";
 import { sendResetMail } from "../../services/slices/auth/forgotPassword";
-import { useState } from "react";
 import toast from "react-hot-toast";
 
 const schema = yup.object().shape({

@@ -267,21 +267,22 @@ const SignupPage = () => {
       setFormData(data);
       if (step === 1) {
         setMail(data.email);
-        toast.promise(
-          dispatch(sendEmailVerification({ email: data.email }))
-            .unwrap()
-            .then(() => {
-              setStep(2); // Move to OTP verification step
-            })
-            .catch((error: any) => {
-              console.error("Error sending OTP:", error);
-            }),
-          {
-            loading: "Sending Email...",
-            success: "Email Sent!",
-            error: "Error while sending email",
-          }
-        );
+        const toastId = toast.loading("Sending Mail...");
+        dispatch(sendEmailVerification({ email: data.email }))
+          .unwrap()
+          .then((res: any) => {
+            toast.dismiss(toastId);
+            if (res.error) {
+              toast.error(res.error);
+            } else {
+              toast.success(res.message);
+              setStep(2);
+            }
+            // Move to OTP verification step
+          })
+          .catch((error: any) => {
+            console.error("Error sending OTP:", error);
+          });
       } else if (step === 2) {
         // Handle OTP verification logic here
         if (otp.length === 6) {
