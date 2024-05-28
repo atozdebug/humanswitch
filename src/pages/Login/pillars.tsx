@@ -229,12 +229,12 @@ const Pillars = () => {
       if (allFieldsFilled) {
         let existingData = Cookies.get("questionnaireData");
         let data = existingData ? JSON.parse(existingData) : [];
-        data.push(currentStepAnswers);
-        Cookies.set("questionnaireData", JSON.stringify(data));
 
+        data.push(currentStepAnswers);
         if (data.length === 3) {
-          toggleModal();
+          return toggleModal();
         }
+        Cookies.set("questionnaireData", JSON.stringify(data));
 
         setStep((prev) => prev + 1);
         setStepsTick((prev: any) => [...prev, step]);
@@ -242,6 +242,7 @@ const Pillars = () => {
         // Show a message or take any other appropriate action to indicate that all fields need to be filled
         toast("Please fill all fields before proceeding.", { icon: "ℹ️" });
       }
+      setQuestionAnswered(false);
     }
   };
 

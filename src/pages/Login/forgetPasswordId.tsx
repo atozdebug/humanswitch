@@ -143,9 +143,7 @@ const ForgetPasswordId = () => {
           <p className="font-normal text-center">
             Your password has been successfully reset.
           </p>
-          <p className="font-normal text-center">
-            Click below to log in magically.
-          </p>
+          <p className="font-normal text-center">Click below to log in.</p>
 
           <div className="form-info w-full flex flex-col justify-between items-center mt-4">
             <a href="/login">

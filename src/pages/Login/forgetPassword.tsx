@@ -36,12 +36,17 @@ const ForgetPasswordPage = () => {
     toast.dismiss();
     const formData: any = new FormData();
     formData.append("email", data.email);
-    toast.promise(dispatch(sendResetMail(formData)), {
-      loading: "Sending Email...",
-      success:
-        "Instructions have been sent to your email to assist you with password reset",
-      error: "Error while sending email",
-    });
+    const toastId = toast.loading("Sending Mail...");
+    dispatch(sendResetMail(formData))
+      .unwrap()
+      .then((res: any) => {
+        toast.dismiss(toastId);
+        if (res.success === "true") {
+          toast.success(res.message);
+        } else {
+          toast.error(res.message);
+        }
+      });
   };
 
   return (
