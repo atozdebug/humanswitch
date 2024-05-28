@@ -259,6 +259,7 @@ const SignupPage = () => {
   const [otpError, setOtpError] = useState(false);
 
   const onSubmit: any = (data: FormData) => {
+    toast.dismiss();
     try {
       setFormData(data);
       if (step === 1) {
@@ -333,6 +334,7 @@ const SignupPage = () => {
   };
 
   const resendOTP = () => {
+    toast.dismiss();
     toast.promise(dispatch(sendEmailVerification({ email })), {
       loading: "Sending Email...",
       success: "Email Sent!",

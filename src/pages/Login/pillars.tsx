@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 import { getQuestions } from "../../services/slices/dashboard/dashboard";
 import { Box, Slider } from "@mui/material";
+import toast from "react-hot-toast";
 
 const sideBarItems = [
   {
@@ -104,12 +105,12 @@ const Pillars = () => {
       .then((res: any) => {
         const questionsMap = new Map();
 
-        res.forEach((item) => {
+        res.forEach((item: any) => {
           questionsMap.set(item.name, item.questions);
         });
 
         // Initialize stepAnswers object
-        const initialStepAnswers = {};
+        const initialStepAnswers: any = {};
 
         // Loop through sideBarItems to create stepAnswers
         sideBarItems.forEach((item, index) => {
@@ -118,11 +119,14 @@ const Pillars = () => {
           const questions = questionsMap.get(item.name) || [];
 
           // Create chapter object
-          const chapter = questions.reduce((acc, question, questionIndex) => {
-            // Change here
-            acc[`question-${questionIndex}`] = "";
-            return acc;
-          }, {});
+          const chapter = questions.reduce(
+            (acc: any, _question: any, questionIndex: any) => {
+              // Change here
+              acc[`question-${questionIndex}`] = "";
+              return acc;
+            },
+            {}
+          );
 
           // Add chapter to initialStepAnswers
           initialStepAnswers[index] = chapter; // Change here
@@ -211,6 +215,7 @@ const Pillars = () => {
   };
 
   const handleNext = () => {
+    toast.dismiss();
     if (questionAnswered) {
       const currentStepAnswers = stepAnswers[step - 1];
 
@@ -235,7 +240,7 @@ const Pillars = () => {
         setStepsTick((prev: any) => [...prev, step]);
       } else {
         // Show a message or take any other appropriate action to indicate that all fields need to be filled
-        console.log("Please fill all fields before proceeding.");
+        toast("Please fill all fields before proceeding.", { icon: "ℹ️" });
       }
     }
   };

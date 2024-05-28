@@ -45,6 +45,7 @@ const Profile = () => {
   };
 
   const saveProfile = () => {
+    toast.dismiss();
     const formData: any = new FormData();
     formData.append("first_name", firstName);
     formData.append("last_name", lastName);

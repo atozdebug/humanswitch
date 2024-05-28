@@ -33,6 +33,7 @@ const ForgetPasswordPage = () => {
   });
 
   const onSubmit: any = (data: FormData) => {
+    toast.dismiss();
     const formData: any = new FormData();
     formData.append("email", data.email);
     toast.promise(dispatch(sendResetMail(formData)), {

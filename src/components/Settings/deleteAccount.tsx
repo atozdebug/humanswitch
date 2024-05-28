@@ -20,6 +20,7 @@ const DeleteAccount = ({
   const [password, setPassword] = useState("");
 
   const handleDelete = async () => {
+    toast.dismiss();
     dispatch(deleteUser({ id: user, password }))
       .unwrap()
       .then((res: any) => {

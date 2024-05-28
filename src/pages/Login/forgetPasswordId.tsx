@@ -109,6 +109,7 @@ const ForgetPasswordId = () => {
   };
 
   const onSubmit: any = (data: FormData) => {
+    toast.dismiss();
     dispatch(resetPassword({ token, new_password: data.password }))
       .unwrap()
       .then((res: any) => {
@@ -144,10 +145,12 @@ const ForgetPasswordId = () => {
             Click below to log in magically.
           </p>
 
-          <div className="form-info flex flex-col justify-between items-center mt-4">
-            <button className="rounded w-full my-5 bg-purple-500 hover:bg-purple-700 py-2 px-4 text-white font-semibold">
-              <a href="/login">Continue</a>
-            </button>
+          <div className="form-info w-full flex flex-col justify-between items-center mt-4">
+            <a href="/login">
+              <button className="rounded w-full my-5 bg-purple-500 hover:bg-purple-700 py-2 px-4 text-white font-semibold">
+                Continue
+              </button>
+            </a>
           </div>
         </div>
       ) : (

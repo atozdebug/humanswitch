@@ -68,6 +68,7 @@ const PrivacySecurity = ({ handleSubmit, onSubmit, errors, setValue }: any) => {
   const [step, setStep] = useState(0);
 
   const enableAuthentication = (state: any) => {
+    toast.dismiss();
     const formData: any = new FormData();
 
     if (state === "enabled") {
@@ -121,6 +122,7 @@ const PrivacySecurity = ({ handleSubmit, onSubmit, errors, setValue }: any) => {
   };
 
   const handleVerifyOtps = (type: any) => {
+    toast.dismiss();
     const formData: any = new FormData();
     formData.append("security", checked);
     if (otp === "") {

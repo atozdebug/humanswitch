@@ -367,6 +367,7 @@ const MyReports = () => {
   };
 
   const handleSaveData = () => {
+    toast.dismiss();
     const chapterIndex = chapterQuestions.findIndex(
       (chapter: any) => chapter.name === selectedChapter
     );
@@ -390,6 +391,7 @@ const MyReports = () => {
   };
 
   const handlePublish = () => {
+    toast.dismiss();
     dispatch(createQuestions(chapterQuestions))
       .unwrap()
       .then(() => {
@@ -441,6 +443,7 @@ const MyReports = () => {
               <div
                 key={chapter.value}
                 onClick={() => {
+                  toast.dismiss();
                   if (saveVisible === true) {
                     toast((t) => (
                       <span>
