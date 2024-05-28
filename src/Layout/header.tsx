@@ -1,14 +1,11 @@
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 import { useLocation } from "react-router-dom";
 import CreateButton from "../components/Home/createButton";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  TextField,
-} from "@mui/material";
+import { Dialog, DialogActions, DialogContent } from "@mui/material";
 import { useState } from "react";
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const headers = [
   {
@@ -69,6 +66,41 @@ const headers = [
   },
 ];
 
+const schemaPlan = yup.object().shape({
+  planName: yup.string().required("Plan name is required"),
+  price: yup.string().required("Price is required"),
+  startDate: yup.string().required("Start date is required"),
+  endDate: yup.string().required("End date is required"),
+  employees: yup.string().required("Employees is required"),
+  isActive: yup.boolean(),
+});
+
+const schemaRole = yup.object().shape({
+  isActive: yup.boolean(),
+  roleName: yup.string().required("Role name is required"),
+  editMember: yup.string(),
+  editCompanyDetails: yup.string(),
+  editReport: yup.string(),
+});
+
+interface FormData {
+  planName: string;
+  price: string;
+  startDate: string;
+  endDate: string;
+  employees: string;
+  isActive: boolean;
+}
+
+const defaultValues = {
+  planName: "",
+  price: "",
+  startDate: "",
+  endDate: "",
+  employees: "",
+  isActive: false,
+};
+
 const Header = () => {
   const location = useLocation();
 
@@ -80,6 +112,28 @@ const Header = () => {
   const title = headers.find(
     (header) => header.path === getBasePath(location.pathname)
   );
+
+  const schemas = () => {
+    if (title?.buttonName === "Report") {
+      return yupResolver(schemaPlan);
+    } else if (title?.buttonName === "Plan") {
+      return yupResolver(schemaPlan);
+    } else if (title?.buttonName === "Role") {
+      return yupResolver(schemaRole);
+    }
+  };
+
+  const {
+    register,
+    handleSubmit,
+    // reset,
+    setValue,
+    trigger,
+    formState: { errors },
+  } = useForm<FormData | any>({
+    resolver: schemas(),
+    defaultValues,
+  });
 
   const [open, setOpen] = useState(false);
 
