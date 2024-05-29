@@ -1,12 +1,12 @@
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 import { useLocation } from "react-router-dom";
 import CreateButton from "../components/Home/createButton";
-import { Dialog, DialogActions, DialogContent } from "@mui/material";
+import { Dialog, DialogActions, DialogContent, Switch } from "@mui/material";
 import { useState } from "react";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import dayjs, { Dayjs } from "dayjs";
+import { Dayjs } from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 const headers = [
@@ -116,7 +116,9 @@ const Header = () => {
   );
 
   const schemas = () => {
-    if (title?.buttonName === "Plan") {
+    if (title?.buttonName === "Report") {
+      return yupResolver(schemaPlan);
+    } else if (title?.buttonName === "Plan") {
       return yupResolver(schemaPlan);
     } else if (title?.buttonName === "Role") {
       return yupResolver(schemaRole);
@@ -135,8 +137,14 @@ const Header = () => {
   });
 
   const [open, setOpen] = useState(false);
-  const [startDate, setStartDate] = useState<Dayjs | null>(dayjs());
-  const [endDate, setEndDate] = useState<Dayjs | null>(dayjs());
+  const [startDate, setStartDate] = useState<Dayjs | null>(null);
+  const [endDate, setEndDate] = useState<Dayjs | null>(null);
+
+  const [checked, setChecked] = useState(true);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setChecked(event.target.checked);
+  };
 
   const onClick = () => {
     handleClickOpen();
@@ -150,7 +158,7 @@ const Header = () => {
     setOpen(false);
   };
 
-  const onSubmit: any = (data: FormData) => {
+  const onSubmit = (data: FormData) => {
     console.log("Called");
     if (title?.buttonName === "Report") {
       console.log("Report", data);
@@ -163,7 +171,7 @@ const Header = () => {
   };
 
   return (
-    <div className="bg-white shadow-sm md:py-5 md:px-8 px-4 py-4 header-top-right">
+    <div className="bg-white shadow-sm md:py-5 md:px-8 px-4 py-4">
       <div className="grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 flex items-center justify-between">
         <div className="flex justify-center items-center">
           <span className="bg-[#F6F8FA] p-2 rounded-full">
@@ -186,7 +194,7 @@ const Header = () => {
       </div>
       <Dialog fullWidth={true} maxWidth="md" open={open} onClose={handleClose}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="p-4">
+          <div className="px-4 pt-4">
             <div className="font-semibold text-xl">
               Create New {title?.buttonName}
             </div>
@@ -211,28 +219,100 @@ const Header = () => {
                     />
                     {errors?.planName && (
                       <p className="text-red-500 text-sm mt-2">
-                        {errors.planName.message}
+                        {String(errors.planName.message)}
                       </p>
                     )}
                   </div>
                 </div>
-                <div>
+                <div className="mt-4">
+                  <div>Price</div>
+                  <div>
+                    <input
+                      className={`shadow appearance-none border rounded-[10px] w-full py-2.5 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                        errors.price ? "border-[#F04438]" : ""
+                      }`}
+                      id="price"
+                      type="number"
+                      placeholder="Enter your Plan"
+                      {...register("price")}
+                    />
+                    {errors?.price && (
+                      <p className="text-red-500 text-sm mt-2">
+                        {String(errors.price.message)}
+                      </p>
+                    )}
+                  </div>
+                </div>
+                <div className="mt-4">
                   <div>Start Date</div>
                   <div>
                     <DatePicker
                       value={startDate}
-                      onChange={(newValue) => setStartDate(newValue)}
+                      onChange={(newValue) => {
+                        setValue(
+                          "startDate",
+                          newValue ? newValue.format("YYYY-MM-DD") : "",
+                          {
+                            shouldValidate: true,
+                          }
+                        );
+                        setStartDate(newValue);
+                      }}
                     />
+                    {errors?.startDate && (
+                      <p className="text-red-500 text-sm mt-2">
+                        {String(errors.startDate.message)}
+                      </p>
+                    )}
                   </div>
                 </div>
-                <div>
+                <div className="mt-4">
                   <div>
                     <div>End Date</div>
                     <DatePicker
                       value={endDate}
-                      onChange={(newValue) => setEndDate(newValue)}
+                      onChange={(newValue) => {
+                        setValue(
+                          "endDate",
+                          newValue ? newValue.format("YYYY-MM-DD") : "",
+                          {
+                            shouldValidate: true,
+                          }
+                        );
+                        setEndDate(newValue);
+                      }}
                     />
+                    {errors?.endDate && (
+                      <p className="text-red-500 text-sm mt-2">
+                        {String(errors.endDate.message)}
+                      </p>
+                    )}
                   </div>
+                </div>
+                <div className="mt-4">
+                  <div>Employees</div>
+                  <div>
+                    <input
+                      className={`shadow appearance-none border rounded-[10px] w-full py-2.5 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                        errors.employees ? "border-[#F04438]" : ""
+                      }`}
+                      id="employees"
+                      type="number"
+                      placeholder="Enter your Plan"
+                      {...register("employees")}
+                    />
+                    {errors?.employees && (
+                      <p className="text-red-500 text-sm mt-2">
+                        {String(errors.employees.message)}
+                      </p>
+                    )}
+                  </div>
+                </div>
+                <div className="flex items-center gap-1 mt-4">
+                  <div>
+                    <Switch checked={checked} onChange={handleChange} />
+                  </div>
+                  <div>Active</div>
                 </div>
               </div>
             )}
@@ -243,13 +323,13 @@ const Header = () => {
               className="m-2 w-full px-4 py-2 rounded-md hover:bg-gray-200 text-red-600"
               onClick={handleClose}
             >
-              Cancel
+              Discard
             </button>
             <button
-              type="submit"
               className="m-2 w-full px-4 py-2 rounded-md hover:bg-gray-200 mr-2 text-blue-800"
+              type="submit"
             >
-              Subscribe
+              Save
             </button>
           </DialogActions>
         </form>
