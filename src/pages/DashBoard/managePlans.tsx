@@ -29,84 +29,178 @@ const data = [
 ];
 
 const ManagePlans = () => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
   return (
-    <div className="px-10 py-8">
-      <Grid container spacing={5}>
-        {data.map((item) => (
-          <Grid item xs={6}>
-            <Card className="p-4">
-              <div>
-                <div className="flex justify-between">
-                  <div>
-                    <div>{item.name}</div>
-                    <div>Edited {item.editedAgo} Ago</div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div>Default</div>
-                    <div>Active</div>
-                    <button
-                      className="hover:bg-gray-200 rounded-full"
-                      onClick={handleClick}
-                    >
-                      <MoreVertIcon />
-                    </button>
-                    <Popover
-                      anchorEl={anchorEl}
-                      open={open}
-                      onClose={handleClose}
-                      anchorOrigin={{
-                        vertical: "bottom",
-                        horizontal: "right",
-                      }}
-                      transformOrigin={{
-                        vertical: "top",
-                        horizontal: "right",
-                      }}
-                    >
-                      <div
-                        className="px-3 py-3 hover:bg-gray-200 hover:cursor-pointer flex justify-center items-center gap-2 text-blue-700"
-                        onClick={handleClose}
-                      >
-                        <EditIcon />
-                        Edit
-                      </div>
-                      <div
-                        className="px-3 py-3 hover:bg-gray-200 hover:cursor-pointer flex justify-center items-center gap-2 text-red-700"
-                        onClick={handleClose}
-                      >
-                        <DeleteIcon />
-                        Delete
-                      </div>
-                    </Popover>
-                  </div>
+    <div className="content-right-inner min-h-vhcalc92px overflow-y-auto max-h-vhcalc92px lg:px-8 px-4 md:py-7 py-4 bg-lightgray">
+      <div className="grid md:grid-cols-2 grid-cols-1 gap-6 mb-6">
+        <div className="grid-item">
+          <div className="grid-item-inner p-5 rounded-[10px] bg-white shadow-s2">
+            <ul className="flex flex-wrap list-unstyled">
+              <li className="w-1/2 pr-3">
+                <h3 className="text-main-heading text-lg font-medium plan-title">
+                  Basic Plan
+                </h3>
+                <p className="text-gray-dark text-sm plan-edited">
+                  Edited 1 min ago
+                </p>
+              </li>
+              <li className="w-1/2 text-right">
+                <span className="px-2 py-2px text-xs bg-lightgray text-gray-dark inline-block align-middle rounded-full mx-1">
+                  Default
+                </span>
+                <span className="px-2 py-2px text-xs bg-lightgreen text-darkgreen inline-block align-middle rounded-full mx-1">
+                  Active
+                </span>
+              </li>
+            </ul>
+            <ul className="flex flex-wrap list-unstyled pt-9">
+              <li className="w-2/3 pr-3 flex gap-2">
+                <div className="w-1/2">
+                  <p className="text-gray-dark text-sm plan-edited">Users</p>
+                  <p className="text-main-heading text-sm font-medium plan-title">
+                    1-10 Users
+                  </p>
                 </div>
-                <div className="flex justify-between mt-4">
-                  <div>
-                    <div>User</div>
-                    <div>{item.users}</div>
-                  </div>
-                  <div>
-                    <div>End Date</div>
-                    <div>mm/dd/yyyy</div>
-                  </div>
-                  <div>
-                    <div>Price</div>
-                    <div>{item.price}</div>
-                  </div>
+                <div className="w-1/2">
+                  <p className="text-gray-dark text-sm plan-edited">End Date</p>
+                  <p className="text-main-heading text-sm font-medium plan-title">
+                    mm/dd/yyyy
+                  </p>
                 </div>
-              </div>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
+              </li>
+              <li className="w-1/3 text-right text-xl text-mediumblue font-medium">
+                £99
+              </li>
+            </ul>
+          </div>
+        </div>
+        {/* ======================= */}
+        <div className="grid-item">
+          <div className="grid-item-inner p-5 rounded-[10px] bg-white shadow-s2">
+            <ul className="flex flex-wrap list-unstyled">
+              <li className="w-1/2 pr-3">
+                <h3 className="text-main-heading text-lg font-medium plan-title">
+                  Professional Plan
+                </h3>
+                <p className="text-gray-dark text-sm plan-edited">
+                  Edited 1 min ago
+                </p>
+              </li>
+              <li className="w-1/2 text-right">
+                <span className="px-2 py-2px text-xs bg-lightgray text-gray-dark inline-block align-middle rounded-full mx-1">
+                  Default
+                </span>
+                <span className="px-2 py-2px text-xs bg-lightred text-darkred inline-block align-middle rounded-full mx-1">
+                  Inactive
+                </span>
+              </li>
+            </ul>
+            <ul className="flex flex-wrap list-unstyled pt-9">
+              <li className="w-2/3 pr-3 flex gap-2">
+                <div className="w-1/2">
+                  <p className="text-gray-dark text-sm plan-edited">Users</p>
+                  <p className="text-main-heading text-sm font-medium plan-title">
+                    11-99 Users
+                  </p>
+                </div>
+                <div className="w-1/2">
+                  <p className="text-gray-dark text-sm plan-edited">End Date</p>
+                  <p className="text-main-heading text-sm font-medium plan-title">
+                    mm/dd/yyyy
+                  </p>
+                </div>
+              </li>
+              <li className="w-1/3 text-right text-xl text-mediumblue font-medium">
+                £499
+              </li>
+            </ul>
+          </div>
+        </div>
+        {/* ======================= */}
+        <div className="grid-item">
+          <div className="grid-item-inner p-5 rounded-[10px] bg-white shadow-s2">
+            <ul className="flex flex-wrap list-unstyled">
+              <li className="w-1/2 pr-3">
+                <h3 className="text-main-heading text-lg font-medium plan-title">
+                  Premium Plan
+                </h3>
+                <p className="text-gray-dark text-sm plan-edited">
+                  Edited 1 min ago
+                </p>
+              </li>
+              <li className="w-1/2 text-right">
+                <span className="px-2 py-2px text-xs bg-lightgray text-gray-dark inline-block align-middle rounded-full mx-1">
+                  Default
+                </span>
+                <span className="px-2 py-2px text-xs bg-lightgreen text-darkgreen inline-block align-middle rounded-full mx-1">
+                  Active
+                </span>
+              </li>
+            </ul>
+            <ul className="flex flex-wrap list-unstyled pt-9">
+              <li className="w-2/3 pr-3 flex gap-2">
+                <div className="w-1/2">
+                  <p className="text-gray-dark text-sm plan-edited">Users</p>
+                  <p className="text-main-heading text-sm font-medium plan-title">
+                    100+ Users
+                  </p>
+                </div>
+                <div className="w-1/2">
+                  <p className="text-gray-dark text-sm plan-edited">End Date</p>
+                  <p className="text-main-heading text-sm font-medium plan-title">
+                    mm/dd/yyyy
+                  </p>
+                </div>
+              </li>
+              <li className="w-1/3 text-right text-xl text-mediumblue font-medium">
+                £1299
+              </li>
+            </ul>
+          </div>
+        </div>
+        {/* ======================= */}
+        <div className="grid-item">
+          <div className="grid-item-inner p-5 rounded-[10px] bg-white shadow-s2">
+            <ul className="flex flex-wrap list-unstyled">
+              <li className="w-1/2 pr-3">
+                <h3 className="text-main-heading text-lg font-medium plan-title">
+                  Premium Plan
+                </h3>
+                <p className="text-gray-dark text-sm plan-edited">
+                  Edited 1 min ago
+                </p>
+              </li>
+              <li className="w-1/2 text-right">
+                <span className="px-2 py-2px text-xs bg-lightblue text-darkblue inline-block align-middle rounded-full mx-1">
+                  Custom
+                </span>
+                <span className="px-2 py-2px text-xs bg-lightgreen text-darkgreen inline-block align-middle rounded-full mx-1">
+                  Active
+                </span>
+              </li>
+            </ul>
+            <ul className="flex flex-wrap list-unstyled pt-9">
+              <li className="w-2/3 pr-3 flex gap-2">
+                <div className="w-1/2">
+                  <p className="text-gray-dark text-sm plan-edited">Users</p>
+                  <p className="text-main-heading text-sm font-medium plan-title">
+                    100+ Users
+                  </p>
+                </div>
+                <div className="w-1/2">
+                  <p className="text-gray-dark text-sm plan-edited">End Date</p>
+                  <p className="text-main-heading text-sm font-medium plan-title">
+                    mm/dd/yyyy
+                  </p>
+                </div>
+              </li>
+              <li className="w-1/3 text-right text-xl text-mediumblue font-medium">
+                £1299
+              </li>
+            </ul>
+          </div>
+        </div>
+        {/* ======================= */}
+      </div>
     </div>
   );
 };
