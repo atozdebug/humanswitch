@@ -8,6 +8,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Dayjs } from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { useDispatch } from "react-redux";
+import { createPlans } from "../services/slices/dashboard/plans";
 
 const headers = [
   {
@@ -112,6 +114,7 @@ const defaultValues = {
 
 const Header = () => {
   const location = useLocation();
+  const dispatch: any = useDispatch();
 
   const getBasePath = (pathname: any) => {
     const parts = pathname.split("/");
@@ -147,7 +150,7 @@ const Header = () => {
   const [startDate, setStartDate] = useState<Dayjs | null>(null);
   const [endDate, setEndDate] = useState<Dayjs | null>(null);
 
-  const [checked, setChecked] = useState(true);
+  const [checked, setChecked] = useState(false);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked);
@@ -171,6 +174,16 @@ const Header = () => {
       console.log("Report", data);
     } else if (title?.buttonName === "Plan") {
       console.log("Plan", data);
+      dispatch(
+        createPlans({
+          name: data.planName,
+          price: data.price,
+          start_date: data.startDate,
+          end_date: data.endDate,
+          employees: data.employees,
+          active: data.isActive,
+        })
+      );
     } else if (title?.buttonName === "Role") {
       console.log("Role", data);
     }

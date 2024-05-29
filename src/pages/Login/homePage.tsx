@@ -30,12 +30,16 @@ const HomePage = () => {
     <>
       <header className="absolute top-0 left-0 w-full z-10">
         <div className="flex justify-end gap-4 z-1 pt-6 md:px-8 px-4">
-          <button className="text-span-clr text-lg font-bold bg-white rounded-[10px] py-3 shadow px-8 ">
-            Register
-          </button>
-          <button className="text-span-clr text-lg font-bold bg-white rounded-[10px] py-3 shadow px-8">
-            Login
-          </button>
+          <a href="/signup">
+            <button className="text-span-clr text-lg font-bold bg-white rounded-[10px] py-3 shadow px-8 ">
+              Register
+            </button>
+          </a>
+          <a href="/login">
+            <button className="text-span-clr text-lg font-bold bg-white rounded-[10px] py-3 shadow px-8">
+              Login
+            </button>
+          </a>
         </div>
       </header>
       <section className="banner bg-lightblue pb-10 pt-20 flex items-center relative min-h-screen ">
@@ -446,8 +450,7 @@ const HomePage = () => {
                   </g>
                 </svg>
                 <h3 className="xl:text-2xl text-xl font-bold mb-3 leading-6">
-                  Integration of our registered Human Centrix AI Business
-                  Model®
+                  Integration of our registered Human Centrix AI Business Model®
                 </h3>
                 <p className="mb-0 leading-relaxed md:text-base text-sm">
                   We help your SME effectively integrate our registered Human
