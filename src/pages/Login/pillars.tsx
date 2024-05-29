@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 import { getQuestions } from "../../services/slices/dashboard/dashboard";
 import { Box, Slider } from "@mui/material";
+import toast from "react-hot-toast";
 
 const sideBarItems = [
   {
@@ -91,6 +92,7 @@ const sideBarItems = [
 
 const Pillars = () => {
   const dispatch = useDispatch();
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -102,38 +104,43 @@ const Pillars = () => {
     dispatch(getQuestions())
       .unwrap()
       .then((res: any) => {
-        const questionsMap = new Map();
+        if (!token) {
+          const questionsMap = new Map();
 
-        res.forEach((item) => {
-          questionsMap.set(item.name, item.questions);
-        });
+          res.forEach((item: any) => {
+            questionsMap.set(item.name, item.questions);
+          });
 
-        // Initialize stepAnswers object
-        const initialStepAnswers = {};
+          // Initialize stepAnswers object
+          const initialStepAnswers: any = {};
 
-        // Loop through sideBarItems to create stepAnswers
-        sideBarItems.forEach((item, index) => {
-          // Change here
-          // Find questions for this item by name
-          const questions = questionsMap.get(item.name) || [];
-
-          // Create chapter object
-          const chapter = questions.reduce((acc, question, questionIndex) => {
+          // Loop through sideBarItems to create stepAnswers
+          sideBarItems.forEach((item, index) => {
             // Change here
-            acc[`question-${questionIndex}`] = "";
-            return acc;
-          }, {});
+            // Find questions for this item by name
+            const questions = questionsMap.get(item.name) || [];
 
-          // Add chapter to initialStepAnswers
-          initialStepAnswers[index] = chapter; // Change here
+            // Create chapter object
+            const chapter = questions.reduce(
+              (acc: any, _question: any, questionIndex: any) => {
+                // Change here
+                acc[`question-${questionIndex}`] = "";
+                return acc;
+              },
+              {}
+            );
 
-          // Update questions array for this item in sideBarItems
-          item.questions = questions;
-        });
+            // Add chapter to initialStepAnswers
+            initialStepAnswers[index] = chapter; // Change here
 
-        // Set the state with the updated sideBarItems and initialStepAnswers
+            // Update questions array for this item in sideBarItems
+            item.questions = questions;
+          });
 
-        setStepAnswers(initialStepAnswers);
+          // Set the state with the updated sideBarItems and initialStepAnswers
+
+          setStepAnswers(initialStepAnswers);
+        }
 
         res.forEach((item: any) => {
           const chapter: any = sideBarItems.find((x) => x.name === item.name);
@@ -211,6 +218,7 @@ const Pillars = () => {
   };
 
   const handleNext = () => {
+    toast.dismiss();
     if (questionAnswered) {
       const currentStepAnswers = stepAnswers[step - 1];
 
@@ -224,19 +232,20 @@ const Pillars = () => {
       if (allFieldsFilled) {
         let existingData = Cookies.get("questionnaireData");
         let data = existingData ? JSON.parse(existingData) : [];
-        data.push(currentStepAnswers);
-        Cookies.set("questionnaireData", JSON.stringify(data));
 
-        if (data.length === 3) {
-          toggleModal();
+        data.push(currentStepAnswers);
+        if (data.length === 3 && !token) {
+          return toggleModal();
         }
+        Cookies.set("questionnaireData", JSON.stringify(data));
 
         setStep((prev) => prev + 1);
         setStepsTick((prev: any) => [...prev, step]);
       } else {
         // Show a message or take any other appropriate action to indicate that all fields need to be filled
-        console.log("Please fill all fields before proceeding.");
+        toast("Please fill all fields before proceeding.", { icon: "ℹ️" });
       }
+      setQuestionAnswered(false);
     }
   };
 

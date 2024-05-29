@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PhoneInput from "react-phone-input-2";
 
 import "react-phone-input-2/lib/bootstrap.css";
@@ -10,8 +10,13 @@ const SignupTwo = ({
   onSubmit,
   errors,
   setValue,
-  trigger,
+  imageFile,
+  phoneNo,
 }: any) => {
+  useEffect(() => {
+    setProfilePic(imageFile ? URL.createObjectURL(imageFile) : null);
+    setPhone(phoneNo);
+  }, []);
   const [phone, setPhone] = useState<any>("");
   const [profilePic, setProfilePic] = useState<any>(null);
 
@@ -19,7 +24,7 @@ const SignupTwo = ({
     <div className="main min-h-vhcalc225px bg-[url(../assets/images/Pattern.png)] bg-no-repeat bg-top px-4">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="form-2 pb-10 flex flex-col max-w-md m-auto justify-center "
+        className="form-2 pb-10 flex flex-col max-w-md m-auto justify-center min-h-vhcalc135px"
       >
         <div className="flex items-center gap-2">
           <div>
@@ -81,7 +86,6 @@ const SignupTwo = ({
                   const newProfilePic: any = e.target.files[0];
                   setProfilePic(URL.createObjectURL(newProfilePic));
                   setValue("image", e.target.files, { shouldValidate: true });
-                  await trigger("image");
                 }}
                 className="relative z-10 w-20 opacity-0 block"
               />
@@ -153,7 +157,7 @@ const SignupTwo = ({
             value={phone}
             onChange={(phone) => {
               setPhone(phone);
-              setValue("phone_no", phone);
+              setValue("phone_no", phone, { shouldValidate: true });
             }}
             placeholder="+1 (545) 674-3543"
             inputStyle={{

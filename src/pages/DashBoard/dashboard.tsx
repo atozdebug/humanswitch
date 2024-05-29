@@ -274,16 +274,16 @@ const Dashboard = () => {
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
-                    <g clip-path="url(#clip0_1829_1483)">
+                    <g clipPath="url(#clip0_1829_1483)">
                       <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
+                        fillRule="evenodd"
+                        clipRule="evenodd"
                         d="M14 0C15.1046 0 16 0.895431 16 2L16 14C16 15.1046 15.1046 16 14 16L2 16C0.895431 16 0 15.1046 0 14L0 2C0 0.895431 0.895431 0 2 0L14 0Z"
                         fill="currentColor"
                       />
                       <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
+                        fillRule="evenodd"
+                        clipRule="evenodd"
                         d="M4.70017 12.2426L10.4372 6.50564L10.4372 11.7759L11.7712 11.7712L11.7712 4.22876L4.22877 4.22876V5.55812L9.49436 5.56283L3.75736 11.2998L4.70017 12.2426Z"
                         fill="white"
                       />
@@ -315,16 +315,16 @@ const Dashboard = () => {
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
-                    <g clip-path="url(#clip0_1829_1561)">
+                    <g clipPath="url(#clip0_1829_1561)">
                       <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
+                        fillRule="evenodd"
+                        clipRule="evenodd"
                         d="M2 0C0.895431 0 0 0.895431 0 2L0 14C0 15.1046 0.895431 16 2 16L14 16C15.1046 16 16 15.1046 16 14L16 2C16 0.895431 15.1046 0 14 0L2 0Z"
                         fill="currentColor"
                       />
                       <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
+                        fillRule="evenodd"
+                        clipRule="evenodd"
                         d="M4.00004 4.94285L9.73703 10.6798L4.46673 10.6798L4.47144 12.0139L12.0139 12.0139L12.0139 4.47144L10.6846 4.47144L10.6798 9.73703L4.94285 4.00004L4.00004 4.94285Z"
                         fill="white"
                       />
@@ -356,16 +356,16 @@ const Dashboard = () => {
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
-                    <g clip-path="url(#clip0_1829_1483)">
+                    <g clipPath="url(#clip0_1829_1483)">
                       <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
+                        fillRule="evenodd"
+                        clipRule="evenodd"
                         d="M14 0C15.1046 0 16 0.895431 16 2L16 14C16 15.1046 15.1046 16 14 16L2 16C0.895431 16 0 15.1046 0 14L0 2C0 0.895431 0.895431 0 2 0L14 0Z"
                         fill="currentColor"
                       />
                       <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
+                        fillRule="evenodd"
+                        clipRule="evenodd"
                         d="M4.70017 12.2426L10.4372 6.50564L10.4372 11.7759L11.7712 11.7712L11.7712 4.22876L4.22877 4.22876V5.55812L9.49436 5.56283L3.75736 11.2998L4.70017 12.2426Z"
                         fill="white"
                       />
@@ -397,16 +397,16 @@ const Dashboard = () => {
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
-                    <g clip-path="url(#clip0_1829_1561)">
+                    <g clipPath="url(#clip0_1829_1561)">
                       <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
+                        fillRule="evenodd"
+                        clipRule="evenodd"
                         d="M2 0C0.895431 0 0 0.895431 0 2L0 14C0 15.1046 0.895431 16 2 16L14 16C15.1046 16 16 15.1046 16 14L16 2C16 0.895431 15.1046 0 14 0L2 0Z"
                         fill="currentColor"
                       />
                       <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
+                        fillRule="evenodd"
+                        clipRule="evenodd"
                         d="M4.00004 4.94285L9.73703 10.6798L4.46673 10.6798L4.47144 12.0139L12.0139 12.0139L12.0139 4.47144L10.6846 4.47144L10.6798 9.73703L4.94285 4.00004L4.00004 4.94285Z"
                         fill="white"
                       />

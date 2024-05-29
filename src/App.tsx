@@ -18,6 +18,9 @@ import Users from "./pages/DashBoard/users";
 import { Toaster } from "react-hot-toast";
 import Layout from "./Layout/layout";
 import ForgetPasswordId from "./pages/Login/forgetPasswordId";
+import ManagePlans from "./pages/DashBoard/managePlans";
+import ManageRoles from "./pages/DashBoard/manageRoles";
+import Companies from "./pages/DashBoard/companies";
 const ForgetPasswordPage = lazy(() => import("./pages/Login/forgetPassword"));
 const SignupPages = lazy(() => import("./pages/Login/hrSignupPage"));
 const HomePage = lazy(() => import("./pages/Login/homePage"));
@@ -128,6 +131,30 @@ const App = () => {
               element={
                 <RouteGuard>
                   <Chatbot />
+                </RouteGuard>
+              }
+            />
+            <Route
+              path="/manage-plans"
+              element={
+                <RouteGuard>
+                  <ManagePlans />
+                </RouteGuard>
+              }
+            />
+            <Route
+              path="/manage-roles"
+              element={
+                <RouteGuard>
+                  <ManageRoles />
+                </RouteGuard>
+              }
+            />
+            <Route
+              path="/companies"
+              element={
+                <RouteGuard>
+                  <Companies />
                 </RouteGuard>
               }
             />

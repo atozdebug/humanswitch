@@ -62,6 +62,7 @@ const ForgetPasswordId = () => {
     resolver: yupResolver(schema),
     defaultValues,
   });
+
   const getTokenFromUrl = () => {
     const urlSearchParams = new URLSearchParams(window.location.search);
     return urlSearchParams.get("token");
@@ -104,11 +105,13 @@ const ForgetPasswordId = () => {
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e);
     const newPassword: any = e;
     checkPasswordRequirements(newPassword);
   };
 
   const onSubmit: any = (data: FormData) => {
+    toast.dismiss();
     dispatch(resetPassword({ token, new_password: data.password }))
       .unwrap()
       .then((res: any) => {
@@ -140,14 +143,14 @@ const ForgetPasswordId = () => {
           <p className="font-normal text-center">
             Your password has been successfully reset.
           </p>
-          <p className="font-normal text-center">
-            Click below to log in magically.
-          </p>
+          <p className="font-normal text-center">Click below to log in.</p>
 
-          <div className="form-info flex flex-col justify-between items-center mt-4">
-            <button className="rounded w-full my-5 bg-purple-500 hover:bg-purple-700 py-2 px-4 text-white font-semibold">
-              <a href="/login">Continue</a>
-            </button>
+          <div className="form-info w-full flex flex-col justify-between items-center mt-4">
+            <a href="/login">
+              <button className="rounded w-full my-5 bg-purple-500 hover:bg-purple-700 py-2 px-4 text-white font-semibold">
+                Continue
+              </button>
+            </a>
           </div>
         </div>
       ) : (
@@ -199,7 +202,9 @@ const ForgetPasswordId = () => {
                   placeholder="Create a password"
                   onChange={(e: any) => {
                     handlePasswordChange(e.target.value);
-                    setValue("password", e.target.value);
+                    setValue("password", e.target.value, {
+                      shouldValidate: true,
+                    });
                   }}
                 />
                 <span

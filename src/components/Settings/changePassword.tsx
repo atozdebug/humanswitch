@@ -115,7 +115,9 @@ const ChangePassword = ({
             placeholder="🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄"
             onChange={(e: any) => {
               handlePasswordChange(e.target.value);
-              setValue("new_password", e.target.value);
+              setValue("new_password", e.target.value, {
+                shouldValidate: true,
+              });
             }}
             // {...register("new_password")}
           />

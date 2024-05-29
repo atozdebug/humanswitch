@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch } from "react-redux";
 import { sendResetMail } from "../../services/slices/auth/forgotPassword";
-import { useState } from "react";
 import toast from "react-hot-toast";
 
 const schema = yup.object().shape({
@@ -33,14 +32,20 @@ const ForgetPasswordPage = () => {
   });
 
   const onSubmit: any = (data: FormData) => {
+    toast.dismiss();
     const formData: any = new FormData();
     formData.append("email", data.email);
-    toast.promise(dispatch(sendResetMail(formData)), {
-      loading: "Sending Email...",
-      success:
-        "Instructions have been sent to your email to assist you with password reset",
-      error: "Error while sending email",
-    });
+    const toastId = toast.loading("Sending Mail...");
+    dispatch(sendResetMail(formData))
+      .unwrap()
+      .then((res: any) => {
+        toast.dismiss(toastId);
+        if (res.success === "true") {
+          toast.success(res.message);
+        } else {
+          toast.error(res.message);
+        }
+      });
   };
 
   return (

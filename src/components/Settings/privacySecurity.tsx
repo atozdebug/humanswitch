@@ -68,6 +68,7 @@ const PrivacySecurity = ({ handleSubmit, onSubmit, errors, setValue }: any) => {
   const [step, setStep] = useState(0);
 
   const enableAuthentication = (state: any) => {
+    toast.dismiss();
     const formData: any = new FormData();
 
     if (state === "enabled") {
@@ -121,6 +122,7 @@ const PrivacySecurity = ({ handleSubmit, onSubmit, errors, setValue }: any) => {
   };
 
   const handleVerifyOtps = (type: any) => {
+    toast.dismiss();
     const formData: any = new FormData();
     formData.append("security", checked);
     if (otp === "") {
@@ -213,7 +215,7 @@ const PrivacySecurity = ({ handleSubmit, onSubmit, errors, setValue }: any) => {
               onChange={(e: any) => {
                 setChecked(e.target.value);
                 setIsDisabled(false);
-                setValue("method", e.target.value);
+                setValue("method", e.target.value, { shouldValidate: true });
               }}
               // className="w-4 h-4 text-span-clr bg-gray-100  dark:focus:ring-span-clr dark:ring-offset-gray-800  dark:bg-gray-700"
               className="w-4 h-4  border border-slate-300 space-top"

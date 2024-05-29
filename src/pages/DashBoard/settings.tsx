@@ -194,6 +194,7 @@ const Settings = () => {
   });
 
   const onSubmit: any = (data: FormData) => {
+    toast.dismiss();
     try {
       if (selectedTab === 4 && selected === "Change Password") {
         dispatch(changePassword(data))

@@ -233,6 +233,7 @@ const SignupPage = () => {
 
   const [imageFile, setImageFile] = useState(null);
   const [businessImageFile, setBusinessImageFile] = useState(null);
+  const [phoneNo, setPhoneNo] = useState("");
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file: any = e.target.files && e.target.files[0];
@@ -259,25 +260,29 @@ const SignupPage = () => {
   const [otpError, setOtpError] = useState(false);
 
   const onSubmit: any = (data: FormData) => {
+    setPhoneNo(data?.phone_no);
+    console.log(data);
+    toast.dismiss();
     try {
       setFormData(data);
       if (step === 1) {
         setMail(data.email);
-        toast.promise(
-          dispatch(sendEmailVerification({ email: data.email }))
-            .unwrap()
-            .then(() => {
-              setStep(2); // Move to OTP verification step
-            })
-            .catch((error: any) => {
-              console.error("Error sending OTP:", error);
-            }),
-          {
-            loading: "Sending Email...",
-            success: "Email Sent!",
-            error: "Error while sending email",
-          }
-        );
+        const toastId = toast.loading("Sending Mail...");
+        dispatch(sendEmailVerification({ email: data.email }))
+          .unwrap()
+          .then((res: any) => {
+            toast.dismiss(toastId);
+            if (res.error) {
+              toast.error(res.error);
+            } else {
+              toast.success(res.message);
+              setStep(2);
+            }
+            // Move to OTP verification step
+          })
+          .catch((error: any) => {
+            console.error("Error sending OTP:", error);
+          });
       } else if (step === 2) {
         // Handle OTP verification logic here
         if (otp.length === 6) {
@@ -333,6 +338,7 @@ const SignupPage = () => {
   };
 
   const resendOTP = () => {
+    toast.dismiss();
     toast.promise(dispatch(sendEmailVerification({ email })), {
       loading: "Sending Email...",
       success: "Email Sent!",
@@ -360,7 +366,6 @@ const SignupPage = () => {
           {header.map((item, index) => (
             <div className="flex" key={index}>
               <div
-                onClick={() => setStep(item.id)}
                 className={`flex items-center justify-center py-2 gap-2 rounded-lg text-gray-500 dark:bg-gray-800  dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
               >
                 <div
@@ -421,7 +426,7 @@ const SignupPage = () => {
         {/* <div className="h-10 w-10"></div> */}
       </div>
       <hr className="border-color: gray;"></hr>
-      {step > 1 && (
+      {step > 1 && step !== 3 && (
         <div className="text-start back-btnn md:px-44px px-4 py-6 bg-[url(../assets/images/Pattern.png)] bg-no-repeat bg-top">
           <button
             className="px-3 flex py-2 justify-center rounded-[10px] items-center gap-2 text-gray-dark border border-[#E2E4E9] font-semibold focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
@@ -460,6 +465,8 @@ const SignupPage = () => {
           register={register}
           errors={errors}
           setValue={setValue}
+          imageFile={imageFile}
+          phoneNo={phoneNo}
         />
       ) : step === 4 ? (
         <SignupThree
@@ -477,6 +484,7 @@ const SignupPage = () => {
           errors={errors}
           setValue={setValue}
           skipStep={skipStep}
+          businessImageFile={businessImageFile}
         />
       ) : (
         <SignupFive

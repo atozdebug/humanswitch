@@ -94,6 +94,7 @@ const LoginHr = () => {
   });
 
   const onSubmit: any = (data: FormData) => {
+    toast.dismiss();
     setEmail(data.email);
     setPassword(data.password);
     dispatch(userLogin(data))
