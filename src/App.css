@@ -253,6 +253,19 @@ body .active-items-start {
   .MuiTabs-flexContainer[role="tablist"]::-webkit-scrollbar-thumb:hover {
   background: #d6d6d6;
 }
+
+.tabs-cs > button[type="button"] {
+  background: none;
+  border-bottom: 2px solid #29b47500;
+  outline: none !important;
+  box-shadow: none !important;
+  padding-bottom: 12px;
+  color: #84818a;
+}
+.tabs-cs > button[type="button"][aria-selected="true"] {
+  border-color: #29b475;
+  color: #2e2c34;
+}
 @media (max-width: 1024.98px) {
   .menu-item-text {
     text-wrap: nowrap;
