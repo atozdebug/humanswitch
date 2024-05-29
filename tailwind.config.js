@@ -97,6 +97,7 @@ export default {
         "100vh": "100vh",
         vhcalc135px: "calc(100vh - 135px)",
         vhcalc92px: "calc(100vh - 92px)",
+        vhcalc93px: "calc(100vh - 93px)",
       },
       height: {
         "vw-calc80px": "calc(100vh - 80px)",

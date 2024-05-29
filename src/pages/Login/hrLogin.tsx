@@ -186,7 +186,7 @@ const LoginHr = () => {
       </div>
       <hr className="border-color: gray;"></hr>
       {/* <div className="grid grid-cols-3 gap-4"> */}
-      <div className="">
+      <div className="form flex flex-col max-w-md m-auto justify-center py-10 min-h-vhcalc135px px-4">
         <div className="...">
           {/* <div className="flex justify-around items-center mob-view ">
             <span>
@@ -236,7 +236,7 @@ const LoginHr = () => {
                   <img src="/assets/images/mail-line.png" />
                 </span>
                 <input
-                  className={`shadow appearance-none lft-space bg-transparent  border rounded-[10px] w-full py-2 px-3 text-input-text leading-tight focus:outline-none focus:shadow-outline ${
+                  className={`appearance-none lft-space bg-transparent  border rounded-[10px] w-full py-2 px-3 text-input-text leading-tight focus:outline-none focus:shadow-outline ${
                     errors.email ? "border-[#F04438]" : " border-slate-300 "
                   }`}
                   id="email"
@@ -264,7 +264,7 @@ const LoginHr = () => {
                   <img src="/assets/images/lock-2-line.png" />
                 </span>
                 <input
-                  className={`lft-space shadow appearance-none border rounded-[10px] w-full py-2 pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline ${
+                  className={`lft-space appearance-none border rounded-[10px] w-full py-2 pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline ${
                     errors.password ? "border-[#F04438]" : "border-slate-300"
                   }`}
                   id="password"
