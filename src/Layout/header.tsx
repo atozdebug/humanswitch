@@ -45,6 +45,13 @@ const headers = [
       "Create a new report from scratch or start with one of our templates.",
   },
   {
+    path: "/knowledge-base",
+    name: "Knowledge Base",
+    description: "Knowledge Base Page",
+    buttonDescription:
+      "Create a new report from scratch or start with one of our templates.",
+  },
+  {
     path: "/companies",
     name: "Companies",
     description: "Companies Page",
@@ -310,7 +317,15 @@ const Header = () => {
                 </div>
                 <div className="flex items-center gap-1 mt-4">
                   <div>
-                    <Switch checked={checked} onChange={handleChange} />
+                    <Switch
+                      checked={checked}
+                      onChange={(e: any) => {
+                        handleChange(e);
+                        setValue("isActive", e.target.checked, {
+                          shouldValidate: true,
+                        });
+                      }}
+                    />
                   </div>
                   <div>Active</div>
                 </div>

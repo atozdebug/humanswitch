@@ -23,6 +23,7 @@ import ManageRoles from "./pages/DashBoard/manageRoles";
 import Companies from "./pages/DashBoard/companies";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import KnowledgeBase from "./pages/DashBoard/knowledgeBase";
 const ForgetPasswordPage = lazy(() => import("./pages/Login/forgetPassword"));
 const SignupPages = lazy(() => import("./pages/Login/hrSignupPage"));
 const HomePage = lazy(() => import("./pages/Login/homePage"));
@@ -150,6 +151,14 @@ const App = () => {
                 element={
                   <RouteGuard>
                     <ManageRoles />
+                  </RouteGuard>
+                }
+              />
+              <Route
+                path="/knowledge-base"
+                element={
+                  <RouteGuard>
+                    <KnowledgeBase />
                   </RouteGuard>
                 }
               />
