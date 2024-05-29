@@ -8,13 +8,10 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Dayjs } from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-<<<<<<< HEAD
 import { useDispatch } from "react-redux";
 import { createPlans } from "../services/slices/dashboard/plans";
-=======
 import { Accordion } from "flowbite-react";
 import { Checkbox, Label } from "flowbite-react";
->>>>>>> 5bfde5ae75ee36d7d06e6a6af4f07ad96806a54e
 
 const headers = [
   {
@@ -118,7 +115,6 @@ const defaultValues = {
 };
 
 const Header = () => {
-  const [switch1, setSwitch1] = useState(false);
   const location = useLocation();
   const dispatch: any = useDispatch();
 
