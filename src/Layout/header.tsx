@@ -6,6 +6,8 @@ import { useState } from "react";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import dayjs, { Dayjs } from "dayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 const headers = [
   {
@@ -114,9 +116,7 @@ const Header = () => {
   );
 
   const schemas = () => {
-    if (title?.buttonName === "Report") {
-      return yupResolver(schemaPlan);
-    } else if (title?.buttonName === "Plan") {
+    if (title?.buttonName === "Plan") {
       return yupResolver(schemaPlan);
     } else if (title?.buttonName === "Role") {
       return yupResolver(schemaRole);
@@ -128,7 +128,6 @@ const Header = () => {
     handleSubmit,
     // reset,
     setValue,
-    trigger,
     formState: { errors },
   } = useForm<FormData | any>({
     resolver: schemas(),
@@ -136,6 +135,8 @@ const Header = () => {
   });
 
   const [open, setOpen] = useState(false);
+  const [startDate, setStartDate] = useState<Dayjs | null>(dayjs());
+  const [endDate, setEndDate] = useState<Dayjs | null>(dayjs());
 
   const onClick = () => {
     handleClickOpen();
@@ -149,14 +150,14 @@ const Header = () => {
     setOpen(false);
   };
 
-  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const onSubmit: any = (data: FormData) => {
+    console.log("Called");
     if (title?.buttonName === "Report") {
-      console.log("Report");
+      console.log("Report", data);
     } else if (title?.buttonName === "Plan") {
-      console.log("Plan");
+      console.log("Plan", data);
     } else if (title?.buttonName === "Role") {
-      console.log("Role");
+      console.log("Role", data);
     }
     handleClose();
   };
@@ -183,54 +184,75 @@ const Header = () => {
           )}
         </div>
       </div>
-      <Dialog
-        fullWidth={true}
-        maxWidth="md"
-        open={open}
-        onClose={handleClose}
-        PaperProps={{
-          component: "form",
-          onSubmit: handleFormSubmit,
-        }}
-      >
-        <div className="p-4">
-          <div className="font-semibold text-xl">
-            Create New {title?.buttonName}
+      <Dialog fullWidth={true} maxWidth="md" open={open} onClose={handleClose}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="p-4">
+            <div className="font-semibold text-xl">
+              Create New {title?.buttonName}
+            </div>
+
+            <div>{title?.buttonDescription}</div>
           </div>
-
-          <div>{title?.buttonDescription}</div>
-        </div>
-        <DialogContent>
-          {title?.buttonName === "Report" && <div>Create New Report</div>}
-          {title?.buttonName === "Plan" && <div>Create New Plan</div>}
-          {title?.buttonName === "Role" && <div>Create New Role</div>}
-
-          {/* <TextField
-            autoFocus
-            required
-            margin="dense"
-            id="name"
-            name="email"
-            label="Email Address"
-            type="email"
-            fullWidth
-            variant="standard"
-          /> */}
-        </DialogContent>
-        <DialogActions>
-          <button
-            className="m-2 w-full px-4 py-2 rounded-md hover:bg-gray-200 text-red-600"
-            onClick={handleClose}
-          >
-            Cancel
-          </button>
-          <button
-            className="m-2 w-full px-4 py-2 rounded-md hover:bg-gray-200 mr-2 text-blue-800"
-            type="submit"
-          >
-            Subscribe
-          </button>
-        </DialogActions>
+          <DialogContent>
+            {title?.buttonName === "Report" && <div>Create New Report</div>}
+            {title?.buttonName === "Plan" && (
+              <div>
+                <div>
+                  <div>Plan Name</div>
+                  <div>
+                    <input
+                      className={`shadow appearance-none border rounded-[10px] w-full py-2.5 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                        errors.planName ? "border-[#F04438]" : ""
+                      }`}
+                      id="planName"
+                      type="text"
+                      placeholder="Enter your Plan"
+                      {...register("planName")}
+                    />
+                    {errors?.planName && (
+                      <p className="text-red-500 text-sm mt-2">
+                        {errors.planName.message}
+                      </p>
+                    )}
+                  </div>
+                </div>
+                <div>
+                  <div>Start Date</div>
+                  <div>
+                    <DatePicker
+                      value={startDate}
+                      onChange={(newValue) => setStartDate(newValue)}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <div>End Date</div>
+                    <DatePicker
+                      value={endDate}
+                      onChange={(newValue) => setEndDate(newValue)}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+            {title?.buttonName === "Role" && <div>Create New Role</div>}
+          </DialogContent>
+          <DialogActions>
+            <button
+              className="m-2 w-full px-4 py-2 rounded-md hover:bg-gray-200 text-red-600"
+              onClick={handleClose}
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="m-2 w-full px-4 py-2 rounded-md hover:bg-gray-200 mr-2 text-blue-800"
+            >
+              Subscribe
+            </button>
+          </DialogActions>
+        </form>
       </Dialog>
     </div>
   );

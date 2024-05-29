@@ -21,6 +21,8 @@ import ForgetPasswordId from "./pages/Login/forgetPasswordId";
 import ManagePlans from "./pages/DashBoard/managePlans";
 import ManageRoles from "./pages/DashBoard/manageRoles";
 import Companies from "./pages/DashBoard/companies";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 const ForgetPasswordPage = lazy(() => import("./pages/Login/forgetPassword"));
 const SignupPages = lazy(() => import("./pages/Login/hrSignupPage"));
 const HomePage = lazy(() => import("./pages/Login/homePage"));
@@ -56,11 +58,12 @@ const App = () => {
         </div>
       }
     >
-      <Toaster reverseOrder={false} />
-      <BrowserRouter>
-        <Layout>
-          <Routes>
-            {/* <Route path="/*" element={<Navigate to="/" />} />
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <Toaster reverseOrder={false} />
+        <BrowserRouter>
+          <Layout>
+            <Routes>
+              {/* <Route path="/*" element={<Navigate to="/" />} />
           <Route path="/" element={<Outlet />}>
             {token ? (
               <Route index element={<Navigate to="/home" />} />
@@ -68,127 +71,128 @@ const App = () => {
               <Route index element={<Navigate to="/login" />} />
             )}
           </Route> */}
-            <Route
-              path="/signup"
-              element={
-                <PublicRouteGuard>
-                  <SignupPages />
-                </PublicRouteGuard>
-              }
-            />
-            <Route
-              path="/login"
-              element={
-                <PublicRouteGuard>
-                  <LoginHr />
-                </PublicRouteGuard>
-              }
-            />
-            <Route
-              path="/forgetPassword"
-              element={
-                <PublicRouteGuard>
-                  <ForgetPasswordPage />
-                </PublicRouteGuard>
-              }
-            />
-            <Route
-              path="/reset-password"
-              element={
-                <PublicRouteGuard>
-                  <ForgetPasswordId />
-                </PublicRouteGuard>
-              }
-            />
-            <Route
-              path="/home"
-              element={
-                <PublicRouteGuard>
-                  <HomePage />
-                </PublicRouteGuard>
-              }
-            />
-            <Route path="/" element={<DefaultRoute />} />;
-            <Route path="/pillars" element={<Pillars />} />
-            <Route
-              path="/dashboard"
-              element={
-                <RouteGuard>
-                  <Dashboard />
-                </RouteGuard>
-              }
-            />
-            <Route
-              path="/reports"
-              element={
-                <RouteGuard>
-                  <MyReports />
-                </RouteGuard>
-              }
-            />
-            <Route
-              path="/chatbot"
-              element={
-                <RouteGuard>
-                  <Chatbot />
-                </RouteGuard>
-              }
-            />
-            <Route
-              path="/manage-plans"
-              element={
-                <RouteGuard>
-                  <ManagePlans />
-                </RouteGuard>
-              }
-            />
-            <Route
-              path="/manage-roles"
-              element={
-                <RouteGuard>
-                  <ManageRoles />
-                </RouteGuard>
-              }
-            />
-            <Route
-              path="/companies"
-              element={
-                <RouteGuard>
-                  <Companies />
-                </RouteGuard>
-              }
-            />
-            <Route
-              path="/integrations"
-              element={
-                <RouteGuard>
-                  <Integration />
-                </RouteGuard>
-              }
-            />
-            <Route
-              path="/users"
-              element={
-                <RouteGuard>
-                  <Users />
-                </RouteGuard>
-              }
-            />
-            <Route
-              path="/settings"
-              element={<Navigate to="/settings/profile" replace />}
-            />
-            <Route
-              path="/settings/:tab"
-              element={
-                <RouteGuard>
-                  <Settings />
-                </RouteGuard>
-              }
-            />
-          </Routes>
-        </Layout>
-      </BrowserRouter>
+              <Route
+                path="/signup"
+                element={
+                  <PublicRouteGuard>
+                    <SignupPages />
+                  </PublicRouteGuard>
+                }
+              />
+              <Route
+                path="/login"
+                element={
+                  <PublicRouteGuard>
+                    <LoginHr />
+                  </PublicRouteGuard>
+                }
+              />
+              <Route
+                path="/forgetPassword"
+                element={
+                  <PublicRouteGuard>
+                    <ForgetPasswordPage />
+                  </PublicRouteGuard>
+                }
+              />
+              <Route
+                path="/reset-password"
+                element={
+                  <PublicRouteGuard>
+                    <ForgetPasswordId />
+                  </PublicRouteGuard>
+                }
+              />
+              <Route
+                path="/home"
+                element={
+                  <PublicRouteGuard>
+                    <HomePage />
+                  </PublicRouteGuard>
+                }
+              />
+              <Route path="/" element={<DefaultRoute />} />;
+              <Route path="/pillars" element={<Pillars />} />
+              <Route
+                path="/dashboard"
+                element={
+                  <RouteGuard>
+                    <Dashboard />
+                  </RouteGuard>
+                }
+              />
+              <Route
+                path="/reports"
+                element={
+                  <RouteGuard>
+                    <MyReports />
+                  </RouteGuard>
+                }
+              />
+              <Route
+                path="/chatbot"
+                element={
+                  <RouteGuard>
+                    <Chatbot />
+                  </RouteGuard>
+                }
+              />
+              <Route
+                path="/manage-plans"
+                element={
+                  <RouteGuard>
+                    <ManagePlans />
+                  </RouteGuard>
+                }
+              />
+              <Route
+                path="/manage-roles"
+                element={
+                  <RouteGuard>
+                    <ManageRoles />
+                  </RouteGuard>
+                }
+              />
+              <Route
+                path="/companies"
+                element={
+                  <RouteGuard>
+                    <Companies />
+                  </RouteGuard>
+                }
+              />
+              <Route
+                path="/integrations"
+                element={
+                  <RouteGuard>
+                    <Integration />
+                  </RouteGuard>
+                }
+              />
+              <Route
+                path="/users"
+                element={
+                  <RouteGuard>
+                    <Users />
+                  </RouteGuard>
+                }
+              />
+              <Route
+                path="/settings"
+                element={<Navigate to="/settings/profile" replace />}
+              />
+              <Route
+                path="/settings/:tab"
+                element={
+                  <RouteGuard>
+                    <Settings />
+                  </RouteGuard>
+                }
+              />
+            </Routes>
+          </Layout>
+        </BrowserRouter>
+      </LocalizationProvider>
     </Suspense>
   );
 };
