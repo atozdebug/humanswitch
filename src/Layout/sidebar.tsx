@@ -17,6 +17,7 @@ import { getUser } from "../services/slices/dashboard/getUser";
 import PublicIcon from "@mui/icons-material/Public";
 import GroupsIcon from "@mui/icons-material/Groups";
 import ApartmentIcon from "@mui/icons-material/Apartment";
+import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 
 let sideBarItems = [
   {
@@ -43,6 +44,11 @@ let sideBarItems = [
     name: "Manage Roles",
     icon: <GroupsIcon />,
     navigateTo: "/manage-roles",
+  },
+  {
+    name: "Knowledge Base",
+    icon: <AutoStoriesIcon />,
+    navigateTo: "/knowledge-base",
   },
   {
     name: "Companies",

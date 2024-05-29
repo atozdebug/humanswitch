@@ -1,4 +1,32 @@
-import React from "react";
+import { Card, Grid, Popover } from "@mui/material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { useState } from "react";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+
+const data = [
+  {
+    name: "Basic Plan",
+    editedAgo: "2 mins",
+    users: "1-2 Users",
+    endDate: "mm/dd/yyyy",
+    price: "$99",
+  },
+  {
+    name: "Professional Plan",
+    editedAgo: "6 mins",
+    users: "8-9 Users",
+    endDate: "mm/dd/yyyy",
+    price: "$26",
+  },
+  {
+    name: "Premium Plan",
+    editedAgo: "5 hrs",
+    users: "100+ Users",
+    endDate: "mm/dd/yyyy",
+    price: "$129",
+  },
+];
 
 const ManagePlans = () => {
   return (
