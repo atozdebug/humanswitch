@@ -488,17 +488,25 @@ const ManagePlans = () => {
               </div>
               <div className="flex items-center gap-1 mt-4">
                 <div>
-                  <Switch
-                    checked={checked}
-                    onChange={(e: any) => {
-                      handleChange(e);
-                      setValue("isActive", e.target.checked, {
-                        shouldValidate: true,
-                      });
-                    }}
-                  />
+                  <label className="inline-flex items-center cursor-pointer">
+                    <input
+                      checked={checked}
+                      onChange={(e: any) => {
+                        handleChange(e);
+                        setValue("isActive", e.target.checked, {
+                          shouldValidate: true,
+                        });
+                      }}
+                      type="checkbox"
+                      value=""
+                      className="sr-only peer"
+                    />
+                    <div className="relative w-7 h-4 bg-gray-300 peer-focus:outline-none peer-focus:ring-0 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white peer-checked:after:border-4 after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-span-clr after:border-span-clr after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-span-clr"></div>
+                    <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+                      Active
+                    </span>
+                  </label>
                 </div>
-                <div>Active</div>
               </div>
             </div>
           </DialogContent>
