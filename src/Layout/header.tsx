@@ -9,7 +9,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Dayjs } from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { useDispatch } from "react-redux";
-import { createPlans } from "../services/slices/dashboard/plans";
+import { createPlans, getPlans } from "../services/slices/dashboard/plans";
 import { Accordion } from "flowbite-react";
 import { Checkbox, Label } from "flowbite-react";
 
@@ -185,7 +185,9 @@ const Header = () => {
           employees: data.employees,
           active: data.isActive,
         })
-      );
+      )
+        .unwrap()
+        .then(() => dispatch(getPlans()));
     } else if (title?.buttonName === "Role") {
       console.log("Role", data);
     }
