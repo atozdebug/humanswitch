@@ -261,7 +261,7 @@ const SignupPage = () => {
 
   const onSubmit: any = (data: FormData) => {
     setPhoneNo(data?.phone_no);
-    console.log(data);
+
     toast.dismiss();
     try {
       setFormData(data);

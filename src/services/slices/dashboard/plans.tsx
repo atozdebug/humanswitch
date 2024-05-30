@@ -118,7 +118,7 @@ export const planSlice = createSlice({
         state.loading = true;
       })
       .addCase(getPlans.fulfilled, (state, action) => {
-        state.getData = action.payload;
+        state.getData = action.payload.user_plans;
         state.loading = false;
       })
       .addCase(getPlans.rejected, (state, _action) => {

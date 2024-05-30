@@ -1,7 +1,7 @@
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 import { useLocation } from "react-router-dom";
 import CreateButton from "../components/Home/createButton";
-import { Dialog, DialogActions, DialogContent, Switch } from "@mui/material";
+import { Dialog, DialogActions, DialogContent } from "@mui/material";
 import { useState } from "react";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
@@ -9,7 +9,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Dayjs } from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { useDispatch } from "react-redux";
-import { createPlans } from "../services/slices/dashboard/plans";
+import { createPlans, getPlans } from "../services/slices/dashboard/plans";
 import { Accordion } from "flowbite-react";
 import { Checkbox, Label } from "flowbite-react";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
@@ -172,11 +172,8 @@ const Header = () => {
   };
 
   const onSubmit = (data: FormData) => {
-    console.log("Called");
     if (title?.buttonName === "Report") {
-      console.log("Report", data);
     } else if (title?.buttonName === "Plan") {
-      console.log("Plan", data);
       dispatch(
         createPlans({
           name: data.planName,
@@ -186,9 +183,10 @@ const Header = () => {
           employees: data.employees,
           active: data.isActive,
         })
-      );
+      )
+        .unwrap()
+        .then(() => dispatch(getPlans()));
     } else if (title?.buttonName === "Role") {
-      console.log("Role", data);
     }
     handleClose();
   };
@@ -384,17 +382,25 @@ const Header = () => {
                 </div>
                 <div className="flex items-center gap-1 mt-4">
                   <div>
-                    <Switch
-                      checked={checked}
-                      onChange={(e: any) => {
-                        handleChange(e);
-                        setValue("isActive", e.target.checked, {
-                          shouldValidate: true,
-                        });
-                      }}
-                    />
+                    <label className="inline-flex items-center cursor-pointer">
+                      <input
+                        checked={checked}
+                        onChange={(e: any) => {
+                          handleChange(e);
+                          setValue("isActive", e.target.checked, {
+                            shouldValidate: true,
+                          });
+                        }}
+                        type="checkbox"
+                        value=""
+                        className="sr-only peer"
+                      />
+                      <div className="relative w-7 h-4 bg-gray-300 peer-focus:outline-none peer-focus:ring-0 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white peer-checked:after:border-4 after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-span-clr after:border-span-clr after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-span-clr"></div>
+                      <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+                        Active
+                      </span>
+                    </label>
                   </div>
-                  <div>Active</div>
                 </div>
               </div>
             )}
