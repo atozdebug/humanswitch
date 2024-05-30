@@ -135,7 +135,7 @@ const SideBar = () => {
         isSidebarOpen ? "menu-open" : "menu-closed"
       }`}
     >
-      <div className="dark:bg-black dark:text-white bg-white relative h-full overflow-y-auto border-r border-[#E2E4E9] flex justify-between flex-col lft-nav">
+      <div className="dark:bg-black dark:text-white bg-white relative h-full overflow-y-auto border-r border-[#E2E4E9] flex justify-between flex-col lft-nav sidebar-innerr">
         <div className="pt-0 pb-4">
           <div className="px-6 logo-hamburg">
             <div className="logo-hamburg-inner flex items-center justify-between border-b py-4">

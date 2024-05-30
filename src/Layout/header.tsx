@@ -12,6 +12,7 @@ import { useDispatch } from "react-redux";
 import { createPlans } from "../services/slices/dashboard/plans";
 import { Accordion } from "flowbite-react";
 import { Checkbox, Label } from "flowbite-react";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 
 const headers = [
   {
@@ -216,16 +217,44 @@ const Header = () => {
           )}
         </div>
       </div>
-      <Dialog fullWidth={true} maxWidth="md" open={open} onClose={handleClose}>
+      <Dialog
+        fullWidth={true}
+        maxWidth="sm"
+        open={open}
+        onClose={handleClose}
+        className="backdrop-blur"
+      >
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="px-4 pt-4">
-            <div className="font-semibold text-xl">
-              Create New {title?.buttonName}
+          <div className="px-4 py-4 border-b relative">
+            <div className="flex justify-start items-center px-0">
+              <span className="bg-white border w-11 h-11 flex justify-center items-center text-gray-dark rounded-full">
+                <SettingsOutlinedIcon />
+              </span>
+              <div className="pl-4">
+                <h2 className="text-main-heading text-lg font-medium">
+                  Create New {title?.buttonName}
+                </h2>
+                <p className="text-gray-dark text-sm">
+                  {title?.buttonDescription}
+                </p>
+              </div>
             </div>
-
-            <div>{title?.buttonDescription}</div>
+            <div className="modal-close-btn absolute top-4 right-4 leading-3">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12.0001 10.9396L15.7126 7.22705L16.7731 8.28755L13.0606 12.0001L16.7731 15.7126L15.7126 16.7731L12.0001 13.0606L8.28755 16.7731L7.22705 15.7126L10.9396 12.0001L7.22705 8.28755L8.28755 7.22705L12.0001 10.9396Z"
+                  fill="#525866"
+                />
+              </svg>
+            </div>
           </div>
-          <DialogContent>
+          <DialogContent className="!p-5">
             {/* <div className="py-2">
               <div className="flex items-center">
                 <span className="bg-[#F6F8FA] p-2 rounded-full">
@@ -251,10 +280,10 @@ const Header = () => {
             {title?.buttonName === "Plan" && (
               <div>
                 <div>
-                  <div>Plan Name</div>
+                  <label className="mb-1 block text-sm">Plan Name</label>
                   <div>
                     <input
-                      className={`shadow appearance-none border rounded-[10px] w-full py-2.5 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                      className={`appearance-none border border-lightgray6 rounded-[10px] w-full py-2.5 px-3 text-darkgray3 leading-tight focus:outline-none focus:shadow-outline ${
                         errors.planName ? "border-[#F04438]" : ""
                       }`}
                       id="planName"
@@ -263,17 +292,17 @@ const Header = () => {
                       {...register("planName")}
                     />
                     {errors?.planName && (
-                      <p className="text-red-500 text-sm mt-2">
+                      <p className="text-red-500 text-sm mt-1">
                         {String(errors.planName.message)}
                       </p>
                     )}
                   </div>
                 </div>
                 <div className="mt-4">
-                  <div>Price</div>
+                  <label className="mb-1 block text-sm">Price</label>
                   <div>
                     <input
-                      className={`shadow appearance-none border rounded-[10px] w-full py-2.5 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                      className={`border-lightgray6 appearance-none border rounded-[10px] w-full py-2.5 px-3 text-darkgray3 leading-tight focus:outline-none focus:shadow-outline ${
                         errors.price ? "border-[#F04438]" : ""
                       }`}
                       id="price"
@@ -282,14 +311,14 @@ const Header = () => {
                       {...register("price")}
                     />
                     {errors?.price && (
-                      <p className="text-red-500 text-sm mt-2">
+                      <p className="text-red-500 text-sm mt-1">
                         {String(errors.price.message)}
                       </p>
                     )}
                   </div>
                 </div>
                 <div className="mt-4">
-                  <div>Start Date</div>
+                  <label className="mb-1 block text-sm">Start Date</label>
                   <div>
                     <DatePicker
                       value={startDate}
@@ -305,7 +334,7 @@ const Header = () => {
                       }}
                     />
                     {errors?.startDate && (
-                      <p className="text-red-500 text-sm mt-2">
+                      <p className="text-red-500 text-sm mt-1">
                         {String(errors.startDate.message)}
                       </p>
                     )}
@@ -313,7 +342,7 @@ const Header = () => {
                 </div>
                 <div className="mt-4">
                   <div>
-                    <div>End Date</div>
+                    <label className="mb-1 block text-sm">End Date</label>
                     <DatePicker
                       value={endDate}
                       onChange={(newValue) => {
@@ -328,17 +357,17 @@ const Header = () => {
                       }}
                     />
                     {errors?.endDate && (
-                      <p className="text-red-500 text-sm mt-2">
+                      <p className="text-red-500 text-sm mt-1">
                         {String(errors.endDate.message)}
                       </p>
                     )}
                   </div>
                 </div>
                 <div className="mt-4">
-                  <div>Employees</div>
+                  <label className="mb-1 block text-sm">Employees</label>
                   <div>
                     <input
-                      className={`shadow appearance-none border rounded-[10px] w-full py-2.5 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                      className={`border-lightgray6 appearance-none border rounded-[10px] w-full py-2.5 px-3 text-darkgray3 leading-tight focus:outline-none focus:shadow-outline ${
                         errors.employees ? "border-[#F04438]" : ""
                       }`}
                       id="employees"
@@ -347,7 +376,7 @@ const Header = () => {
                       {...register("employees")}
                     />
                     {errors?.employees && (
-                      <p className="text-red-500 text-sm mt-2">
+                      <p className="text-red-500 text-sm mt-1">
                         {String(errors.employees.message)}
                       </p>
                     )}
@@ -373,7 +402,7 @@ const Header = () => {
               <>
                 <label className="inline-flex items-center cursor-pointer">
                   <input type="checkbox" value="" className="sr-only peer" />
-                  <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                  <div className="relative w-7 h-4 bg-gray-300 peer-focus:outline-none peer-focus:ring-0 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white peer-checked:after:border-4 after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-span-clr after:border-span-clr after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-span-clr"></div>
                   <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">
                     Active
                   </span>
@@ -386,7 +415,7 @@ const Header = () => {
                       id="role"
                       type={"text"}
                       placeholder="role"
-                      value={"role"}
+                      // value={"role"}
                     />
                     <span className="top-1/2 right-2 absolute translate-y-n50">
                       <svg
@@ -406,13 +435,13 @@ const Header = () => {
                     </span>
                   </div>
                 </div>
-                <div className="cs-accordion">
-                  <Accordion>
-                    <Accordion.Panel className=" !border-0 rounded-[10px]">
-                      <Accordion.Title className="bg-lightgray5 hover:bg-lightgray5 border-0 rounded-t-[10px] hover:!bg-transparent !ring-0">
+                <div className="cs-accordion pb-10px">
+                  <Accordion className="border-0 flex flex-col gap-4">
+                    <Accordion.Panel className=" !border-0 bg-lightgray5">
+                      <Accordion.Title className="bg-lightgray5 hover:!bg-lightgray5 !border-0 rounded-[10px] !ring-0">
                         Edit
                       </Accordion.Title>
-                      <Accordion.Content className="pt-0 bg-lightgray5 rounded-b-[10px] !border-0">
+                      <Accordion.Content className="pt-5 mt-n40px bg-lightgray5 rounded-b-[10px] !border-0">
                         <p className="mb-14px text-gray-dark text-sm">
                           Lorem ipsum dolor sit amet, consectetur adipiscing
                           elit, sed do eiusmod tempor incididunt ut labore et
@@ -448,7 +477,119 @@ const Header = () => {
                             </div>
                           </div>
                         </div>
+                        <div className="flex gap-2">
+                          <div className="flex h-5 items-center">
+                            <Checkbox id="shipping" />
+                          </div>
+                          <div className="flex flex-col">
+                            <Label htmlFor="shipping">Edit Report</Label>
+                            <div className="text-gray-500">
+                              <span className="text-sm font-normal">
+                                A short description of the permissions will be
+                                displayed here
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </Accordion.Content>
+                    </Accordion.Panel>
+                    <Accordion.Panel className=" !border-0 rounded-[10px] mb-4">
+                      <Accordion.Title className="bg-lightgray5 hover:bg-lightgray5 !border-0 rounded-[10px] !ring-0">
+                        Create
+                      </Accordion.Title>
+                      <Accordion.Content className="pt-5 mt-n40px bg-lightgray5 rounded-b-[10px] !border-0">
+                        <p className="mb-14px text-gray-dark text-sm">
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit, sed do eiusmod tempor incididunt ut labore et
+                          dolore magna aliqua.
+                        </p>
                         <div className="flex gap-2 mb-17px">
+                          <div className="flex h-5 items-center">
+                            <Checkbox id="shipping" />
+                          </div>
+                          <div className="flex flex-col">
+                            <Label htmlFor="shipping">Edit Member</Label>
+                            <div className="text-gray-500">
+                              <span className="text-sm font-normal">
+                                A short description of the permissions will be
+                                displayed here
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex gap-2 mb-17px">
+                          <div className="flex h-5 items-center">
+                            <Checkbox id="shipping" />
+                          </div>
+                          <div className="flex flex-col">
+                            <Label htmlFor="shipping">
+                              Edit Company Details{" "}
+                            </Label>
+                            <div className="text-gray-500">
+                              <span className="text-sm font-normal">
+                                A short description of the permissions will be
+                                displayed here
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex gap-2">
+                          <div className="flex h-5 items-center">
+                            <Checkbox id="shipping" />
+                          </div>
+                          <div className="flex flex-col">
+                            <Label htmlFor="shipping">Edit Report</Label>
+                            <div className="text-gray-500">
+                              <span className="text-sm font-normal">
+                                A short description of the permissions will be
+                                displayed here
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </Accordion.Content>
+                    </Accordion.Panel>
+                    <Accordion.Panel className=" !border-0 rounded-[10px] mb-4">
+                      <Accordion.Title className="bg-lightgray5 hover:bg-lightgray5 !border-0 rounded-[10px] !ring-0">
+                        Delete
+                      </Accordion.Title>
+                      <Accordion.Content className="pt-5 mt-n40px bg-lightgray5 rounded-b-[10px] !border-0">
+                        <p className="mb-14px text-gray-dark text-sm">
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit, sed do eiusmod tempor incididunt ut labore et
+                          dolore magna aliqua.
+                        </p>
+                        <div className="flex gap-2 mb-17px">
+                          <div className="flex h-5 items-center">
+                            <Checkbox id="shipping" />
+                          </div>
+                          <div className="flex flex-col">
+                            <Label htmlFor="shipping">Edit Member</Label>
+                            <div className="text-gray-500">
+                              <span className="text-sm font-normal">
+                                A short description of the permissions will be
+                                displayed here
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex gap-2 mb-17px">
+                          <div className="flex h-5 items-center">
+                            <Checkbox id="shipping" />
+                          </div>
+                          <div className="flex flex-col">
+                            <Label htmlFor="shipping">
+                              Edit Company Details{" "}
+                            </Label>
+                            <div className="text-gray-500">
+                              <span className="text-sm font-normal">
+                                A short description of the permissions will be
+                                displayed here
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex gap-2">
                           <div className="flex h-5 items-center">
                             <Checkbox id="shipping" />
                           </div>
@@ -469,15 +610,15 @@ const Header = () => {
               </>
             )}
           </DialogContent>
-          <DialogActions>
+          <DialogActions className="border-t !px-5 !py-4">
             <button
-              className="m-2 w-full px-4 py-2 rounded-md hover:bg-gray-200 text-red-600"
+              className="w-full px-4 py-2 rounded-[10px] hover:bg-red-500 hover:border-red-500 hover:text-white text-gray-dark border "
               onClick={handleClose}
             >
               Discard
             </button>
             <button
-              className="m-2 w-full px-4 py-2 rounded-md hover:bg-gray-200 mr-2 text-blue-800"
+              className="w-full px-4 py-2 rounded-[10px] hover:bg-purple-700 hover:border-purple-700 border-span-clr text-white bg-span-clr "
               type="submit"
             >
               Save

@@ -231,29 +231,35 @@ body .active-items-start {
   overflow-x: auto;
 }
 /* width */
-.settings-tabs .MuiTabs-flexContainer[role="tablist"]::-webkit-scrollbar {
+.settings-tabs .MuiTabs-flexContainer[role="tablist"]::-webkit-scrollbar,
+.sidebar-innerr::-webkit-scrollbar {
   width: 4px;
   height: 4px;
 }
 
 /* Track */
-.settings-tabs .MuiTabs-flexContainer[role="tablist"]::-webkit-scrollbar-track {
+.settings-tabs .MuiTabs-flexContainer[role="tablist"]::-webkit-scrollbar-track,
+.sidebar-innerr::-webkit-scrollbar-track {
   box-shadow: inset 0 0 5px #d6d6d6;
   border-radius: 10px;
 }
 
 /* Handle */
-.settings-tabs .MuiTabs-flexContainer[role="tablist"]::-webkit-scrollbar-thumb {
+.settings-tabs .MuiTabs-flexContainer[role="tablist"]::-webkit-scrollbar-thumb,
+.sidebar-innerr::-webkit-scrollbar-thumb {
   background: #a6a6a6;
   border-radius: 10px;
 }
 
 /* Handle on hover */
 .settings-tabs
-  .MuiTabs-flexContainer[role="tablist"]::-webkit-scrollbar-thumb:hover {
+  .MuiTabs-flexContainer[role="tablist"]::-webkit-scrollbar-thumb:hover,
+.sidebar-innerr::-webkit-scrollbar-thumb:hover {
   background: #d6d6d6;
 }
-
+.MuiDialog-container > .MuiPaper-rounded {
+  border-radius: 20px;
+}
 .tabs-cs > button[type="button"] {
   background: none;
   border-bottom: 2px solid #29b47500;
@@ -265,6 +271,9 @@ body .active-items-start {
 .tabs-cs > button[type="button"][aria-selected="true"] {
   border-color: #29b475;
   color: #2e2c34;
+}
+.MuiDialog-root > .MuiBackdrop-root {
+  background-color: rgb(77 77 77 / 50%);
 }
 @media (max-width: 1024.98px) {
   .menu-item-text {

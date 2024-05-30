@@ -11,19 +11,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        // purple: "#7F56D9",
-        // gray: "#D0D5DD",
-        // "gray-text": "#667085",
-        // "gray-dark": "#525866",
-        // heading: "#0A0D14",
         grayMedium1: "#868C98",
-
-        // "dark-purple": "#2B1664",
-        // "span-clr": "#375DFB",
-        // content: "#525866",
-        // "border-error": "#DF1C41",
         success2: "#38C793",
         darkgray2: "#2E2C34",
+        darkgray3: "#0E121B",
         darkblue: "#0F3063",
         darkblue2: "#335CFF",
         darkblue3: "#0B2D63",
@@ -51,9 +42,13 @@ export default {
         lightgray3: "#E2E4E9",
         lightgray4: "#84818A",
         lightgray5: "#F5F7FA",
+        lightgray6: "#E1E4EA",
         mediumgray2: "#B7C0D0",
         red2: "#D74B81",
         "slate-300": "#E2E4E9",
+      },
+      borderColor: {
+        DEFAULT: "#E1E4EA",
       },
       backgroundImage: {
         pattern: "url(../assets/images/Pattern.png)",
@@ -74,6 +69,8 @@ export default {
       },
       margin: {
         "-140px": "-140px",
+        n20px: "-20px",
+        n40px: "-40px",
         "20px": "20px",
         "14px": "14px",
         "17px": "17px",
