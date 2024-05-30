@@ -10,7 +10,7 @@ import MoreVert from "@mui/icons-material/MoreVert";
 import { Dropdown, Button, Modal } from "flowbite-react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Dialog, DialogActions, DialogContent, Switch } from "@mui/material";
+import { Dialog, DialogActions, DialogContent } from "@mui/material";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
