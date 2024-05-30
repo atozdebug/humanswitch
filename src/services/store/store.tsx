@@ -10,6 +10,7 @@ import forgetPasswordSlice from "../slices/auth/forgotPassword";
 import deleteUserSlice from "../slices/dashboard/deleteUser";
 import authenticationSlice from "../slices/auth/authentication";
 import planSlice from "../slices/dashboard/plans";
+import roleSlice from "../slices/dashboard/roles";
 
 export const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ export const store = configureStore({
     deleteUser: deleteUserSlice,
     authentication: authenticationSlice,
     plan: planSlice,
+    role: roleSlice,
   },
 });
 
