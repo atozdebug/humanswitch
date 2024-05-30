@@ -303,27 +303,6 @@ const Header = () => {
             </div>
           </div>
           <DialogContent className="!p-5">
-            {/* <div className="py-2">
-              <div className="flex items-center">
-                <span className="bg-[#F6F8FA] p-2 rounded-full">
-                  <svg
-                    className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                    focusable="false"
-                    aria-hidden="true"
-                    viewBox="0 0 24 24"
-                    data-testid="SmartToyIcon"
-                  >
-                    <path d="M20 9V7c0-1.1-.9-2-2-2h-3c0-1.66-1.34-3-3-3S9 3.34 9 5H6c-1.1 0-2 .9-2 2v2c-1.66 0-3 1.34-3 3s1.34 3 3 3v4c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-4c1.66 0 3-1.34 3-3s-1.34-3-3-3M7.5 11.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5S9.83 13 9 13s-1.5-.67-1.5-1.5M16 17H8v-2h8zm-1-4c-.83 0-1.5-.67-1.5-1.5S14.17 10 15 10s1.5.67 1.5 1.5S15.83 13 15 13"></path>
-                  </svg>
-                </span>
-                <div className="px-4">
-                  <h2 className="text-main-heading text-lg font-medium">
-                    Create new role
-                  </h2>
-                  <p className="text-gray-dark text-sm">Description</p>
-                </div>
-              </div>
-            </div> */}
             {title?.buttonName === "Report" && <div>Create New Report</div>}
             {title?.buttonName === "Plan" && (
               <div>

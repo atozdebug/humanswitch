@@ -15,6 +15,7 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 
 const schemaPlan = yup.object().shape({
   planName: yup.string().required("Plan name is required"),
@@ -375,8 +376,34 @@ const ManagePlans = () => {
       </Modal>
       <Dialog fullWidth={true} maxWidth="md" open={open} onClose={handleClose}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="px-4 pt-4">
-            <div className="font-semibold text-xl">Update Plans</div>
+          <div className="px-4 py-4 border-b relative">
+            <div className="flex justify-start items-center px-0">
+              <span className="bg-white border w-11 h-11 flex justify-center items-center text-gray-dark rounded-full">
+                <SettingsOutlinedIcon />
+              </span>
+              <div className="pl-4">
+                <h2 className="text-main-heading text-lg font-medium">
+                  Update Plan
+                </h2>
+              </div>
+            </div>
+            <div
+              className="modal-close-btn absolute top-4 right-4 leading-3"
+              onClick={handleClose}
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12.0001 10.9396L15.7126 7.22705L16.7731 8.28755L13.0606 12.0001L16.7731 15.7126L15.7126 16.7731L12.0001 13.0606L8.28755 16.7731L7.22705 15.7126L10.9396 12.0001L7.22705 8.28755L8.28755 7.22705L12.0001 10.9396Z"
+                  fill="#525866"
+                />
+              </svg>
+            </div>
           </div>
           <DialogContent>
             <div>
