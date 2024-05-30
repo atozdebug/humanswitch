@@ -5,11 +5,11 @@ import {
   stopLoadingActivity,
 } from "../activity/activitySlice.tsx";
 
-export const createPlans: any = createAsyncThunk(
-  "auth/createPlans",
+export const createRoles: any = createAsyncThunk(
+  "auth/createRoles",
   async (data, { dispatch }) => {
     try {
-      const response = await http.post(`/createPlans`, data);
+      const response = await http.post(`/createRoles`, data);
       if (response.status === 200) {
         dispatch(startLoadingActivity());
         return response.data;
@@ -24,11 +24,11 @@ export const createPlans: any = createAsyncThunk(
   }
 );
 
-export const getPlans: any = createAsyncThunk(
-  "auth/getPlans",
+export const getRoles: any = createAsyncThunk(
+  "auth/getRoles",
   async (_, { dispatch }) => {
     try {
-      const response = await http.get(`/getPlans`);
+      const response = await http.get(`/getRoles`);
       if (response.status === 200) {
         dispatch(startLoadingActivity());
         return response.data;
@@ -43,11 +43,11 @@ export const getPlans: any = createAsyncThunk(
   }
 );
 
-export const updatePlans: any = createAsyncThunk(
-  "auth/updatePlans",
+export const updateRoles: any = createAsyncThunk(
+  "auth/updateRoles",
   async (data: any, { dispatch }) => {
     try {
-      const response = await http.put(`/updatePlans/${data.id}`, data);
+      const response = await http.put(`/updateRoles/${data.id}`, data);
       if (response.status === 200) {
         dispatch(startLoadingActivity());
         return response.data;
@@ -62,11 +62,11 @@ export const updatePlans: any = createAsyncThunk(
   }
 );
 
-export const deletePlans: any = createAsyncThunk(
-  "auth/deletePlans",
+export const deleteRoles: any = createAsyncThunk(
+  "auth/deleteRoles",
   async (id: any, { dispatch }) => {
     try {
-      const response = await http.delete(`/deletePlans/${id}`);
+      const response = await http.delete(`/deleteRoles/${id}`);
       if (response.status === 200) {
         dispatch(startLoadingActivity());
         return response.data;
@@ -81,7 +81,7 @@ export const deletePlans: any = createAsyncThunk(
   }
 );
 
-export interface Plans {
+export interface Roles {
   loading: boolean;
   createData: [];
   getData: [];
@@ -89,7 +89,7 @@ export interface Plans {
   deleteData: [];
 }
 
-const initialState: Plans = {
+const initialState: Roles = {
   loading: false,
   createData: [],
   getData: [],
@@ -97,54 +97,54 @@ const initialState: Plans = {
   deleteData: [],
 };
 
-export const planSlice = createSlice({
-  name: "plans",
+export const roleSlice = createSlice({
+  name: "roles",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
       // agent registration
-      .addCase(createPlans.pending, (state, _action) => {
+      .addCase(createRoles.pending, (state, _action) => {
         state.loading = true;
       })
-      .addCase(createPlans.fulfilled, (state, action) => {
+      .addCase(createRoles.fulfilled, (state, action) => {
         state.createData = action.payload;
         state.loading = false;
       })
-      .addCase(createPlans.rejected, (state, _action) => {
+      .addCase(createRoles.rejected, (state, _action) => {
         state.loading = false;
       })
-      .addCase(getPlans.pending, (state, _action) => {
+      .addCase(getRoles.pending, (state, _action) => {
         state.loading = true;
       })
-      .addCase(getPlans.fulfilled, (state, action) => {
-        state.getData = action.payload?.user_plans;
+      .addCase(getRoles.fulfilled, (state, action) => {
+        state.getData = action.payload;
         state.loading = false;
       })
-      .addCase(getPlans.rejected, (state, _action) => {
+      .addCase(getRoles.rejected, (state, _action) => {
         state.loading = false;
       })
-      .addCase(updatePlans.pending, (state, _action) => {
+      .addCase(updateRoles.pending, (state, _action) => {
         state.loading = true;
       })
-      .addCase(updatePlans.fulfilled, (state, action) => {
+      .addCase(updateRoles.fulfilled, (state, action) => {
         state.updateData = action.payload;
         state.loading = false;
       })
-      .addCase(updatePlans.rejected, (state, _action) => {
+      .addCase(updateRoles.rejected, (state, _action) => {
         state.loading = false;
       })
-      .addCase(deletePlans.pending, (state, _action) => {
+      .addCase(deleteRoles.pending, (state, _action) => {
         state.loading = true;
       })
-      .addCase(deletePlans.fulfilled, (state, action) => {
+      .addCase(deleteRoles.fulfilled, (state, action) => {
         state.deleteData = action.payload;
         state.loading = false;
       })
-      .addCase(deletePlans.rejected, (state, _action) => {
+      .addCase(deleteRoles.rejected, (state, _action) => {
         state.loading = false;
       });
   },
 });
 
-export default planSlice.reducer;
+export default roleSlice.reducer;
