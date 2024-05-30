@@ -105,7 +105,6 @@ const ForgetPasswordId = () => {
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e);
     const newPassword: any = e;
     checkPasswordRequirements(newPassword);
   };

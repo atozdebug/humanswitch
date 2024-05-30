@@ -1,7 +1,7 @@
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 import { useLocation } from "react-router-dom";
 import CreateButton from "../components/Home/createButton";
-import { Dialog, DialogActions, DialogContent, Switch } from "@mui/material";
+import { Dialog, DialogActions, DialogContent } from "@mui/material";
 import { useState } from "react";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
@@ -171,11 +171,8 @@ const Header = () => {
   };
 
   const onSubmit = (data: FormData) => {
-    console.log("Called");
     if (title?.buttonName === "Report") {
-      console.log("Report", data);
     } else if (title?.buttonName === "Plan") {
-      console.log("Plan", data);
       dispatch(
         createPlans({
           name: data.planName,
@@ -189,7 +186,6 @@ const Header = () => {
         .unwrap()
         .then(() => dispatch(getPlans()));
     } else if (title?.buttonName === "Role") {
-      console.log("Role", data);
     }
     handleClose();
   };

@@ -177,8 +177,6 @@ const Pillars = () => {
     }
   });
 
-  console.log(stepAnswers);
-
   const section2Ref = useRef(null);
 
   const [isActive, setIsActive] = useState(false);
@@ -221,8 +219,6 @@ const Pillars = () => {
     toast.dismiss();
     if (questionAnswered) {
       const currentStepAnswers = stepAnswers[step - 1];
-
-      console.log(currentStepAnswers);
 
       // Check if all fields in currentStepAnswers are filled
       const allFieldsFilled = Object.values(currentStepAnswers).every(

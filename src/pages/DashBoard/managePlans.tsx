@@ -96,8 +96,6 @@ const ManagePlans = () => {
     );
   }, [selectedPlan]);
 
-  console.log(selectedPlan);
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked);
   };
@@ -116,7 +114,6 @@ const ManagePlans = () => {
   };
 
   const onSubmit = (data: FormData) => {
-    console.log("Plan", data);
     dispatch(
       updatePlans({
         id: selectedPlan.id,
