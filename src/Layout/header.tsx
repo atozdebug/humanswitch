@@ -237,7 +237,10 @@ const Header = () => {
                 </p>
               </div>
             </div>
-            <div className="modal-close-btn absolute top-4 right-4 leading-3">
+            <div
+              className="modal-close-btn absolute top-4 right-4 leading-3"
+              onClick={handleClose}
+            >
               <svg
                 width="24"
                 height="24"
