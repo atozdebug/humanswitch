@@ -90,8 +90,8 @@ const ManageRoles = () => {
   });
 
   useEffect(() => {
-    setValue("isActiveRole", selectedRole?.isActiveRole);
-    setValue("roleName", selectedRole?.roleName);
+    setValue("isActiveRole", selectedRole?.active);
+    setValue("roleName", selectedRole?.name);
     setValue("editMember", selectedRole?.editMember);
     setValue("editCompanyDetails", selectedRole?.editCompanyDetails);
     setValue("editReport", selectedRole?.editReport);
@@ -171,66 +171,68 @@ const ManageRoles = () => {
                   <Table.HeadCell className="pl-0 bg-transparent py-4 normal-case text-sm font-semibold"></Table.HeadCell>
                 </Table.Head>
                 <Table.Body className="divide-y">
-                  <Table.Row className="text-darkgray2 fw-medium">
-                    <Table.Cell className="py-5 border-b pl-0">
-                      HS Super Admin
-                    </Table.Cell>
-                    <Table.Cell className="py-5 border-b pl-0">
-                      Active
-                    </Table.Cell>
-                    <Table.Cell className="py-5 border-b pl-0">
-                      Default
-                    </Table.Cell>
-                    <Table.Cell className="py-5 border-b pl-0">
-                      <a
-                        href="#"
-                        className="font-medium text-mediumgreen underline"
-                      >
-                        675
-                      </a>
-                    </Table.Cell>
-                    <Table.Cell className="py-5 border-b pl-0">
-                      <a
-                        href="#"
-                        className="font-medium text-mediumblue underline"
-                      >
-                        View/Modify
-                      </a>
-                    </Table.Cell>
-                    <Table.Cell className="py-5 border-b pl-0 text-end">
-                      <Dropdown
-                        label=""
-                        dismissOnClick={false}
-                        renderTrigger={() => (
-                          <span className="inline-block cursor-pointer">
-                            <MoreVertIcon />
-                          </span>
-                        )}
-                        className="bg-white border-0 text-gray-dark"
-                      >
-                        <Dropdown.Item
-                          onClick={() => {
-                            // setSelectedRole(item);
-                            setOpen(true);
-                          }}
-                          className="gap-2"
+                  {data.active_roles.map((item: any) => (
+                    <Table.Row className="text-darkgray2 fw-medium">
+                      <Table.Cell className="py-5 border-b pl-0">
+                        {item.name}
+                      </Table.Cell>
+                      <Table.Cell className="py-5 border-b pl-0">
+                        {item.active ? "Active" : "In Active"}
+                      </Table.Cell>
+                      <Table.Cell className="py-5 border-b pl-0">
+                        Default
+                      </Table.Cell>
+                      <Table.Cell className="py-5 border-b pl-0">
+                        <a
+                          href="#"
+                          className="font-medium text-mediumgreen underline"
                         >
-                          <EditIcon />
-                          Update
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                          onClick={() => {
-                            // setSelectedRole(item);
-                            setOpenDelete(true);
-                          }}
-                          className="gap-2"
+                          675
+                        </a>
+                      </Table.Cell>
+                      <Table.Cell className="py-5 border-b pl-0">
+                        <a
+                          href="#"
+                          className="font-medium text-mediumblue underline"
                         >
-                          <DeleteIcon />
-                          Delete
-                        </Dropdown.Item>
-                      </Dropdown>
-                    </Table.Cell>
-                  </Table.Row>
+                          View/Modify
+                        </a>
+                      </Table.Cell>
+                      <Table.Cell className="py-5 border-b pl-0 text-end">
+                        <Dropdown
+                          label=""
+                          dismissOnClick={false}
+                          renderTrigger={() => (
+                            <span className="inline-block cursor-pointer">
+                              <MoreVertIcon />
+                            </span>
+                          )}
+                          className="bg-white border-0 text-gray-dark"
+                        >
+                          <Dropdown.Item
+                            onClick={() => {
+                              setSelectedRole(item);
+                              setOpen(true);
+                            }}
+                            className="gap-2"
+                          >
+                            <EditIcon />
+                            Update
+                          </Dropdown.Item>
+                          <Dropdown.Item
+                            onClick={() => {
+                              setSelectedRole(item);
+                              setOpenDelete(true);
+                            }}
+                            className="gap-2"
+                          >
+                            <DeleteIcon />
+                            Delete
+                          </Dropdown.Item>
+                        </Dropdown>
+                      </Table.Cell>
+                    </Table.Row>
+                  ))}
                 </Table.Body>
               </Table>
             </div>
@@ -259,58 +261,68 @@ const ManageRoles = () => {
                   <Table.HeadCell className="pl-0 bg-transparent py-4 normal-case text-sm font-semibold"></Table.HeadCell>
                 </Table.Head>
                 <Table.Body className="divide-y">
-                  <Table.Row className="text-darkgray2 fw-medium">
-                    <Table.Cell className="py-5 border-b pl-0">
-                      HS Super Admin
-                    </Table.Cell>
-                    <Table.Cell className="py-5 border-b pl-0">
-                      Inactive
-                    </Table.Cell>
-                    <Table.Cell className="py-5 border-b pl-0">
-                      Default
-                    </Table.Cell>
-                    <Table.Cell className="py-5 border-b pl-0">
-                      <a
-                        href="#"
-                        className="font-medium text-mediumgreen underline"
-                      >
-                        675
-                      </a>
-                    </Table.Cell>
-                    <Table.Cell className="py-5 border-b pl-0">
-                      <a
-                        href="#"
-                        className="font-medium text-mediumblue underline"
-                      >
-                        View/Modify
-                      </a>
-                    </Table.Cell>
-                    <Table.Cell className="py-5 border-b pl-0 text-end">
-                      <Dropdown
-                        label=""
-                        dismissOnClick={false}
-                        renderTrigger={() => (
-                          <span className="inline-block cursor-pointer">
-                            <MoreVertIcon />
-                          </span>
-                        )}
-                        className="bg-white border-0 text-gray-dark"
-                      >
-                        <Dropdown.Item className=" min-w-[168px]">
-                          Point 1
-                        </Dropdown.Item>
-                        <Dropdown.Item className=" min-w-[168px]">
-                          Point 1
-                        </Dropdown.Item>
-                        <Dropdown.Item className=" min-w-[168px]">
-                          Point 1
-                        </Dropdown.Item>
-                        <Dropdown.Item className=" min-w-[168px]">
-                          Point 1
-                        </Dropdown.Item>
-                      </Dropdown>
-                    </Table.Cell>
-                  </Table.Row>
+                  {data.inactive_roles.map((item: any) => (
+                    <Table.Row className="text-darkgray2 fw-medium">
+                      <Table.Cell className="py-5 border-b pl-0">
+                        {item.name}
+                      </Table.Cell>
+                      <Table.Cell className="py-5 border-b pl-0">
+                        {item.active ? "Active" : "In Active"}
+                      </Table.Cell>
+                      <Table.Cell className="py-5 border-b pl-0">
+                        Default
+                      </Table.Cell>
+                      <Table.Cell className="py-5 border-b pl-0">
+                        <a
+                          href="#"
+                          className="font-medium text-mediumgreen underline"
+                        >
+                          675
+                        </a>
+                      </Table.Cell>
+                      <Table.Cell className="py-5 border-b pl-0">
+                        <a
+                          href="#"
+                          className="font-medium text-mediumblue underline"
+                        >
+                          View/Modify
+                        </a>
+                      </Table.Cell>
+                      <Table.Cell className="py-5 border-b pl-0 text-end">
+                        <Dropdown
+                          label=""
+                          dismissOnClick={false}
+                          renderTrigger={() => (
+                            <span className="inline-block cursor-pointer">
+                              <MoreVertIcon />
+                            </span>
+                          )}
+                          className="bg-white border-0 text-gray-dark"
+                        >
+                          <Dropdown.Item
+                            onClick={() => {
+                              setSelectedRole(item);
+                              setOpen(true);
+                            }}
+                            className="gap-2"
+                          >
+                            <EditIcon />
+                            Update
+                          </Dropdown.Item>
+                          <Dropdown.Item
+                            onClick={() => {
+                              setSelectedRole(item);
+                              setOpenDelete(true);
+                            }}
+                            className="gap-2"
+                          >
+                            <DeleteIcon />
+                            Delete
+                          </Dropdown.Item>
+                        </Dropdown>
+                      </Table.Cell>
+                    </Table.Row>
+                  ))}
                 </Table.Body>
               </Table>
             </div>

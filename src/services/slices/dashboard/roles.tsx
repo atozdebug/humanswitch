@@ -118,7 +118,7 @@ export const roleSlice = createSlice({
         state.loading = true;
       })
       .addCase(getRoles.fulfilled, (state, action) => {
-        state.getData = action.payload?.user_roles;
+        state.getData = action.payload;
         state.loading = false;
       })
       .addCase(getRoles.rejected, (state, _action) => {
