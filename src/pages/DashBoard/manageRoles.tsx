@@ -93,7 +93,7 @@ const ManageRoles = () => {
                     <Table.Cell className="py-5 border-b pl-0">
                       HS Super Admin
                     </Table.Cell>
-                    <Table.Cell className="py-5 border-b pl-0">
+                    <Table.Cell className="py-5 border-b pl-0 min-w-[168px]">
                       Active
                     </Table.Cell>
                     <Table.Cell className="py-5 border-b pl-0">
@@ -145,7 +145,7 @@ const ManageRoles = () => {
                     <Table.Cell className="py-5 border-b pl-0">
                       HS Super Admin
                     </Table.Cell>
-                    <Table.Cell className="py-5 border-b pl-0">
+                    <Table.Cell className="py-5 border-b pl-0 min-w-[168px]">
                       Active
                     </Table.Cell>
                     <Table.Cell className="py-5 border-b pl-0">
@@ -197,7 +197,7 @@ const ManageRoles = () => {
                     <Table.Cell className="py-5 border-b pl-0">
                       HS Super Admin
                     </Table.Cell>
-                    <Table.Cell className="py-5 border-b pl-0">
+                    <Table.Cell className="py-5 border-b pl-0 min-w-[168px]">
                       Active
                     </Table.Cell>
                     <Table.Cell className="py-5 border-b pl-0">
@@ -249,7 +249,7 @@ const ManageRoles = () => {
                     <Table.Cell className="py-5 border-b pl-0">
                       HS Super Admin
                     </Table.Cell>
-                    <Table.Cell className="py-5 border-b pl-0">
+                    <Table.Cell className="py-5 border-b pl-0 min-w-[168px]">
                       Active
                     </Table.Cell>
                     <Table.Cell className="py-5 border-b pl-0">
@@ -301,7 +301,7 @@ const ManageRoles = () => {
                     <Table.Cell className="py-5 border-b pl-0">
                       HS Super Admin
                     </Table.Cell>
-                    <Table.Cell className="py-5 border-b pl-0">
+                    <Table.Cell className="py-5 border-b pl-0 min-w-[168px]">
                       Active
                     </Table.Cell>
                     <Table.Cell className="py-5 border-b pl-0">
@@ -381,7 +381,7 @@ const ManageRoles = () => {
                     <Table.Cell className="py-5 border-b pl-0">
                       HS Super Admin
                     </Table.Cell>
-                    <Table.Cell className="py-5 border-b pl-0">
+                    <Table.Cell className="py-5 border-b pl-0 ">
                       Inactive
                     </Table.Cell>
                     <Table.Cell className="py-5 border-b pl-0">
@@ -433,7 +433,7 @@ const ManageRoles = () => {
                     <Table.Cell className="py-5 border-b pl-0">
                       HS Super Admin
                     </Table.Cell>
-                    <Table.Cell className="py-5 border-b pl-0">
+                    <Table.Cell className="py-5 border-b pl-0 min-w-[168px]">
                       Inactive
                     </Table.Cell>
                     <Table.Cell className="py-5 border-b pl-0">
