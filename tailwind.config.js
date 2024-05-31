@@ -20,6 +20,8 @@ export default {
         darkblue3: "#0B2D63",
         mediumblue: "#6355F6",
         lightblue: "#EBEDFF",
+        lightblue2: "#00A5FF1A",
+        lightblue3: "#5542F61A",
         mediumgreen: "#18CBB8",
         "blue-600": "rgb(99 85 246 / var(--tw-bg-opacity))",
         success: "#5cb85c",
@@ -32,6 +34,8 @@ export default {
         "bggreen-500": "#6E3FF3",
         darkgreen: "#176448",
         lightgreen: "#CBF5E5",
+        lightgreen2: "#20C9AC1A",
+        lightorage: "#FFA0431A",
         lightred: "#F8C9D2",
         darkred: "#710E21",
         lightblue: "#C2D6FF",
@@ -43,6 +47,7 @@ export default {
         lightgray4: "#84818A",
         lightgray5: "#F5F7FA",
         lightgray6: "#E1E4EA",
+        lightgray7: "#FBFAFC",
         mediumgray2: "#B7C0D0",
         red2: "#D74B81",
         "slate-300": "#E2E4E9",
@@ -100,6 +105,7 @@ export default {
         123: "123px",
         "172px": "172px",
         13: "13px",
+        p90: "90%",
       },
       maxHeight: {
         "vw-calc300px": "calc(100vh - 300px)",
@@ -114,6 +120,7 @@ export default {
         "vw-calc80px": "calc(100vh - 80px)",
         "vw-calc140px": "calc(100vh - 140px)",
         "1px": "1px",
+        "42px": "42px",
       },
       minHeight: {
         "62px": "62px",
@@ -134,6 +141,7 @@ export default {
         "250px": "250px",
         "272px": "272px",
         "172px": "172px",
+        "42px": "42px",
         "100-272px": "calc(100% - 272px)",
       },
       boxShadow: {
@@ -143,6 +151,7 @@ export default {
       minwidth: {
         "168px": "168px",
         123: "123px",
+        200: "200px",
       },
       left: {
         n5: "-1.25rem",
