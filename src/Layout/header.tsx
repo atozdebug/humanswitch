@@ -506,7 +506,7 @@ const Header = () => {
                             />
                           </div>
                           <div className="flex flex-col">
-                            <Label htmlFor="shipping">Edit Member</Label>
+                            <Label>Edit Member</Label>
                             <div className="text-gray-500">
                               <span className="text-sm font-normal">
                                 A short description of the permissions will be
@@ -523,9 +523,7 @@ const Header = () => {
                             />
                           </div>
                           <div className="flex flex-col">
-                            <Label htmlFor="shipping">
-                              Edit Company Details{" "}
-                            </Label>
+                            <Label>Edit Company Details </Label>
                             <div className="text-gray-500">
                               <span className="text-sm font-normal">
                                 A short description of the permissions will be
@@ -542,7 +540,7 @@ const Header = () => {
                             />
                           </div>
                           <div className="flex flex-col">
-                            <Label htmlFor="shipping">Edit Report</Label>
+                            <Label>Edit Report</Label>
                             <div className="text-gray-500">
                               <span className="text-sm font-normal">
                                 A short description of the permissions will be
@@ -571,7 +569,7 @@ const Header = () => {
                             />
                           </div>
                           <div className="flex flex-col">
-                            <Label htmlFor="shipping">Create Member</Label>
+                            <Label>Create Member</Label>
                             <div className="text-gray-500">
                               <span className="text-sm font-normal">
                                 A short description of the permissions will be
@@ -588,9 +586,7 @@ const Header = () => {
                             />
                           </div>
                           <div className="flex flex-col">
-                            <Label htmlFor="shipping">
-                              Create Company Details{" "}
-                            </Label>
+                            <Label>Create Company Details </Label>
                             <div className="text-gray-500">
                               <span className="text-sm font-normal">
                                 A short description of the permissions will be
@@ -607,7 +603,7 @@ const Header = () => {
                             />
                           </div>
                           <div className="flex flex-col">
-                            <Label htmlFor="shipping">Create Report</Label>
+                            <Label>Create Report</Label>
                             <div className="text-gray-500">
                               <span className="text-sm font-normal">
                                 A short description of the permissions will be
@@ -636,7 +632,7 @@ const Header = () => {
                             />
                           </div>
                           <div className="flex flex-col">
-                            <Label htmlFor="shipping">Delete Member</Label>
+                            <Label>Delete Member</Label>
                             <div className="text-gray-500">
                               <span className="text-sm font-normal">
                                 A short description of the permissions will be
@@ -653,9 +649,7 @@ const Header = () => {
                             />
                           </div>
                           <div className="flex flex-col">
-                            <Label htmlFor="shipping">
-                              Delete Company Details{" "}
-                            </Label>
+                            <Label>Delete Company Details </Label>
                             <div className="text-gray-500">
                               <span className="text-sm font-normal">
                                 A short description of the permissions will be
@@ -672,7 +666,7 @@ const Header = () => {
                             />
                           </div>
                           <div className="flex flex-col">
-                            <Label htmlFor="shipping">Delete Report</Label>
+                            <Label>Delete Report</Label>
                             <div className="text-gray-500">
                               <span className="text-sm font-normal">
                                 A short description of the permissions will be
