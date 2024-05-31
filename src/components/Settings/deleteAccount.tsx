@@ -136,12 +136,6 @@ const DeleteAccount = ({
 
         <div className="flex gap-4 mt-5">
           <button
-            type="button"
-            className="w-full rounded-[10px] bg-white border hover:bg-red-700 hover:border-red-700 py-2 px-4 hover:text-white text-gray-dark font-medium disabled:bg-gray-400 disabled:border-gray-400 disabled:text-gray-dark"
-          >
-            Cancel
-          </button>
-          <button
             type="submit"
             onClick={handleDelete}
             className="w-full rounded-[10px] bg-red-700 hover:bg-red-900 py-2.5 px-4 text-white font-medium"

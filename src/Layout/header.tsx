@@ -172,6 +172,7 @@ const Header = () => {
     handleSubmit,
     reset,
     setValue,
+    clearErrors,
     formState: { errors },
   } = useForm<FormData | any>({
     resolver: schemas(),
@@ -197,6 +198,8 @@ const Header = () => {
   };
 
   const handleClose = () => {
+    reset(defaultValues);
+    clearErrors();
     setOpen(false);
   };
 
@@ -689,6 +692,7 @@ const Header = () => {
             <button
               className="w-full px-4 py-2 rounded-[10px] hover:bg-red-500 hover:border-red-500 hover:text-white text-gray-dark border "
               onClick={handleClose}
+              type="button"
             >
               Discard
             </button>

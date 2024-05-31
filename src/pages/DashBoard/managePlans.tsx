@@ -68,8 +68,29 @@ const ManagePlans = () => {
   const [open, setOpen] = useState(false);
   const [startDate, setStartDate] = useState<Dayjs | null>(null);
   const [endDate, setEndDate] = useState<Dayjs | null>(null);
+  const [initialValues, setInitialValues] = useState<FormData | null>(null);
 
   const [checked, setChecked] = useState(false);
+
+  const handleEdit = (item: any) => {
+    setSelectedPlan(item);
+    setOpen(true);
+    // Set initial values to the selected role's data
+    setInitialValues({
+      planName: item.name,
+      price: item.price,
+      employees: item.employees,
+      isActive: item.active,
+
+      startDate: dayjs(
+        item?.start_date,
+        "ddd, DD MMM YYYY HH:mm:ss [GMT]"
+      ).format("YYYY-MM-DD"),
+      endDate: dayjs(item?.end_date, "ddd, DD MMM YYYY HH:mm:ss [GMT]").format(
+        "YYYY-MM-DD"
+      ),
+    });
+  };
 
   useEffect(() => {
     setValue("planName", selectedPlan?.name);
@@ -103,6 +124,14 @@ const ManagePlans = () => {
 
   const handleClose = () => {
     setOpen(false);
+    if (initialValues) {
+      setValue("planName", initialValues.planName);
+      setValue("price", initialValues.price);
+      setValue("employees", initialValues.employees);
+      setValue("isActive", initialValues.isActive);
+      setValue("startDate", initialValues.startDate);
+      setValue("endDate", initialValues.endDate);
+    }
   };
 
   const handleDelete = () => {
@@ -173,8 +202,7 @@ const ManagePlans = () => {
                   >
                     <Dropdown.Item
                       onClick={() => {
-                        setSelectedPlan(item);
-                        setOpen(true);
+                        handleEdit(item);
                       }}
                       className="gap-2"
                     >

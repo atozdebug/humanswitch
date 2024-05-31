@@ -77,6 +77,7 @@ const ManageRoles = () => {
   const [selectedRole, setSelectedRole] = useState<any>(null);
   const [openDelete, setOpenDelete] = useState(false);
   const [open, setOpen] = useState(false);
+  const [initialValues, setInitialValues] = useState<FormData | null>(null);
 
   const {
     register,
@@ -88,6 +89,25 @@ const ManageRoles = () => {
     resolver: yupResolver(schemaRole),
     defaultValues,
   });
+
+  const handleEdit = (item: any) => {
+    setSelectedRole(item);
+    setOpen(true);
+    // Set initial values to the selected role's data
+    setInitialValues({
+      isActiveRole: item.active,
+      roleName: item.name,
+      editMember: item.editMember,
+      editCompanyDetails: item.editCompanyDetails,
+      editReport: item.editReport,
+      createMember: item.createMember,
+      createCompanyDetails: item.createCompanyDetails,
+      createReport: item.createReport,
+      deleteMember: item.deleteMember,
+      deleteCompanyDetails: item.deleteCompanyDetails,
+      deleteReport: item.deleteReport,
+    });
+  };
 
   useEffect(() => {
     setValue("isActiveRole", selectedRole?.active);
@@ -105,6 +125,19 @@ const ManageRoles = () => {
 
   const handleClose = () => {
     setOpen(false);
+    if (initialValues) {
+      setValue("isActiveRole", initialValues.isActiveRole);
+      setValue("roleName", initialValues.roleName);
+      setValue("editMember", initialValues.editMember);
+      setValue("editCompanyDetails", initialValues.editCompanyDetails);
+      setValue("editReport", initialValues.editReport);
+      setValue("createMember", initialValues.createMember);
+      setValue("createCompanyDetails", initialValues.createCompanyDetails);
+      setValue("createReport", initialValues.createReport);
+      setValue("deleteMember", initialValues.deleteMember);
+      setValue("deleteCompanyDetails", initialValues.deleteCompanyDetails);
+      setValue("deleteReport", initialValues.deleteReport);
+    }
   };
 
   const handleDelete = () => {
@@ -211,8 +244,7 @@ const ManageRoles = () => {
                         >
                           <Dropdown.Item
                             onClick={() => {
-                              setSelectedRole(item);
-                              setOpen(true);
+                              handleEdit(item);
                             }}
                             className="gap-2"
                           >
@@ -301,8 +333,7 @@ const ManageRoles = () => {
                         >
                           <Dropdown.Item
                             onClick={() => {
-                              setSelectedRole(item);
-                              setOpen(true);
+                              handleEdit(item);
                             }}
                             className="gap-2"
                           >
