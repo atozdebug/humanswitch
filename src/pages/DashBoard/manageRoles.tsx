@@ -171,7 +171,7 @@ const ManageRoles = () => {
                   <Table.HeadCell className="pl-0 bg-transparent py-4 normal-case text-sm font-semibold"></Table.HeadCell>
                 </Table.Head>
                 <Table.Body className="divide-y">
-                  {data.active_roles.map((item: any) => (
+                  {data?.active_roles?.map((item: any) => (
                     <Table.Row className="text-darkgray2 fw-medium">
                       <Table.Cell className="py-5 border-b pl-0">
                         {item.name}
@@ -261,7 +261,7 @@ const ManageRoles = () => {
                   <Table.HeadCell className="pl-0 bg-transparent py-4 normal-case text-sm font-semibold"></Table.HeadCell>
                 </Table.Head>
                 <Table.Body className="divide-y">
-                  {data.inactive_roles.map((item: any) => (
+                  {data?.inactive_roles?.map((item: any) => (
                     <Table.Row className="text-darkgray2 fw-medium">
                       <Table.Cell className="py-5 border-b pl-0">
                         {item.name}
