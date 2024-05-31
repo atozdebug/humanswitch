@@ -331,7 +331,7 @@ const ManageRoles = () => {
       </Tabs>
       <Modal
         show={openDelete}
-        size="md"
+        size="xl"
         onClose={() => setOpenDelete(false)}
         popup
         position="center"
@@ -340,7 +340,7 @@ const ManageRoles = () => {
         <Modal.Body>
           <div className="text-center">
             <div className="flex gap-1 mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-              Are you sure you want to delete the{" "}
+              Are you sure you want to delete the
               <div className="font-semibold text-gray-900">
                 {selectedRole?.name}
               </div>
