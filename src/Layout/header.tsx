@@ -6,7 +6,7 @@ import { useState } from "react";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { useDispatch } from "react-redux";
 import { createPlans, getPlans } from "../services/slices/dashboard/plans";
@@ -371,6 +371,10 @@ const Header = () => {
                   <div>
                     <label className="mb-1 block text-sm">End Date</label>
                     <DatePicker
+                      minDate={
+                        (startDate && dayjs(startDate).add(1, "day")) ||
+                        undefined
+                      }
                       value={endDate}
                       onChange={(newValue) => {
                         setValue(

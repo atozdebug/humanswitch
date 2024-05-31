@@ -472,6 +472,9 @@ const ManagePlans = () => {
                 <div>
                   <div>End Date</div>
                   <DatePicker
+                    minDate={
+                      (startDate && dayjs(startDate).add(1, "day")) || undefined
+                    }
                     value={endDate}
                     onChange={(newValue) => {
                       setValue(
