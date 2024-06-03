@@ -80,7 +80,12 @@ const PrivacySecurity = ({ handleSubmit, onSubmit, errors, setValue }: any) => {
           .unwrap()
           .then(() => {
             toast.promise(
-              dispatch(sendEmailVerification({ email: userData.email }))
+              dispatch(
+                sendEmailVerification({
+                  email: userData.email,
+                  enable_2fa: true,
+                })
+              )
                 .unwrap()
                 .then(() => {
                   setOpen(true);

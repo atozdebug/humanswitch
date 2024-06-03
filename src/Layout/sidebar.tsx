@@ -18,6 +18,7 @@ import PublicIcon from "@mui/icons-material/Public";
 import GroupsIcon from "@mui/icons-material/Groups";
 import ApartmentIcon from "@mui/icons-material/Apartment";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
+import { googleLogout } from "@react-oauth/google";
 
 let sideBarItems = [
   {
@@ -122,6 +123,7 @@ const SideBar = () => {
 
   const logout = async () => {
     localStorage.clear();
+    googleLogout();
     dispatch(handleLogout(true))
       .unwrap()
       .then(() => {
@@ -131,7 +133,7 @@ const SideBar = () => {
 
   return (
     <div
-      className={`max-h-100vh w-272px sidebar-main ${
+      className={`max-h-100vh w-320px sidebar-main ${
         isSidebarOpen ? "menu-open" : "menu-closed"
       }`}
     >
@@ -308,12 +310,29 @@ const SideBar = () => {
               style={{ width: "50px", height: "50px", overflow: "hidden" }}
             >
               {userData?.image ? (
-                <img
-                  src={`data:image/jpeg;base64,${userData?.image}`}
-                  alt="Profile"
-                  className="rounded-full"
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                />
+                userData?.image?.startsWith("https://") ? (
+                  <img
+                    src={userData?.image}
+                    alt="Profile"
+                    className="rounded-full"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
+                ) : (
+                  <img
+                    src={`data:image/jpeg;base64,${userData?.image}`}
+                    alt="Profile"
+                    className="rounded-full"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
+                )
               ) : (
                 <img
                   src="/assets/images/avatarpic.jpg"

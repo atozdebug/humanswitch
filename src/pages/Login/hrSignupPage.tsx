@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SignupOne from "../../components/HrSignup/signupFirst";
 import SignupTwo from "../../components/HrSignup/signupSecond";
 import SignupThree from "../../components/HrSignup/signupThird";
@@ -64,16 +64,16 @@ const schemaSecond = yup.object().shape({
   phone_no: yup.string().required("Phone number is required"),
   image: yup
     .mixed()
-    .required("Profile picture is required")
     .test(
       "fileType",
-      "Only image files are allowed (jpeg, jpg, png, gif).",
-      function (file: any) {
-        if (!file) {
-          return false;
+      "Only image files are allowed (jpeg, jpg, png, gif), or a valid image URL.",
+      function (fileOrUrl: any) {
+        if (typeof fileOrUrl === "string") {
+          // If it's a string, assume it's a valid URL and return true
+          return true;
         }
-
-        const fileObj = file[0];
+        // If it's a file, perform file type validation
+        const fileObj = fileOrUrl[0];
         const supportedFormats = [
           "image/jpeg",
           "image/jpg",
@@ -83,14 +83,19 @@ const schemaSecond = yup.object().shape({
         return supportedFormats.includes(fileObj?.type);
       }
     )
-    .test("fileSize", "File size must be less than 2MB.", function (file: any) {
-      if (!file) {
-        return false;
+    .test(
+      "fileSize",
+      "File size must be less than 2MB.",
+      function (fileOrUrl: any) {
+        if (typeof fileOrUrl === "string") {
+          // If it's a string, no file size validation needed, return true
+          return true;
+        }
+        // If it's a file, perform file size validation
+        const fileObj = fileOrUrl[0];
+        return fileObj?.size <= 2 * 1024 * 1024;
       }
-
-      const fileObj = file[0];
-      return fileObj?.size <= 2 * 1024 * 1024;
-    }),
+    ),
 });
 
 const schemaThird = yup.object().shape({
@@ -231,6 +236,24 @@ const SignupPage = () => {
     }
   };
 
+  const googleUser: any = localStorage.getItem("googleUser");
+
+  useEffect(() => {
+    const parsed = JSON.parse(googleUser);
+    console.log(parsed?.picture);
+    if (googleUser) {
+      setStep(3);
+      setValue("email", parsed.email);
+      const parsedName = parsed.name.split(" ");
+      const firstName = parsedName[0];
+      const lastName = parsedName.slice(1).join(" "); // Join remaining parts as last name
+      setValue("first_name", firstName);
+      setValue("last_name", lastName);
+      setImageFile(parsed?.picture);
+      setValue("image", parsed?.picture);
+    }
+  }, []);
+
   const [imageFile, setImageFile] = useState(null);
   const [businessImageFile, setBusinessImageFile] = useState(null);
   const [phoneNo, setPhoneNo] = useState("");
@@ -304,8 +327,35 @@ const SignupPage = () => {
         } else {
           setOtpError(true);
         }
-      } else if (step >= 3 && step <= 5) {
+      } else if (step >= 3 && step <= 4) {
         setStep((prev) => prev + 1);
+      } else if (step === 5) {
+        if (googleUser) {
+          const formData: any = new FormData();
+          formData.append("imageGoogle", imageFile);
+          formData.append("business_image", businessImageFile);
+          formData.append("email", data.email);
+          formData.append("first_name", data.first_name);
+          formData.append("last_name", data.last_name);
+          formData.append("phone_no", data.phone_no);
+          formData.append("role", data.role);
+          formData.append("company_name", data.company_name);
+          formData.append("industry", data.industry);
+          formData.append("sector", data.sector);
+          formData.append("employees_count", data.employees_count);
+          formData.append("location", data.location);
+          formData.append("partners", data.partners);
+          formData.append("suppliers", data.suppliers);
+          formData.append("isGoogleLogin", true);
+          dispatch(userSignUp(formData))
+            .unwrap()
+            .then(() => {
+              localStorage.clear();
+              navigate("/login");
+            });
+        } else {
+          setStep((prev) => prev + 1);
+        }
       } else if (step === 6) {
         const formData: any = new FormData();
         formData.append("image", imageFile);
@@ -326,7 +376,10 @@ const SignupPage = () => {
 
         dispatch(userSignUp(formData))
           .unwrap()
-          .then(() => navigate("/login"));
+          .then(() => {
+            localStorage.clear();
+            navigate("/login");
+          });
       }
     } catch (error) {
       console.error("Submission error:", error);
@@ -363,64 +416,79 @@ const SignupPage = () => {
         </div>
 
         <div className="flex text-sm lg:flex-nowrap flex-wrap justify-center">
-          {header.map((item, index) => (
-            <div className="flex" key={index}>
-              <div
-                className={`flex items-center justify-center py-2 gap-2 rounded-lg text-gray-500 dark:bg-gray-800  dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
-              >
-                <div
-                  className={`flex justify-center items-center border rounded-full h-5 w-5 ${
-                    item.id < step
-                      ? "bg-green-400 text-white"
-                      : `${step === item.id ? "bg-blue-600 text-white" : ""}`
-                  }`}
-                >
-                  {item.id < step ? (
-                    // <DoneIcon
-                    //   className=""
-                    //   style={{ height: "20px" }}
-                    // />
-                    <>
-                      <svg
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M0 10C0 4.47715 4.47715 0 10 0C15.5228 0 20 4.47715 20 10C20 15.5228 15.5228 20 10 20C4.47715 20 0 15.5228 0 10Z"
-                          fill="#38C793"
-                        />
-                        <path
-                          d="M15.1817 7.2726L8.8187 13.6365L5 9.8178L6.2726 8.5452L8.8187 11.0913L13.9091 6L15.1817 7.2726Z"
-                          fill="white"
-                        />
-                      </svg>
-                    </>
-                  ) : (
-                    item.id
+          {header.map(
+            (item, index) =>
+              !(googleUser && item.id === 6) && (
+                <div className="flex" key={index}>
+                  <div
+                    className={`flex items-center justify-center py-2 gap-2 rounded-lg text-gray-500 dark:bg-gray-800  dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
+                  >
+                    <div
+                      className={`flex justify-center items-center border rounded-full h-5 w-5 ${
+                        item.id < step
+                          ? "bg-green-400 text-white"
+                          : `${
+                              step === item.id ? "bg-blue-600 text-white" : ""
+                            }`
+                      }`}
+                    >
+                      {item.id < step ? (
+                        // <DoneIcon
+                        //   className=""
+                        //   style={{ height: "20px" }}
+                        // />
+                        <>
+                          <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 20 20"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M0 10C0 4.47715 4.47715 0 10 0C15.5228 0 20 4.47715 20 10C20 15.5228 15.5228 20 10 20C4.47715 20 0 15.5228 0 10Z"
+                              fill="#38C793"
+                            />
+                            <path
+                              d="M15.1817 7.2726L8.8187 13.6365L5 9.8178L6.2726 8.5452L8.8187 11.0913L13.9091 6L15.1817 7.2726Z"
+                              fill="white"
+                            />
+                          </svg>
+                        </>
+                      ) : (
+                        item.id
+                      )}
+                    </div>
+                    <div
+                      className={`${
+                        step === item.id ? "font-medium text-black" : ""
+                      }`}
+                    >
+                      {item.name}
+                    </div>
+                  </div>
+                  {item.id < 6 && (
+                    <div className="flex items-center justify-center mx-4 min-w-4">
+                      {googleUser
+                        ? item.id < 5 && (
+                            <img
+                              src="/assets/images/arrow-right-s-line.png"
+                              width={"20px"}
+                              height={"20px"}
+                            />
+                          )
+                        : item.id < 6 && (
+                            <img
+                              src="/assets/images/arrow-right-s-line.png"
+                              width={"20px"}
+                              height={"20px"}
+                            />
+                          )}
+                    </div>
                   )}
                 </div>
-                <div
-                  className={`${
-                    step === item.id ? "font-medium text-black" : ""
-                  }`}
-                >
-                  {item.name}
-                </div>
-              </div>
-              {item.id < 6 && (
-                <div className="flex items-center justify-center mx-4 min-w-4">
-                  <img
-                    src="/assets/images/arrow-right-s-line.png"
-                    width={"20px"}
-                    height={"20px"}
-                  />
-                </div>
-              )}
-            </div>
-          ))}
+              )
+          )}
         </div>
 
         {/* <div className="h-10 w-10"></div> */}
@@ -487,14 +555,17 @@ const SignupPage = () => {
           businessImageFile={businessImageFile}
         />
       ) : (
-        <SignupFive
-          handleSubmit={handleSubmit}
-          onSubmit={onSubmit}
-          register={register}
-          errors={errors}
-          setValue={setValue}
-          trigger={trigger}
-        />
+        step === 6 &&
+        !googleUser && (
+          <SignupFive
+            handleSubmit={handleSubmit}
+            onSubmit={onSubmit}
+            register={register}
+            errors={errors}
+            setValue={setValue}
+            trigger={trigger}
+          />
+        )
       )}
       <div className="xl:px-[44px] px-4 w-full mx-auto footer flex items-center content-center justify-between">
         <div>© 2024 HumanSwitch.ai</div>

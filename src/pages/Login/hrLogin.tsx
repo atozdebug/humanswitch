@@ -4,7 +4,7 @@ import * as yup from "yup";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { userLogin } from "../../services/slices/auth/login";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import * as React from "react";
@@ -14,6 +14,7 @@ import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import { DialogContent } from "@mui/material";
 import OTPInput from "../../components/HrLogin/Otp";
+import { useGoogleLogin } from "@react-oauth/google";
 import {
   generateSecret,
   sendEmailVerification,
@@ -22,6 +23,10 @@ import {
   verifyQROtp,
 } from "../../services/slices/auth/authentication";
 import toast from "react-hot-toast";
+import {
+  googleLogin,
+  googleLoginCheck,
+} from "../../services/slices/auth/googleLogin";
 
 const schema = yup.object().shape({
   email: yup
@@ -164,6 +169,73 @@ const LoginHr = () => {
         });
     }
   };
+
+  const [user, setUser] = useState<any>([]);
+
+  const login = useGoogleLogin({
+    onSuccess: (codeResponse: any) => setUser(codeResponse),
+    onError: (error) => console.log("Login Failed:", error),
+  });
+
+  useEffect(() => {
+    if (user) {
+      dispatch(googleLogin(user))
+        .unwrap()
+        .then((response: any) => {
+          dispatch(googleLoginCheck(response))
+            .unwrap()
+            .then((res: any) => {
+              if (res.redirect === "/signup") {
+                localStorage.setItem("googleUser", JSON.stringify(response));
+                navigate("/signup");
+              } else {
+                if (res?.error) {
+                  toast.error(res?.error);
+                } else if (res.security === "SMS Code") {
+                  setSecurityType(res?.security);
+                } else if (res.security === "Email Code") {
+                  setSecurityType(res?.security);
+                  dispatch(generateSecret({ email: response.email }))
+                    .unwrap()
+                    .then(() => {
+                      toast.promise(
+                        dispatch(
+                          sendEmailVerification({ email: response.email })
+                        )
+                          .unwrap()
+                          .then(() => {
+                            setOpen(true);
+                          }),
+                        {
+                          loading: "Sending Email...",
+                          success: "Email Sent!",
+                          error: "Error while sending email",
+                        }
+                      );
+                    });
+                } else if (res.security === "Authenticator App") {
+                  setSecurityType(res?.security);
+                  dispatch(generateSecret({ email: response.email }))
+                    .unwrap()
+                    .then(() => {
+                      dispatch(sendQRVerification({ email: response.email }))
+                        .unwrap()
+                        .then((res: any) => {
+                          setQrCode(`data:image/jpeg;base64,${res?.qr_code}`);
+                          setOpen(true);
+                        });
+                    });
+                } else if (!res.security) {
+                  res?.access_token && existingData
+                    ? navigate("/pillars")
+                    : navigate("/dashboard");
+                }
+              }
+            });
+        })
+        .catch((err: any) => console.log(err));
+    }
+  }, [user]);
 
   return (
     <div className="main min-h-vhcalc225px bg-[url(../assets/images/Pattern.png)] bg-no-repeat bg-top">
@@ -322,7 +394,11 @@ const LoginHr = () => {
               <p className="my-0 text-grayMedium1 px-5">OR</p>
               <hr className="border-gray w-1/2"></hr>
             </div>
-            <button className="rounded-[10px] w-full font-medium text-sm border bg-transparent border-slate-300 outline-none py-2.5 px-4 text-black flex justify-center gap-2 items-center drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400">
+            <button
+              onClick={() => login()}
+              type="button"
+              className="rounded-[10px] w-full font-medium text-sm border bg-transparent border-slate-300 outline-none py-2.5 px-4 text-black flex justify-center gap-2 items-center drop-shadow-sm transition-all duration-200 ease-in-out focus:bg-white focus:ring-2 focus:ring-blue-400"
+            >
               {" "}
               <span className="img-size">
                 {" "}
