@@ -140,7 +140,7 @@ const LoginHr = () => {
                   setOpen(true);
                 });
             });
-        } else if (res.security === "none") {
+        } else if (!res.security) {
           res.access_token && existingData
             ? navigate("/pillars")
             : navigate("/dashboard");
@@ -172,8 +172,6 @@ const LoginHr = () => {
 
   const [user, setUser] = useState<any>([]);
 
-  console.log("user", user);
-
   const login = useGoogleLogin({
     onSuccess: (codeResponse: any) => setUser(codeResponse),
     onError: (error) => console.log("Login Failed:", error),
@@ -187,15 +185,16 @@ const LoginHr = () => {
           dispatch(googleLoginCheck(response))
             .unwrap()
             .then((res: any) => {
-              console.log("response", response);
-              if (res.redirect !== "/signup") {
-                if (res.error) {
-                  toast.error(res.error);
-                }
-                if (res.security === "SMS Code") {
-                  setSecurityType(res.security);
+              if (res.redirect === "/signup") {
+                localStorage.setItem("googleUser", JSON.stringify(response));
+                navigate("/signup");
+              } else {
+                if (res?.error) {
+                  toast.error(res?.error);
+                } else if (res.security === "SMS Code") {
+                  setSecurityType(res?.security);
                 } else if (res.security === "Email Code") {
-                  setSecurityType(res.security);
+                  setSecurityType(res?.security);
                   dispatch(generateSecret({ email: response.email }))
                     .unwrap()
                     .then(() => {
@@ -215,7 +214,7 @@ const LoginHr = () => {
                       );
                     });
                 } else if (res.security === "Authenticator App") {
-                  setSecurityType(res.security);
+                  setSecurityType(res?.security);
                   dispatch(generateSecret({ email: response.email }))
                     .unwrap()
                     .then(() => {
@@ -226,14 +225,11 @@ const LoginHr = () => {
                           setOpen(true);
                         });
                     });
-                } else if (res.security === "none") {
-                  res.access_token && existingData
+                } else if (!res.security) {
+                  res?.access_token && existingData
                     ? navigate("/pillars")
                     : navigate("/dashboard");
                 }
-              } else {
-                localStorage.setItem("googleUser", JSON.stringify(response));
-                navigate("/signup");
               }
             });
         })

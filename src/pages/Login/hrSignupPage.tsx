@@ -332,7 +332,7 @@ const SignupPage = () => {
       } else if (step === 5) {
         if (googleUser) {
           const formData: any = new FormData();
-          formData.append("image", imageFile);
+          formData.append("imageGoogle", imageFile);
           formData.append("business_image", businessImageFile);
           formData.append("email", data.email);
           formData.append("first_name", data.first_name);

@@ -17,7 +17,11 @@ const Profile = () => {
         setFirstName(res?.first_name);
         setLastName(res?.last_name);
         setPhoneNumber(res?.phone_no);
-        setProfilePic(`data:image/jpeg;base64,${res.image}`);
+        setProfilePic(
+          res?.image?.startsWith("https://")
+            ? res?.image
+            : `data:image/jpeg;base64,${res?.image}`
+        );
         setIsDisabled(true);
       });
   }, [dispatch]);
