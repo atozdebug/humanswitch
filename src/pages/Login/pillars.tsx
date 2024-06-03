@@ -179,8 +179,10 @@ const Pillars = () => {
 
   const section2Ref = useRef(null);
 
+  const cookieStep = Cookies.get("questionnaireData");
+
   const [isActive, setIsActive] = useState(false);
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(cookieStep ? 4 : 1);
   const [stepsTick, setStepsTick] = useState<any>([]);
   const [questionAnswered, setQuestionAnswered] = useState(false);
 

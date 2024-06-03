@@ -240,7 +240,7 @@ const SignupPage = () => {
 
   useEffect(() => {
     const parsed = JSON.parse(googleUser);
-    console.log(parsed.picture);
+    console.log(parsed?.picture);
     if (googleUser) {
       setStep(3);
       setValue("email", parsed.email);
@@ -249,8 +249,8 @@ const SignupPage = () => {
       const lastName = parsedName.slice(1).join(" "); // Join remaining parts as last name
       setValue("first_name", firstName);
       setValue("last_name", lastName);
-      setImageFile(parsed.picture);
-      setValue("image", parsed.picture);
+      setImageFile(parsed?.picture);
+      setValue("image", parsed?.picture);
     }
   }, []);
 
