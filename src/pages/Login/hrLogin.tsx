@@ -23,7 +23,10 @@ import {
   verifyQROtp,
 } from "../../services/slices/auth/authentication";
 import toast from "react-hot-toast";
-import { googleLogin } from "../../services/slices/auth/googleLogin";
+import {
+  googleLogin,
+  googleLoginCheck,
+} from "../../services/slices/auth/googleLogin";
 
 const schema = yup.object().shape({
   email: yup
@@ -137,7 +140,7 @@ const LoginHr = () => {
                   setOpen(true);
                 });
             });
-        } else if (!res.security) {
+        } else if (res.security === "none") {
           res.access_token && existingData
             ? navigate("/pillars")
             : navigate("/dashboard");
@@ -168,10 +171,8 @@ const LoginHr = () => {
   };
 
   const [user, setUser] = useState<any>([]);
-  const [profile, setProfile] = useState([]);
 
   console.log("user", user);
-  console.log("Profile", profile);
 
   const login = useGoogleLogin({
     onSuccess: (codeResponse: any) => setUser(codeResponse),
@@ -182,8 +183,59 @@ const LoginHr = () => {
     if (user) {
       dispatch(googleLogin(user))
         .unwrap()
-        .then((res: any) => {
-          setProfile(res);
+        .then((response: any) => {
+          dispatch(googleLoginCheck(response))
+            .unwrap()
+            .then((res: any) => {
+              console.log("response", response);
+              if (res.redirect !== "/signup") {
+                if (res.error) {
+                  toast.error(res.error);
+                }
+                if (res.security === "SMS Code") {
+                  setSecurityType(res.security);
+                } else if (res.security === "Email Code") {
+                  setSecurityType(res.security);
+                  dispatch(generateSecret({ email: response.email }))
+                    .unwrap()
+                    .then(() => {
+                      toast.promise(
+                        dispatch(
+                          sendEmailVerification({ email: response.email })
+                        )
+                          .unwrap()
+                          .then(() => {
+                            setOpen(true);
+                          }),
+                        {
+                          loading: "Sending Email...",
+                          success: "Email Sent!",
+                          error: "Error while sending email",
+                        }
+                      );
+                    });
+                } else if (res.security === "Authenticator App") {
+                  setSecurityType(res.security);
+                  dispatch(generateSecret({ email: response.email }))
+                    .unwrap()
+                    .then(() => {
+                      dispatch(sendQRVerification({ email: response.email }))
+                        .unwrap()
+                        .then((res: any) => {
+                          setQrCode(`data:image/jpeg;base64,${res?.qr_code}`);
+                          setOpen(true);
+                        });
+                    });
+                } else if (res.security === "none") {
+                  res.access_token && existingData
+                    ? navigate("/pillars")
+                    : navigate("/dashboard");
+                }
+              } else {
+                localStorage.setItem("googleUser", JSON.stringify(response));
+                navigate("/signup");
+              }
+            });
         })
         .catch((err: any) => console.log(err));
     }

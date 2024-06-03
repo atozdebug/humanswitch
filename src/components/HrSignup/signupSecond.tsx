@@ -14,7 +14,13 @@ const SignupTwo = ({
   phoneNo,
 }: any) => {
   useEffect(() => {
-    setProfilePic(imageFile ? URL.createObjectURL(imageFile) : null);
+    setProfilePic(
+      imageFile
+        ? imageFile instanceof File
+          ? URL.createObjectURL(imageFile)
+          : imageFile
+        : null
+    );
     setPhone(phoneNo);
   }, []);
   const [phone, setPhone] = useState<any>("");

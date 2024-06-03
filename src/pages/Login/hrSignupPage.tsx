@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SignupOne from "../../components/HrSignup/signupFirst";
 import SignupTwo from "../../components/HrSignup/signupSecond";
 import SignupThree from "../../components/HrSignup/signupThird";
@@ -231,6 +231,22 @@ const SignupPage = () => {
     }
   };
 
+  useEffect(() => {
+    const googleUser: any = localStorage.getItem("googleUser");
+    const parsed = JSON.parse(googleUser);
+    console.log(parsed.picture);
+    if (googleUser) {
+      setStep(3);
+      setValue("email", parsed.email);
+      const parsedName = parsed.name.split(" ");
+      const firstName = parsedName[0];
+      const lastName = parsedName.slice(1).join(" "); // Join remaining parts as last name
+      setValue("first_name", firstName);
+      setValue("last_name", lastName);
+      setImageFile(parsed.picture);
+    }
+  }, []);
+
   const [imageFile, setImageFile] = useState(null);
   const [businessImageFile, setBusinessImageFile] = useState(null);
   const [phoneNo, setPhoneNo] = useState("");
@@ -260,6 +276,7 @@ const SignupPage = () => {
   const [otpError, setOtpError] = useState(false);
 
   const onSubmit: any = (data: FormData) => {
+    localStorage.clear();
     setPhoneNo(data?.phone_no);
 
     toast.dismiss();
