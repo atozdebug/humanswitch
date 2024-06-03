@@ -45,7 +45,9 @@
   margin: 0 auto;
   padding: 70px 0;
 } */
-
+.chatbox-page {
+  height: calc(100vh - 191px);
+}
 body {
   font-family: "Outfit", sans-serif;
 }
@@ -116,7 +118,9 @@ hr {
   background-repeat: no-repeat;
   position: relative;
 }
-
+.focus input:focus {
+  box-shadow: none !important;
+}
 @media only screen and (max-width: 820px) {
   .mob .grid-cols-3 {
     grid-template-columns: repeat(1, minmax(0, 1fr));
@@ -128,6 +132,14 @@ hr {
     padding: 5px 7px !important;
     margin: 0px;
   }
+}
+@media only screen and (max-width: 767px) {
+  .bg-image {
+    height: 300px;
+  }
+  .chatbox-page {
+    height: auto;
+}
 }
 @media only screen and (max-width: 375px) {
   .form-2 {

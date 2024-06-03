@@ -183,7 +183,7 @@ const HomePage = () => {
                 </p>
                 <form className="max-w-xl md:ms-0 mx-auto">
                   <div className="relative mb-4">
-                    <div className="absolute inset-y-0 start-0 top-5 flex items-center  pointer-events-none">
+                    <div className="absolute inset-y-0 start-0 pl-8 flex items-center  pointer-events-none">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         version="1.1"
@@ -207,12 +207,12 @@ const HomePage = () => {
                     <input
                       type="text"
                       id="first-name-icon"
-                      className="bg-white border border-white text-gray-900 text-sm rounded-lg focus:ring-mediumblue focus:border-mediumblue block w-full ms-6 p-2.5"
+                      className="bg-white border border-white pl-8 text-gray-900 text-sm rounded-lg focus:ring-mediumblue focus:border-mediumblue block w-full ms-6 p-2.5"
                       placeholder="First Name"
                     />
                   </div>
                   <div className="relative mb-4">
-                    <div className="absolute inset-y-0 start-0 top-5 flex items-center pointer-events-none">
+                    <div className="absolute inset-y-0 start-0 pl-8  flex items-center pointer-events-none">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         version="1.1"
@@ -236,12 +236,12 @@ const HomePage = () => {
                     <input
                       type="text"
                       id="last-name-icon"
-                      className="bg-white border border-white text-gray-900 text-sm rounded-lg focus:ring-mediumblue focus:border-mediumblue block w-full ms-6 p-2.5"
+                      className="bg-white border border-white pl-8  text-gray-900 text-sm rounded-lg focus:ring-mediumblue focus:border-mediumblue block w-full ms-6 p-2.5"
                       placeholder="Last Name"
                     />
                   </div>
                   <div className="relative mb-4">
-                    <div className="absolute inset-y-0 start-0 top-5 flex items-center pointer-events-none">
+                    <div className="absolute inset-y-0 start-0 pl-8  flex items-center pointer-events-none">
                       <svg
                         className="w-4 h-4 text-mediumblue"
                         aria-hidden="true"
@@ -256,12 +256,12 @@ const HomePage = () => {
                     <input
                       type="text"
                       id="company-address-icon"
-                      className="bg-white border border-white text-gray-900 text-sm rounded-lg focus:ring-mediumblue focus:border-mediumblue block w-full ms-6 p-2.5"
+                      className="bg-white border border-white pl-8 text-gray-900 text-sm rounded-lg focus:ring-mediumblue focus:border-mediumblue block w-full ms-6 p-2.5"
                       placeholder="Company Email"
                     />
                   </div>
                   <div className="relative mb-5">
-                    <div className="absolute inset-y-0 start-0 top-5 flex items-center pointer-events-none">
+                    <div className="absolute inset-y-0 start-0 pl-8 flex items-center pointer-events-none">
                       <svg
                         className="w-4 h-4 text-mediumblue"
                         aria-hidden="true"
@@ -276,7 +276,7 @@ const HomePage = () => {
                     <input
                       type="text"
                       id="business-address-icon"
-                      className="bg-white border border-white text-gray-900 text-sm rounded-lg focus:ring-mediumblue focus:border-mediumblue block w-full ms-6 p-2.5"
+                      className="bg-white border border-white text-gray-900 pl-8 text-sm rounded-lg focus:ring-mediumblue focus:border-mediumblue block w-full ms-6 p-2.5"
                       placeholder="Business Email"
                     />
                   </div>

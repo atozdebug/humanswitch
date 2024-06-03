@@ -557,9 +557,7 @@ const Header = () => {
                       </Accordion.Title>
                       <Accordion.Content className="pt-5 mt-n40px bg-lightgray5 rounded-b-[10px] !border-0">
                         <p className="mb-14px text-gray-dark text-sm">
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua.
+                          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                         </p>
                         <div className="flex gap-2 mb-17px">
                           <div className="flex h-5 items-center">
