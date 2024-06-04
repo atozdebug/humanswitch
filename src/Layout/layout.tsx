@@ -15,12 +15,13 @@ const Layout = ({ children }: any) => {
   const data = useSelector((state: any) => state.login?.data);
   const data2 = useSelector((state: any) => state.authentication?.data);
   const logout = useSelector((state: any) => state.activity?.logout);
+  const data3 = useSelector((state: any) => state.googleLogin?.data);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
 
     token ? setIsTrue(true) : setIsTrue(false);
-  }, [data, data2, logout]);
+  }, [data, data2, logout, data3]);
 
   return (
     <div className="bg-white text-black main-outerr">

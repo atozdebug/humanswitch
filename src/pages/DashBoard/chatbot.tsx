@@ -1,8 +1,8 @@
 const Chatbot = () => {
   return (
-    <div className="bg-gray-100 min-h-screen ">
-      <div className="p-8 bg-[#F6F8FA]">
-        <div className="main-sec">
+    <div className="bg-gray-100 ">
+      <div className="p-8 pb-2 bg-[#F6F8FA]">
+        <div className="main-sec chatbox-page">
           <div className="bg-image">
            
           </div>
@@ -16,7 +16,7 @@ const Chatbot = () => {
               </p>
             </div>
 
-          <div className="grid grid-cols-3">
+          <div className="grid md:grid-cols-3 sm:grid-cols-1">
             <div>
               <div className="text-center">
                 <img className="m-auto my-1 max-w-8 max-h-8" src="/assets/images/Chats-r.png" />

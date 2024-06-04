@@ -100,59 +100,12 @@ const Pillars = () => {
     !token && Cookies.remove("questionnaireData");
   }, []);
 
-  useEffect(() => {
-    dispatch(getQuestions())
-      .unwrap()
-      .then((res: any) => {
-        if (!token) {
-          const questionsMap = new Map();
+  const cookieStep = Cookies.get("questionnaireData");
 
-          res.forEach((item: any) => {
-            questionsMap.set(item.name, item.questions);
-          });
-
-          // Initialize stepAnswers object
-          const initialStepAnswers: any = {};
-
-          // Loop through sideBarItems to create stepAnswers
-          sideBarItems.forEach((item, index) => {
-            // Change here
-            // Find questions for this item by name
-            const questions = questionsMap.get(item.name) || [];
-
-            // Create chapter object
-            const chapter = questions.reduce(
-              (acc: any, _question: any, questionIndex: any) => {
-                // Change here
-                acc[`question-${questionIndex}`] = "";
-                return acc;
-              },
-              {}
-            );
-
-            // Add chapter to initialStepAnswers
-            initialStepAnswers[index] = chapter; // Change here
-
-            // Update questions array for this item in sideBarItems
-            item.questions = questions;
-          });
-
-          // Set the state with the updated sideBarItems and initialStepAnswers
-
-          setStepAnswers(initialStepAnswers);
-        }
-
-        res.forEach((item: any) => {
-          const chapter: any = sideBarItems.find((x) => x.name === item.name);
-
-          if (chapter) {
-            chapter.questions = [...item.questions];
-          }
-        });
-      });
-  }, []);
-
-  // const [activeSection, setActiveSection] = useState(null);
+  const [step, setStep] = useState(cookieStep ? 4 : 1);
+  const [isActive, setIsActive] = useState(cookieStep ? true : false);
+  const [stepsTick, setStepsTick] = useState<any>(cookieStep ? [1, 2, 3] : []);
+  const [questionAnswered, setQuestionAnswered] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [stepAnswers, setStepAnswers] = useState<any>(() => {
     // Try to get the data from cookies
@@ -177,12 +130,50 @@ const Pillars = () => {
     }
   });
 
-  const section2Ref = useRef(null);
+  const [dataSideBar, setDataSideBar] = useState(sideBarItems);
 
-  const [isActive, setIsActive] = useState(false);
-  const [step, setStep] = useState(1);
-  const [stepsTick, setStepsTick] = useState<any>([]);
-  const [questionAnswered, setQuestionAnswered] = useState(false);
+  useEffect(() => {
+    dispatch(getQuestions())
+      .unwrap()
+      .then((res: any) => {
+        if (!token) {
+          const questionsMap = new Map();
+
+          res.forEach((item: any) => {
+            questionsMap.set(item.name, item.questions);
+          });
+          const initialStepAnswers: any = {};
+          sideBarItems.forEach((item, index) => {
+            const questions = questionsMap.get(item.name) || [];
+            const chapter = questions.reduce(
+              (acc: any, _question: any, questionIndex: any) => {
+                // Change here
+                acc[`question-${questionIndex}`] = "";
+                return acc;
+              },
+              {}
+            );
+            initialStepAnswers[index] = chapter;
+            item.questions = questions;
+          });
+
+          setStepAnswers(initialStepAnswers);
+        }
+
+        res.forEach((item: any) => {
+          const chapter: any = sideBarItems.find((x) => x.name === item.name);
+
+          if (chapter) {
+            chapter.questions = [...item.questions];
+          }
+        });
+        setDataSideBar([...sideBarItems]);
+      });
+  }, []);
+
+  // const [activeSection, setActiveSection] = useState(null);
+
+  const section2Ref = useRef(null);
 
   const toggleActive = () => {
     setIsActive(!isActive);
@@ -230,10 +221,11 @@ const Pillars = () => {
         let data = existingData ? JSON.parse(existingData) : [];
 
         data.push(currentStepAnswers);
+
+        Cookies.set("questionnaireData", JSON.stringify(data));
         if (data.length === 3 && !token) {
           return toggleModal();
         }
-        Cookies.set("questionnaireData", JSON.stringify(data));
 
         setStep((prev) => prev + 1);
         setStepsTick((prev: any) => [...prev, step]);
@@ -296,6 +288,10 @@ const Pillars = () => {
     // Optionally, handle modal state or other necessary actions
     setIsModalOpen(false);
   };
+
+  console.log(step);
+  console.log("=---=", sideBarItems?.[step - 1]?.questions);
+  console.log("=---=", sideBarItems?.[step - 1]);
 
   return (
     <>
@@ -592,7 +588,7 @@ const Pillars = () => {
               {/* screen default */}
               <div
                 className={`chapter-screendefault px-4 text-center h-full ${
-                  isActive ? "hidden screen-default" : ""
+                  isActive || cookieStep ? "hidden screen-default" : ""
                 }`}
               >
                 <div className="max-w-screen-lg mx-auto px-4 py-6 flex items-center justify-center h-full">
@@ -650,17 +646,17 @@ const Pillars = () => {
               {/* screen 1 */}
               <div
                 className={`chapter-screen1 h-full ${
-                  step == sideBarItems[step - 1].id ? "screen1" : "hidden"
+                  step === sideBarItems[step - 1]?.id ? "screen1" : "hidden"
                 } ${isActive ? "" : "hidden"}`}
               >
                 <div className="header-title pt-6 text-center border-s border-white">
                   <h2 className="xl:text-5xl md:text-4xl text-2xl mb-6 font-bold xl:leading-normal leading-normal bg-gradient1 text-clip">
-                    {sideBarItems[step - 1].name}
+                    {sideBarItems[step - 1]?.name}
                   </h2>
                 </div>
                 <div className="chapterContent max-w-screen-lg mx-auto pb-12 pt-8">
                   <div className="questions-form">
-                    {sideBarItems[step - 1].questions?.map(
+                    {dataSideBar?.[step - 1]?.questions?.map(
                       (question: any, index: number) => (
                         <div key={index} className="form-item mb-6">
                           <div className="flex gap-2 items-center justify-between mb-2">
@@ -695,10 +691,10 @@ const Pillars = () => {
                             htmlFor={`question-${step - 1}-${index}`}
                             className="block text-sm font-medium leading-6 text-gray-900"
                           >
-                            {question.text}
+                            {question?.text}
                           </label>
                           <div className="mt-2">
-                            {question.type === "Short Answer" && (
+                            {question?.type === "Short Answer" && (
                               <textarea
                                 id={`question-${step - 1}-${index}`}
                                 name={`question-${step - 1}-${index}`}

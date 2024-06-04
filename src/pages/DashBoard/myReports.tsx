@@ -827,7 +827,7 @@ const MyReports = () => {
             <div className="font-semibold">{selectedQuestionType.name}</div>
           </div>
 
-          <div className="w-full flex justify-between items-center gap-4 mt-4">
+          <div className="w-full flex justify-between items-center gap-4 mt-4  focus ">
             <TextField
               autoFocus
               required
@@ -841,6 +841,7 @@ const MyReports = () => {
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
             />
+     
           </div>
         </DialogContent>
         <DialogActions>
