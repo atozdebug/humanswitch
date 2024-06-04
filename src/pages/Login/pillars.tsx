@@ -100,6 +100,36 @@ const Pillars = () => {
     !token && Cookies.remove("questionnaireData");
   }, []);
 
+  const cookieStep = Cookies.get("questionnaireData");
+
+  const [step, setStep] = useState(cookieStep ? 4 : 1);
+  const [isActive, setIsActive] = useState(cookieStep ? true : false);
+  const [stepsTick, setStepsTick] = useState<any>(cookieStep ? [1, 2, 3] : []);
+  const [questionAnswered, setQuestionAnswered] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [stepAnswers, setStepAnswers] = useState<any>(() => {
+    // Try to get the data from cookies
+    const existingData = Cookies.get("questionnaireData");
+    if (existingData) {
+      // If data exists, parse it
+      return JSON.parse(existingData);
+    } else {
+      // Initialize default state structure if no data is found
+      return {
+        0: {},
+        1: {},
+        2: {},
+        3: {},
+        4: {},
+        5: {},
+        6: {},
+        7: {},
+        8: {},
+        9: {},
+      };
+    }
+  });
+
   useEffect(() => {
     dispatch(getQuestions())
       .unwrap()
@@ -153,38 +183,8 @@ const Pillars = () => {
   }, []);
 
   // const [activeSection, setActiveSection] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [stepAnswers, setStepAnswers] = useState<any>(() => {
-    // Try to get the data from cookies
-    const existingData = Cookies.get("questionnaireData");
-    if (existingData) {
-      // If data exists, parse it
-      return JSON.parse(existingData);
-    } else {
-      // Initialize default state structure if no data is found
-      return {
-        0: {},
-        1: {},
-        2: {},
-        3: {},
-        4: {},
-        5: {},
-        6: {},
-        7: {},
-        8: {},
-        9: {},
-      };
-    }
-  });
 
   const section2Ref = useRef(null);
-
-  const cookieStep = Cookies.get("questionnaireData");
-
-  const [isActive, setIsActive] = useState(false);
-  const [step, setStep] = useState(cookieStep ? 4 : 1);
-  const [stepsTick, setStepsTick] = useState<any>([]);
-  const [questionAnswered, setQuestionAnswered] = useState(false);
 
   const toggleActive = () => {
     setIsActive(!isActive);
@@ -232,10 +232,11 @@ const Pillars = () => {
         let data = existingData ? JSON.parse(existingData) : [];
 
         data.push(currentStepAnswers);
+
+        Cookies.set("questionnaireData", JSON.stringify(data));
         if (data.length === 3 && !token) {
           return toggleModal();
         }
-        Cookies.set("questionnaireData", JSON.stringify(data));
 
         setStep((prev) => prev + 1);
         setStepsTick((prev: any) => [...prev, step]);
@@ -298,6 +299,9 @@ const Pillars = () => {
     // Optionally, handle modal state or other necessary actions
     setIsModalOpen(false);
   };
+
+  console.log(step);
+  console.log("=---=", sideBarItems?.[step - 1]);
 
   return (
     <>
@@ -594,7 +598,7 @@ const Pillars = () => {
               {/* screen default */}
               <div
                 className={`chapter-screendefault px-4 text-center h-full ${
-                  isActive ? "hidden screen-default" : ""
+                  isActive || cookieStep ? "hidden screen-default" : ""
                 }`}
               >
                 <div className="max-w-screen-lg mx-auto px-4 py-6 flex items-center justify-center h-full">
@@ -657,12 +661,12 @@ const Pillars = () => {
               >
                 <div className="header-title pt-6 text-center border-s border-white">
                   <h2 className="xl:text-5xl md:text-4xl text-2xl mb-6 font-bold xl:leading-normal leading-normal bg-gradient1 text-clip">
-                    {sideBarItems[step - 1].name}
+                    {sideBarItems[step - 1]?.name}
                   </h2>
                 </div>
                 <div className="chapterContent max-w-screen-lg mx-auto pb-12 pt-8">
                   <div className="questions-form">
-                    {sideBarItems[step - 1].questions?.map(
+                    {sideBarItems?.[step - 1]?.questions?.map(
                       (question: any, index: number) => (
                         <div key={index} className="form-item mb-6">
                           <div className="flex gap-2 items-center justify-between mb-2">
@@ -697,10 +701,10 @@ const Pillars = () => {
                             htmlFor={`question-${step - 1}-${index}`}
                             className="block text-sm font-medium leading-6 text-gray-900"
                           >
-                            {question.text}
+                            {question?.text}
                           </label>
                           <div className="mt-2">
-                            {question.type === "Short Answer" && (
+                            {question?.type === "Short Answer" && (
                               <textarea
                                 id={`question-${step - 1}-${index}`}
                                 name={`question-${step - 1}-${index}`}
