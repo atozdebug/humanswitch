@@ -26,7 +26,13 @@ const Profile = () => {
   const [lastName, setLastName] = useState<any>("");
   const [phoneNumber, setPhoneNumber] = useState<any>("");
   const [isDisabled, setIsDisabled] = useState(true);
+  const [isDiscardDisabled, setIsDiscardDisabled] = useState(true)
   const [sendImage, setSendImage] = useState(null);
+  const [formErrors, setFormErrors] = useState({
+    firstName: "",
+    lastName: "",
+    phoneNumber: ""
+  })
 
   // Function to handle changing profile picture
   const handleChangeProfilePic = (event: any) => {
@@ -41,7 +47,12 @@ const Profile = () => {
     setLastName(userData?.last_name);
     setPhoneNumber(userData?.phone_no);
     setProfilePic(`data:image/jpeg;base64,${userData.image}`);
-    setIsDisabled(true);
+    setIsDiscardDisabled(true);
+    setFormErrors({
+      firstName: "",
+      lastName: "",
+      phoneNumber: ""
+    })
   };
 
   const saveProfile = () => {
@@ -56,6 +67,11 @@ const Profile = () => {
       .unwrap()
       .then((res: any) => {
         toast.success(res.message);
+        setFormErrors({
+          firstName: "",
+          lastName: "",
+          phoneNumber: ""
+        });
         dispatch(getUser(user))
           .unwrap()
           .then(() => setIsDisabled(true));
@@ -124,8 +140,25 @@ const Profile = () => {
                 onChange={(e) => {
                   setFirstName(e.target.value);
                   setIsDisabled(false);
-                }}
+                  if(!e.target.value.trim()){
+                    setFormErrors((prevErrors) => ({
+                      ...prevErrors,
+                      firstName: "First Name is required"
+                    }));
+                    setIsDisabled(true);
+                    setIsDiscardDisabled(false);
+                  } else {
+                    setFormErrors((prevErrors) => ({
+                      ...prevErrors,
+                      firstName: ""
+                    }))
+                  }
+                  }
+                 
+                }
+                
               />
+               {formErrors.firstName &&  <p className="text-[#F04438] text-sm mt-2">{formErrors.firstName}</p>}
             </div>
           </div>
 
@@ -142,8 +175,22 @@ const Profile = () => {
                 onChange={(e) => {
                   setLastName(e.target.value);
                   setIsDisabled(false);
+                 if(!e.target.value.trim()){
+                  setFormErrors((prevErrors) => ({
+                    ...prevErrors,
+                    lastName: "Last Name is required"
+                  }))
+                  setIsDisabled(true);
+                  setIsDiscardDisabled(false);
+                 } else {
+                  setFormErrors((prevErrors) => ({
+                    ...prevErrors,
+                    lastName: ""
+                  }))
+                 }
                 }}
               />
+              {formErrors.lastName && <p className="text-[#F04438] text-sm mt-2">{formErrors.lastName}</p>}
             </div>
           </div>
           {/* =================================== */}
@@ -157,6 +204,20 @@ const Profile = () => {
                 onChange={(e) => {
                   setPhoneNumber(e);
                   setIsDisabled(false);
+                  if(!e.trim()){
+                    setFormErrors((prevErrors) => ({
+                      ...prevErrors,
+                      phoneNumber: "Phone Number is required"
+                      
+                    }))
+                    setIsDisabled(true);
+                    setIsDiscardDisabled(false);
+                  } else {
+                    setFormErrors((prevErrors) => ({
+                      ...prevErrors,
+                      phoneNumber: ""
+                    }))
+                  }
                 }}
                 placeholder="+1 (545) 674-3543"
                 inputStyle={{
@@ -186,13 +247,14 @@ const Profile = () => {
                   required: true,
                 }}
               />
+              {formErrors.phoneNumber &&  <p className="text-[#F04438] text-sm mt-2">{formErrors.phoneNumber}</p>}
             </div>
           </div>
           {/* =================================== */}
         </div>
         <div className="flex justify-center mt-4 gap-4">
           <button
-            disabled={isDisabled}
+            disabled={isDiscardDisabled}
             onClick={handleReset}
             className="w-full rounded-[10px] bg-white border hover:bg-red-500 hover:border-red-500 py-2 px-4 hover:text-white text-gray-dark font-medium disabled:bg-gray-400 disabled:border-gray-400 disabled:text-gray-dark"
           >

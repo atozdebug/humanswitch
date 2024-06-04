@@ -3,7 +3,7 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 const ChangePassword = ({
   handleSubmit,
-  register,
+  register,  
   onSubmit,
   errors,
   setValue,
@@ -43,6 +43,13 @@ const ChangePassword = ({
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newPassword: any = e;
     checkPasswordRequirements(newPassword);
+  };
+
+  const handleConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const confirmPassword: any = e.target.value;
+    setValue("confirm_password", confirmPassword, {
+      shouldValidate: true,
+    });
   };
 
   return (
@@ -112,7 +119,7 @@ const ChangePassword = ({
             } rounded-[10px] w-full py-2 pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
             id="new_password"
             type={showNewPassword ? "text" : "password"}
-            placeholder="🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄"
+            placeholder="🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄"   
             onChange={(e: any) => {
               handlePasswordChange(e.target.value);
               setValue("new_password", e.target.value, {
@@ -144,7 +151,7 @@ const ChangePassword = ({
           className="block text-heading text-sm font-medium mb-1"
           htmlFor="confirm_password"
         >
-          Confirm New Password
+          Confirm New Password{""}
           <span className="text-span-clr">*</span>
         </label>
         <div className="relative">
@@ -157,7 +164,8 @@ const ChangePassword = ({
             } rounded-[10px] w-full py-2 pl-5 text-input-text leading-tight focus:outline-none focus:shadow-outline`}
             id="confirm_password"
             type={showConfirmPassword ? "text" : "password"}
-            {...register("confirm_password")}
+            // {...register("confirm_password")}
+            onChange={(e: any) => handleConfirmPasswordChange(e)}
             placeholder="🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄"
           />
           <span

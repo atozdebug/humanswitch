@@ -263,7 +263,7 @@ const SideBar = () => {
             <div
               key={index}
               className="top px-20px py-2 hover:bg-lightgray rounded-lg hover:tex-main-heading flex items-center gap-2 my-2 menu-icon"
-              onClick={() => logout()}
+              onClick={item.name === "Log Out" ?  logout : undefined}
             >
               {item.icon}
               <div className="menu-item-text">{item.name}</div>

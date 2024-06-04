@@ -21,12 +21,6 @@ const schema = yup.object().shape({
   confirmPassword: yup
     .string()
     .required("Password is required")
-    .matches(
-      /^(?=.*[A-Z])/,
-      "Password must contain at least one uppercase letter"
-    )
-    .matches(/^(?=.*[0-9])/, "Password must contain at least one number")
-    .min(8, "Password must be atleast 8 characters long")
     .test(
       "password-match",
       "Confirm password must match password",
@@ -108,6 +102,13 @@ const ForgetPasswordId = () => {
     const newPassword: any = e;
     checkPasswordRequirements(newPassword);
   };
+  
+  const handleConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const confirmPassword: any = e.target.value;
+     setValue("confirmPassword", confirmPassword , {
+      shouldValidate: true
+    })
+  }
 
   const onSubmit: any = (data: FormData) => {
     toast.dismiss();
@@ -236,7 +237,8 @@ const ForgetPasswordId = () => {
                   }`}
                   id="confirmPassword"
                   type={showConfirmPassword ? "text" : "password"}
-                  {...register("confirmPassword")}
+                  // {...register("confirmPassword")}
+                  onChange={(e: any) => handleConfirmPasswordChange(e)}
                   placeholder="Confirm your password"
                 />
                 <span
