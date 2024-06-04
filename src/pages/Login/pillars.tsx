@@ -130,6 +130,8 @@ const Pillars = () => {
     }
   });
 
+  const [dataSideBar, setDataSideBar] = useState(sideBarItems);
+
   useEffect(() => {
     dispatch(getQuestions())
       .unwrap()
@@ -140,17 +142,9 @@ const Pillars = () => {
           res.forEach((item: any) => {
             questionsMap.set(item.name, item.questions);
           });
-
-          // Initialize stepAnswers object
           const initialStepAnswers: any = {};
-
-          // Loop through sideBarItems to create stepAnswers
           sideBarItems.forEach((item, index) => {
-            // Change here
-            // Find questions for this item by name
             const questions = questionsMap.get(item.name) || [];
-
-            // Create chapter object
             const chapter = questions.reduce(
               (acc: any, _question: any, questionIndex: any) => {
                 // Change here
@@ -159,15 +153,9 @@ const Pillars = () => {
               },
               {}
             );
-
-            // Add chapter to initialStepAnswers
-            initialStepAnswers[index] = chapter; // Change here
-
-            // Update questions array for this item in sideBarItems
+            initialStepAnswers[index] = chapter;
             item.questions = questions;
           });
-
-          // Set the state with the updated sideBarItems and initialStepAnswers
 
           setStepAnswers(initialStepAnswers);
         }
@@ -179,6 +167,7 @@ const Pillars = () => {
             chapter.questions = [...item.questions];
           }
         });
+        setDataSideBar([...sideBarItems]);
       });
   }, []);
 
@@ -301,6 +290,7 @@ const Pillars = () => {
   };
 
   console.log(step);
+  console.log("=---=", sideBarItems?.[step - 1]?.questions);
   console.log("=---=", sideBarItems?.[step - 1]);
 
   return (
@@ -656,7 +646,7 @@ const Pillars = () => {
               {/* screen 1 */}
               <div
                 className={`chapter-screen1 h-full ${
-                  step == sideBarItems[step - 1].id ? "screen1" : "hidden"
+                  step === sideBarItems[step - 1]?.id ? "screen1" : "hidden"
                 } ${isActive ? "" : "hidden"}`}
               >
                 <div className="header-title pt-6 text-center border-s border-white">
@@ -666,7 +656,7 @@ const Pillars = () => {
                 </div>
                 <div className="chapterContent max-w-screen-lg mx-auto pb-12 pt-8">
                   <div className="questions-form">
-                    {sideBarItems?.[step - 1]?.questions?.map(
+                    {dataSideBar?.[step - 1]?.questions?.map(
                       (question: any, index: number) => (
                         <div key={index} className="form-item mb-6">
                           <div className="flex gap-2 items-center justify-between mb-2">
