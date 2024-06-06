@@ -11,7 +11,7 @@ const KnowledgeBase = () => {
           <ul className="grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5">
             <li className="grid-item xl:col-span-3 md:col-span-2">
               <div className="xl:max-w-p90 max-w-808">
-                <div className="grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5 ">
+                <div className="grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5">
                   <div className="grid-item p-3 rounded-[10px] bg-lightgray7">
                     <img
                       src="/assets/images/folder.png"

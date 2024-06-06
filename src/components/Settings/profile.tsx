@@ -142,9 +142,10 @@ const Profile = () => {
                 placeholder="John"
                 value={firstName}
                 onChange={(e) => {
-                  setFirstName(e.target.value);
+                  const value = e.target.value.replace(/[^A-Za-z]/ig, '')
+                  setFirstName(value);
                   setIsDisabled(false);
-                  if(!e.target.value.trim()){
+                  if(!value.trim()){
                     setFormErrors((prevErrors) => ({
                       ...prevErrors,
                       firstName: "First Name is required"
@@ -158,7 +159,6 @@ const Profile = () => {
                     }))
                   }
                   }
-                 
                 }
                 
               />
@@ -177,9 +177,10 @@ const Profile = () => {
                 placeholder="Adams"
                 value={lastName}
                 onChange={(e) => {
-                  setLastName(e.target.value);
+                  const value = e.target.value.replace(/[^A-Za-z]/ig, '')
+                  setLastName(value);
                   setIsDisabled(false);
-                 if(!e.target.value.trim()){
+                 if(!value.trim()){
                   setFormErrors((prevErrors) => ({
                     ...prevErrors,
                     lastName: "Last Name is required"
@@ -212,7 +213,6 @@ const Profile = () => {
                     setFormErrors((prevErrors) => ({
                       ...prevErrors,
                       phoneNumber: "Phone Number is required"
-                      
                     }))
                     setIsDisabled(true);
                     setIsDiscardDisabled(false);
