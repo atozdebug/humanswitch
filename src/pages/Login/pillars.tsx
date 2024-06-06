@@ -289,10 +289,6 @@ const Pillars = () => {
     setIsModalOpen(false);
   };
 
-  console.log(step);
-  console.log("=---=", sideBarItems?.[step - 1]?.questions);
-  console.log("=---=", sideBarItems?.[step - 1]);
-
   return (
     <>
       <header className="bg-white shadow-md relative">
@@ -510,23 +506,20 @@ const Pillars = () => {
                 </p>
               </div>
               <div
-                className={`Chapter-names mt-6 relative after:content-[''] after:absolute after:left-5 after:top-0 after:border-dashed after:border-mediumblue after:h-full after:border after:z-0 ${
-                  isActive ? "active" : ""
-                }`}
+                className={`Chapter-names mt-6 relative after:content-[''] after:absolute after:left-5 after:top-0 after:border-dashed after:border-mediumblue after:h-full after:border after:z-0 ${isActive ? "active" : ""
+                  }`}
               >
                 {sideBarItems.map((item: any, index) => (
                   <div
                     key={index}
-                    className={`flex gap-3 mb-3 chapteritem relative z-10 ${
-                      step == item.id ? "" : "items-center"
-                    } ${isActive ? "items-start" : "items-center"}`}
+                    className={`flex gap-3 mb-3 chapteritem relative z-10 ${step == item.id ? "" : "items-center"
+                      } ${isActive ? "items-start" : "items-center"}`}
                   >
                     <div
-                      className={`w-10 min-w-10 h-10 inline-flex items-center justify-center rounded-md ${
-                        stepsTick.includes(item.id + 1) || step == item.id + 1
-                          ? "bg-g-success"
-                          : "bg-gradient1"
-                      }`}
+                      className={`w-10 min-w-10 h-10 inline-flex items-center justify-center rounded-md ${stepsTick.includes(item.id + 1) || step == item.id + 1
+                        ? "bg-g-success"
+                        : "bg-gradient1"
+                        }`}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -536,11 +529,10 @@ const Pillars = () => {
                         x="0"
                         y="0"
                         viewBox="0 0 64 64"
-                        className={`w-4 h-4 text-white ${
-                          stepsTick.includes(item.id + 1) || step == item.id + 1
-                            ? ""
-                            : "hidden"
-                        }`}
+                        className={`w-4 h-4 text-white ${stepsTick.includes(item.id + 1) || step == item.id + 1
+                          ? ""
+                          : "hidden"
+                          }`}
                       >
                         <g transform="matrix(1.0699999999999992,0,0,1.0699999999999992,-2.239650142192822,-2.2399999332427853)">
                           <path
@@ -559,11 +551,10 @@ const Pillars = () => {
                         x="0"
                         y="0"
                         viewBox="0 0 512 512.002"
-                        className={`w-4 h-4 text-white ${
-                          stepsTick.includes(item.id + 1) || step == item.id + 1
-                            ? "hidden"
-                            : ""
-                        }`}
+                        className={`w-4 h-4 text-white ${stepsTick.includes(item.id + 1) || step == item.id + 1
+                          ? "hidden"
+                          : ""
+                          }`}
                       >
                         <g transform="matrix(0.98,0,0,0.98,49.27163876531441,5.12004028320311)">
                           {item.icon}
@@ -573,9 +564,8 @@ const Pillars = () => {
                     <div>
                       <p className="font-bold text-md">{item.name}</p>
                       <p
-                        className={`w-full leading-relaxed md:text-base text-sm ${
-                          step == item.id ? "" : " h-0 overflow-hidden"
-                        } ${isActive ? "" : "h-0 overflow-hidden"}`}
+                        className={`w-full leading-relaxed md:text-base text-sm ${step == item.id ? "" : " h-0 overflow-hidden"
+                          } ${isActive ? "" : "h-0 overflow-hidden"}`}
                       >
                         {item.description}
                       </p>
@@ -587,9 +577,8 @@ const Pillars = () => {
             <div className="col-right lg:max-w-calc350px max-w-calc300px w-full overflow-auto">
               {/* screen default */}
               <div
-                className={`chapter-screendefault px-4 text-center h-full ${
-                  isActive || cookieStep ? "hidden screen-default" : ""
-                }`}
+                className={`chapter-screendefault px-4 text-center h-full ${isActive || cookieStep ? "hidden screen-default" : ""
+                  }`}
               >
                 <div className="max-w-screen-lg mx-auto px-4 py-6 flex items-center justify-center h-full">
                   <div>
@@ -645,9 +634,8 @@ const Pillars = () => {
               </div>
               {/* screen 1 */}
               <div
-                className={`chapter-screen1 h-full ${
-                  step === sideBarItems[step - 1]?.id ? "screen1" : "hidden"
-                } ${isActive ? "" : "hidden"}`}
+                className={`chapter-screen1 h-full ${step === sideBarItems[step - 1]?.id ? "screen1" : "hidden"
+                  } ${isActive ? "" : "hidden"}`}
               >
                 <div className="header-title pt-6 text-center border-s border-white">
                   <h2 className="xl:text-5xl md:text-4xl text-2xl mb-6 font-bold xl:leading-normal leading-normal bg-gradient1 text-clip">
@@ -702,7 +690,7 @@ const Pillars = () => {
                                 // Bind value to the state property for this question
                                 value={
                                   stepAnswers[step - 1]?.[
-                                    `question-${index}`
+                                  `question-${index}`
                                   ] || ""
                                 }
                                 // Handle input changes to update state
@@ -728,19 +716,17 @@ const Pillars = () => {
                                           <input
                                             id={`question-${step - 1}-${index}`}
                                             type="radio"
-                                            value={
-                                              stepAnswers[step - 1]?.[
-                                                `question-${index}`
-                                              ] || option.name
-                                            }
-                                            name={`question-${
-                                              step - 1
-                                            }-${index}`}
+                                            checked={stepAnswers[step - 1]?.[
+                                              `question-${index}`
+                                            ] === option?.id}
+
+                                            name={`question-${step - 1
+                                              }-${index}`}
                                             onChange={(e) =>
                                               handleInputChange(
                                                 step - 1,
                                                 `question-${index}`,
-                                                e.target.value // Pass the selected option value
+                                                option?.id // Pass the selected option value
                                               )
                                             }
                                             className="w-4 h-4 text-blue-600 bg-gray-100  dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:bg-gray-700"
@@ -788,7 +774,7 @@ const Pillars = () => {
                                   valueLabelDisplay="auto"
                                   value={
                                     stepAnswers[step - 1]?.[
-                                      `question-${index}`
+                                    `question-${index}`
                                     ] || ""
                                   }
                                   min={question.min}
@@ -838,9 +824,8 @@ const Pillars = () => {
               <div className="lg:max-w-350px max-w-300px w-full">
                 <div className="flex item-center px-4 py-2">
                   <div
-                    className={`button-start w-full text-right ${
-                      isActive ? "hidden" : ""
-                    }`}
+                    className={`button-start w-full text-right ${isActive ? "hidden" : ""
+                      }`}
                   >
                     <button
                       className="ms-auto flex select-none items-center gap-3 bg-white py-2 px-0 text-center text-md text-black  active:shadow-none focus:outline-0"
@@ -868,9 +853,8 @@ const Pillars = () => {
                     </button>
                   </div>
                   <div
-                    className={`button-start w-full text-right ${
-                      isActive ? "" : "hidden"
-                    } ${step == 10 ? "disabled" : ""}`}
+                    className={`button-start w-full text-right ${isActive ? "" : "hidden"
+                      } ${step == 10 ? "disabled" : ""}`}
                   >
                     <button
                       className="ms-auto flex select-none items-center gap-3 bg-white py-2 px-0 text-center text-md text-black active:shadow-none focus:outline-0"
@@ -905,9 +889,8 @@ const Pillars = () => {
                 <div className="flex gap-2 justify-between items-center px-4 py-2">
                   <div className="button-back w-full text-left">
                     <button
-                      className={`me-auto flex select-none items-center gap-3 bg-white py-2 px-0 text-center text-md text-black  active:shadow-none focus:outline-0 ${
-                        step == 1 ? "disabled" : ""
-                      }`}
+                      className={`me-auto flex select-none items-center gap-3 bg-white py-2 px-0 text-center text-md text-black  active:shadow-none focus:outline-0 ${step == 1 ? "disabled" : ""
+                        }`}
                       type="button"
                       data-ripple-light="true"
                       onClick={() => handlePrev()}
@@ -933,82 +916,69 @@ const Pillars = () => {
                   </div>
                   <div className="dots-progress flex gap-1">
                     <span
-                      className={`w-8 h-2 rounded ${
-                        isActive ? "bg-gradient1" : "bg-lightblue"
-                      } ${
-                        stepsTick.includes(1) || step == 1 ? "" : "bg-lightblue"
-                      }`}
+                      className={`w-8 h-2 rounded ${isActive ? "bg-gradient1" : "bg-lightblue"
+                        } ${stepsTick.includes(1) || step == 1 ? "" : "bg-lightblue"
+                        }`}
                     ></span>
                     <span
-                      className={`w-8 h-2 rounded ${
-                        stepsTick.includes(2) || step == 2
-                          ? "bg-gradient1"
-                          : "bg-lightblue"
-                      }`}
+                      className={`w-8 h-2 rounded ${stepsTick.includes(2) || step == 2
+                        ? "bg-gradient1"
+                        : "bg-lightblue"
+                        }`}
                     ></span>
                     <span
-                      className={`w-8 h-2 rounded ${
-                        stepsTick.includes(3) || step == 3
-                          ? "bg-gradient1"
-                          : "bg-lightblue"
-                      }`}
+                      className={`w-8 h-2 rounded ${stepsTick.includes(3) || step == 3
+                        ? "bg-gradient1"
+                        : "bg-lightblue"
+                        }`}
                     ></span>
                     <span
-                      className={`w-8 h-2 rounded ${
-                        stepsTick.includes(4) || step == 4
-                          ? "bg-gradient1"
-                          : "bg-lightblue"
-                      }`}
+                      className={`w-8 h-2 rounded ${stepsTick.includes(4) || step == 4
+                        ? "bg-gradient1"
+                        : "bg-lightblue"
+                        }`}
                     ></span>
                     <span
-                      className={`w-8 h-2 rounded ${
-                        stepsTick.includes(5) || step == 5
-                          ? "bg-gradient1"
-                          : "bg-lightblue"
-                      }`}
+                      className={`w-8 h-2 rounded ${stepsTick.includes(5) || step == 5
+                        ? "bg-gradient1"
+                        : "bg-lightblue"
+                        }`}
                     ></span>
                     <span
-                      className={`w-8 h-2 rounded ${
-                        stepsTick.includes(6) || step == 6
-                          ? "bg-gradient1"
-                          : "bg-lightblue"
-                      }`}
+                      className={`w-8 h-2 rounded ${stepsTick.includes(6) || step == 6
+                        ? "bg-gradient1"
+                        : "bg-lightblue"
+                        }`}
                     ></span>
                     <span
-                      className={`w-8 h-2 rounded ${
-                        stepsTick.includes(7) || step == 7
-                          ? "bg-gradient1"
-                          : "bg-lightblue"
-                      }`}
+                      className={`w-8 h-2 rounded ${stepsTick.includes(7) || step == 7
+                        ? "bg-gradient1"
+                        : "bg-lightblue"
+                        }`}
                     ></span>
                     <span
-                      className={`w-8 h-2 rounded ${
-                        stepsTick.includes(8) || step == 8
-                          ? "bg-gradient1"
-                          : "bg-lightblue"
-                      }`}
+                      className={`w-8 h-2 rounded ${stepsTick.includes(8) || step == 8
+                        ? "bg-gradient1"
+                        : "bg-lightblue"
+                        }`}
                     ></span>
                     <span
-                      className={`w-8 h-2 rounded ${
-                        stepsTick.includes(9) || step == 9
-                          ? "bg-gradient1"
-                          : "bg-lightblue"
-                      }`}
+                      className={`w-8 h-2 rounded ${stepsTick.includes(9) || step == 9
+                        ? "bg-gradient1"
+                        : "bg-lightblue"
+                        }`}
                     ></span>
                     <span
-                      className={`w-8 h-2 rounded ${
-                        stepsTick.includes(10) || step == 10
-                          ? "bg-gradient1"
-                          : "bg-lightblue"
-                      }`}
+                      className={`w-8 h-2 rounded ${stepsTick.includes(10) || step == 10
+                        ? "bg-gradient1"
+                        : "bg-lightblue"
+                        }`}
                     ></span>
                   </div>
                   <div
-                    className={`button-next w-full text-right disabled:disabled ${
-                      step == 10 ? "hidden" : ""
-                    } ${isActive ? "" : "disabled"} ${
-                      !questionAnswered ? "disabled" : ""
-                    }`}
+                    className={`button-next w-full text-right disabled:disabled ${step == 10 ? "hidden" : ""
+                      } ${isActive ? "" : "disabled"} ${!questionAnswered ? "disabled" : ""
+                      }`}
                   >
                     <button
                       className="ms-auto flex select-none items-center gap-3 bg-white py-2 px-0 text-center text-md text-black  active:shadow-none focus:outline-0"
@@ -1039,9 +1009,8 @@ const Pillars = () => {
                     </button>
                   </div>
                   <div
-                    className={`button-submit w-full text-right ${
-                      step == 10 ? "submit-final" : "hidden"
-                    }`}
+                    className={`button-submit w-full text-right ${step == 10 ? "submit-final" : "hidden"
+                      }`}
                   >
                     <a href="/dashboard">
                       <button
