@@ -121,7 +121,7 @@ const ChangePassword = ({
             type={showNewPassword ? "text" : "password"}
             placeholder="🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄🞄"   
             onChange={(e: any) => {
-              handlePasswordChange(e.target.value);
+              handlePasswordChange(e.target.value);          
               setValue("new_password", e.target.value, {
                 shouldValidate: true,
               });
