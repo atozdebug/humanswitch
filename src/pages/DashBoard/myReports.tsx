@@ -108,6 +108,7 @@ const MyReports = () => {
   const [chapters, setChapters] = useState<any>([])
   const [newChapterName, setNewChapterName] = useState('')
   const [openDelete, setOpenDelete] = useState(false);
+  const [duplicateOptions, setDuplicateOptions] = useState(false)
 
   useEffect(() => {
     dispatch(getQuestions())
@@ -117,7 +118,6 @@ const MyReports = () => {
         const filteredQuestions = res.find(
           (question: any) => question.name === selectedChapter
         );
-
         setQuestions(filteredQuestions?.questions || []);
       });
   }, [selectedChapter]);
@@ -455,8 +455,10 @@ const MyReports = () => {
   });
 
     if(isDuplicate) {
-      toast.error('Same Option already exist')
+      toast.error('Cannot Have Same Options for a Question')
       return;
+
+      setDuplicateOptions(false)
     } else if (chapterIndex !== -1) {
       chapterQuestions[chapterIndex].questions = currentQuestions;
     } else {
@@ -650,6 +652,7 @@ const MyReports = () => {
                     </div>
                   )}
                   {question.type === "Multiple Choice" && (
+                   
                     <div className="mt-2  ml-[35px]">
                       <div className="flex">
                         <div className="mt-2 w-96">
@@ -658,7 +661,7 @@ const MyReports = () => {
                               key={option.id}
                               className={`flex justify-between items-center content-center border px-4 py-2 rounded-xl mb-5`}
                             >
-                              <div className="flex justify-center items-center gap-4">
+                              <div className={`flex justify-center items-center gap-4 ${duplicateOptions ? 'border-red'}`}>
                                 <input
                                   disabled
                                   id={`default-radio-${option.id}`}
@@ -668,7 +671,7 @@ const MyReports = () => {
                                   className="min-w-[13px] text-blue-600 bg-gray-100  dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:bg-gray-700"
                                 />
                                 <input
-                                  className={`shadow-none appearance-none border-0 rounded w-full py-2 pl-2 text-input-text leading-tight focus:outline-none focus:shadow-none`}
+                                  className={`shadow-none appearance-none border-0 rounded w-full py-2 pl-2 text-input-text leading-tight focus:outline-none focus:shadow-none  `}
                                   id="option"
                                   type="text"
                                   placeholder="Write option here..."
@@ -680,8 +683,8 @@ const MyReports = () => {
                                       option.id
                                     )
                                   }
-                                  
                                 />
+                                
                               </div>
                               <div>
                                 {question.options.length > 2 && (

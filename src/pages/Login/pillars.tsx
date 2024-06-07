@@ -130,14 +130,17 @@ const Pillars = () => {
     }
   });
 
+  const [sideBar, setSideBar] = useState([])
   const [dataSideBar, setDataSideBar] = useState(sideBarItems);
 
   useEffect(() => {
     dispatch(getQuestions())
       .unwrap()
       .then((res: any) => {
+        setSideBar(res)
         if (!token) {
           const questionsMap = new Map();
+          
 
           res.forEach((item: any) => {
             questionsMap.set(item.name, item.questions);
@@ -509,7 +512,7 @@ const Pillars = () => {
                 className={`Chapter-names mt-6 relative after:content-[''] after:absolute after:left-5 after:top-0 after:border-dashed after:border-mediumblue after:h-full after:border after:z-0 ${isActive ? "active" : ""
                   }`}
               >
-                {sideBarItems.map((item: any, index) => (
+                {sideBar.map((item: any,index) => (
                   <div
                     key={index}
                     className={`flex gap-3 mb-3 chapteritem relative z-10 ${step == item.id ? "" : "items-center"
