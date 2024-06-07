@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { getQuestions } from "../../services/slices/dashboard/dashboard";
 import { Box, Slider } from "@mui/material";
 import toast from "react-hot-toast";
+import axios from 'axios';
 
 const sideBarItems = [
   {
@@ -108,13 +109,16 @@ const Pillars = () => {
   const [questionAnswered, setQuestionAnswered] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [stepAnswers, setStepAnswers] = useState<any>(() => {
-    // Try to get the data from cookies
+
+
     const existingData = Cookies.get("questionnaireData");
+
     if (existingData) {
-      // If data exists, parse it
+
       return JSON.parse(existingData);
     } else {
-      // Initialize default state structure if no data is found
+
+
       return {
         0: {},
         1: {},
@@ -147,7 +151,9 @@ const Pillars = () => {
           });
           const initialStepAnswers: any = {};
           sideBarItems.forEach((item, index) => {
+
             const questions = questionsMap.get(item.name) || [];
+
             const chapter = questions.reduce(
               (acc: any, _question: any, questionIndex: any) => {
                 // Change here
@@ -167,7 +173,7 @@ const Pillars = () => {
           const chapter: any = sideBarItems.find((x) => x.name === item.name);
 
           if (chapter) {
-            chapter.questions = [...item.questions];
+            chapter.questions = [...item.questions, item.name];
           }
         });
         setDataSideBar([...sideBarItems]);
@@ -211,8 +217,25 @@ const Pillars = () => {
 
   const handleNext = () => {
     toast.dismiss();
+
+
     if (questionAnswered) {
       const currentStepAnswers = stepAnswers[step - 1];
+      let itemObject;
+
+      const currentItem = sideBarItems.find(item => item.id === step);
+
+      if (currentItem) {
+        // Set the name of the current step answers using the found sidebar item
+        currentStepAnswers.name = currentItem.name;
+
+        // Construct the itemObject with "name" and "questions" keys
+        itemObject = {
+          name: currentStepAnswers.name,
+          questions: Object.entries(currentStepAnswers).filter(([key]) => key.startsWith('question')).map(([key, value]) => ({ [key]: value })),
+        };
+      }
+
 
       // Check if all fields in currentStepAnswers are filled
       const allFieldsFilled = Object.values(currentStepAnswers).every(
@@ -223,12 +246,15 @@ const Pillars = () => {
         let existingData = Cookies.get("questionnaireData");
         let data = existingData ? JSON.parse(existingData) : [];
 
-        data.push(currentStepAnswers);
+        if (itemObject) {
+          data.push(itemObject);
+        }
 
         Cookies.set("questionnaireData", JSON.stringify(data));
         if (data.length === 3 && !token) {
           return toggleModal();
         }
+        console.log(data)
 
         setStep((prev) => prev + 1);
         setStepsTick((prev: any) => [...prev, step]);
@@ -256,7 +282,7 @@ const Pillars = () => {
     questionId: string,
     value: any // Value will be the selected option in MCQ
   ) => {
-    // Update the state with the selected option for the corresponding step and question
+
     setQuestionAnswered(true);
     setStepAnswers((prevStepAnswers: any) => ({
       ...prevStepAnswers,
@@ -267,29 +293,48 @@ const Pillars = () => {
     }));
   };
 
-  const handleSubmit = () => {
-    // Clear the cookie
-    Cookies.remove("questionnaireData");
+  const handleSubmit = async () => {
 
-    // Optionally, you can reset the state
-    setStepAnswers({
-      0: {},
-      1: {},
-      2: {},
-      3: {},
-      4: {},
-      5: {},
-      6: {},
-      7: {},
-      8: {},
-      9: {},
+    const existingData = Cookies.get("questionnaireData");
+    const data = existingData ? JSON.parse(existingData) : [];
+
+
+    const formattedData = data.map(item => {
+      const { name, ...questions } = item;
+      return {
+        name,
+        questions: Object.entries(questions).map(([question, answer]) => ({
+          id: "",
+          [question]: answer
+        }))
+      };
     });
 
-    // Reset the step if necessary
-    setStep(1);
+    try {
+      const response = await axios.post('http://localhost:5000/submitQuestionnaire', formattedData);
+      if (response.status === 201) {
+        Cookies.remove("questionnaireData");
+        setStepAnswers({
+          0: {},
+          1: {},
+          2: {},
+          3: {},
+          4: {},
+          5: {},
+          6: {},
+          7: {},
+          8: {},
+          9: {},
+        });
+        setStep(1);
+        setIsModalOpen(false);
+        toast("Data submitted successfully!", { icon: "✅" });
+      }
+    } catch (error) {
 
-    // Optionally, handle modal state or other necessary actions
-    setIsModalOpen(false);
+      console.error('Error submitting data:', error);
+      toast("Error submitting data. Please try again.", { icon: "⚠️" });
+    }
   };
 
   return (
