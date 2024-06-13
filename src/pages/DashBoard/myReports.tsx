@@ -1,3 +1,4 @@
+
 import { Box, Paper, Slider, TextField } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import { Button, Modal } from "flowbite-react";
@@ -21,6 +22,7 @@ import UTurnLeftSharpIcon from "@mui/icons-material/UTurnLeftSharp";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import AddIcon from "@mui/icons-material/Add";
+import { Link } from "react-router-dom";
 
 // const chapters = [
 //   {
@@ -88,7 +90,7 @@ const questionType: any = [
 
 const MyReports = () => {
   const dispatch: any = useDispatch();
-  const [selectedChapter, setSelectedChapter] = useState("Strategy");
+  const [selectedChapter, setSelectedChapter] = useState("");
   const [deleteChapter, setDeleteChapter] = useState<any>(null)
   const [open, setOpen] = useState(false);
   const [newOpen, setNewOpen] = useState(false)
@@ -108,6 +110,8 @@ const MyReports = () => {
   const [chapters, setChapters] = useState<any>([])
   const [newChapterName, setNewChapterName] = useState('')
   const [openDelete, setOpenDelete] = useState(false);
+  const [isDuplicateOptions, setDuplicateOptions] = useState<any[]>([])
+  const [isEmptyOption, setEmptyOption] = useState<any[]>([])
 
   useEffect(() => {
     dispatch(getQuestions())
@@ -117,7 +121,6 @@ const MyReports = () => {
         const filteredQuestions = res.find(
           (question: any) => question.name === selectedChapter
         );
-
         setQuestions(filteredQuestions?.questions || []);
       });
   }, [selectedChapter]);
@@ -204,11 +207,14 @@ const MyReports = () => {
     const formJson = Object.fromEntries(formData);
     const question = formJson.question as string;
 
-    const isDuplicateQuestion = questions.some(q => q.text == question);
+
+    const questionType = questions.filter(q => q.type === selectedQuestionType.name)
+    const isDuplicateQuestion = questionType.some(q => q.text === question);
     if (isDuplicateQuestion) {
       toast.error('Cannot add same questions')
       return;
     }
+
 
     const findNextId = (options: any) => {
       const usedIds = new Set(options.map((option: any) => option.id));
@@ -221,6 +227,7 @@ const MyReports = () => {
 
     const nextId = findNextId(questions);
 
+
     const newQuestion = {
       id: nextId,
       type: selectedQuestionType.name,
@@ -232,10 +239,12 @@ const MyReports = () => {
           {
             id: 0,
             name: `Enter Option Value`,
+
           },
           {
             id: 1,
             name: `Enter Option Value`,
+
           },
         ],
       }),
@@ -264,6 +273,7 @@ const MyReports = () => {
 
   };
 
+
   const handleAddOption = (questionId: number, options: any) => {
     const findNextId = (options: any) => {
       const usedIds = new Set(options.map((option: any) => option.id));
@@ -276,10 +286,13 @@ const MyReports = () => {
 
     const nextId = findNextId(options);
 
+
+
     const newOption = {
       id: nextId,
       name: `Enter Option Value`,
     };
+
 
     // Add the new option to the specific question's options array
     setQuestions((prevQuestions) => {
@@ -447,21 +460,64 @@ const MyReports = () => {
 
     const currentQuestions = [...questions];
 
+
     const isDuplicate = currentQuestions.some((question) => {
-      const options = question.options;
 
-      return options.some((option: any, optionIndex: any) => {
-        return options.findIndex((o: any, idx: any) =>
+      if (question.type === 'Multiple Choice') {
+        const options = question.options;
+
+        const duplicateOptions = options.filter((option: any, optionIndex: any) =>
+          options.findIndex((o: any, idx: any) => idx !== optionIndex && o.name.toLowerCase() === option.name.toLowerCase()) !== -1
+        );
 
 
-          idx !== optionIndex && o.name === option.name) !== -1;
-      })
+        if (duplicateOptions.length > 0) {
+          setDuplicateOptions((prevOptions) => ({
+            ...prevOptions,
+            [question.id]: duplicateOptions
+          }));
+          return true;
+        }
+
+      }
+
+      return false;
     });
 
     if (isDuplicate) {
-      toast.error('Same Option already exist')
+      toast.error('Cannot Have Same Options for a Question');
       return;
-    } else if (chapterIndex !== -1) {
+    }
+
+    setDuplicateOptions([])
+
+    const isEmpty = currentQuestions.some((question) => {
+
+      if (question.type === 'Multiple Choice') {
+        const options = question.options;
+
+        const emptyValue = options.some((option: any) =>
+          option.name.trim() === ''
+        )
+
+        if (emptyValue) {
+          setEmptyOption((prevOptions) => ({
+            ...prevOptions,
+            [question.id]: emptyValue
+          }));
+          return true;
+        }
+      }
+      return false;
+    });
+
+    if (isEmpty) {
+      toast.error('Please Enter a valid Option Value');
+      return;
+    }
+    setEmptyOption([])
+
+    if (chapterIndex !== -1) {
       chapterQuestions[chapterIndex].questions = currentQuestions;
     } else {
       chapterQuestions.push({
@@ -494,7 +550,9 @@ const MyReports = () => {
       <div className="header-reports w-full">
         <div className="header-reports-inner flex justify-between px-8 py-6 bg-white shadow">
           <div className="flex flex-wrap gap-8 items-center w-full">
-            <button className="bg-white border-lightgray3 text-gray-dark border rounded-lg px-3 py-2">
+            <button
+              className="bg-white border-lightgray3 text-gray-dark border rounded-lg px-3 py-2"
+            >
               <span className="rotate-90 inline-block text-gray-dark">
                 <UTurnLeftSharpIcon />
               </span>{" "}
@@ -513,6 +571,7 @@ const MyReports = () => {
             >
               Publish
             </button>
+
           </div>
         </div>
       </div>
@@ -608,6 +667,7 @@ const MyReports = () => {
                   const displayIcon = questionType.find(
                     (type: any) => type.icon.id === question.icon
                   );
+
                   return (
                     <div key={question.id} className="mb-8">
                       <div className="font-semibold mb-2 flex w-full justify-between items-center">
@@ -660,20 +720,22 @@ const MyReports = () => {
                               {question.options.map((option: any) => (
                                 <div
                                   key={option.id}
-                                  className={`flex justify-between items-center content-center border px-4 py-2 rounded-xl mb-5`}
+                                  className={`flex justify-between items-center content-center border px-4 py-2 rounded-xl mb-5 ${isDuplicateOptions[question.id] && isDuplicateOptions[question.id].find((error: any) => error.name === option.name) || isEmptyOption[question.id] && isEmptyOption ? 'border-red-700' : ''}`}
                                 >
-                                  <div className="flex justify-center items-center gap-4">
+                                  <div className={`flex justify-center items-center gap-4`}>
                                     <input
+                                      required
                                       disabled
                                       id={`default-radio-${option.id}`}
                                       type="radio"
                                       value={option.name}
                                       name={`default-radio-${question.id}`}
-                                      className="min-w-[13px] text-blue-600 bg-gray-100  dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:bg-gray-700"
+                                      className={`min-w-[13px] text-blue-600 bg-gray-100  dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:bg-gray-700`}
                                     />
                                     <input
+                                      required
                                       className={`shadow-none appearance-none border-0 rounded w-full py-2 pl-2 text-input-text leading-tight focus:outline-none focus:shadow-none`}
-                                      id="option"
+                                      id={`option-${option.id}`}
                                       type="text"
                                       placeholder="Write option here..."
                                       value={option.name}
@@ -681,11 +743,13 @@ const MyReports = () => {
                                         onChangeOptionText(
                                           e.target.value,
                                           question.id,
-                                          option.id
+                                          option.id,
+
                                         )
                                       }
 
                                     />
+
                                   </div>
                                   <div>
                                     {question.options.length > 2 && (
