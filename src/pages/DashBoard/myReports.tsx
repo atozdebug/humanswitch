@@ -550,14 +550,14 @@ const MyReports = () => {
       <div className="header-reports w-full">
         <div className="header-reports-inner flex justify-between px-8 py-6 bg-white shadow">
           <div className="flex flex-wrap gap-8 items-center w-full">
-            <button 
+            <Link to = "/dashboard"><button 
               className="bg-white border-lightgray3 text-gray-dark border rounded-lg px-3 py-2" 
               >
               <span className="rotate-90 inline-block text-gray-dark">
                 <UTurnLeftSharpIcon />
               </span>{" "}
               Back to My Reports
-            </button> 
+            </button></Link> 
             <div className="text-xl">AI Strategy Readiness</div>
           </div>
           <div className="flex gap-3 items-center w-full justify-end">
