@@ -1,6 +1,7 @@
+
 import { Box, Paper, Slider, TextField } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
-import {  Button, Modal } from "flowbite-react";
+import { Button, Modal } from "flowbite-react";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -21,6 +22,7 @@ import UTurnLeftSharpIcon from "@mui/icons-material/UTurnLeftSharp";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import AddIcon from "@mui/icons-material/Add";
+import { Link } from "react-router-dom";
 
 // const chapters = [
 //   {
@@ -88,7 +90,7 @@ const questionType: any = [
 
 const MyReports = () => {
   const dispatch: any = useDispatch();
-  const [selectedChapter, setSelectedChapter] = useState("Strategy");
+  const [selectedChapter, setSelectedChapter] = useState("");
   const [deleteChapter, setDeleteChapter] = useState<any>(null)
   const [open, setOpen] = useState(false);
   const [newOpen, setNewOpen] = useState(false)
@@ -108,7 +110,8 @@ const MyReports = () => {
   const [chapters, setChapters] = useState<any>([])
   const [newChapterName, setNewChapterName] = useState('')
   const [openDelete, setOpenDelete] = useState(false);
-  const [duplicateOptions, setDuplicateOptions] = useState(false)
+  const [isDuplicateOptions, setDuplicateOptions] = useState<any[]>([])
+  const [isEmptyOption, setEmptyOption] = useState<any[]>([])
 
   useEffect(() => {
     dispatch(getQuestions())
@@ -144,51 +147,51 @@ const MyReports = () => {
 
   const handleAddChapter = () => {
     toast.dismiss();
-    dispatch(createQuestions([{name:newChapterName}]))
-    .unwrap()
-    .then(() => {
-      if (newChapterName.trim() !== '') {
-      const newChapter = {
-        value: chapters.length + 1,
-        name: newChapterName,
-      };
-      setChapters([...chapters, newChapter]);
-      setNewChapterName('')
-      toast.success(`${newChapterName}  added succesfully`) 
-    } else {
-      toast.error('Chapter Name is Required')
-    }
-  }).then(()=>
-    dispatch(getQuestions())
-    .unwrap()
-    .then((res: any) => {
-      setChapters(res)
-      const filteredQuestions = res.find(
-        (question: any) => question.name === selectedChapter
-      );
+    dispatch(createQuestions([{ name: newChapterName }]))
+      .unwrap()
+      .then(() => {
+        if (newChapterName.trim() !== '') {
+          const newChapter = {
+            value: chapters.length + 1,
+            name: newChapterName,
+          };
+          setChapters([...chapters, newChapter]);
+          setNewChapterName('')
+          toast.success(`${newChapterName}  added succesfully`)
+        } else {
+          toast.error('Chapter Name is Required')
+        }
+      }).then(() =>
+        dispatch(getQuestions())
+          .unwrap()
+          .then((res: any) => {
+            setChapters(res)
+            const filteredQuestions = res.find(
+              (question: any) => question.name === selectedChapter
+            );
 
-      setQuestions(filteredQuestions?.questions || []);
-    }))
+            setQuestions(filteredQuestions?.questions || []);
+          }))
   }
 
   const handleDeleteChapter = () => {
     toast.dismiss();
     dispatch(deleteQuestions(deleteChapter.id))
-    .unwrap()
-    .then(() => {
-      setOpenDelete(false);
-      toast.success('Chapter Deleted Successfully')
-    }).then(()=>
-      dispatch(getQuestions())
       .unwrap()
-      .then((res: any) => {
-        setChapters(res)
-        const filteredQuestions = res.find(
-          (question: any) => question.name === selectedChapter
-        );
-  
-        setQuestions(filteredQuestions?.questions || []);
-      }))
+      .then(() => {
+        setOpenDelete(false);
+        toast.success('Chapter Deleted Successfully')
+      }).then(() =>
+        dispatch(getQuestions())
+          .unwrap()
+          .then((res: any) => {
+            setChapters(res)
+            const filteredQuestions = res.find(
+              (question: any) => question.name === selectedChapter
+            );
+
+            setQuestions(filteredQuestions?.questions || []);
+          }))
   }
 
   const handleSliderChange = (questionId: number, newValue: number) => {
@@ -204,11 +207,14 @@ const MyReports = () => {
     const formJson = Object.fromEntries(formData);
     const question = formJson.question as string;
 
-    const isDuplicateQuestion = questions.some(q => q.text == question);
+
+    const questionType = questions.filter(q => q.type === selectedQuestionType.name)
+    const isDuplicateQuestion = questionType.some(q => q.text === question);
     if (isDuplicateQuestion) {
       toast.error('Cannot add same questions')
       return;
     }
+
 
     const findNextId = (options: any) => {
       const usedIds = new Set(options.map((option: any) => option.id));
@@ -220,6 +226,7 @@ const MyReports = () => {
     };
 
     const nextId = findNextId(questions);
+   
 
     const newQuestion = {
       id: nextId,
@@ -232,10 +239,12 @@ const MyReports = () => {
           {
             id: 0,
             name: `Enter Option Value`,
+         
           },
           {
             id: 1,
             name: `Enter Option Value`,
+           
           },
         ],
       }),
@@ -263,6 +272,7 @@ const MyReports = () => {
     setSaveVisible(true);
 
   };
+  
 
   const handleAddOption = (questionId: number, options: any) => {
     const findNextId = (options: any) => {
@@ -276,10 +286,13 @@ const MyReports = () => {
 
     const nextId = findNextId(options);
 
+    
+
     const newOption = {
       id: nextId,
       name: `Enter Option Value`,
     };
+    
 
     // Add the new option to the specific question's options array
     setQuestions((prevQuestions) => {
@@ -416,50 +429,95 @@ const MyReports = () => {
     questionId: number,
     optionId: number
   ) => {
-      setQuestions((prevQuestions) => {
-        return prevQuestions.map((question) => {
-          if (question.id === questionId) {
-            return {
-              ...question,
-              options: question.options.map((option: any) => {
-                if (option.id === optionId) {
-                  return {
-                    ...option,
-                    name: value,
-                  };
-                }
-                return option;
-              }),
-            };
-          }
-          return question;
-        });
+    setQuestions((prevQuestions) => {
+      return prevQuestions.map((question) => {
+        if (question.id === questionId) {
+          return {
+            ...question,
+            options: question.options.map((option: any) => {
+              if (option.id === optionId) {
+                return {
+                  ...option,
+                  name: value,
+                };
+              }
+              return option;
+            }),
+          };
+        }
+        return question;
       });
-      setSaveVisible(true);
+    });
+    setSaveVisible(true);
   };
 
   const handleSaveData = () => {
     toast.dismiss();
-    
+
     const chapterIndex = chapterQuestions.findIndex(
       (chapter: any) => chapter.name === selectedChapter
     );
 
     const currentQuestions = [...questions];
 
-     const isDuplicate = currentQuestions.some((question) => {
-      const options = question.options;
-      return options.some((option: any, optionIndex: any) => {
-       return options.findIndex((o: any, idx: any) => idx !== optionIndex && o.name === option.name) !== -1;
-     })
-  });
 
-    if(isDuplicate) {
-      toast.error('Cannot Have Same Options for a Question')
+    const isDuplicate = currentQuestions.some((question) => {
+
+      if (question.type === 'Multiple Choice') {
+        const options = question.options;
+
+          const duplicateOptions = options.filter((option: any, optionIndex: any) =>
+            options.findIndex((o: any, idx: any) => idx !== optionIndex && o.name.toLowerCase() === option.name.toLowerCase()) !== -1
+          );
+        
+  
+        if (duplicateOptions.length > 0) {
+          setDuplicateOptions((prevOptions) => ({
+            ...prevOptions,
+            [question.id]: duplicateOptions
+          }));
+          return true;
+        }
+
+      }
+      
+      return false;
+    });
+
+    if (isDuplicate) {
+      toast.error('Cannot Have Same Options for a Question');
       return;
+    }
 
-      setDuplicateOptions(false)
-    } else if (chapterIndex !== -1) {
+    setDuplicateOptions([])
+
+    const isEmpty = currentQuestions.some((question) => {
+
+      if (question.type === 'Multiple Choice') {
+        const options = question.options;
+
+        const emptyValue = options.some((option: any) => 
+          option.name.trim() === '' 
+        )
+
+        if(emptyValue) {
+          setEmptyOption((prevOptions) => ({
+            ...prevOptions,
+            [question.id]: emptyValue
+          }));
+          return true;
+        }
+      } 
+      return false;
+    });
+
+    if (isEmpty) {
+      toast.error('Please Enter a valid Option Value');
+      return;
+    }
+    setEmptyOption([])
+
+    if (chapterIndex !== -1) {
       chapterQuestions[chapterIndex].questions = currentQuestions;
     } else {
       chapterQuestions.push({
@@ -492,25 +550,28 @@ const MyReports = () => {
       <div className="header-reports w-full">
         <div className="header-reports-inner flex justify-between px-8 py-6 bg-white shadow">
           <div className="flex flex-wrap gap-8 items-center w-full">
-            <button className="bg-white border-lightgray3 text-gray-dark border rounded-lg px-3 py-2">
+            <button 
+              className="bg-white border-lightgray3 text-gray-dark border rounded-lg px-3 py-2" 
+              >
               <span className="rotate-90 inline-block text-gray-dark">
                 <UTurnLeftSharpIcon />
               </span>{" "}
               Back to My Reports
-            </button>
+            </button> 
             <div className="text-xl">AI Strategy Readiness</div>
           </div>
           <div className="flex gap-3 items-center w-full justify-end">
             <button className="bg-white border-lightgray3 text-gray-dark border rounded-lg px-6 max-w-172px w-full py-2 text-nowrap">
               Save Draft
             </button>
-            <button
-              onClick={handlePublish}
+           <button
+             onClick={handlePublish}
               disabled={saveVisible === true}
               className="bg-darkblue2 border-darkblue2 text-white border rounded-lg px-6 max-w-172px py-2 w-full"
             >
               Publish
             </button>
+            
           </div>
         </div>
       </div>
@@ -526,7 +587,7 @@ const MyReports = () => {
               </span>
             </div>
             <div>
-              {chapters.map((chapter:any) => (
+              {chapters.map((chapter: any) => (
                 <div
                   key={chapter.value}
                   onClick={() => {
@@ -574,8 +635,8 @@ const MyReports = () => {
                     }
                   }}
                   className={`px-3 py-2 flex gap-2 justify-between items-center hover:bg-lightgray rounded-lg mx-5 my-2 relative cursor-pointer ${selectedChapter === chapter.name
-                      ? "bg-lightgray before:content before:absolute before:w-1 before:top-1/2 before:left-[-1.25rem] before:h-5 before:bg-span-clr before:translate-y-[-50%] before:rounded-r-lg"
-                      : ""
+                    ? "bg-lightgray before:content before:absolute before:w-1 before:top-1/2 before:left-[-1.25rem] before:h-5 before:bg-span-clr before:translate-y-[-50%] before:rounded-r-lg"
+                    : ""
                     }`}
                 >
                   {chapter.name}{" "}
@@ -583,12 +644,12 @@ const MyReports = () => {
                     <AddCircleOutlineIcon />
                   </span>{" "} */}
                   <span className="text-red2">
-                    <RemoveCircleOutlineIcon 
-                    onClick = {() =>  {   
-                      setOpenDelete(true)
-                      setDeleteChapter(chapter)
-                    }  
-                    }
+                    <RemoveCircleOutlineIcon
+                      onClick={() => {
+                        setOpenDelete(true)
+                        setDeleteChapter(chapter)
+                      }
+                      }
                     />
                   </span>
                 </div>
@@ -597,278 +658,283 @@ const MyReports = () => {
           </div>
         </div>
         <div className="md:p-6 p-4 md:w-100-272px w-full">
-          {chapters.length === 0 ? ( 
+          {chapters.length === 0 ? (
             <div className="bg-white shadow rounded-l-0 rounded-[10px] flex justify-center align-center p-5"><h1 className="text-xl my-3">Please Create a New Chapter to Add Questions</h1></div>
           ) : (
-          <Paper sx={{ borderRadius: "16px", py: 4 }} className="md:px-6 px-4">
-          <div className="flex flex-col justify-center">
-            {questions?.map((question, index) => {
-              const displayIcon = questionType.find(
-                (type: any) => type.icon.id === question.icon
-              );
-              return (
-                <div key={question.id} className="mb-8">
-                  <div className="font-semibold mb-2 flex w-full justify-between items-center">
-                    <div>Questions for {selectedChapter}</div>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <div className={question.color}>
-                          {displayIcon?.icon.image}
-                        </div>
+            <Paper sx={{ borderRadius: "16px", py: 4 }} className="md:px-6 px-4">
+              <div className="flex flex-col justify-center">
+                {questions?.map((question, index) => {
+                  const displayIcon = questionType.find(
+                    (type: any) => type.icon.id === question.icon
+                  );
 
-                        <div className="text-xl font-semibold">
-                          Question {index + 1}
+                  return (
+                    <div key={question.id} className="mb-8">
+                      <div className="font-semibold mb-2 flex w-full justify-between items-center">
+                        <div>Questions for {selectedChapter}</div>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <div className={question.color}>
+                              {displayIcon?.icon.image}
+                            </div>
+
+                            <div className="text-xl font-semibold">
+                              Question {index + 1}
+                            </div>
+                          </div>
+                          <div className="ml-[35px] text-gray-dark2">
+                            {question.text}
+                          </div>
+                        </div>
+                        <div>
+                          {questions.length > 1 && (
+                            <div
+                              className="text-red-600 p-2 hover:bg-gray-100 rounded-full cursor-pointer"
+                              onClick={() => handleRemoveQuestion(question.id)}
+                            >
+                              <DeleteIcon />
+                            </div>
+                          )}
                         </div>
                       </div>
-                      <div className="ml-[35px] text-gray-dark2">
-                        {question.text}
-                      </div>
-                    </div>
-                    <div>
-                      {questions.length > 1 && (
-                        <div
-                          className="text-red-600 p-2 hover:bg-gray-100 rounded-full cursor-pointer"
-                          onClick={() => handleRemoveQuestion(question.id)}
-                        >
-                          <DeleteIcon />
+                      {question.type === "Short Answer" && (
+                        <div className="mt-2 ml-[35px]">
+                          <textarea
+                            disabled
+                            id={`question-${question.id}`}
+                            name={`question-${question.id}`}
+                            className="bg-lightgray2 border border-lightgray2 text-gray-900 text-sm rounded-lg focus:ring-lightgray2 focus:border-mediumblue block w-full p-2.5 min-h-62px"
+                            value={answers[question.id] || ""}
+                            onChange={(e) =>
+                              onChangeTextArea(question.id, e.target.value)
+                            }
+                          />
                         </div>
                       )}
-                    </div>
-                  </div>
-                  {question.type === "Short Answer" && (
-                    <div className="mt-2 ml-[35px]">
-                      <textarea
-                        disabled
-                        id={`question-${question.id}`}
-                        name={`question-${question.id}`}
-                        className="bg-lightgray2 border border-lightgray2 text-gray-900 text-sm rounded-lg focus:ring-lightgray2 focus:border-mediumblue block w-full p-2.5 min-h-62px"
-                        value={answers[question.id] || ""}
-                        onChange={(e) =>
-                          onChangeTextArea(question.id, e.target.value)
-                        }
-                      />
-                    </div>
-                  )}
-                  {question.type === "Multiple Choice" && (
-                   
-                    <div className="mt-2  ml-[35px]">
-                      <div className="flex">
-                        <div className="mt-2 w-96">
-                          {question.options.map((option: any) => (
+                      {question.type === "Multiple Choice" && (
+
+                        <div className="mt-2  ml-[35px]">
+                          <div className="flex">
+                            <div className="mt-2 w-96">
+                              {question.options.map((option: any) => (
+                                <div
+                                  key={option.id}
+                                  className={`flex justify-between items-center content-center border px-4 py-2 rounded-xl mb-5 ${isDuplicateOptions[question.id] && isDuplicateOptions[question.id].find((error: any) => error.name === option.name) || isEmptyOption[question.id] && isEmptyOption ? 'border-red-700' : ''}`}
+                                >
+                                  <div className={`flex justify-center items-center gap-4`}>
+                                    <input
+                                      required
+                                      disabled
+                                      id={`default-radio-${option.id}`}
+                                      type="radio"
+                                      value={option.name}
+                                      name={`default-radio-${question.id}`}
+                                      className={`min-w-[13px] text-blue-600 bg-gray-100  dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:bg-gray-700`}
+                                    />
+                                    <input
+                                      required
+                                      className={`shadow-none appearance-none border-0 rounded w-full py-2 pl-2 text-input-text leading-tight focus:outline-none focus:shadow-none`}
+                                      id={`option-${option.id}`}
+                                      type="text"
+                                      placeholder="Write option here..."
+                                      value={option.name}
+                                      onChange={(e) =>
+                                        onChangeOptionText(
+                                          e.target.value,
+                                          question.id,
+                                          option.id,
+                                         
+                                        )
+                                      }
+                                      
+                                    />
+
+                                  </div>
+                                  <div>
+                                    {question.options.length > 2 && (
+                                      <div
+                                        onClick={() =>
+                                          handleRemoveOption(
+                                            question.id,
+                                            option.id
+                                          )
+                                        }
+                                        className="text-mediumgray2 rounded-full hover:bg-gray-100 cursor-pointer"
+                                      >
+                                        <CancelIcon />
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                          <div>
+                            {question.options.length < 4 && (
+                              <button
+                                className="text-blue-600 font-semibold hover:bg-gray-200 px-3 py-1 rounded-md"
+                                onClick={() =>
+                                  handleAddOption(question.id, question.options)
+                                }
+                              >
+                                Add Option
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                      {question.type === "Slider" && (
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            gap: 6,
+                            mt: 2,
+                            alignItems: "center",
+                            ml: "35px",
+                          }}
+                        >
+                          <div className="flex gap-3 items-center">
                             <div
-                              key={option.id}
-                              className={`flex justify-between items-center content-center border px-4 py-2 rounded-xl mb-5`}
+                              style={{
+                                cursor: "pointer",
+                              }}
                             >
-                              <div className={`flex justify-center items-center gap-4 ${duplicateOptions ? 'border-red'}`}>
+                              <div
+                                style={{
+                                  cursor: "pointer",
+                                  fontWeight: "bold",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  gap: 8,
+                                }}
+                              >
                                 <input
-                                  disabled
-                                  id={`default-radio-${option.id}`}
-                                  type="radio"
-                                  value={option.name}
-                                  name={`default-radio-${question.id}`}
-                                  className="min-w-[13px] text-blue-600 bg-gray-100  dark:focus:ring-blue-600 dark:ring-offset-gray-800  dark:bg-gray-700"
-                                />
-                                <input
-                                  className={`shadow-none appearance-none border-0 rounded w-full py-2 pl-2 text-input-text leading-tight focus:outline-none focus:shadow-none  `}
-                                  id="option"
-                                  type="text"
-                                  placeholder="Write option here..."
-                                  value={option.name}
+                                  name="minValue"
+                                  value={
+                                    minValues[question.id] || question.min || 10
+                                  }
                                   onChange={(e) =>
-                                    onChangeOptionText(
-                                      e.target.value,
+                                    changeMinValue(
                                       question.id,
-                                      option.id
+                                      e.target.value,
+                                      question.max
                                     )
                                   }
+                                  type="number"
+                                  className="w-14 rounded-lg text-sm border-0 px-2"
                                 />
-                                
+                                {/* <div>Min</div> */}
                               </div>
-                              <div>
-                                {question.options.length > 2 && (
-                                  <div
-                                    onClick={() =>
-                                      handleRemoveOption(
-                                        question.id,
-                                        option.id
-                                      )
-                                    }
-                                    className="text-mediumgray2 rounded-full hover:bg-gray-100 cursor-pointer"
-                                  >
-                                    <CancelIcon />
-                                  </div>
-                                )}
-                              </div>
+                              {minValueErrors[question.id] && (
+                                <div className="text-xs text-red-600">
+                                  Min value cannot be greater than or equal to Max
+                                  value
+                                </div>
+                              )}
                             </div>
-                          ))}
-                        </div>
-                      </div>
-                      <div>
-                        {question.options.length < 4 && (
-                          <button
-                            className="text-blue-600 font-semibold hover:bg-gray-200 px-3 py-1 rounded-md"
-                            onClick={() =>
-                              handleAddOption(question.id, question.options)
-                            }
-                          >
-                            Add Option
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                  )}
-                  {question.type === "Slider" && (
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        gap: 6,
-                        mt: 2,
-                        alignItems: "center",
-                        ml: "35px",
-                      }}
-                    >
-                      <div className="flex gap-3 items-center">
-                        <div
-                          style={{
-                            cursor: "pointer",
-                          }}
-                        >
-                          <div
-                            style={{
-                              cursor: "pointer",
-                              fontWeight: "bold",
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 8,
-                            }}
-                          >
-                            <input
-                              name="minValue"
-                              value={
-                                minValues[question.id] || question.min || 10
-                              }
-                              onChange={(e) =>
-                                changeMinValue(
-                                  question.id,
-                                  e.target.value,
-                                  question.max
-                                )
-                              }
-                              type="number"
-                              className="w-14 rounded-lg text-sm border-0 px-2"
-                            />
-                            {/* <div>Min</div> */}
-                          </div>
-                          {minValueErrors[question.id] && (
-                            <div className="text-xs text-red-600">
-                              Min value cannot be greater than or equal to Max
-                              value
-                            </div>
-                          )}
-                        </div>
 
-                        <Slider
-                          disabled
-                          sx={{ width: 250 }}
-                          step={steps[question.id] || question.steps || 5}
-                          value={sliderValues[question.id] || 10}
-                          valueLabelDisplay="auto"
-                          min={minValues[question.id] || question.min || 10}
-                          max={maxValues[question.id] || question.max || 20}
-                          onChange={(_, newValue) =>
-                            handleSliderChange(
-                              question.id,
-                              newValue as number
-                            )
-                          }
-                          marks
-                        />
-                        <div
-                          style={{
-                            cursor: "pointer",
-                          }}
-                        >
-                          <div
-                            style={{
-                              cursor: "pointer",
-                              fontWeight: "bold",
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 8,
-                            }}
-                          >
-                            <input
-                              name="maxValue"
-                              value={
-                                maxValues[question.id] || question.max || 20
-                              }
-                              onChange={(e) =>
-                                changeMaxValue(
+                            <Slider
+                              disabled
+                              sx={{ width: 250 }}
+                              step={steps[question.id] || question.steps || 5}
+                              value={sliderValues[question.id] || 10}
+                              valueLabelDisplay="auto"
+                              min={minValues[question.id] || question.min || 10}
+                              max={maxValues[question.id] || question.max || 20}
+                              onChange={(_, newValue) =>
+                                handleSliderChange(
                                   question.id,
-                                  e.target.value,
-                                  question.min
+                                  newValue as number
                                 )
                               }
-                              type="number"
-                              className="w-14 border-0 px-2 rounded-lg text-sm"
+                              marks
                             />
-                            {/* <div className="flex w-full justify-center">Max</div> */}
-                          </div>
-                          {maxValueErrors[question.id] && (
-                            <div className="text-xs text-red-600">
-                              Max value cannot be less than or equal to Min
-                              value
+                            <div
+                              style={{
+                                cursor: "pointer",
+                              }}
+                            >
+                              <div
+                                style={{
+                                  cursor: "pointer",
+                                  fontWeight: "bold",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  gap: 8,
+                                }}
+                              >
+                                <input
+                                  name="maxValue"
+                                  value={
+                                    maxValues[question.id] || question.max || 20
+                                  }
+                                  onChange={(e) =>
+                                    changeMaxValue(
+                                      question.id,
+                                      e.target.value,
+                                      question.min
+                                    )
+                                  }
+                                  type="number"
+                                  className="w-14 border-0 px-2 rounded-lg text-sm"
+                                />
+                                {/* <div className="flex w-full justify-center">Max</div> */}
+                              </div>
+                              {maxValueErrors[question.id] && (
+                                <div className="text-xs text-red-600">
+                                  Max value cannot be less than or equal to Min
+                                  value
+                                </div>
+                              )}
                             </div>
-                          )}
-                        </div>
+                          </div>
+                          <div className="flex items-center ml-10">
+                            <div className="font-semibold">
+                              Enter Number of steps :
+                            </div>
+                            <input
+                              name="steps"
+                              defaultValue={
+                                steps[question.id] || question.steps || 5
+                              }
+                              onChange={(e: any) => {
+                                if (e.target.value > 0) {
+                                  changeStepsValue(question.id, e.target.value);
+                                }
+                              }}
+                              min={1}
+                              type="number"
+                              className="ml-2 w-28 rounded-lg font-bold"
+                            />
+                          </div>
+                        </Box>
+                      )}
+                    </div>
+                  );
+                })}
+                <div className="relative text-center before:content before:absolute before:w-full before:top-1/2 before:left-0 mt-4 before:h-1px before:bg-lightgray3 ">
+                  <div className="inline-flex gap-4 justify-center items-center relative bg-white px-3">
+                    <div
+                      className="rounded-lg bg-white hover:bg-blue-700 py-2 px-4 hover:text-white text-gray-dark font-semibold cursor-pointer border border-lighgray3"
+                      onClick={handleClickOpen}
+                    >
+                      Add Questions
+                    </div>
+                    {saveVisible && (
+                      <div
+                        onClick={() => handleSaveData()}
+                        className="rounded bg-purple-500 hover:bg-purple-700 py-2 px-4 text-white font-semibold cursor-pointer"
+                      >
+                        Save
                       </div>
-                      <div className="flex items-center ml-10">
-                        <div className="font-semibold">
-                          Enter Number of steps :
-                        </div>
-                        <input
-                          name="steps"
-                          defaultValue={
-                            steps[question.id] || question.steps || 5
-                          }
-                          onChange={(e: any) => {
-                            if (e.target.value > 0) {
-                              changeStepsValue(question.id, e.target.value);
-                            }
-                          }}
-                          min={1}
-                          type="number"
-                          className="ml-2 w-28 rounded-lg font-bold"
-                        />
-                      </div>
-                    </Box>
-                  )}
-                </div>
-              );
-            })}
-            <div className="relative text-center before:content before:absolute before:w-full before:top-1/2 before:left-0 mt-4 before:h-1px before:bg-lightgray3 ">
-              <div className="inline-flex gap-4 justify-center items-center relative bg-white px-3">
-                <div
-                  className="rounded-lg bg-white hover:bg-blue-700 py-2 px-4 hover:text-white text-gray-dark font-semibold cursor-pointer border border-lighgray3"
-                  onClick={handleClickOpen}
-                >
-                  Add Questions
-                </div>
-                {saveVisible && (
-                  <div
-                    onClick={() => handleSaveData()}
-                    className="rounded bg-purple-500 hover:bg-purple-700 py-2 px-4 text-white font-semibold cursor-pointer"
-                  >
-                    Save
+                    )}
                   </div>
-                )}
+                </div>
               </div>
-            </div>
-          </div>
-        </Paper>
+            </Paper>
           )}
         </div>
       </div>
@@ -885,12 +951,12 @@ const MyReports = () => {
             <div className="flex gap-1 mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
               Are you sure you want to delete the
               <div className="font-semibold text-gray-900">
-              {deleteChapter?.name}
+                {deleteChapter?.name}
               </div>
               Chapter?
             </div>
             <div className="flex justify-center gap-4">
-              <Button color="failure" onClick={ handleDeleteChapter} >
+              <Button color="failure" onClick={handleDeleteChapter} >
                 Yes, I'm sure
               </Button>
               <Button color="gray" onClick={() => setOpenDelete(false)}>
@@ -936,7 +1002,7 @@ const MyReports = () => {
           </div>
         </DialogActions>
       </Dialog>
-      
+
 
       <Dialog fullWidth={true} maxWidth="xs" open={open} onClose={handleClose}>
         <DialogTitle> Select the type of question</DialogTitle>

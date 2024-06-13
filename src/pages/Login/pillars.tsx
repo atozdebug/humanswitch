@@ -8,88 +8,88 @@ import { Box, Slider } from "@mui/material";
 import toast from "react-hot-toast";
 import axios from 'axios';
 
-const sideBarItems = [
-  {
-    id: 1,
-    name: "Strategy",
-    description:
-      "Defining a sharp vision that embraces both business success and social responsibility.",
-    icon: <PersonIcon />,
-    questions: [],
-  },
-  {
-    id: 2,
-    name: "Clientele",
-    description:
-      "Defining a sharp vision that embraces both business success and social responsibility.",
-    icon: <PersonIcon />,
-    questions: [],
-  },
-  {
-    id: 3,
-    name: "Budget-ROI",
-    description:
-      "Defining a sharp vision that embraces both business success and social responsibility.",
-    icon: <PersonIcon />,
-    questions: [],
-  },
-  {
-    id: 4,
-    name: "Employees",
-    description:
-      "Defining a sharp vision that embraces both business success and social responsibility.",
-    icon: <PersonIcon />,
-    questions: [],
-  },
-  {
-    id: 5,
-    name: "Market",
-    description:
-      "Defining a sharp vision that embraces both business success and social responsibility.",
-    icon: <PersonIcon />,
-    questions: [],
-  },
-  {
-    id: 6,
-    name: "Compliance",
-    description:
-      "Defining a sharp vision that embraces both business success and social responsibility.",
-    icon: <PersonIcon />,
-    questions: [],
-  },
-  {
-    id: 7,
-    name: "Partners-Suppliers",
-    description:
-      "Defining a sharp vision that embraces both business success and social responsibility.",
-    icon: <PersonIcon />,
-    questions: [],
-  },
-  {
-    id: 8,
-    name: "Data-ICT",
-    description:
-      "Defining a sharp vision that embraces both business success and social responsibility.",
-    icon: <PersonIcon />,
-    questions: [],
-  },
-  {
-    id: 9,
-    name: "Customer Value & Social Impact",
-    description:
-      "Defining a sharp vision that embraces both business success and social responsibility.",
-    icon: <PersonIcon />,
-    questions: [],
-  },
-  {
-    id: 10,
-    name: "Innovation",
-    description:
-      "Defining a sharp vision that embraces both business success and social responsibility.",
-    icon: <PersonIcon />,
-    questions: [],
-  },
-];
+// const sideBarItems = [
+//   {
+//     id: 1,
+//     name: "Strategy",
+//     description:
+//       "Defining a sharp vision that embraces both business success and social responsibility.",
+//     icon: <PersonIcon />,
+//     questions: [],
+//   },
+//   {
+//     id: 2,
+//     name: "Clientele",
+//     description:
+//       "Defining a sharp vision that embraces both business success and social responsibility.",
+//     icon: <PersonIcon />,
+//     questions: [],
+//   },
+//   {
+//     id: 3,
+//     name: "Budget-ROI",
+//     description:
+//       "Defining a sharp vision that embraces both business success and social responsibility.",
+//     icon: <PersonIcon />,
+//     questions: [],
+//   },
+//   {
+//     id: 4,
+//     name: "Employees",
+//     description:
+//       "Defining a sharp vision that embraces both business success and social responsibility.",
+//     icon: <PersonIcon />,
+//     questions: [],
+//   },
+//   {
+//     id: 5,
+//     name: "Market",
+//     description:
+//       "Defining a sharp vision that embraces both business success and social responsibility.",
+//     icon: <PersonIcon />,
+//     questions: [],
+//   },
+//   {
+//     id: 6,
+//     name: "Compliance",
+//     description:
+//       "Defining a sharp vision that embraces both business success and social responsibility.",
+//     icon: <PersonIcon />,
+//     questions: [],
+//   },
+//   {
+//     id: 7,
+//     name: "Partners-Suppliers",
+//     description:
+//       "Defining a sharp vision that embraces both business success and social responsibility.",
+//     icon: <PersonIcon />,
+//     questions: [],
+//   },
+//   {
+//     id: 8,
+//     name: "Data-ICT",
+//     description:
+//       "Defining a sharp vision that embraces both business success and social responsibility.",
+//     icon: <PersonIcon />,
+//     questions: [],
+//   },
+//   {
+//     id: 9,
+//     name: "Customer Value & Social Impact",
+//     description:
+//       "Defining a sharp vision that embraces both business success and social responsibility.",
+//     icon: <PersonIcon />,
+//     questions: [],
+//   },
+//   {
+//     id: 10,
+//     name: "Innovation",
+//     description:
+//       "Defining a sharp vision that embraces both business success and social responsibility.",
+//     icon: <PersonIcon />,
+//     questions: [],
+//   },
+// ];
 
 const Pillars = () => {
   const dispatch = useDispatch();
@@ -109,16 +109,13 @@ const Pillars = () => {
   const [questionAnswered, setQuestionAnswered] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [stepAnswers, setStepAnswers] = useState<any>(() => {
-
-
+    // Try to get the data from cookies
     const existingData = Cookies.get("questionnaireData");
-
     if (existingData) {
-
+      // If data exists, parse it
       return JSON.parse(existingData);
     } else {
-
-
+      // Initialize default state structure if no data is found
       return {
         0: {},
         1: {},
@@ -134,26 +131,21 @@ const Pillars = () => {
     }
   });
 
-  const [sideBar, setSideBar] = useState([])
-  const [dataSideBar, setDataSideBar] = useState(sideBarItems);
+  const [sideBarItems, setSideBarItems] = useState<any[]>([]);
 
   useEffect(() => {
     dispatch(getQuestions())
       .unwrap()
       .then((res: any) => {
-        setSideBar(res)
         if (!token) {
           const questionsMap = new Map();
-          
 
           res.forEach((item: any) => {
             questionsMap.set(item.name, item.questions);
           });
           const initialStepAnswers: any = {};
           sideBarItems.forEach((item, index) => {
-
             const questions = questionsMap.get(item.name) || [];
-
             const chapter = questions.reduce(
               (acc: any, _question: any, questionIndex: any) => {
                 // Change here
@@ -176,7 +168,7 @@ const Pillars = () => {
             chapter.questions = [...item.questions, item.name];
           }
         });
-        setDataSideBar([...sideBarItems]);
+        setSideBarItems(res);
       });
   }, []);
 
@@ -217,25 +209,21 @@ const Pillars = () => {
 
   const handleNext = () => {
     toast.dismiss();
-
-
     if (questionAnswered) {
       const currentStepAnswers = stepAnswers[step - 1];
+
       let itemObject;
 
-      const currentItem = sideBarItems.find(item => item.id === step);
+      const currentItem = sideBarItems.find((index) => index === step);
 
-      if (currentItem) {
-        // Set the name of the current step answers using the found sidebar item
+      if(currentItem){
         currentStepAnswers.name = currentItem.name;
 
-        // Construct the itemObject with "name" and "questions" keys
         itemObject = {
           name: currentStepAnswers.name,
           questions: Object.entries(currentStepAnswers).filter(([key]) => key.startsWith('question')).map(([key, value]) => ({ [key]: value })),
         };
       }
-
 
       // Check if all fields in currentStepAnswers are filled
       const allFieldsFilled = Object.values(currentStepAnswers).every(
@@ -246,15 +234,15 @@ const Pillars = () => {
         let existingData = Cookies.get("questionnaireData");
         let data = existingData ? JSON.parse(existingData) : [];
 
-        if (itemObject) {
-          data.push(itemObject);
+
+        if(itemObject) {
+          data.push(currentStepAnswers)
         }
 
         Cookies.set("questionnaireData", JSON.stringify(data));
         if (data.length === 3 && !token) {
           return toggleModal();
         }
-        console.log(data)
 
         setStep((prev) => prev + 1);
         setStepsTick((prev: any) => [...prev, step]);
@@ -282,7 +270,7 @@ const Pillars = () => {
     questionId: string,
     value: any // Value will be the selected option in MCQ
   ) => {
-
+    // Update the state with the selected option for the corresponding step and question
     setQuestionAnswered(true);
     setStepAnswers((prevStepAnswers: any) => ({
       ...prevStepAnswers,
@@ -299,7 +287,7 @@ const Pillars = () => {
     const data = existingData ? JSON.parse(existingData) : [];
 
 
-    const formattedData = data.map(item => {
+    const formattedData = data.map((item: any) => {
       const { name, ...questions } = item;
       return {
         name,
@@ -557,14 +545,14 @@ const Pillars = () => {
                 className={`Chapter-names mt-6 relative after:content-[''] after:absolute after:left-5 after:top-0 after:border-dashed after:border-mediumblue after:h-full after:border after:z-0 ${isActive ? "active" : ""
                   }`}
               >
-                {sideBar.map((item: any,index) => (
+                {sideBarItems.map((item: any, index) => (
                   <div
                     key={index}
-                    className={`flex gap-3 mb-3 chapteritem relative z-10 ${step == item.id ? "" : "items-center"
-                      } ${isActive ? "items-start" : "items-center"}`}
+                    className={`flex gap-3 mb-3 chapteritem relative z-10 ${step === index  ? "" : "items-center"
+                      } ${isActive ? "items-start" : "items-center"}`}  
                   >
                     <div
-                      className={`w-10 min-w-10 h-10 inline-flex items-center justify-center rounded-md ${stepsTick.includes(item.id + 1) || step == item.id + 1
+                      className={`w-10 min-w-10 h-10 inline-flex items-center justify-center rounded-md ${stepsTick.includes(index + 1) || step === index + 1
                         ? "bg-g-success"
                         : "bg-gradient1"
                         }`}
@@ -577,7 +565,7 @@ const Pillars = () => {
                         x="0"
                         y="0"
                         viewBox="0 0 64 64"
-                        className={`w-4 h-4 text-white ${stepsTick.includes(item.id + 1) || step == item.id + 1
+                        className={`w-4 h-4 text-white ${stepsTick.includes(index + 1) || step === index + 1
                           ? ""
                           : "hidden"
                           }`}
@@ -599,20 +587,20 @@ const Pillars = () => {
                         x="0"
                         y="0"
                         viewBox="0 0 512 512.002"
-                        className={`w-4 h-4 text-white ${stepsTick.includes(item.id + 1) || step == item.id + 1
+                        className={`w-4 h-4 text-white ${stepsTick.includes(index + 1) || step === index + 1
                           ? "hidden"
                           : ""
                           }`}
                       >
                         <g transform="matrix(0.98,0,0,0.98,49.27163876531441,5.12004028320311)">
-                          {item.icon}
+                          <PersonIcon />
                         </g>
                       </svg>
                     </div>
                     <div>
                       <p className="font-bold text-md">{item.name}</p>
                       <p
-                        className={`w-full leading-relaxed md:text-base text-sm ${step == item.id ? "" : " h-0 overflow-hidden"
+                        className={`w-full leading-relaxed md:text-base text-sm ${step == index ? "" : " h-0 overflow-hidden"
                           } ${isActive ? "" : "h-0 overflow-hidden"}`}
                       >
                         {item.description}
@@ -682,7 +670,7 @@ const Pillars = () => {
               </div>
               {/* screen 1 */}
               <div
-                className={`chapter-screen1 h-full ${step === sideBarItems[step - 1]?.id ? "screen1" : "hidden"
+                className={`chapter-screen1 h-full ${step === sideBarItems[step - 1]?.id || isActive ? "screen1" : "hidden"
                   } ${isActive ? "" : "hidden"}`}
               >
                 <div className="header-title pt-6 text-center border-s border-white">
@@ -692,7 +680,7 @@ const Pillars = () => {
                 </div>
                 <div className="chapterContent max-w-screen-lg mx-auto pb-12 pt-8">
                   <div className="questions-form">
-                    {dataSideBar?.[step - 1]?.questions?.map(
+                    {sideBarItems?.[step - 1]?.questions?.map(
                       (question: any, index: number) => (
                         <div key={index} className="form-item mb-6">
                           <div className="flex gap-2 items-center justify-between mb-2">
@@ -902,7 +890,7 @@ const Pillars = () => {
                   </div>
                   <div
                     className={`button-start w-full text-right ${isActive ? "" : "hidden"
-                      } ${step == 10 ? "disabled" : ""}`}
+                      } ${step == sideBarItems.length ? "disabled" : ""}`}
                   >
                     <button
                       className="ms-auto flex select-none items-center gap-3 bg-white py-2 px-0 text-center text-md text-black active:shadow-none focus:outline-0"
@@ -962,69 +950,20 @@ const Pillars = () => {
                       Back
                     </button>
                   </div>
-                  <div className="dots-progress flex gap-1">
-                    <span
-                      className={`w-8 h-2 rounded ${isActive ? "bg-gradient1" : "bg-lightblue"
-                        } ${stepsTick.includes(1) || step == 1 ? "" : "bg-lightblue"
-                        }`}
-                    ></span>
-                    <span
-                      className={`w-8 h-2 rounded ${stepsTick.includes(2) || step == 2
-                        ? "bg-gradient1"
-                        : "bg-lightblue"
-                        }`}
-                    ></span>
-                    <span
-                      className={`w-8 h-2 rounded ${stepsTick.includes(3) || step == 3
-                        ? "bg-gradient1"
-                        : "bg-lightblue"
-                        }`}
-                    ></span>
-                    <span
-                      className={`w-8 h-2 rounded ${stepsTick.includes(4) || step == 4
-                        ? "bg-gradient1"
-                        : "bg-lightblue"
-                        }`}
-                    ></span>
-                    <span
-                      className={`w-8 h-2 rounded ${stepsTick.includes(5) || step == 5
-                        ? "bg-gradient1"
-                        : "bg-lightblue"
-                        }`}
-                    ></span>
-                    <span
-                      className={`w-8 h-2 rounded ${stepsTick.includes(6) || step == 6
-                        ? "bg-gradient1"
-                        : "bg-lightblue"
-                        }`}
-                    ></span>
-                    <span
-                      className={`w-8 h-2 rounded ${stepsTick.includes(7) || step == 7
-                        ? "bg-gradient1"
-                        : "bg-lightblue"
-                        }`}
-                    ></span>
-                    <span
-                      className={`w-8 h-2 rounded ${stepsTick.includes(8) || step == 8
-                        ? "bg-gradient1"
-                        : "bg-lightblue"
-                        }`}
-                    ></span>
-                    <span
-                      className={`w-8 h-2 rounded ${stepsTick.includes(9) || step == 9
-                        ? "bg-gradient1"
-                        : "bg-lightblue"
-                        }`}
-                    ></span>
-                    <span
-                      className={`w-8 h-2 rounded ${stepsTick.includes(10) || step == 10
-                        ? "bg-gradient1"
-                        : "bg-lightblue"
-                        }`}
-                    ></span>
-                  </div>
+               
+                  {sideBarItems.map((item: any, index: any) => (
+                    <div
+                      key={index} 
+                      className={`dots-progress flex gap-1 ${step == index ? "bg-gradient" : "bg-lightblue"}`}>   
+                      
+                      <span
+                        className={`w-8 h-2 rounded ${step === index + 1 ? "bg-gradient1" : "bg-lightblue"
+                        } ${stepsTick.includes(index + 1) || step === index + 1 ? "bg-gradient1" : "bg-lightblue"}`}
+                      ></span>
+                    </div>
+                 ))}
                   <div
-                    className={`button-next w-full text-right disabled:disabled ${step == 10 ? "hidden" : ""
+                    className={`button-next w-full text-right disabled:disabled ${step == sideBarItems.length   ? "hidden" : ""
                       } ${isActive ? "" : "disabled"} ${!questionAnswered ? "disabled" : ""
                       }`}
                   >
@@ -1057,7 +996,7 @@ const Pillars = () => {
                     </button>
                   </div>
                   <div
-                    className={`button-submit w-full text-right ${step == 10 ? "submit-final" : "hidden"
+                    className={`button-submit w-full text-right ${step == sideBarItems.length ? "submit-final" : "hidden"
                       }`}
                   >
                     <a href="/dashboard">
@@ -1087,6 +1026,7 @@ const Pillars = () => {
                       </button>
                     </a>
                   </div>
+
                 </div>
               </div>
             </div>
