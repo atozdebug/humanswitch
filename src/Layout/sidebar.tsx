@@ -71,6 +71,11 @@ let sideBarItems = [
     icon: <SettingsIcon />,
     navigateTo: "/settings/profile",
   },
+  {
+    name: "ManageReports",
+    icon: <PeopleAltIcon />,
+    navigateTo: "/manage-reports",
+  },
 ];
 
 let bottomSidebarItems = [
@@ -133,9 +138,8 @@ const SideBar = () => {
 
   return (
     <div
-      className={`max-h-100vh w-320px sidebar-main ${
-        isSidebarOpen ? "menu-open" : "menu-closed"
-      }`}
+      className={`max-h-100vh w-320px sidebar-main ${isSidebarOpen ? "menu-open" : "menu-closed"
+        }`}
     >
       <div className="dark:bg-black dark:text-white bg-white relative h-full overflow-y-auto border-r border-[#E2E4E9] flex justify-between flex-col lft-nav sidebar-innerr">
         <div className="pt-0 pb-4">
@@ -149,9 +153,8 @@ const SideBar = () => {
                 />
               </div>
               <div
-                className={`menu-bar cursor-pointer ${
-                  isSidebarOpen ? "menu-bar-open" : "menu-bar-closed"
-                }`}
+                className={`menu-bar cursor-pointer ${isSidebarOpen ? "menu-bar-open" : "menu-bar-closed"
+                  }`}
                 onClick={toggleSidebar}
               >
                 <svg
@@ -229,11 +232,10 @@ const SideBar = () => {
                 <a
                   key={index}
                   href={`${item.navigateTo}`}
-                  className={`menu-link-a top px-2 hover:bg-bg-clr font-regular rounded-lg hover:text-main-heading text-gray-dark flex items-center gap-2 my-2 relative ${
-                    isActive
-                      ? " text-main-heading px-20px active-linkk-memnu"
-                      : "py-2 mx-20px hover:bg-lightgray "
-                  }`}
+                  className={`menu-link-a top px-2 hover:bg-bg-clr font-regular rounded-lg hover:text-main-heading text-gray-dark flex items-center gap-2 my-2 relative ${isActive
+                    ? " text-main-heading px-20px active-linkk-memnu"
+                    : "py-2 mx-20px hover:bg-lightgray "
+                    }`}
                 >
                   {isActive && (
                     <div className="absolute top-2 -left-4">
@@ -241,14 +243,12 @@ const SideBar = () => {
                     </div>
                   )}
                   <div
-                    className={`flex w-full items-center rounded-lg active-menu-linkk ${
-                      isActive && "bg-lightgray text-main-heading py-2 px-2"
-                    }`}
+                    className={`flex w-full items-center rounded-lg active-menu-linkk ${isActive && "bg-lightgray text-main-heading py-2 px-2"
+                      }`}
                   >
                     <div
-                      className={`px-2 menu-icon ${
-                        isActive && "text-[#375DFB]"
-                      }`}
+                      className={`px-2 menu-icon ${isActive && "text-[#375DFB]"
+                        }`}
                     >
                       {item.icon}
                     </div>
@@ -265,7 +265,7 @@ const SideBar = () => {
             <div
               key={index}
               className="top px-20px py-2 hover:bg-lightgray rounded-lg hover:tex-main-heading flex items-center gap-2 my-2 menu-icon"
-              onClick={item.name === "Log Out" ?  logout : undefined}
+              onClick={item.name === "Log Out" ? logout : undefined}
             >
               {item.icon}
               <div className="menu-item-text">{item.name}</div>

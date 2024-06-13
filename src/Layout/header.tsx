@@ -1,7 +1,7 @@
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 import { useLocation } from "react-router-dom";
 import CreateButton from "../components/Home/createButton";
-import { Dialog, DialogActions, DialogContent } from "@mui/material";
+import { Dialog, DialogActions, DialogContent, Button } from "@mui/material";
 import { useState } from "react";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
@@ -14,6 +14,10 @@ import { Accordion } from "flowbite-react";
 import { Checkbox, Label } from "flowbite-react";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import { createRoles, getRoles } from "../services/slices/dashboard/roles";
+import { handleFinalReport } from "../services/slices/activity/activitySlice";
+
+
+
 
 const headers = [
   {
@@ -78,6 +82,12 @@ const headers = [
     path: "/settings",
     name: "Settings",
     description: "Settings Page",
+  },
+  {
+    path: "/manage-reports",
+    name: "My Reports",
+    buttonName: "Report",
+    description: "Create new reports and generate data to analyze",
   },
 ];
 
@@ -159,7 +169,7 @@ const Header = () => {
 
   const schemas = () => {
     if (title?.buttonName === "Report") {
-      return yupResolver(schemaPlan);
+      // return yupResolver(schemaPlan);
     } else if (title?.buttonName === "Plan") {
       return yupResolver(schemaPlan);
     } else if (title?.buttonName === "Role") {
@@ -203,8 +213,15 @@ const Header = () => {
     setOpen(false);
   };
 
+
+
   const onSubmit = (data: FormData) => {
+    console.log("called1")
     if (title?.buttonName === "Report") {
+      console.log("called")
+      dispatch(handleFinalReport("final"));
+
+
     } else if (title?.buttonName === "Plan") {
       dispatch(
         createPlans({
@@ -237,6 +254,8 @@ const Header = () => {
         .unwrap()
         .then(() => dispatch(getRoles()));
     }
+
+
     reset();
     handleClose();
   };
@@ -306,16 +325,93 @@ const Header = () => {
             </div>
           </div>
           <DialogContent className="!p-5">
-            {title?.buttonName === "Report" && <div>Create New Report</div>}
+            {title?.buttonName === "Report" &&
+              <div>
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-700 ">Report Name</label>
+                  <input
+                    type="text"
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    placeholder="Enter your report name"
+                    {...register("reportName")}
+                  />
+
+                </div>
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-700 ">Templates</label>
+                  <div className="mt-2 space-y-4">
+                    <div className="flex items-center   border rounded shadow-sm p-2 ">
+                      <div className="px-2 menu-icon false ">
+                        <img src="/assets/images/vector1.png" className="border  shadow p-2 border-radius" />
+                      </div>
+
+                      <label htmlFor="template1" className="ml-3 block text-sm font-medium text-black fw-bold ">
+                        Title of the Report Template
+                        <p className="text-xs text-gray-500">A short description of the report goes here</p>
+                      </label>
+
+                      <input
+                        id="template1"
+                        name="template"
+                        type="radio"
+                        className="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500 margin-left "
+                        checked
+                      />
+                    </div>
+                  </div>
+                  <div className="flex items-center border rounded shadow-sm p-2">
+                    <div className="px-2 menu-icon false "><img src="/assets/images/bar-chart.png" className="border  shadow p-2 border-radius" /></div>
+                    <label htmlFor="template2" className="ml-3 block text-sm font-medium text-black">
+                      Title of the Report Template
+                      <p className="text-xs text-gray-500">A short description of the report goes here</p>
+                    </label>
+                    <input
+                      id="template2"
+                      name="template"
+                      type="radio"
+                      className=" h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500 margin-left" checked
+                    />
+                  </div>
+                  <div className="flex items-center border rounded shadow-sm p-2">
+                    <div className="px-2 menu-icon false "><img src="/assets/images/column-line.png" className="border  shadow p-2 border-radius" /></div>
+                    <label htmlFor="template3" className="ml-3 block text-sm font-medium text-black">
+                      Title of the Report Template
+                      <p className="text-xs text-gray-500">A short description of the report goes here</p>
+                    </label>
+                    <input
+                      id="template3"
+                      name="template"
+                      type="radio"
+                      className=" h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500 margin-left" checked
+                    />
+                  </div>
+                  <div className="flex items-center border rounded shadow-sm p-2 ">
+                    <div className="px-2 menu-icon false "><img src="/assets/images/hail-line.png" className="border  shadow p-2 border-radius" /></div>
+                    <label htmlFor="template4" className="ml-3 block text-sm font-medium text-black">
+                      Title of the Report Template
+                      <p className="text-xs text-gray-500">A short description of the report goes here</p>
+                    </label>
+                    <input
+                      id="template4"
+                      name="template"
+                      type="radio"
+                      className=" h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500 margin-left" checked
+
+                    />
+                  </div>
+                </div>
+              </div>
+
+            }
             {title?.buttonName === "Plan" && (
               <div>
+
                 <div>
                   <label className="mb-1 block text-sm">Plan Name</label>
                   <div>
                     <input
-                      className={`appearance-none border border-lightgray6 rounded-[10px] w-full py-2.5 px-3 text-darkgray3 leading-tight focus:outline-none focus:shadow-outline ${
-                        errors.planName ? "border-[#F04438]" : ""
-                      }`}
+                      className={`appearance-none border border-lightgray6 rounded-[10px] w-full py-2.5 px-3 text-darkgray3 leading-tight focus:outline-none focus:shadow-outline ${errors.planName ? "border-[#F04438]" : ""
+                        }`}
                       id="planName"
                       type="text"
                       placeholder="Enter your Plan"
@@ -332,9 +428,8 @@ const Header = () => {
                   <label className="mb-1 block text-sm">Price</label>
                   <div>
                     <input
-                      className={`border-lightgray6 appearance-none border rounded-[10px] w-full py-2.5 px-3 text-darkgray3 leading-tight focus:outline-none focus:shadow-outline ${
-                        errors.price ? "border-[#F04438]" : ""
-                      }`}
+                      className={`border-lightgray6 appearance-none border rounded-[10px] w-full py-2.5 px-3 text-darkgray3 leading-tight focus:outline-none focus:shadow-outline ${errors.price ? "border-[#F04438]" : ""
+                        }`}
                       id="price"
                       type="number"
                       placeholder="Enter your Plan"
@@ -401,9 +496,8 @@ const Header = () => {
                   <label className="mb-1 block text-sm">Employees</label>
                   <div>
                     <input
-                      className={`border-lightgray6 appearance-none border rounded-[10px] w-full py-2.5 px-3 text-darkgray3 leading-tight focus:outline-none focus:shadow-outline ${
-                        errors.employees ? "border-[#F04438]" : ""
-                      }`}
+                      className={`border-lightgray6 appearance-none border rounded-[10px] w-full py-2.5 px-3 text-darkgray3 leading-tight focus:outline-none focus:shadow-outline ${errors.employees ? "border-[#F04438]" : ""
+                        }`}
                       id="employees"
                       type="number"
                       placeholder="Enter your Plan"
@@ -697,7 +791,7 @@ const Header = () => {
           </DialogActions>
         </form>
       </Dialog>
-    </div>
+    </div >
   );
 };
 

@@ -2,12 +2,12 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const startLoadingActivity: any = createAsyncThunk(
   "activity/startLoadingActivity",
-  async () => {}
+  async () => { }
 );
 
 export const stopLoadingActivity: any = createAsyncThunk(
   "activity/stopLoadingActivity",
-  async () => {}
+  async () => { }
 );
 
 export const collapsedSideBar: any = createAsyncThunk(
@@ -31,6 +31,15 @@ export const handleLogout: any = createAsyncThunk(
   }
 );
 
+export const handleFinalReport: any = createAsyncThunk(
+  "activity/handleFinalReport",
+  async (data) => {
+    return data;
+  }
+)
+
+
+
 export const activitySlice = createSlice({
   name: "activity",
   initialState: {
@@ -38,6 +47,7 @@ export const activitySlice = createSlice({
     collapsedSidebar: false,
     isDark: false,
     logout: false,
+    finalreport: null,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -91,6 +101,16 @@ export const activitySlice = createSlice({
         state.loading = false;
       })
       .addCase(handleLogout.rejected, (state, _action) => {
+        state.loading = false;
+      })
+      .addCase(handleFinalReport.pending, (state, _action) => {
+        state.loading = true;
+      })
+      .addCase(handleFinalReport.fulfilled, (state, action) => {
+        state.finalreport = action.payload;
+        state.loading = false
+      })
+      .addCase(handleFinalReport.rejected, (state, _action) => {
         state.loading = false;
       });
   },

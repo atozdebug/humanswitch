@@ -45,6 +45,54 @@
   margin: 0 auto;
   padding: 70px 0;
 } */
+
+
+
+/* new */
+.max-h-100vh.w-320px.sidebar-main.menu-closed {
+  max-height: 100%!important;
+}
+.relative.mt-5 {
+  margin-top: 40%!important;
+}
+ input#template1,input#template2,input#template3,input#template4 {
+
+  margin-left: 40%;
+} 
+.menu-icon .max-width{
+width: 50%;
+padding-inline: auto;
+display: block;
+}
+.min-h-165px{
+  min-height:230px;
+}
+
+.absolute.mt-8.w-48.bg-white.border.border-gray-200.rounded.shadow-md {
+  bottom: -40%;
+  right: -45%;
+  z-index: 1;
+  border-radius: 16px;
+}
+/* .flex.items-center.border.rounded.shadow-sm.p-2:active {
+  border-color: #375DFB;
+} */
+.flex.items-center img.border.shadow.p-2.border-radius {
+  max-width: 50%;
+}
+.flex.items-center.border.rounded.shadow-sm.p-2 {
+  margin-top: 10px;
+  border-radius: 12px;
+}
+.flex.gap-2.items-end.justify-between.pt-4 {
+  padding: 20px 10px;
+}
+.color{
+  color:#375DFB;
+}
+.border-radius {
+  border-radius: 50%;
+}
 .chatbox-page {
   height: calc(100vh - 191px);
 }
@@ -67,6 +115,9 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 } */
 
+.flex.gap-2.items-end.justify-between.pt-4 {
+  background-color: #EBEDFF;
+}
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -121,6 +172,11 @@ hr {
 .focus input:focus {
   box-shadow: none !important;
 }
+
+
+
+
+
 @media only screen and (max-width: 820px) {
   .mob .grid-cols-3 {
     grid-template-columns: repeat(1, minmax(0, 1fr));
@@ -164,6 +220,8 @@ hr {
   /* justify-content: space-between; */
   align-items: center;
 }
+
+
 .fa-moon {
   color: #f1c40f;
 }

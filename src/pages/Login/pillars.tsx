@@ -60,6 +60,7 @@ const sideBarItems = [
   {
     id: 7,
     name: "Partners-Suppliers",
+
     description:
       "Defining a sharp vision that embraces both business success and social responsibility.",
     icon: <PersonIcon />,
@@ -293,6 +294,7 @@ const Pillars = () => {
   const handleSubmit = async () => {
 
     const existingData = Cookies.get("questionnaireData");
+    console.log(existingData)
     const data = existingData ? JSON.parse(existingData) : [];
 
 

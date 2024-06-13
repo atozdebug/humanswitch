@@ -13,6 +13,8 @@ import Chatbot from "./pages/DashBoard/chatbot";
 import Pillars from "./pages/Login/pillars";
 import Dashboard from "./pages/DashBoard/dashboard";
 import MyReports from "./pages/DashBoard/myReports";
+import ManageReports from "./pages/DashBoard/ManageReports";
+
 import Integration from "./pages/DashBoard/integration";
 import Users from "./pages/DashBoard/users";
 import { Toaster } from "react-hot-toast";
@@ -159,6 +161,14 @@ const App = () => {
                 element={
                   <RouteGuard>
                     <KnowledgeBase />
+                  </RouteGuard>
+                }
+              />
+              <Route
+                path="/manage-reports"
+                element={
+                  <RouteGuard>
+                    <ManageReports />
                   </RouteGuard>
                 }
               />

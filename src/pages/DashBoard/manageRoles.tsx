@@ -70,6 +70,22 @@ const ManageRoles = () => {
   const data: any = useSelector((state: any) => state.role?.getData) || [];
   const dispatch: any = useDispatch();
 
+  const [activeRolesCount, setActiveRolesCount] = useState(0); //For Active Roles
+  const [inactiveRolesCount, setInactiveRolesCount] = useState(0); //For Inactive Roles
+
+  const [datas, setData] = useState({ active_roles: [] });
+
+  useEffect(() => {
+    if (data?.active_roles) {
+      setActiveRolesCount(data.active_roles.length);
+    }
+    if (data?.inactive_roles) {
+      console.log(data.inactive_roles.length)
+      setInactiveRolesCount(data.inactive_roles.length);
+    }
+  }, [data]);
+
+
   useEffect(() => {
     dispatch(getRoles());
   }, []);
@@ -149,6 +165,18 @@ const ManageRoles = () => {
       });
   };
 
+  const handleAddRole = (newRole) => {
+    // Update the data with the new role
+    const updatedActiveRoles = [...data.active_roles, newRole];
+    setData({ ...data, active_roles: updatedActiveRoles });
+
+    // Update the active roles count
+    setActiveRolesCount(updatedActiveRoles.length);
+  };
+
+
+
+
   const onSubmit = (data: FormData) => {
     dispatch(
       updateRoles({
@@ -171,6 +199,15 @@ const ManageRoles = () => {
         setOpen(false);
         dispatch(getRoles());
         reset();
+        if (data.isActiveRole) {
+          const newRole = {
+            id: selectedRole?.id, // Use the proper ID
+            name: data.roleName,
+            active: true, // Assuming the role is always active when submitted
+            // Add other properties as needed
+          };
+          handleAddRole(newRole);
+        }
       });
   };
 
@@ -181,7 +218,8 @@ const ManageRoles = () => {
         style="default"
         className="bg-transparent border-0 tabs-cs"
       >
-        <Tabs.Item active title="ACTIVE (35)">
+        <Tabs.Item active title={`ACTIVE (${activeRolesCount})`}>
+
           <div className="bg-white py-5 rounded-[20px] px-7">
             <div className="overflow-x-auto min-h-50vh">
               <Table className="relative z-10">
@@ -227,6 +265,10 @@ const ManageRoles = () => {
                         <a
                           href="#"
                           className="font-medium text-mediumblue underline"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleEdit(item);
+                          }}
                         >
                           View/Modify
                         </a>
@@ -270,7 +312,7 @@ const ManageRoles = () => {
             </div>
           </div>
         </Tabs.Item>
-        <Tabs.Item title="INACTIVE">
+        <Tabs.Item title={`INACTIVE (${inactiveRolesCount})`}>
           <div className="bg-white py-5 rounded-[20px] px-7">
             <div className="overflow-x-auto min-h-50vh">
               <Table className="relative z-10">
@@ -316,6 +358,10 @@ const ManageRoles = () => {
                         <a
                           href="#"
                           className="font-medium text-mediumblue underline"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleEdit(item);
+                          }}
                         >
                           View/Modify
                         </a>
