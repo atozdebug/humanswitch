@@ -226,7 +226,7 @@ const MyReports = () => {
     };
 
     const nextId = findNextId(questions);
-   
+
 
     const newQuestion = {
       id: nextId,
@@ -239,12 +239,12 @@ const MyReports = () => {
           {
             id: 0,
             name: `Enter Option Value`,
-         
+
           },
           {
             id: 1,
             name: `Enter Option Value`,
-           
+
           },
         ],
       }),
@@ -272,7 +272,7 @@ const MyReports = () => {
     setSaveVisible(true);
 
   };
-  
+
 
   const handleAddOption = (questionId: number, options: any) => {
     const findNextId = (options: any) => {
@@ -286,13 +286,13 @@ const MyReports = () => {
 
     const nextId = findNextId(options);
 
-    
+
 
     const newOption = {
       id: nextId,
       name: `Enter Option Value`,
     };
-    
+
 
     // Add the new option to the specific question's options array
     setQuestions((prevQuestions) => {
@@ -466,11 +466,11 @@ const MyReports = () => {
       if (question.type === 'Multiple Choice') {
         const options = question.options;
 
-          const duplicateOptions = options.filter((option: any, optionIndex: any) =>
-            options.findIndex((o: any, idx: any) => idx !== optionIndex && o.name.toLowerCase() === option.name.toLowerCase()) !== -1
-          );
-        
-  
+        const duplicateOptions = options.filter((option: any, optionIndex: any) =>
+          options.findIndex((o: any, idx: any) => idx !== optionIndex && o.name.toLowerCase() === option.name.toLowerCase()) !== -1
+        );
+
+
         if (duplicateOptions.length > 0) {
           setDuplicateOptions((prevOptions) => ({
             ...prevOptions,
@@ -480,7 +480,7 @@ const MyReports = () => {
         }
 
       }
-      
+
       return false;
     });
 
@@ -496,18 +496,18 @@ const MyReports = () => {
       if (question.type === 'Multiple Choice') {
         const options = question.options;
 
-        const emptyValue = options.some((option: any) => 
-          option.name.trim() === '' 
+        const emptyValue = options.some((option: any) =>
+          option.name.trim() === ''
         )
 
-        if(emptyValue) {
+        if (emptyValue) {
           setEmptyOption((prevOptions) => ({
             ...prevOptions,
             [question.id]: emptyValue
           }));
           return true;
         }
-      } 
+      }
       return false;
     });
 
@@ -564,14 +564,14 @@ const MyReports = () => {
             <button className="bg-white border-lightgray3 text-gray-dark border rounded-lg px-6 max-w-172px w-full py-2 text-nowrap">
               Save Draft
             </button>
-           <button
-             onClick={handlePublish}
+            <button
+              onClick={handlePublish}
               disabled={saveVisible === true}
               className="bg-darkblue2 border-darkblue2 text-white border rounded-lg px-6 max-w-172px py-2 w-full"
             >
               Publish
             </button>
-            
+
           </div>
         </div>
       </div>
@@ -714,7 +714,6 @@ const MyReports = () => {
                         </div>
                       )}
                       {question.type === "Multiple Choice" && (
-
                         <div className="mt-2  ml-[35px]">
                           <div className="flex">
                             <div className="mt-2 w-96">
@@ -745,10 +744,10 @@ const MyReports = () => {
                                           e.target.value,
                                           question.id,
                                           option.id,
-                                         
+
                                         )
                                       }
-                                      
+
                                     />
 
                                   </div>

@@ -216,7 +216,7 @@ const Pillars = () => {
 
       const currentItem = sideBarItems.find((index) => index === step);
 
-      if(currentItem){
+      if (currentItem) {
         currentStepAnswers.name = currentItem.name;
 
         itemObject = {
@@ -235,7 +235,7 @@ const Pillars = () => {
         let data = existingData ? JSON.parse(existingData) : [];
 
 
-        if(itemObject) {
+        if (itemObject) {
           data.push(currentStepAnswers)
         }
 
@@ -284,6 +284,7 @@ const Pillars = () => {
   const handleSubmit = async () => {
 
     const existingData = Cookies.get("questionnaireData");
+    console.log(existingData)
     const data = existingData ? JSON.parse(existingData) : [];
 
 
@@ -548,8 +549,8 @@ const Pillars = () => {
                 {sideBarItems.map((item: any, index) => (
                   <div
                     key={index}
-                    className={`flex gap-3 mb-3 chapteritem relative z-10 ${step === index  ? "" : "items-center"
-                      } ${isActive ? "items-start" : "items-center"}`}  
+                    className={`flex gap-3 mb-3 chapteritem relative z-10 ${step === index ? "" : "items-center"
+                      } ${isActive ? "items-start" : "items-center"}`}
                   >
                     <div
                       className={`w-10 min-w-10 h-10 inline-flex items-center justify-center rounded-md ${stepsTick.includes(index + 1) || step === index + 1
@@ -950,20 +951,20 @@ const Pillars = () => {
                       Back
                     </button>
                   </div>
-               
+
                   {sideBarItems.map((item: any, index: any) => (
                     <div
-                      key={index} 
-                      className={`dots-progress flex gap-1 ${step == index ? "bg-gradient" : "bg-lightblue"}`}>   
-                      
+                      key={index}
+                      className={`dots-progress flex gap-1 ${step == index ? "bg-gradient" : "bg-lightblue"}`}>
+
                       <span
                         className={`w-8 h-2 rounded ${step === index + 1 ? "bg-gradient1" : "bg-lightblue"
-                        } ${stepsTick.includes(index + 1) || step === index + 1 ? "bg-gradient1" : "bg-lightblue"}`}
+                          } ${stepsTick.includes(index + 1) || step === index + 1 ? "bg-gradient1" : "bg-lightblue"}`}
                       ></span>
                     </div>
-                 ))}
+                  ))}
                   <div
-                    className={`button-next w-full text-right disabled:disabled ${step == sideBarItems.length   ? "hidden" : ""
+                    className={`button-next w-full text-right disabled:disabled ${step == sideBarItems.length ? "hidden" : ""
                       } ${isActive ? "" : "disabled"} ${!questionAnswered ? "disabled" : ""
                       }`}
                   >
