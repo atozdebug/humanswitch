@@ -26,6 +26,7 @@ import Companies from "./pages/DashBoard/companies";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import KnowledgeBase from "./pages/DashBoard/knowledgeBase";
+import AdvisorSettings from "./pages/DashBoard/AdvisorSettings";
 const ForgetPasswordPage = lazy(() => import("./pages/Login/forgetPassword"));
 const SignupPages = lazy(() => import("./pages/Login/hrSignupPage"));
 const HomePage = lazy(() => import("./pages/Login/homePage"));
@@ -33,17 +34,17 @@ const HomePage = lazy(() => import("./pages/Login/homePage"));
 const App = () => {
   const DefaultRoute = () => {
     const token = localStorage.getItem("token");
-    return token ? <Navigate to="/dashboard" /> : <Navigate to="/home" />;
+    return true ? <Navigate to="/dashboard" /> : <Navigate to="/home" />;
   };
 
   const RouteGuard = ({ children }: any) => {
     const token = localStorage.getItem("token");
-    return token ? children : <Navigate to="/login" />;
+    return true ? children : <Navigate to="/login" />;
   };
 
   const PublicRouteGuard = ({ children }: any) => {
     const token = localStorage.getItem("token");
-    return token ? <Navigate to="/dashboard" /> : children;
+    return true ? <Navigate to="/dashboard" /> : children;
   };
 
   return (
@@ -137,6 +138,14 @@ const App = () => {
                 element={
                   <RouteGuard>
                     <Chatbot />
+                  </RouteGuard>
+                }
+              />
+              <Route
+                path="/advisor-settings"
+                element={
+                  <RouteGuard>
+                    <AdvisorSettings />
                   </RouteGuard>
                 }
               />

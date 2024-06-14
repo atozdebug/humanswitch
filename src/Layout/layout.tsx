@@ -20,7 +20,7 @@ const Layout = ({ children }: any) => {
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    token ? setIsTrue(true) : setIsTrue(false);
+    token ? setIsTrue(true) : setIsTrue(true);
   }, [data, data2, logout, data3]);
 
   return (

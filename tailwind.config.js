@@ -48,6 +48,7 @@ export default {
         lightgray5: "#F5F7FA",
         lightgray6: "#E1E4EA",
         lightgray7: "#FBFAFC",
+        lightgray8: "#99A0AE",
         mediumgray2: "#B7C0D0",
         red2: "#D74B81",
         "slate-300": "#E2E4E9",

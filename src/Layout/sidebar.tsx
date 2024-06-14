@@ -8,7 +8,7 @@ import HeadsetMicIcon from "@mui/icons-material/HeadsetMic";
 import NightsStayIcon from "@mui/icons-material/NightsStay";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import VerifiedIcon from "@mui/icons-material/Verified";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -34,7 +34,7 @@ let sideBarItems = [
   {
     name: "AI Advisor Settings",
     icon: <FaceRetouchingNaturalIcon />,
-    navigateTo: "/chatbot",
+    navigateTo: "/advisor-settings",
   },
   {
     name: "Manage Plans",
@@ -138,8 +138,9 @@ const SideBar = () => {
 
   return (
     <div
-      className={`max-h-100vh w-320px sidebar-main ${isSidebarOpen ? "menu-open" : "menu-closed"
-        }`}
+      className={`max-h-100vh w-320px sidebar-main ${
+        isSidebarOpen ? "menu-open" : "menu-closed"
+      }`}
     >
       <div className="dark:bg-black dark:text-white bg-white relative h-full overflow-y-auto border-r border-[#E2E4E9] flex justify-between flex-col lft-nav sidebar-innerr">
         <div className="pt-0 pb-4">
@@ -153,8 +154,9 @@ const SideBar = () => {
                 />
               </div>
               <div
-                className={`menu-bar cursor-pointer ${isSidebarOpen ? "menu-bar-open" : "menu-bar-closed"
-                  }`}
+                className={`menu-bar cursor-pointer ${
+                  isSidebarOpen ? "menu-bar-open" : "menu-bar-closed"
+                }`}
                 onClick={toggleSidebar}
               >
                 <svg
@@ -229,13 +231,14 @@ const SideBar = () => {
 
               const isActive = basePathMain === basePath;
               return (
-                <a
+                <Link
                   key={index}
-                  href={`${item.navigateTo}`}
-                  className={`menu-link-a top px-2 hover:bg-bg-clr font-regular rounded-lg hover:text-main-heading text-gray-dark flex items-center gap-2 my-2 relative ${isActive
-                    ? " text-main-heading px-20px active-linkk-memnu"
-                    : "py-2 mx-20px hover:bg-lightgray "
-                    }`}
+                  to={`${item.navigateTo}`}
+                  className={`menu-link-a top px-2 hover:bg-bg-clr font-regular rounded-lg hover:text-main-heading text-gray-dark flex items-center gap-2 my-2 relative ${
+                    isActive
+                      ? " text-main-heading px-20px active-linkk-memnu"
+                      : "py-2 mx-20px hover:bg-lightgray "
+                  }`}
                 >
                   {isActive && (
                     <div className="absolute top-2 -left-4">
@@ -243,18 +246,20 @@ const SideBar = () => {
                     </div>
                   )}
                   <div
-                    className={`flex w-full items-center rounded-lg active-menu-linkk ${isActive && "bg-lightgray text-main-heading py-2 px-2"
-                      }`}
+                    className={`flex w-full items-center rounded-lg active-menu-linkk ${
+                      isActive && "bg-lightgray text-main-heading py-2 px-2"
+                    }`}
                   >
                     <div
-                      className={`px-2 menu-icon ${isActive && "text-[#375DFB]"
-                        }`}
+                      className={`px-2 menu-icon ${
+                        isActive && "text-[#375DFB]"
+                      }`}
                     >
                       {item.icon}
                     </div>
                     <div className="menu-item-text">{item.name}</div>
                   </div>
-                </a>
+                </Link>
               );
             })}
           </div>
