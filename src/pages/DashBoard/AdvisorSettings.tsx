@@ -1,32 +1,140 @@
-import React, { useState } from "react";
-import { Form } from "react-hook-form";
+import React, { useEffect, useRef, useState } from "react";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import AddKnowledgeBaseModal from "../../components/AdvisiorSetting/AddKnowledgeBaseModal";
+import { IoMdAdd } from "react-icons/io";
+import Dropzone from "react-dropzone";
+import { HiUserCircle } from "react-icons/hi2";
+import { MdDelete } from "react-icons/md";
 
 function AdvisorSettings() {
-  const [botTitle, setBotTitle] = useState<string>("");
-
-  const [welcomeMessage, setwelcomeMessage] = useState<string>("");
+  const initailValues = {
+    botTitle: "",
+    welcomeMessage: "",
+    greetingMsg: "",
+    callToAction: "",
+    botEngine: "",
+    questions: [],
+    links: [],
+  };
+  const [formData, setFormData] = useState(initailValues);
   console.log(
-    "🚀 ~ file: AdvisorSettings.tsx:8 ~ AdvisorSettings ~ welcomeMessage:",
-    welcomeMessage
+    "🚀 ~ file: AdvisorSettings.tsx:20 ~ AdvisorSettings ~ formData:",
+    formData
   );
-  const [greeting, setgreeting] = useState<string>("");
 
   const [action, setaction] = useState<string>("");
+  const [questions, setquestions] = useState<Question[]>([]);
   const [question, setquestion] = useState<string>("");
+  const [idCount, setIdCount] = useState(1);
+  const [profileImage, setProfileImage] = useState("");
+  const [isFocusInput, setIsFocusInput] = useState(false);
+  const inputRef = useRef(null);
+  console.log(
+    "🚀 ~ file: AdvisorSettings.tsx:31 ~ AdvisorSettings ~ isFocusInput:",
+    isFocusInput
+  );
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  interface Question {
+    id: number;
+    question: string;
+  }
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
   }
+
+  const createNewQuestionFields = (id: number) => {
+    // @ts-ignore
+    setquestions([...questions, { id: id, question: question }]);
+    setIdCount(idCount + 1);
+    setquestion("");
+
+    setIsFocusInput(true);
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+  console.log(
+    "🚀 ~ file: AdvisorSettings.tsx:31 ~ createNewQuestionFields ~ questions:",
+    questions
+  );
+
+  function handleQuestionInput(e: React.ChangeEvent<HTMLInputElement>) {
+    // @ts-ignore
+
+    const qsn = [...questions];
+
+    setquestions(qsn);
+
+    setquestion(e.target.value);
+  }
+
+  function handleEditInput(e: React.ChangeEvent<HTMLInputElement>, id: number) {
+    const updatedQuestions: Question[] = questions.map((qsn) => {
+      if (qsn.id === id) {
+        return { ...qsn, question: e.target.value };
+      }
+      return qsn;
+    });
+    setquestions(updatedQuestions);
+  }
+
+  console.log(
+    "🚀 ~ file: AdvisorSettings.tsx:40 ~ handleQuestionInput ~ questions:",
+    question
+  );
+
+  function handleDeleteQuestion(id: number) {
+    const filteredQsn = questions.filter((qns) => qns.id !== id);
+    setquestions(filteredQsn);
+  }
+
   return (
     <div className="p-6 bg-lightgray  w-full ">
       <form className="rounded-[20px] bg-white w-full p-4 flex flex-col gap-4">
+        <div className="flex  gap-1 ">
+          <HiUserCircle fill="#dee0e5" className="!h-16 !w-16" />
+          <div className="flex flex-col gap-1 ">
+            <h3 className="text-base font-medium text-main-heading">
+              Upload Image
+            </h3>
+            <span className="text-sm font-normal text-gray-dark">
+              Min 400x400px, PNG or JPEG
+            </span>
+            <Dropzone
+              onDrop={(acceptedFiles) => {
+                const file = acceptedFiles[0];
+                console.log(
+                  "🚀 ~ file: AddKnowledgeBaseModal.tsx:105 ~ file:",
+                  file
+                );
+                const imageFileUrl = URL.createObjectURL(file);
+                setProfileImage(imageFileUrl);
+                // setImageURL(file);
+                // setModalOpen(false);
+              }}
+            >
+              {({ getRootProps, getInputProps }) => (
+                <div {...getRootProps()} className="">
+                  <input {...getInputProps()} />
+
+                  <button
+                    className="border px-3 py-[2px] text-sm font-medium text-gray-dark rounded-md"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    Upload{" "}
+                  </button>
+                </div>
+              )}
+            </Dropzone>
+          </div>
+        </div>
+        <p>{profileImage}</p>
+
         <div>
           <label
-            for="botTitle"
+            htmlFor="botTitle"
             className=" text-sm  text-darkgray3 font-medium"
           >
             Bot Title
@@ -37,15 +145,20 @@ function AdvisorSettings() {
             type="text"
             name="botTitle"
             id="botTitle"
-            value={botTitle}
-            onChange={(e) => setBotTitle(e.target.value)}
+            value={formData.botTitle}
+            onChange={(e) =>
+              setFormData({ ...formData, botTitle: e.target.value })
+            }
             className="w-full border-[#eceef2] rounded-xl outline-none resize-none mt-2 text-sm font-normal"
             placeholder="Enter here..."
             required
           />
         </div>
         <div>
-          <label for="welcome" className=" text-sm  text-darkgray3 font-medium">
+          <label
+            htmlFor="welcome"
+            className=" text-sm  text-darkgray3 font-medium"
+          >
             Welcome Message
           </label>
           <br />
@@ -53,16 +166,18 @@ function AdvisorSettings() {
           <textarea
             name="welcome"
             id="welcome"
-            value={welcomeMessage}
-            onChange={(e) => setwelcomeMessage(e.target.value)}
-            className="w-full border-[#eceef2] rounded-xl outline-none resize-none  h-24 mt-2 text-sm"
+            value={formData.welcomeMessage}
+            onChange={(e) =>
+              setFormData({ ...formData, welcomeMessage: e.target.value })
+            }
+            className="w-full border-[#eceef2] rounded-xl outline-none   h-24 mt-2 text-sm"
             placeholder="Enter here..."
             required
           />
         </div>
         <div>
           <label
-            for="greeting"
+            htmlFor="greeting"
             className=" text-sm  text-darkgray3 font-medium"
           >
             Greeting Messages
@@ -74,14 +189,16 @@ function AdvisorSettings() {
             id="greeting"
             className="w-full border-[#eceef2] rounded-xl outline-none resize-none  h-24 mt-2 text-sm"
             placeholder="Enter here..."
-            value={greeting}
-            onChange={(e) => setgreeting(e.target.value)}
+            value={formData.greetingMsg}
+            onChange={(e) =>
+              setFormData({ ...formData, greetingMsg: e.target.value })
+            }
             required
           />
         </div>
         <div>
           <label
-            for="botEngine"
+            htmlFor="botEngine"
             className=" text-sm  text-darkgray3 font-medium"
           >
             Bot Engine
@@ -92,7 +209,7 @@ function AdvisorSettings() {
             // type="text"
             id="botEngine"
             name="botEngine"
-            className="w-full border-[#eceef2] rounded-xl outline-none resize-none mt-2 text-sm"
+            className="w-full border-[#eceef2] rounded-xl outline-none resize-none mt-2 cursor-pointer text-sm"
             // placeholder="Enter here..." required
           >
             <option className="border-none outline-none" value="chatGpt">
@@ -104,7 +221,10 @@ function AdvisorSettings() {
           </select>
         </div>
         <div>
-          <label for="action" className=" text-sm  text-darkgray3 font-medium">
+          <label
+            htmlFor="action"
+            className=" text-sm  text-darkgray3 font-medium"
+          >
             Call to Action
           </label>
           <br />
@@ -115,8 +235,10 @@ function AdvisorSettings() {
             name="action"
             className="w-full border-[#eceef2] rounded-xl outline-none resize-none mt-2 text-sm"
             placeholder="Enter here..."
-            value={action}
-            onChange={(e) => setaction(e.target.value)}
+            value={formData.callToAction}
+            onChange={(e) =>
+              setFormData({ ...formData, callToAction: e.target.value })
+            }
             required
           />
         </div>
@@ -148,23 +270,68 @@ function AdvisorSettings() {
 
         <div>
           <label
-            for="questions"
+            htmlFor="questions"
             className=" text-sm  text-darkgray3 font-medium"
           >
             Quick Questions
           </label>
           <br />
 
-          <input
-            type="text"
-            id="questions"
-            name="questions"
-            className="w-full border-[#eceef2] rounded-xl outline-none resize-none mt-2 text-sm"
-            placeholder="Enter here..."
-            value={question}
-            onChange={(e) => setquestion(e.target.value)}
-            required
-          />
+          <div className="flex items-center justify-between gap-2 mt-2">
+            <input
+              type="text"
+              id="questions"
+              name="questions"
+              className={`"w-full border-[#eceef2] rounded-xl outline-none  w-full  text-sm" ${
+                isFocusInput ? "ring-darkblue2" : null
+              }`}
+              placeholder="Enter here..."
+              ref={inputRef}
+              value={question}
+              onChange={(e) => handleQuestionInput(e)}
+              required
+            />
+            {question !== "" && (
+              <span
+                className="border rounded-lg p-2 flex items-center cursor-pointer bg-darkblue2 text-white "
+                onClick={() => {
+                  createNewQuestionFields(idCount);
+
+                  setIsFocusInput(true);
+                }}
+              >
+                <IoMdAdd />
+              </span>
+            )}
+          </div>
+
+          {questions?.map((qsn) => (
+            <div
+              className="flex items-center justify-between gap-2 mt-2"
+              key={qsn.id}
+            >
+              <input
+                type="text"
+                id="questions"
+                name="questions"
+                className="w-full border-[#eceef2] rounded-xl outline-none resize-none  text-sm"
+                placeholder="Enter here..."
+                value={qsn?.question}
+                onChange={(e) => handleEditInput(e, qsn.id)}
+                required
+              />
+              {questions.length > 0 && (
+                <span
+                  className="border rounded-lg p-2 flex items-center cursor-pointer bg-darkblue2 text-white "
+                  onClick={() => handleDeleteQuestion(qsn.id)}
+                >
+                  {/* <IoMdAdd onClick={createNewQuestionFields} />
+                   */}
+                  <MdDelete />
+                </span>
+              )}
+            </div>
+          ))}
         </div>
         <div className="flex gap-3">
           {" "}
@@ -174,7 +341,7 @@ function AdvisorSettings() {
           <button
             className="px-12 text-sm font-medium py-1 bg-darkblue2 text-white rounded-lg"
             type="submit"
-            onClick={handleSubmit}
+            onClick={() => handleSubmit}
           >
             Save
           </button>{" "}

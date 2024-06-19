@@ -27,6 +27,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import KnowledgeBase from "./pages/DashBoard/knowledgeBase";
 import AdvisorSettings from "./pages/DashBoard/AdvisorSettings";
+import NewDocument from "./components/KnowledgeBase/NewDocument";
 const ForgetPasswordPage = lazy(() => import("./pages/Login/forgetPassword"));
 const SignupPages = lazy(() => import("./pages/Login/hrSignupPage"));
 const HomePage = lazy(() => import("./pages/Login/homePage"));
@@ -170,6 +171,14 @@ const App = () => {
                 element={
                   <RouteGuard>
                     <KnowledgeBase />
+                  </RouteGuard>
+                }
+              />
+              <Route
+                path="/knowledge-base/new-document"
+                element={
+                  <RouteGuard>
+                    <NewDocument />
                   </RouteGuard>
                 }
               />

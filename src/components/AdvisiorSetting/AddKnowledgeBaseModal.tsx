@@ -1,18 +1,24 @@
-import * as React from "react";
+import { useState } from "react";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import CloseIcon from "@mui/icons-material/Close";
 import SettingsIcon from "@mui/icons-material/Settings";
+import Dropzone from "react-dropzone";
+import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
 
-import Typography from "@mui/material/Typography";
 import UrlandFileCard from "./UrlandFileCard";
+import UploadCard from "./UploadCard";
+import LinkUpload from "./LinkUpload";
 interface AddKnowledgeBaseModalProps {
   isModalOpen: boolean;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
-
+interface Image {
+  url: string;
+  name: string;
+}
 const AddKnowledgeBaseModal: React.FC<AddKnowledgeBaseModalProps> = ({
   isModalOpen,
   setIsModalOpen,
@@ -30,12 +36,18 @@ const AddKnowledgeBaseModal: React.FC<AddKnowledgeBaseModalProps> = ({
     color: "black",
     // p: 2,
   };
+  const [selectedType, setSelectedType] = useState<string>("URL");
+  const [imageUrl, setImageURL] = useState([]);
+  console.log("🚀 ~ file: AddKnowledgeBaseModal.tsx:38 ~ imageUrl:", imageUrl);
+  const [links, setLinks] = useState([]);
+  console.log("🚀 ~ file: AddKnowledgeBaseModal.tsx:39 ~ links:", links);
+  const [images, setImages] = useState<Image[]>([]);
 
   function handleclose() {
     setIsModalOpen(false);
     return isModalOpen;
   }
-
+ 
   return (
     <div>
       <Modal
@@ -82,21 +94,90 @@ const AddKnowledgeBaseModal: React.FC<AddKnowledgeBaseModalProps> = ({
                 <UrlandFileCard
                   type={"URL"}
                   subHeading={"Add a url for the content"}
+                  setSelectedType={setSelectedType}
+                  selectedType={selectedType}
                 />
                 <UrlandFileCard
                   type={"File"}
                   subHeading={"Upload .pdf files."}
+                  setSelectedType={setSelectedType}
+                  selectedType={selectedType}
                 />
               </div>
-              <div></div>
-              <div className="flex justify-between gap-4 ">
-                <button className="border py-2 text-sm font-medium w-full rounded-lg">
-                  Discard
-                </button>
-                <button className=" w-full text-sm font-medium py-1 bg-darkblue2 text-white rounded-lg">
-                  Save and Proceed
-                </button>
+              <div>
+                {selectedType === "File" ? (
+                  images.length === 0 ? (
+                    <Dropzone
+                      onDrop={(acceptedFiles) => {
+                        // let imageFileUrl = [];
+                        // const file = acceptedFiles[0];
+                        acceptedFiles.map((element) => {
+                          console.log(
+                            "🚀 ~ file: AddKnowledgeBaseModal.tsx:111 ~ acceptedFiles.forEach ~ element:",
+                            element.name
+                          );
+                          // imageFileUrl.push(URL.createObjectURL(element));
+
+                          setImages((prevImages) => [
+                            ...prevImages,
+                            {
+                              url: URL.createObjectURL(element),
+                              name: element.name,
+                            },
+                          ]);
+                        });
+                        // setImageURL(imageFileUrl);
+
+                        console.log(
+                          "🚀 ~ file: AddKnowledgeBaseModal.tsx:108 ~ acceptedFiles:",
+                          acceptedFiles
+                        );
+
+                        // setModalOpen(false);
+                      }}
+                    >
+                      {({ getRootProps, getInputProps }) => (
+                        <div
+                          {...getRootProps()}
+                          className="flex cursor-pointer flex-col gap-3 items-center justify-center rounded-lg border-2 border-dashed p-12"
+                        >
+                          <input {...getInputProps()} />
+                          <CloudUploadOutlinedIcon className="text-gray-dark" />
+                          <div className="text-center flex flex-col gap-1">
+                            <p className="text-sm font-medium text-main-heading">
+                              Choose a file or drag & drop it here.
+                            </p>
+                            <p className="text-xs font-medium text-grayMedium1">
+                              JPEG, PNG, PDF, and MP4 formats, up to 50 MB.
+                            </p>
+                          </div>
+                          <button className="border px-4 py-1 text-sm font-medium text-gray-dark rounded-md">
+                            Browse File
+                          </button>
+                        </div>
+                      )}
+                    </Dropzone>
+                  ) : (
+                    <UploadCard data={images} setImages={setImages} />
+                  )
+                ) : (
+                  <LinkUpload setLinks={setLinks} links={links} />
+                )}
               </div>
+            </div>
+            <hr />
+            <div className="flex justify-between gap-4 p-4">
+              <button
+                className="border py-2 text-sm font-medium w-full rounded-lg"
+                onClick={() =>
+                  selectedType === "File" ? setImageURL([]) : setLinks([])
+                }
+              >
+                Discard
+              </button>
+              <button className=" w-full text-sm font-medium py-1 bg-darkblue2 text-white rounded-lg">
+                Save and Proceed
+              </button>
             </div>
           </Box>
         </Fade>
