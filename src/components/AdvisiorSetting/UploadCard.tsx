@@ -10,7 +10,7 @@ import CloseIcon from "@mui/icons-material/Close";
 // }
 //
 
-const UploadCard = ({ data, setImages }) => {
+const UploadCard = ({ data, discard }) => {
   console.log("🚀 ~ file: UploadCard.tsx:8 ~ UploadCard ~ data:", data);
   const [progress, setProgress] = React.useState(0);
 
@@ -51,7 +51,7 @@ const UploadCard = ({ data, setImages }) => {
                     return pat.name !== path.name;
                   });
                   console.log("🚀 ~ file: UploadCard.tsx:49 ~ filter:", filter);
-                  setImages(filter);
+                  discard(filter);
                 }}
               />
             </div>

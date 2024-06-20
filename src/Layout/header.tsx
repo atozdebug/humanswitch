@@ -1,5 +1,5 @@
 import SmartToyIcon from "@mui/icons-material/SmartToy";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import CreateButton from "../components/Home/createButton";
 import { Dialog, DialogActions, DialogContent, Button } from "@mui/material";
 import { useState } from "react";
@@ -15,6 +15,7 @@ import { Checkbox, Label } from "flowbite-react";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import { createRoles, getRoles } from "../services/slices/dashboard/roles";
 import { handleFinalReport } from "../services/slices/activity/activitySlice";
+import BackButton from "../components/KnowledgeBase/BackButton";
 
 const headers = [
   {
@@ -62,6 +63,8 @@ const headers = [
     description: "Knowledge Base Page",
     buttonDescription:
       "Create a new report from scratch or start with one of our templates.",
+    buttonName: " Document",
+    buttonRoute: "/knowledge-base/new-document",
   },
   {
     path: "/companies",
@@ -159,6 +162,10 @@ const defaultValues = {
 const Header = () => {
   const location = useLocation();
   const dispatch: any = useDispatch();
+  console.log(
+    "🚀 ~ file: header.tsx:172 ~ Header ~ location.pathname:",
+    location.pathname
+  );
 
   const getBasePath = (pathname: any) => {
     const parts = pathname.split("/");
@@ -168,6 +175,7 @@ const Header = () => {
   const title = headers.find(
     (header) => header.path === getBasePath(location.pathname)
   );
+  console.log("🚀 ~ file: header.tsx:173 ~ Header ~ title:", title);
 
   const schemas = () => {
     if (title?.buttonName === "Report") {
@@ -260,26 +268,39 @@ const Header = () => {
   return (
     <div className="bg-white shadow-sm md:py-5 md:px-8 px-4 py-4">
       <div className="grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 flex items-center justify-between">
-        <div className="flex justify-center items-center">
-          <span className="bg-[#F6F8FA] p-2 rounded-full">
-            <SmartToyIcon />
-          </span>
-          <div className="px-4">
-            <h2 className="text-main-heading text-lg font-medium">
-              {title?.name}
-            </h2>
-            <p className="text-gray-dark text-sm">{title?.description}</p>
+        {location.pathname === "/knowledge-base/new-document" ? (
+          <BackButton path={"Knowledge Base"} route={"/knowledge-base"} />
+        ) : (
+          <div className="flex justify-center items-center">
+            <span className="bg-[#F6F8FA] p-2 rounded-full">
+              <SmartToyIcon />
+            </span>
+            <div className="px-4">
+              <h2 className="text-main-heading text-lg font-medium">
+                {title?.name}
+              </h2>
+              <p className="text-gray-dark text-sm">{title?.description}</p>
+            </div>
           </div>
-        </div>
-        <div className="rounded-lg flex justify-end">
-          {title?.buttonName && (
-            <CreateButton
-              text={`Create New ${title?.buttonName}`}
-              onClick={onClick}
-              className=""
-            />
-          )}
-        </div>
+        )}
+
+        {location.pathname !== "/knowledge-base/new-document" && (
+          <div className="rounded-lg flex justify-end">
+            {title?.buttonName &&
+              title?.buttonRoute == "/knowledge-base/new-document" && (
+                <Link to={title.buttonRoute}>
+                  <CreateButton
+                    text={`Create New ${title?.buttonName}`}
+                    onClick={() =>
+                      title?.buttonRoute !== "/knowledge-base/new-document" &&
+                      onClick()
+                    }
+                    className=""
+                  />
+                </Link>
+              )}
+          </div>
+        )}
       </div>
       <Dialog
         fullWidth={true}

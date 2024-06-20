@@ -4,7 +4,7 @@ const CreateButton = ({ onClick, className, text }: any) => {
   return (
     <button
       onClick={onClick}
-      className={`${className} py-10px px-18px bg-darkblue3 rounded-lg text-white flex justify-center gap-2 items-center`}
+      className={`${className} py-10px px-18px bg-darkblue3 rounded-lg text-white  justify-center sm:flex hidden gap-2 items-center`}
     >
       <ControlPointIcon />
       {text}

@@ -6,7 +6,17 @@ import Switch, { SwitchProps } from "@mui/material/Switch";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-function ButtonsAndtoggle({ button1, button2 }) {
+interface ButtonProp {
+  button1: string;
+  button2: string;
+  discard: any;
+}
+
+const ButtonsAndtoggle: React.FC<ButtonProp> = ({
+  button1,
+  button2,
+  discard,
+}) => {
   const AntSwitch = styled(Switch)(({ theme }) => ({
     width: 28,
     height: 16,
@@ -75,13 +85,18 @@ function ButtonsAndtoggle({ button1, button2 }) {
       </FormGroup>
 
       <div className="flex gap-2">
-        <button className="w-fit px-8 py-1 rounded-lg border">{button1}</button>
-        <button className="w-fit px-6 py-1 rounded-lg text-white bg-darkblue2">
+        <button
+          className="w-fit sm:px-8 px-3 py-[2px] sm:py-1 text-[10px] sm:text-sm font-medium text-gray-dark rounded-lg border"
+          onClick={() => discard("")}
+        >
+          {button1}
+        </button>
+        <button className="w-fit sm:px-6  px-3 py-[2px] sm:py-1 rounded-lg text-[10px] sm:text-sm font-medium text-white bg-darkblue2">
           {button2}
         </button>
       </div>
     </div>
   );
-}
+};
 
 export default ButtonsAndtoggle;

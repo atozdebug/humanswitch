@@ -334,3 +334,11 @@ body .active-items-start {
     padding-bottom: 0 !important;
   }
 }
+
+.divide-y > :not([hidden]) ~ :not([hidden]) {
+  border-top-width: none !important;
+  border-bottom-width: none !important;
+}
+.css-1f773le-MuiButtonBase-root-MuiAccordionSummary-root {
+  padding: 0 !important;
+}

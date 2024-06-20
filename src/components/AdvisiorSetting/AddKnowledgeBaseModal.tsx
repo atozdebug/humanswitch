@@ -47,7 +47,7 @@ const AddKnowledgeBaseModal: React.FC<AddKnowledgeBaseModalProps> = ({
     setIsModalOpen(false);
     return isModalOpen;
   }
- 
+
   return (
     <div>
       <Modal
@@ -158,7 +158,7 @@ const AddKnowledgeBaseModal: React.FC<AddKnowledgeBaseModalProps> = ({
                       )}
                     </Dropzone>
                   ) : (
-                    <UploadCard data={images} setImages={setImages} />
+                    <UploadCard data={images} discard={setImages} />
                   )
                 ) : (
                   <LinkUpload setLinks={setLinks} links={links} />
