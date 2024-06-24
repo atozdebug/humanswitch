@@ -6,10 +6,19 @@ import { Divider } from "@mui/material";
 import ModalBox from "./ModalBox";
 import { FaRegQuestionCircle } from "react-icons/fa";
 import { IoSearchOutline } from "react-icons/io5";
-import Category from "./Category";
+
+import EditModal from "./EditModal";
+import ButtonsAndtoggle from "./ButtonsAndtoggle";
+
+interface Question {
+  id: number | string;
+  question: string;
+  ans: string;
+  categories: string[];
+}
 
 function Faqs() {
-  const questionsDemo = [
+  const questionsDemo: Question[] = [
     {
       id: 1,
       question: "Who are you?",
@@ -36,12 +45,14 @@ function Faqs() {
       categories: ["earth", "Mati", "tesla", "motor"],
     },
   ];
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [questions, setQuestions] = useState(questionsDemo);
-  const [filteredQuestions, setFilteredQuestions] = useState(questionsDemo);
-  const [editdata, setEditData] = useState([]);
-
-  //   const [searchQuery, setSearchQuery] = useState("");
+  const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [questions, setQuestions] = useState<Question[]>(questionsDemo);
+  const [filteredQuestions, setFilteredQuestions] =
+    useState<Question[]>(questionsDemo);
+  const [editdata, setEditData] = useState<Question[]>([]);
+  const [checkedItems, setCheckedItems] = useState<Question[]>([]);
+  console.log("🚀 ~ file: Faqs.tsx:55 ~ Faqs ~ checkedItems:", checkedItems);
 
   const colors = [
     { dark: "#C2540A", Light: "#FEF3EB" },
@@ -53,40 +64,75 @@ function Faqs() {
     { dark: "#9C23A9", Light: "#FDEBFF" },
   ];
 
-  function handleSearch(e) {
+  function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
     const filter = questions?.filter((qsn) =>
       qsn.question.toLowerCase().includes(e.target.value.toLowerCase())
     );
     setFilteredQuestions(filter);
     console.log("🚀 ~ file: Faqs.tsx:29 ~ handleSearch ~ filter:", filter);
   }
-  function handleDelete(id) {
+  const handleDelete = (id: number): void => {
     const filter = questions?.filter((item) => item.id !== id);
     setFilteredQuestions(filter);
     setQuestions(filter);
-  }
+  };
 
-  function handleEdit(id) {
+  const handleEdit = (id: number): void => {
     console.log("edit cliccked");
-    const filter = questions?.filter((item) => item.id !== id);
+    const filter = questions?.filter((item) => item.id == id);
     setEditData(filter);
-    setIsModalOpen(true);
-  }
+    setIsEditModalOpen(true);
+  };
+
+  //handle multiple check
+  const handleMultipleChecked = (e, id) => {
+    const isChecked = e.target.checked;
+
+    if (isChecked) {
+      // Add the checked item's ID to the checkedItems array
+      setCheckedItems((prevCheckedItems) => [...prevCheckedItems, id]);
+    } else {
+      // Remove the unchecked item's ID from the checkedItems array
+      setCheckedItems((prevCheckedItems) =>
+        prevCheckedItems.filter((itemId) => itemId !== id)
+      );
+    }
+  };
+  //multiple delete
+  const handleMultipleDelete = () => {
+    const filter = filteredQuestions.filter(
+      (qsn) => !checkedItems.includes(qsn.id)
+    );
+    setFilteredQuestions(filter);
+    setCheckedItems([]);
+  };
 
   return (
     <div>
       <div className="flex justify-between h-fit items-center">
         <h6 className="text-base text-main-heading font-medium ">Questions </h6>
-        <div className="rounded-lg border flex items-center text-grayMedium1 px-2 gap-2 ">
-          <IoSearchOutline />
-          <input
-            type="search"
-            placeholder="Search..."
-            onChange={(e) => {
-              handleSearch(e);
-            }}
-            className="outline-none border-none focus:ring-transparent w-full p-1 rounded-lg"
-          />
+        <div className="flex gap-4">
+          {checkedItems?.length > 0 && (
+            <div className="flex items-center gap-1">
+              <span className="text-sm">Delete</span>{" "}
+              <RiDeleteBin5Line
+                className="cursor-pointer text-red-code"
+                onClick={handleMultipleDelete}
+              />
+            </div>
+          )}
+
+          <div className="rounded-lg border flex items-center text-grayMedium1 px-2 gap-2 ">
+            <IoSearchOutline />
+            <input
+              type="search"
+              placeholder="Search..."
+              onChange={(e) => {
+                handleSearch(e);
+              }}
+              className="outline-none border-none focus:ring-transparent w-full p-1 rounded-lg"
+            />
+          </div>
         </div>
       </div>
 
@@ -95,23 +141,21 @@ function Faqs() {
           <Table.Body className="divide-y">
             {filteredQuestions?.length > 0 &&
               filteredQuestions?.map((qsn, index) => {
-                // let maxcolorCount = 4;
-                // let colorCount = 0;
-
-                // if (colorCount <= 4) {
-                //   colorCount++;
-                // } else {
-                //   colorCount = 0;
-                // }
                 const colorIndex = index % colors.length; // Calculate color index based on questions index
 
                 return (
-                  <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                  <Table.Row
+                    className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                    key={qsn.id}
+                  >
                     {/* <Table.Cell className="p-4">
                   </Table.Cell> */}
                     <Table.Cell className="whitespace-nowrap font-medium text-main-heading text-sm dark:text-black">
                       <div className="flex items-center gap-3">
-                        <Checkbox className="bg-white outline-none focus:ring-transparent cursor-pointer" />
+                        <Checkbox
+                          onChange={(e) => handleMultipleChecked(e, qsn.id)}
+                          className="bg-white outline-none focus:ring-transparent cursor-pointer"
+                        />
 
                         <span
                           className={`h-5 w-5 rounded-[50%] flex items-center justify-center`}
@@ -187,12 +231,32 @@ function Faqs() {
           Add Question{" "}
         </button>
       </Divider>
+      <div className="mt-8">
+        <ButtonsAndtoggle
+          button1="Discard"
+          button2="Save"
+          discard={setFilteredQuestions}
+        ></ButtonsAndtoggle>
+      </div>
+
       <ModalBox
         setIsModalOpen={setIsModalOpen}
         isModalOpen={isModalOpen}
         heading={"New Questions"}
         setQuestions={setQuestions}
         questions={questions}
+        setFilteredQuestions={setFilteredQuestions}
+        editdata={editdata}
+        setEditData={setEditData}
+        filteredQuestions={filteredQuestions}
+      />
+
+      <EditModal
+        setIsModalOpen={setIsEditModalOpen}
+        isModalOpen={isEditModalOpen}
+        heading={"Edit Question"}
+        // setQuestions={setQuestions}
+
         setFilteredQuestions={setFilteredQuestions}
         editdata={editdata}
         setEditData={setEditData}

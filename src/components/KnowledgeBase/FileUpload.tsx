@@ -39,7 +39,7 @@ function FileUpload({ setImages, images }) {
         {({ getRootProps, getInputProps }) => (
           <div
             {...getRootProps()}
-            className="flex cursor-pointer flex-col gap-3 items-center justify-center rounded-lg border-2 border-dashed p-12"
+            className="flex cursor-pointer flex-col gap-3 items-center justify-center rounded-lg border-2 border-dashed p-8 sm:p-12"
           >
             <input {...getInputProps()} />
             <CloudUploadOutlinedIcon className="text-gray-dark" />

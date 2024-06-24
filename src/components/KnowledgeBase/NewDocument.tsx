@@ -44,7 +44,7 @@ function NewDocument() {
       </div>
 
       <div className="rounded-lg bg-white shadow-lg p-4 sm:p-6 mt-4 flex  flex-col gap-8 ">
-        <div className="rounded-lg flex-wrap lg:flex-nowrap flex gap-4">
+        <div className="rounded-lg  grid md:grid-cols-2 lg:grid-cols-3  gap-4">
           {uploadTypes.map((item) => {
             return (
               <UploadCategoryCard

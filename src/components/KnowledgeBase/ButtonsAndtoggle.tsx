@@ -64,25 +64,27 @@ const ButtonsAndtoggle: React.FC<ButtonProp> = ({
 
   return (
     <div className=" flex flex-col gap-6">
-      <FormGroup className="">
-        <Stack
-          direction="row"
-          spacing={1}
-          className="items-baseline"
-          alignItems="top"
-        >
-          <AntSwitch
-            defaultChecked
-            inputProps={{ "aria-label": "ant design" }}
-          />
-          <div>
-            <h5 className="text-sm font-medium text-darkgray33">Active</h5>
-            <span className="text-xs text-gray-dark font-normal">
-              The support articles are visible on the website
-            </span>
-          </div>
-        </Stack>
-      </FormGroup>
+      {button2 !== "Save" && (
+        <FormGroup className="">
+          <Stack
+            direction="row"
+            spacing={1}
+            className="items-baseline"
+            alignItems="top"
+          >
+            <AntSwitch
+              defaultChecked
+              inputProps={{ "aria-label": "ant design" }}
+            />
+            <div>
+              <h5 className="text-sm font-medium text-darkgray33">Active</h5>
+              <span className="text-xs text-gray-dark font-normal">
+                The support articles are visible on the website
+              </span>
+            </div>
+          </Stack>
+        </FormGroup>
+      )}
 
       <div className="flex gap-2">
         <button

@@ -13,7 +13,7 @@ interface Question {
   categories: string[];
 }
 
-interface ModalBoxProps {
+interface EditModalProps {
   isModalOpen: boolean;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   heading: string;
@@ -21,30 +21,34 @@ interface ModalBoxProps {
   editdata: Question[];
   setEditData: React.Dispatch<React.SetStateAction<Question[]>>;
   filteredQuestions: Question[];
-  questions: Question[];
-  setQuestions: React.Dispatch<React.SetStateAction<Question[]>>;
 }
 
-const ModalBox: React.FC<ModalBoxProps> = ({
+const EditModal: React.FC<EditModalProps> = ({
   isModalOpen,
   setIsModalOpen,
   heading,
-  questions,
-  setQuestions,
+  // questions,
+  // setQuestions,
   setFilteredQuestions,
   editdata,
   setEditData,
   filteredQuestions,
 }) => {
-  console.log("🚀 ~ file: ModalBox.tsx:17 ~ questions:", questions);
   const [category, setCategory] = useState<string>("");
   const [categories, setcategories] = useState<string[]>([]);
   const [answer, setAnswer] = useState<string>("");
   const [question, setQuestion] = useState<string>("");
-  console.log(
-    "🚀 ~ file: ModalBox.tsx:13 ~ ModalBox ~ categories:",
-    categories
-  );
+  const [id, setId] = useState<any>();
+
+  useEffect(() => {
+    if (editdata.length !== 0) {
+      setcategories(editdata[0]?.categories || []);
+      setQuestion(editdata[0]?.question || "");
+      setAnswer(editdata[0]?.ans || "");
+      setId(editdata[0]?.id || "");
+    }
+  }, [editdata]);
+
   const style = {
     position: "absolute",
     top: "50%",
@@ -58,47 +62,42 @@ const ModalBox: React.FC<ModalBoxProps> = ({
     color: "black",
     // p: 2,
   };
-  function handleclose() {
+
+  function handleClose() {
     setIsModalOpen(false);
-    return isModalOpen;
     setEditData([]);
   }
 
-  function handleKeyDown(e: KeyboardEvent<HTMLInputElement>) {
+  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === "Enter") {
       if (category !== "") {
-        // setQuestions([...questions,{c}])
         setcategories([...categories, category]);
-
         setCategory("");
       }
     }
   }
 
-  function RandomId() {
-    return Math.random()
-      .toString(36)
-      .replace(/[^a-z]+/g, "")
-      .substr(2, 10);
-  }
-  function handleSubmit() {
+  function handleUpdate() {
     if (answer !== "" && question !== "" && categories.length > 0) {
-      const newQuestion: Question = {
-        id: RandomId(),
+      const updatedQuestion = {
+        id: id,
         categories: categories,
         question: question,
         ans: answer,
       };
 
-      setQuestions([...questions, newQuestion]);
-      setFilteredQuestions([...filteredQuestions, newQuestion]);
+      const updatedFilteredQuestions = filteredQuestions.map((q) =>
+        q.id === id ? updatedQuestion : q
+      );
+
+      setFilteredQuestions(updatedFilteredQuestions);
       setcategories([]);
       setQuestion("");
       setAnswer("");
       setIsModalOpen(false);
       setEditData([]);
     } else {
-      alert("fill all fields ");
+      alert("Please fill all fields");
     }
   }
 
@@ -106,9 +105,9 @@ const ModalBox: React.FC<ModalBoxProps> = ({
     <div>
       <Modal
         aria-labelledby="transition-modal-title"
-        ariaDescribedby="transition-modal-description"
+        aria-describedby="transition-modal-description"
         open={isModalOpen}
-        onClose={handleclose}
+        onClose={handleClose}
         closeAfterTransition
         slots={{ backdrop: Backdrop }}
         slotProps={{
@@ -126,16 +125,13 @@ const ModalBox: React.FC<ModalBoxProps> = ({
                 </span>
                 <div className="flex flex-col gap-1 ">
                   <h4 className="text-sm font-medium text-darkgray3">
-                    Add {heading}
+                    {heading}
                   </h4>
-                  {/* <p className="text-xs font-normal text-gray-dark">
-                    Your bot will answer based on the added knowledge base.
-                  </p> */}
                 </div>
               </div>
               <CloseIcon
                 className="!w-4 !h-4 text-gray-dark cursor-pointer"
-                onClick={() => setIsModalOpen(false)}
+                onClick={handleClose}
               />
             </div>
             <hr />
@@ -164,8 +160,11 @@ const ModalBox: React.FC<ModalBoxProps> = ({
                 />
                 <div className="flex gap-2  mt-2">
                   {categories?.length > 0 &&
-                    categories?.map((cat) => (
-                      <div className="border flex gap-1 items-center rounded-md px-2 text-gray-dark font-medium text-xs py-[2px]">
+                    categories?.map((cat, index) => (
+                      <div
+                        key={index}
+                        className="border flex gap-1 items-center rounded-md px-2 text-gray-dark font-medium text-xs py-[2px]"
+                      >
                         <span>{cat}</span>
                         <CloseIcon
                           className="!w-3 !h-3 cursor-pointer"
@@ -191,12 +190,11 @@ const ModalBox: React.FC<ModalBoxProps> = ({
                   type="text"
                   name="question"
                   id="question"
-                  value={
-                    editdata.length !== 0 && editdata[0]?.question !== ""
-                      ? editdata[0]?.question
-                      : question
-                  }
-                  onChange={(e) => setQuestion(e.target.value)}
+                  value={question}
+                  onChange={(e) => {
+                    setQuestion(e.target.value);
+                    setEditData([{ ...editdata[0], question: e.target.value }]);
+                  }}
                   className="w-full border-[#eceef2] rounded-xl outline-none resize-none mt-2 text-sm font-normal"
                   placeholder="Enter here..."
                   required
@@ -214,15 +212,13 @@ const ModalBox: React.FC<ModalBoxProps> = ({
                 <textarea
                   name="answer"
                   id="answer"
-                  value={
-                    editdata.length !== 0 && editdata[0].ans !== ""
-                      ? editdata[0].ans
-                      : answer
-                  }
-                  className="w-full border-[#eceef2] rounded-xl outline-none   h-24 mt-2 text-sm"
-                  // placeholder="Enter here..."
-                  // value={formData.greetingMsg}
-                  onChange={(e) => setAnswer(e.target.value)}
+                  value={answer}
+                  onChange={(e) => {
+                    setAnswer(e.target.value);
+                    setEditData([{ ...editdata[0], ans: e.target.value }]);
+                  }}
+                  className="w-full border-[#eceef2] rounded-xl outline-none h-24 mt-2 text-sm"
+                  placeholder="Enter here..."
                   required
                 />
               </div>
@@ -234,14 +230,12 @@ const ModalBox: React.FC<ModalBoxProps> = ({
             <div className="flex justify-between gap-4 p-4">
               <button
                 className="border py-2 text-sm font-medium w-full rounded-lg"
-                // onClick={() =>
-                // //   selectedType === "File" ? setImageURL([]) : setLinks([])
-                // }
+                onClick={handleClose}
               >
                 Discard
               </button>
               <button
-                onClick={handleSubmit}
+                onClick={handleUpdate}
                 className=" w-full text-sm font-medium py-1 bg-darkblue2 text-white rounded-lg"
               >
                 Save and Proceed
@@ -254,4 +248,4 @@ const ModalBox: React.FC<ModalBoxProps> = ({
   );
 };
 
-export default ModalBox;
+export default EditModal;

@@ -10,7 +10,8 @@ import SideGraphAnalytics from "../../components/KnowledgeBase/SideGraphAnalytic
 const KnowledgeBase = () => {
   return (
     <>
-      <div className="content-right-inner min-h-vhcalc92px overflow-y-auto max-h-vhcalc92px lg:px-8 px-4 md:py-7 py-4 bg-lightgray">
+      {/* max-h-vhcalc92px */}
+      <div className="content-right-inner min-h-vhcalc92px overflow-y-auto  lg:px-8 px-4 md:py-7 py-4 bg-lightgray">
         <div className="knowledge-inner bg-white rounded-[20px] lg:p-6 p-4">
           <ul className="grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5">
             <li className="grid-item xl:col-span-3 md:col-span-2">

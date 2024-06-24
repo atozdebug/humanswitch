@@ -1,340 +1,286 @@
-import { Dropdown, Table } from "flowbite-react";
-import React from "react";
+import { Dropdown, Flowbite, Table } from "flowbite-react";
+import React, { useState } from "react";
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
-import type { CustomFlowbiteTheme } from "flowbite-react";
-
-import { Accordion } from "flowbite-react";
+import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
+import { GridExpandMoreIcon } from "@mui/x-data-grid";
+import { boolean } from "yup";
 
 function RecentUpload() {
+  const [isAccordianClicked, setIsAccordianClicked] = useState<number | null>(
+    null
+  );
+  const [hideUpload, setHideUpload] = useState<boolean>(false);
   const dummyData = [
     {
       id: 1,
-      images: ["image1", "image2", "image3"],
+      images: ["image1.png", "image2.png", "image3.jpg"],
       createdAt: "june 20,2024",
       references: ["ref1,ref2,ref3"],
     },
     {
       id: 2,
-      images: [],
+      images: ["images23.png", "images3.jpg"],
       createdAt: "june 20,2024",
       references: ["ref1,ref2,ref3"],
     },
 
     {
       id: 3,
-      images: ["image1", "image2"],
+      images: ["image1.png", "image2.svg"],
       createdAt: "june 20,2024",
       references: ["ref1,ref2,"],
     },
     {
       id: 4,
-      images: ["image1"],
+      images: ["image.jpg"],
       createdAt: "june 20,2024",
       references: ["ref1,ref2,ref3"],
     },
   ];
-
-  const customTheme: CustomFlowbiteTheme = {
-    content: {
-      base: "p-0 first:rounded-t-lg last:rounded-b-lg dark:bg-gray-900",
-    },
-  };
+  const handleAccordionClick =
+    (itemId: number) => (event: React.MouseEvent) => {
+      setIsAccordianClicked(isAccordianClicked === itemId ? null : itemId);
+    };
 
   return (
     <div className="pt-8">
       <div className="overflow-x-auto">
         <div className="flex gap-2 text-sm font-semibold justify-between items-center text-darkgray2 pb-3 border-b">
           <p>Recent Upload</p>
-          <p>Hide</p>
+          <p
+            className="cursor-pointer"
+            onClick={() => setHideUpload(!hideUpload)}
+          >
+            {hideUpload ? "Unhide" : "Hide"}
+          </p>
         </div>
-        <Table className="relative z-10">
-          <Table.Body className="divide-y">
-            {dummyData.map((item) => (
-              <Table.Row className="text-darkgray2 fw-medium">
-                <Accordion collapseAll className=" !p-0">
-                  <Accordion.Panel className="  p-0">
-                    <Accordion.Title className="hover:!bg-none">
-                      <Table.Cell className="py-4 border-b pl-3">
-                        <div className="flex gap-2 items-center min-w-[200px]">
-                          <img
+        {!hideUpload && (
+          <Table className="relative z-10">
+            <Table.Body className="">
+              {dummyData?.map((item) => (
+                <Table.Row className="text-darkgray2 fw-medium" key={item.id}>
+                  <Accordion expanded={isAccordianClicked === item.id}>
+                    <div className="flex">
+                      <AccordionSummary
+                        // expandIcon={<GridExpandMoreIcon />}
+                        aria-controls="panel1-content"
+                        id="panel1-header"
+                        className="!m-0"
+                        onClick={handleAccordionClick(item.id)}
+                      >
+                        <Table.Cell className="py-4 border-b pl-3">
+                          <div className="flex gap-2 items-center min-w-[200px]">
+                            {/* <img
                             src="/assets/images/arrow-right-s-line.png"
                             width={24}
                             height={24}
                             className="w-6 h-6"
-                          />
-                          <img
-                            src="/assets/images/movie_creation.png"
-                            width={24}
-                            height={24}
-                            className="w-8 h-8"
-                          />
+                          /> */}
 
-                          <p className="text-darkgray2 text-sm font-semibold">
-                            {item.images.length} images
-                          </p>
-                        </div>
-                      </Table.Cell>
-                      <Table.Cell className="py-4 border-b pl-3">
-                        <p className="text-lightgray4 text-sm font-medium min-w-[168px]">
-                          added {item.createdAt}
-                        </p>
-                      </Table.Cell>
-                      <Table.Cell className="py-4 border-b pl-3">
-                        <div className="flex items-center gap-2">
-                          <img
-                            src="/assets/images/folder.png"
-                            width={16}
-                            height={16}
-                            className="w-4 h-4"
-                          />
-                          <p className="text-lightgray4 text-sm font-medium">
-                            References
-                          </p>
-                        </div>
-                      </Table.Cell>
-                      <Table.Cell className="py-4 border-b pl-3 text-end">
-                        <Dropdown
-                          label=""
-                          dismissOnClick={false}
-                          renderTrigger={() => (
-                            <span className="inline-block cursor-pointer">
-                              <MoreHorizOutlinedIcon />
-                            </span>
-                          )}
-                          className="bg-white border-0 text-gray-dark"
-                        >
-                          <Dropdown.Item className=" min-w-[168px]">
-                            Point 1
-                          </Dropdown.Item>
-                          <Dropdown.Item className=" min-w-[168px]">
-                            Point 1
-                          </Dropdown.Item>
-                          <Dropdown.Item className=" min-w-[168px]">
-                            Point 1
-                          </Dropdown.Item>
-                          <Dropdown.Item className=" min-w-[168px]">
-                            Point 1
-                          </Dropdown.Item>
-                        </Dropdown>
-                      </Table.Cell>
-                    </Accordion.Title>
-                    <Accordion.Content>
-                      <p className="mb-2 text-gray-500 dark:text-gray-400">
-                        Flowbite is an open-source library of interactive
-                        components built on top of Tailwind CSS including
-                        buttons, dropdowns, modals, navbars, and more.
-                      </p>
-                      <p className="text-gray-500 dark:text-gray-400">
-                        Check out this guide to learn how to&nbsp;
-                        <a
-                          href="https://flowbite.com/docs/getting-started/introduction/"
-                          className="text-cyan-600 hover:underline dark:text-cyan-500"
-                        >
-                          get started&nbsp;
-                        </a>
-                        and start developing websites even faster with
-                        components on top of Tailwind CSS.
-                      </p>
-                    </Accordion.Content>
-                  </Accordion.Panel>
-                </Accordion>
-              </Table.Row>
-            ))}
+                            {item.images.length !== 1 && (
+                              <svg
+                                stroke="currentColor"
+                                fill="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 20 20"
+                                aria-hidden="true"
+                                className={`h-6 w-6 shrink-0 ${
+                                  isAccordianClicked === item.id
+                                    ? "rotate-0"
+                                    : "-rotate-90"
+                                }`}
+                                data-testid="flowbite-accordion-arrow"
+                                height="1em"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  fill-rule="evenodd"
+                                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                  clip-rule="evenodd"
+                                ></path>
+                              </svg>
+                            )}
 
-            {/* <Table.Row className="text-darkgray2 fw-medium">
-              <Table.Cell className="py-4 border-b pl-3">
-                <div className="flex gap-2 items-center">
-                  <img
-                    src="/assets/images/arrow-right-s-line.png"
-                    width={24}
-                    height={24}
-                    className="w-6 h-6"
-                  />
-                  <img
-                    src="/assets/images/movie_creation.png"
-                    width={24}
-                    height={24}
-                    className="w-8 h-8"
-                  />
-                  <p className="text-darkgray2 text-sm font-semibold">
-                    4 images
-                  </p>
-                </div>
-              </Table.Cell>
-              <Table.Cell className="py-4 border-b pl-3">
-                <p className="text-lightgray4 text-sm font-medium min-w-[168px]">
-                  added Oct 23, 2021
-                </p>
-              </Table.Cell>
-              <Table.Cell className="py-4 border-b pl-3">
-                <div className="flex items-center gap-2">
-                  <img
-                    src="/assets/images/folder.png"
-                    width={16}
-                    height={16}
-                    className="w-4 h-4"
-                  />
-                  <p className="text-lightgray4 text-sm font-medium">
-                    References
-                  </p>
-                </div>
-              </Table.Cell>
-              <Table.Cell className="py-4 border-b pl-3 text-end">
-                <Dropdown
-                  label=""
-                  dismissOnClick={false}
-                  renderTrigger={() => (
-                    <span className="inline-block cursor-pointer">
-                      <MoreHorizOutlinedIcon />
-                    </span>
-                  )}
-                  className="bg-white border-0 text-gray-dark"
-                >
-                  <Dropdown.Item className=" min-w-[168px]">
-                    Point 1
-                  </Dropdown.Item>
-                  <Dropdown.Item className=" min-w-[168px]">
-                    Point 1
-                  </Dropdown.Item>
-                  <Dropdown.Item className=" min-w-[168px]">
-                    Point 1
-                  </Dropdown.Item>
-                  <Dropdown.Item className=" min-w-[168px]">
-                    Point 1
-                  </Dropdown.Item>
-                </Dropdown>
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row className="text-darkgray2 fw-medium">
-              <Table.Cell className="py-4 border-b pl-3">
-                <div className="flex gap-2 items-center">
-                  <img
-                    src="/assets/images/arrow-right-s-line.png"
-                    width={24}
-                    height={24}
-                    className="w-6 h-6"
-                  />
-                  <img
-                    src="/assets/images/pdf-File.png"
-                    width={24}
-                    height={24}
-                    className="w-8 h-8"
-                  />
-                  <p className="text-darkgray2 text-sm font-semibold">
-                    4 images
-                  </p>
-                </div>
-              </Table.Cell>
-              <Table.Cell className="py-4 border-b pl-3">
-                <p className="text-lightgray4 text-sm font-medium min-w-[168px]">
-                  added Oct 23, 2021
-                </p>
-              </Table.Cell>
-              <Table.Cell className="py-4 border-b pl-3">
-                <div className="flex items-center gap-2">
-                  <img
-                    src="/assets/images/folder.png"
-                    width={16}
-                    height={16}
-                    className="w-4 h-4"
-                  />
-                  <p className="text-lightgray4 text-sm font-medium">
-                    References
-                  </p>
-                </div>
-              </Table.Cell>
-              <Table.Cell className="py-4 border-b pl-3 text-end">
-                <Dropdown
-                  label=""
-                  dismissOnClick={false}
-                  renderTrigger={() => (
-                    <span className="inline-block cursor-pointer">
-                      <MoreHorizOutlinedIcon />
-                    </span>
-                  )}
-                  className="bg-white border-0 text-gray-dark"
-                >
-                  <Dropdown.Item className=" min-w-[168px]">
-                    Point 1
-                  </Dropdown.Item>
-                  <Dropdown.Item className=" min-w-[168px]">
-                    Point 1
-                  </Dropdown.Item>
-                  <Dropdown.Item className=" min-w-[168px]">
-                    Point 1
-                  </Dropdown.Item>
-                  <Dropdown.Item className=" min-w-[168px]">
-                    Point 1
-                  </Dropdown.Item>
-                </Dropdown>
-              </Table.Cell>
-            </Table.Row>
-            <Table.Row className="text-darkgray2 fw-medium">
-              <Table.Cell className="py-4 border-b pl-3">
-                <div className="flex gap-2 items-center">
-                  <img
-                    src="/assets/images/arrow-right-s-line.png"
-                    width={24}
-                    height={24}
-                    className="w-6 h-6"
-                  />
-                  <img
-                    src="/assets/images/movie_creation.png"
-                    width={24}
-                    height={24}
-                    className="w-8 h-8"
-                  />
-                  <p className="text-darkgray2 text-sm font-semibold">
-                    4 images
-                  </p>
-                </div>
-              </Table.Cell>
-              <Table.Cell className="py-4 border-b pl-3">
-                <p className="text-lightgray4 text-sm font-medium min-w-[168px]">
-                  added Oct 23, 2021
-                </p>
-              </Table.Cell>
-              <Table.Cell className="py-4 border-b pl-3">
-                <div className="flex items-center gap-2">
-                  <img
-                    src="/assets/images/folder.png"
-                    width={16}
-                    height={16}
-                    className="w-4 h-4"
-                  />
-                  <p className="text-lightgray4 text-sm font-medium">
-                    References
-                  </p>
-                </div>
-              </Table.Cell>
-              <Table.Cell className="py-4 border-b pl-3 text-end">
-                <Dropdown
-                  label=""
-                  dismissOnClick={false}
-                  renderTrigger={() => (
-                    <span className="inline-block cursor-pointer">
-                      <MoreHorizOutlinedIcon />
-                    </span>
-                  )}
-                  className="bg-white border-0 text-gray-dark"
-                >
-                  <Dropdown.Item className=" min-w-[168px]">
-                    Point 1
-                  </Dropdown.Item>
-                  <Dropdown.Item className=" min-w-[168px]">
-                    Point 1
-                  </Dropdown.Item>
-                  <Dropdown.Item className=" min-w-[168px]">
-                    Point 1
-                  </Dropdown.Item>
-                  <Dropdown.Item className=" min-w-[168px]">
-                    Point 1
-                  </Dropdown.Item>
-                </Dropdown>
-              </Table.Cell>
-            </Table.Row> */}
-          </Table.Body>
-        </Table>
+                            <img
+                              src="/assets/images/movie_creation.png"
+                              width={24}
+                              height={24}
+                              className="w-8 h-8"
+                            />
+
+                            <p className="text-darkgray2 text-sm font-semibold">
+                              {item.images.length === 1
+                                ? item.images
+                                : item.images.length + " " + "images"}
+                            </p>
+                          </div>
+                        </Table.Cell>
+                        <Table.Cell className="py-4 border-b pl-3">
+                          <p className="text-lightgray4 text-sm font-normal min-w-[168px]">
+                            {item.createdAt}
+                          </p>
+                        </Table.Cell>
+                        <Table.Cell className="py-4 border-b pl-3">
+                          <div className="flex items-center gap-2">
+                            <img
+                              src="/assets/images/folder.png"
+                              width={16}
+                              height={16}
+                              className="w-4 h-4"
+                            />
+                            <p className="text-lightgray4 text-sm font-medium">
+                              References
+                            </p>
+                          </div>
+                        </Table.Cell>
+                      </AccordionSummary>
+
+                      {item.images.length === 1 && (
+                        <Table.Cell
+                          className={`"py-4 border-b pl-3" 
+     
+                         `}
+                        >
+                          <Dropdown
+                            label=""
+                            dismissOnClick={false}
+                            renderTrigger={() => (
+                              <span className="inline-block cursor-pointer">
+                                <MoreHorizOutlinedIcon />
+                              </span>
+                            )}
+                            onClick={(e) => e.stopPropagation()}
+                            className="bg-white border-0 text-gray-dark"
+                          >
+                            <Dropdown.Item className=" min-w-[168px]">
+                              Edit
+                            </Dropdown.Item>
+                            <Dropdown.Item className=" min-w-[168px]">
+                              Delete
+                            </Dropdown.Item>
+                            {/* <Dropdown.Item className=" min-w-[168px]">
+                         Point 1
+                       </Dropdown.Item>
+                       <Dropdown.Item className=" min-w-[168px]">
+                         Point 1
+                       </Dropdown.Item> */}
+                          </Dropdown>
+                        </Table.Cell>
+                      )}
+                    </div>
+
+                    <AccordionDetails className="border-b">
+                      {item?.images.map((img, index) => (
+                        <Table.Row className="text-darkgray2 border-b fw-medium">
+                          <Table.Cell
+                            className={`"py-4 border-b pl-3" ${
+                              index === item.images.length - 1
+                                ? "border-none"
+                                : "border-b"
+                            }`}
+                          >
+                            <div className="flex gap-2 items-center min-w-[150px]">
+                              {/* <img
+    src="/assets/images/arrow-right-s-line.png"
+    width={24}
+    height={24}
+    className="w-6 h-6"
+  /> */}
+
+                              <img
+                                src="/assets/images/movie_creation.png"
+                                width={24}
+                                height={24}
+                                className="w-8 h-8"
+                              />
+
+                              <p className="text-darkgray2 text-sm font-semibold">
+                                {img}
+                              </p>
+                            </div>
+                          </Table.Cell>
+                          <Table.Cell
+                            className={`"py-4 border-b " ${
+                              index === item.images.length - 1
+                                ? "border-none"
+                                : "border-b"
+                            }`}
+                          >
+                            <p className="text-lightgray4 text-sm font-normal min-w-[148px]">
+                              {item.createdAt}
+                            </p>
+                          </Table.Cell>
+                          <Table.Cell
+                            className={`"py-4 border-b pl-3" ${
+                              index === item.images.length - 1
+                                ? "border-none"
+                                : "border-b"
+                            }`}
+                          >
+                            <div className="flex items-center gap-2">
+                              <img
+                                src="/assets/images/folder.png"
+                                width={16}
+                                height={16}
+                                className="w-4 h-4"
+                              />
+                              <p className="text-lightgray4 text-sm font-medium">
+                                References
+                              </p>
+                            </div>
+                          </Table.Cell>
+
+                          <Table.Cell
+                            className={`"py-4 border-b pl-3" ${
+                              index === item.images.length - 1
+                                ? "border-none"
+                                : "border-b"
+                            }`}
+                          >
+                            <Dropdown
+                              label=""
+                              dismissOnClick={false}
+                              renderTrigger={() => (
+                                <span className="inline-block cursor-pointer">
+                                  <MoreHorizOutlinedIcon />
+                                </span>
+                              )}
+                              onClick={(e) => e.stopPropagation()}
+                              className="bg-white border-0 text-gray-dark"
+                            >
+                              <Dropdown.Item className=" min-w-[168px]">
+                                Edit
+                              </Dropdown.Item>
+                              <Dropdown.Item className=" min-w-[168px]">
+                                Delete
+                              </Dropdown.Item>
+                              {/* <Dropdown.Item className=" min-w-[168px]">
+                            Point 1
+                          </Dropdown.Item>
+                          <Dropdown.Item className=" min-w-[168px]">
+                            Point 1
+                          </Dropdown.Item> */}
+                            </Dropdown>
+                          </Table.Cell>
+                        </Table.Row>
+                      ))}
+
+                      {/* <p>{item.images.length} images</p>
+                  <span>Added on: {item.createdAt} </span>
+                  <p>
+                    Refences:{" "}
+                    {item.references.map((ref) => (
+                      <span>{ref}</span>
+                    ))}
+                  </p> */}
+                    </AccordionDetails>
+                  </Accordion>
+                </Table.Row>
+              ))}
+            </Table.Body>
+          </Table>
+        )}
       </div>
     </div>
   );
