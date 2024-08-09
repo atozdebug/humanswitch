@@ -1,81 +1,76 @@
 import { useState } from 'react';
-import ReactPlayer from 'react-player/youtube';
 
-import { FaCirclePlay } from 'react-icons/fa6';
+import FileUpload from './FileUpload';
+import UploadCard from '../AdvisiorSetting/UploadCard';
 import { useDispatch, useSelector } from 'react-redux';
-import { createUrl } from '../../services/slices/knowledge_base/urls';
 import type { RootState } from '../../services/store/store';
+import { createDocument } from '../../services/slices/knowledge_base/document';
+import { BsFiletypePdf } from 'react-icons/bs';
+import { GridCloseIcon } from '@mui/x-data-grid';
 
-function UrlUpload() {
-  // Access the loading state
-  const loading = useSelector((state: RootState) => state.url.loading);
-
-  const [videoLink, setVideoLink] = useState<string>('');
-
+function DocumentUpload() {
+  const [uploadedDocument, setUploadedDocument] = useState(null);
+  const loading = useSelector((state: RootState) => state.document.loading);
   const [description, setDescription] = useState<string>('');
   const dispatch = useDispatch();
-
-  const handleCreateUrl = async () => {
-    if (!videoLink) {
-      alert('Please fill out all fields.');
+  // const [isActive, setIsActive] = useState<boolean>(true);
+  const handleCreateDocument = async () => {
+    if (!uploadedDocument) {
+      alert('Please upload a document and select categories.');
       return;
     }
 
-    const data = {
-      url: videoLink,
-      description: description,
-      is_active: true, // You can adjust this as needed or remove it if it's not necessary
-    };
+    const formData = new FormData();
+    formData.append('file', uploadedDocument?.url);
+    formData.append('categories', []);
+    formData.append('is_active', true);
+    formData.append('description', description);
 
-    const result = await dispatch(createUrl(data));
+    const result = await dispatch(createDocument(formData));
 
     if (result.payload?.error) {
       alert(result.payload.error);
     } else {
-      alert('URL created successfully!');
-      setVideoLink('');
+      alert('Document uploaded successfully!');
+      setUploadedDocument(null);
       setDescription('');
+      //  setCategories([]);
     }
   };
 
   return (
-    <div className='flex flex-col'>
-      {videoLink !== '' && (
-        <ReactPlayer
-          url={videoLink}
-          playIcon={<FaCirclePlay />}
-          height={200}
-          width={380}
-          style={{ borderRadius: '20px' }}
+    <div className='flex flex-col gap-4'>
+      {!uploadedDocument ? (
+        <FileUpload
+          uploadedDocument={uploadedDocument}
+          setUploadedDocument={setUploadedDocument}
         />
-      )}
-
-      <div>
-        <label
-          htmlFor='link'
-          className=' text-sm  text-darkgray3 font-medium'
-        >
-          Youtube URL{' '}
-          <span className='text-sm  text-gray-dark font-normal'></span>
-        </label>
-        <br />
-        <div className='flex border rounded-xl items-center'>
-          <div className='text-sm px-2 text-lightgray8 py-2 border-r'>
-            https://
+      ) : (
+        <div className='border p-2 rounded-lg'>
+          <div className='flex gap-2 items-center '>
+            <span>
+              <BsFiletypePdf className='!w-6 !h-6' />
+            </span>
+            <div className='flex justify-between w-full'>
+              <div className='flex flex-col '>
+                <span>{uploadedDocument?.name} </span>
+                {/* <span>speed </span> */}
+              </div>
+              <GridCloseIcon
+                className='!w-4 !h-4 text-gray-dark cursor-pointer'
+                onClick={() => {
+                  setUploadedDocument(null);
+                }}
+              />
+            </div>
           </div>
-          <hr />
-          <input
-            type='url'
-            name='link'
-            id='link'
-            value={videoLink}
-            onChange={(e) => setVideoLink(e.target.value)}
-            className='w-full   border-none text-lightgray8  outline-none focus:ring-transparent rounded-xl resize-none  text-sm font-normal'
-            placeholder='www.example.com'
-            required
-          />
+          {/* <span>
+            <Box sx={{ width: "100%" }}>
+              <LinearProgress variant="determinate" value={progress} />
+            </Box>
+          </span>{" "} */}
         </div>
-      </div>
+      )}
 
       <div>
         <label
@@ -96,19 +91,18 @@ function UrlUpload() {
           required
         />
       </div>
-
       <div className='flex gap-2'>
         <button
           className='w-fit sm:px-8 px-3 py-[2px] sm:py-1 text-[10px] sm:text-sm font-medium text-gray-dark rounded-lg border'
           onClick={() => {
-            setVideoLink('');
+            setUploadedDocument([]);
             setDescription('');
           }}
         >
           Discard
         </button>
         <button
-          onClick={handleCreateUrl}
+          onClick={handleCreateDocument}
           disabled={loading} // Disable the button while loading
           className={`w-fit sm:px-6 px-3 py-[2px] sm:py-1 rounded-lg text-[10px] sm:text-sm font-medium text-white bg-darkblue2 ${
             loading ? 'opacity-50 cursor-not-allowed' : ''
@@ -136,10 +130,10 @@ function UrlUpload() {
                   d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'
                 ></path>
               </svg>
-              Saving...
+              Uploading...
             </div>
           ) : (
-            'Add Video'
+            'Add Document'
           )}
         </button>
       </div>
@@ -147,4 +141,4 @@ function UrlUpload() {
   );
 }
 
-export default UrlUpload;
+export default DocumentUpload;

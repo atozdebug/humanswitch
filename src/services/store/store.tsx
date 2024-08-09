@@ -1,18 +1,21 @@
-import { configureStore } from "@reduxjs/toolkit";
-import signUpSlice from "../slices/auth/signUp";
-import loginSlice from "../slices/auth/login";
-import dashboardSlice from "../slices/dashboard/dashboard";
-import changePasswordSlice from "../slices/dashboard/changePassword";
-import updateProfileSlice from "../slices/dashboard/updateProfile";
-import activitySlice from "../slices/activity/activitySlice";
-import getUserSlice from "../slices/dashboard/getUser";
-import forgetPasswordSlice from "../slices/auth/forgotPassword";
-import deleteUserSlice from "../slices/dashboard/deleteUser";
-import authenticationSlice from "../slices/auth/authentication";
-import planSlice from "../slices/dashboard/plans";
-import roleSlice from "../slices/dashboard/roles";
-import googleLoginSlice from "../slices/auth/googleLogin";
-
+import { configureStore } from '@reduxjs/toolkit';
+import signUpSlice from '../slices/auth/signUp';
+import loginSlice from '../slices/auth/login';
+import dashboardSlice from '../slices/dashboard/dashboard';
+import documentSlice from '../slices/knowledge_base/document';
+import changePasswordSlice from '../slices/dashboard/changePassword';
+import updateProfileSlice from '../slices/dashboard/updateProfile';
+import activitySlice from '../slices/activity/activitySlice';
+import getUserSlice from '../slices/dashboard/getUser';
+import forgetPasswordSlice from '../slices/auth/forgotPassword';
+import deleteUserSlice from '../slices/dashboard/deleteUser';
+import authenticationSlice from '../slices/auth/authentication';
+import planSlice from '../slices/dashboard/plans';
+import roleSlice from '../slices/dashboard/roles';
+import googleLoginSlice from '../slices/auth/googleLogin';
+import urlSlice from '../slices/knowledge_base/urls';
+import faqSlice from '../slices/knowledge_base/faq';
+import advisorSlice from '../slices/ai_advisor/setting';
 export const store = configureStore({
   reducer: {
     signUp: signUpSlice,
@@ -28,6 +31,10 @@ export const store = configureStore({
     plan: planSlice,
     role: roleSlice,
     googleLogin: googleLoginSlice,
+    document: documentSlice,
+    url: urlSlice,
+    faq: faqSlice,
+    advisor: advisorSlice,
   },
 });
 

@@ -96,6 +96,8 @@ const ButtonsAndtoggle: React.FC<ButtonProp> = ({
         <button className="w-fit sm:px-6  px-3 py-[2px] sm:py-1 rounded-lg text-[10px] sm:text-sm font-medium text-white bg-darkblue2">
           {button2}
         </button>
+
+        
       </div>
     </div>
   );

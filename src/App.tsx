@@ -1,51 +1,54 @@
-import { Suspense, lazy } from "react";
-import "./App.css";
+import { Suspense, lazy } from 'react';
+import './App.css';
 import {
   BrowserRouter,
   Routes,
   Route,
   // Outlet,
   Navigate,
-} from "react-router-dom";
-import LoginHr from "./pages/Login/hrLogin";
-import Settings from "./pages/DashBoard/settings";
-import Chatbot from "./pages/DashBoard/chatbot";
-import Pillars from "./pages/Login/pillars";
-import Dashboard from "./pages/DashBoard/dashboard";
-import MyReports from "./pages/DashBoard/myReports";
-import ManageReports from "./pages/DashBoard/ManageReports";
+} from 'react-router-dom';
+import LoginHr from './pages/Login/hrLogin';
+import Settings from './pages/DashBoard/settings';
+import Chatbot from './pages/DashBoard/chatbot';
+import Pillars from './pages/Login/pillars';
+import Dashboard from './pages/DashBoard/dashboard';
+import MyReports from './pages/DashBoard/myReports';
+import ManageReports from './pages/DashBoard/ManageReports';
 
-import Integration from "./pages/DashBoard/integration";
-import Users from "./pages/DashBoard/users";
-import { Toaster } from "react-hot-toast";
-import Layout from "./Layout/layout";
-import ForgetPasswordId from "./pages/Login/forgetPasswordId";
-import ManagePlans from "./pages/DashBoard/managePlans";
-import ManageRoles from "./pages/DashBoard/manageRoles";
-import Companies from "./pages/DashBoard/companies";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import KnowledgeBase from "./pages/DashBoard/knowledgeBase";
-import AdvisorSettings from "./pages/DashBoard/AdvisorSettings";
-import NewDocument from "./components/KnowledgeBase/NewDocument";
-const ForgetPasswordPage = lazy(() => import("./pages/Login/forgetPassword"));
-const SignupPages = lazy(() => import("./pages/Login/hrSignupPage"));
-const HomePage = lazy(() => import("./pages/Login/homePage"));
+import Integration from './pages/DashBoard/integration';
+import Users from './pages/DashBoard/users';
+import { Toaster } from 'react-hot-toast';
+import Layout from './Layout/layout';
+import ForgetPasswordId from './pages/Login/forgetPasswordId';
+import ManagePlans from './pages/DashBoard/managePlans';
+import ManageRoles from './pages/DashBoard/manageRoles';
+import Companies from './pages/DashBoard/companies';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import KnowledgeBase from './pages/DashBoard/knowledgeBase';
+import AdvisorSettings from './pages/DashBoard/AdvisorSettings';
+import NewDocument from './components/KnowledgeBase/NewDocument';
+import ViewDocuments from './components/KnowledgeBase/ViewDocuments';
+import ViewFaqs from './components/KnowledgeBase/ViewFaqs';
+import ViewUrls from './components/KnowledgeBase/ViewUrls';
+const ForgetPasswordPage = lazy(() => import('./pages/Login/forgetPassword'));
+const SignupPages = lazy(() => import('./pages/Login/hrSignupPage'));
+const HomePage = lazy(() => import('./pages/Login/homePage'));
 
 const App = () => {
   const DefaultRoute = () => {
-    const token = localStorage.getItem("token");
-    return true ? <Navigate to="/dashboard" /> : <Navigate to="/home" />;
+    const token = localStorage.getItem('token');
+    return true ? <Navigate to='/dashboard' /> : <Navigate to='/home' />;
   };
 
   const RouteGuard = ({ children }: any) => {
-    const token = localStorage.getItem("token");
-    return true ? children : <Navigate to="/login" />;
+    const token = localStorage.getItem('token');
+    return true ? children : <Navigate to='/login' />;
   };
 
   const PublicRouteGuard = ({ children }: any) => {
-    const token = localStorage.getItem("token");
-    return true ? <Navigate to="/dashboard" /> : children;
+    const token = localStorage.getItem('token');
+    return true ? <Navigate to='/dashboard' /> : children;
   };
 
   return (
@@ -53,10 +56,10 @@ const App = () => {
       fallback={
         <div
           style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100vh",
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100vh',
           }}
         >
           Loading...
@@ -77,7 +80,7 @@ const App = () => {
             )}
           </Route> */}
               <Route
-                path="/signup"
+                path='/signup'
                 element={
                   <PublicRouteGuard>
                     <SignupPages />
@@ -85,7 +88,7 @@ const App = () => {
                 }
               />
               <Route
-                path="/login"
+                path='/login'
                 element={
                   <PublicRouteGuard>
                     <LoginHr />
@@ -93,7 +96,11 @@ const App = () => {
                 }
               />
               <Route
-                path="/forgetPassword"
+                path='/chatbots'
+                element={<Chatbot />}
+              />
+              <Route
+                path='/forgetPassword'
                 element={
                   <PublicRouteGuard>
                     <ForgetPasswordPage />
@@ -101,7 +108,7 @@ const App = () => {
                 }
               />
               <Route
-                path="/reset-password"
+                path='/reset-password'
                 element={
                   <PublicRouteGuard>
                     <ForgetPasswordId />
@@ -109,17 +116,24 @@ const App = () => {
                 }
               />
               <Route
-                path="/home"
+                path='/home'
                 element={
                   <PublicRouteGuard>
                     <HomePage />
                   </PublicRouteGuard>
                 }
               />
-              <Route path="/" element={<DefaultRoute />} />;
-              <Route path="/pillars" element={<Pillars />} />
               <Route
-                path="/dashboard"
+                path='/'
+                element={<DefaultRoute />}
+              />
+              ;
+              <Route
+                path='/pillars'
+                element={<Pillars />}
+              />
+              <Route
+                path='/dashboard'
                 element={
                   <RouteGuard>
                     <Dashboard />
@@ -127,7 +141,7 @@ const App = () => {
                 }
               />
               <Route
-                path="/reports"
+                path='/reports'
                 element={
                   <RouteGuard>
                     <MyReports />
@@ -135,7 +149,7 @@ const App = () => {
                 }
               />
               <Route
-                path="/chatbot"
+                path='/chatbot'
                 element={
                   <RouteGuard>
                     <Chatbot />
@@ -143,7 +157,7 @@ const App = () => {
                 }
               />
               <Route
-                path="/advisor-settings"
+                path='/advisor-settings'
                 element={
                   <RouteGuard>
                     <AdvisorSettings />
@@ -151,7 +165,7 @@ const App = () => {
                 }
               />
               <Route
-                path="/manage-plans"
+                path='/manage-plans'
                 element={
                   <RouteGuard>
                     <ManagePlans />
@@ -159,7 +173,7 @@ const App = () => {
                 }
               />
               <Route
-                path="/manage-roles"
+                path='/manage-roles'
                 element={
                   <RouteGuard>
                     <ManageRoles />
@@ -167,7 +181,7 @@ const App = () => {
                 }
               />
               <Route
-                path="/knowledge-base"
+                path='/knowledge-base'
                 element={
                   <RouteGuard>
                     <KnowledgeBase />
@@ -175,7 +189,7 @@ const App = () => {
                 }
               />
               <Route
-                path="/knowledge-base/new-document"
+                path='/knowledge-base/new-document'
                 element={
                   <RouteGuard>
                     <NewDocument />
@@ -183,7 +197,31 @@ const App = () => {
                 }
               />
               <Route
-                path="/manage-reports"
+                path='/knowledge-base/view-documents'
+                element={
+                  <RouteGuard>
+                    <ViewDocuments />
+                  </RouteGuard>
+                }
+              />
+              <Route
+                path='/knowledge-base/view-faqs'
+                element={
+                  <RouteGuard>
+                    <ViewFaqs />
+                  </RouteGuard>
+                }
+              />
+              <Route
+                path='/knowledge-base/view-urls'
+                element={
+                  <RouteGuard>
+                    <ViewUrls />
+                  </RouteGuard>
+                }
+              />
+              <Route
+                path='/manage-reports'
                 element={
                   <RouteGuard>
                     <ManageReports />
@@ -191,7 +229,7 @@ const App = () => {
                 }
               />
               <Route
-                path="/companies"
+                path='/companies'
                 element={
                   <RouteGuard>
                     <Companies />
@@ -199,7 +237,7 @@ const App = () => {
                 }
               />
               <Route
-                path="/integrations"
+                path='/integrations'
                 element={
                   <RouteGuard>
                     <Integration />
@@ -207,7 +245,7 @@ const App = () => {
                 }
               />
               <Route
-                path="/users"
+                path='/users'
                 element={
                   <RouteGuard>
                     <Users />
@@ -215,11 +253,16 @@ const App = () => {
                 }
               />
               <Route
-                path="/settings"
-                element={<Navigate to="/settings/profile" replace />}
+                path='/settings'
+                element={
+                  <Navigate
+                    to='/settings/profile'
+                    replace
+                  />
+                }
               />
               <Route
-                path="/settings/:tab"
+                path='/settings/:tab'
                 element={
                   <RouteGuard>
                     <Settings />

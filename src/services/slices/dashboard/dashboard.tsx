@@ -1,13 +1,16 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import http from "../../http/baseUrl.tsx";
+import {
+  createAsyncThunk,
+  createSlice,
+  type PayloadAction,
+} from '@reduxjs/toolkit';
+import http from '../../http/baseUrl.tsx';
 import {
   startLoadingActivity,
   stopLoadingActivity,
-} from "../activity/activitySlice.tsx";
-
+} from '../activity/activitySlice.tsx';
 
 export const createQuestions: any = createAsyncThunk(
-  "auth/createQuestions",
+  'auth/createQuestions',
   async (data, { dispatch }) => {
     try {
       const response = await http.post(`/createQuestions`, data);
@@ -17,7 +20,7 @@ export const createQuestions: any = createAsyncThunk(
       }
     } catch (error: any) {
       if (error.response && error.response.status === 400) {
-        return { error: "Bad Request" };
+        return { error: 'Bad Request' };
       }
     } finally {
       dispatch(stopLoadingActivity());
@@ -26,7 +29,7 @@ export const createQuestions: any = createAsyncThunk(
 );
 
 export const getQuestions: any = createAsyncThunk(
-  "auth/getQuestions",
+  'auth/getQuestions',
   async (_, { dispatch }) => {
     try {
       const response = await http.get(`/getQuestions`);
@@ -36,7 +39,7 @@ export const getQuestions: any = createAsyncThunk(
       }
     } catch (error: any) {
       if (error.response && error.response.status === 400) {
-        return { error: "Bad Request" };
+        return { error: 'Bad Request' };
       }
     } finally {
       dispatch(stopLoadingActivity());
@@ -45,7 +48,7 @@ export const getQuestions: any = createAsyncThunk(
 );
 
 export const updateQuestions: any = createAsyncThunk(
-  "auth/updateQuestions",
+  'auth/updateQuestions',
   async (data: any, { dispatch }) => {
     try {
       const response = await http.put(`/updateQuestions/${data.id}`, data);
@@ -55,7 +58,7 @@ export const updateQuestions: any = createAsyncThunk(
       }
     } catch (error: any) {
       if (error.response && error.response.status === 400) {
-        return { error: "Bad Request" };
+        return { error: 'Bad Request' };
       }
     } finally {
       dispatch(stopLoadingActivity());
@@ -64,7 +67,7 @@ export const updateQuestions: any = createAsyncThunk(
 );
 
 export const deleteQuestions: any = createAsyncThunk(
-  "auth/deleteQuestions",
+  'auth/deleteQuestions',
   async (id: any, { dispatch }) => {
     try {
       const response = await http.delete(`/deleteQuestions/${id}`);
@@ -74,7 +77,7 @@ export const deleteQuestions: any = createAsyncThunk(
       }
     } catch (error: any) {
       if (error.response && error.response.status === 400) {
-        return { error: "Bad Request" };
+        return { error: 'Bad Request' };
       }
     } finally {
       dispatch(stopLoadingActivity());
@@ -83,7 +86,7 @@ export const deleteQuestions: any = createAsyncThunk(
 );
 
 export const filterQuestionsByName: any = createAsyncThunk(
-  "auth/getQuestionsbyname",
+  'auth/getQuestionsbyname',
   async (data: any, { dispatch }) => {
     try {
       const response = await http.get(`/getQuestionsbyname/${data.name}`);
@@ -93,7 +96,7 @@ export const filterQuestionsByName: any = createAsyncThunk(
       }
     } catch (error: any) {
       if (error.response && error.response.status === 400) {
-        return { error: "Bad Request" };
+        return { error: 'Bad Request' };
       }
     } finally {
       dispatch(stopLoadingActivity());
@@ -120,7 +123,7 @@ const initialState: CreateQuestions = {
 };
 
 export const dashboardSlice = createSlice({
-  name: "dashboard",
+  name: 'dashboard',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
