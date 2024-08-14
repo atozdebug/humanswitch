@@ -36,6 +36,11 @@ let sideBarItems = [
     icon: <FaceRetouchingNaturalIcon />,
     navigateTo: "/advisor-settings",
   },
+   {
+    name: "AI Advisor",
+    icon: <FaceRetouchingNaturalIcon />,
+    navigateTo: "/advisor",
+  },
   {
     name: "Manage Plans",
     icon: <PublicIcon />,

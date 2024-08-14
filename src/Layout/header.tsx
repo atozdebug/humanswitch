@@ -1,5 +1,5 @@
 import SmartToyIcon from '@mui/icons-material/SmartToy';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import CreateButton from '../components/Home/createButton';
 import { Dialog, DialogActions, DialogContent, Button } from '@mui/material';
 import { useState } from 'react';
@@ -37,8 +37,8 @@ const headers = [
     description: 'Create new plans and manage existing',
   },
   {
-    path: '/chatbot',
-    name: 'ChatBot',
+    path: '/advisor',
+    name: 'AI Advisor',
     description: 'A short description of the chatbot and its capabilities',
   },
   {
@@ -66,6 +66,7 @@ const headers = [
     buttonName: ' Document',
     buttonRoute: '/knowledge-base/new-document',
   },
+
   {
     path: '/companies',
     name: 'Companies',
@@ -204,6 +205,7 @@ const Header = () => {
     setChecked(event.target.checked);
   };
 
+  const navigate = useNavigate();
   const onClick = () => {
     handleClickOpen();
   };
@@ -261,22 +263,37 @@ const Header = () => {
   return (
     <div className='bg-white shadow-sm md:py-5 md:px-8 px-4 py-4'>
       <div className='grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 flex items-center justify-between'>
-        {location.pathname === '/knowledge-base/new-document' ? (
-          <BackButton
-            path={'Knowledge Base'}
-            route={'/knowledge-base'}
-          />
+        {location.pathname === '/knowledge-base/new-document' ||
+        location.pathname === '/chat-histories' ? (
+          location.pathname === '/knowledge-base/new-document' ? (
+            <BackButton
+              path={'Knowledge Base'}
+              route={'/knowledge-base'}
+            />
+          ) : (
+            <BackButton
+              path={'Advisor'}
+              route={'/advisor'}
+            />
+          )
         ) : (
-          <div className='flex justify-center items-center'>
-            <span className='bg-[#F6F8FA] p-2 rounded-full'>
-              <SmartToyIcon />
-            </span>
-            <div className='px-4'>
-              <h2 className='text-main-heading text-lg font-medium'>
-                {title?.name}
-              </h2>
-              <p className='text-gray-dark text-sm'>{title?.description}</p>
+          <div className='flex justify-between items-center w-full'>
+            <div className='flex'>
+              <span className='bg-[#F6F8FA] p-2 rounded-full'>
+                <SmartToyIcon />
+              </span>
+              <div className='px-4'>
+                <h2 className='text-main-heading text-lg font-medium'>
+                  {title?.name}
+                </h2>
+                <p className='text-gray-dark text-sm'>{title?.description}</p>
+              </div>
             </div>
+            {window.location.href.includes('/advisor?chat_id=') && (
+              <div>
+                <button onClick={() => navigate('/advisor')}>New Chat</button>
+              </div>
+            )}
           </div>
         )}
 

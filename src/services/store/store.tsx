@@ -16,6 +16,7 @@ import googleLoginSlice from '../slices/auth/googleLogin';
 import urlSlice from '../slices/knowledge_base/urls';
 import faqSlice from '../slices/knowledge_base/faq';
 import advisorSlice from '../slices/ai_advisor/setting';
+import chatSlice from '../slices/ai_advisor/chats';
 export const store = configureStore({
   reducer: {
     signUp: signUpSlice,
@@ -35,6 +36,7 @@ export const store = configureStore({
     url: urlSlice,
     faq: faqSlice,
     advisor: advisorSlice,
+    chat: chatSlice,
   },
 });
 

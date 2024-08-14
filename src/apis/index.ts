@@ -1,9 +1,10 @@
 import axios, { type AxiosRequestConfig, type AxiosResponse } from 'axios';
+
+const token = localStorage.getItem('token');
 export const axiosInstance = axios.create({
   baseURL: 'http://localhost:8000',
   headers: {
-    Authorization:
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcyMzE3OTE0MSwianRpIjoiMTU3ZGJiYzMtOWRiNi00Yjg2LWJlYjUtODFiMzY3NGE3Mjc5IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InN1cGVyYWRtaW5AZ21haWwuY29tIiwibmJmIjoxNzIzMTc5MTQxLCJjc3JmIjoiNjliYzM1ZWUtNWMwNi00MzI1LTgxZjAtYzU1NGExNjQ5N2IyIiwiZXhwIjoxNzIzMjY1NTQxLCJmaXJzdG5hbWUiOiJQcmluY2UiLCJsYXN0bmFtZSI6IlBhcmJoYWthciIsInBob25lX25vIjoiOTE5ODc2NTQzMjEiLCJyb2xlIjoiU3VwZXIgQWRtaW4iLCJjb21wYW55LW5hbWUiOiJVUyIsImluZHVzdHJ5IjoiRlIiLCJzZWN0b3IiOiJDQSIsImVtYWlsIjoic3VwZXJhZG1pbkBnbWFpbC5jb20iLCJpZCI6IjY2NzNjNDczNTEyMDFhYTQxY2UxYjRiMyIsInNlY3VyaXR5Ijoibm9uZSJ9.0TZUvcU2GAlVwmdMAa-pDhIs7cwO3tNTHfhV3gSfz0E',
+    Authorization: token,
   },
 });
 

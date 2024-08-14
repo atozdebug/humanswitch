@@ -1,3 +1,5 @@
+import { date, string } from 'yup';
+
 export interface CategoryResponseType {
   id: string;
   name: string;
@@ -86,4 +88,18 @@ export interface AdvisorResponseType {
   quick_questions: string[];
   created_at: string;
   updated_at: string;
+}
+
+export interface ChatMessageType {
+  id: string;
+  chat_id: string;
+  type: string;
+  content: string;
+}
+
+export interface ChatResponseType {
+  id: string;
+  title: string;
+  created_at: Date;
+  updated_at: Date;
 }

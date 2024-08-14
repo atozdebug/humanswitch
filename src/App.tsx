@@ -31,6 +31,7 @@ import NewDocument from './components/KnowledgeBase/NewDocument';
 import ViewDocuments from './components/KnowledgeBase/ViewDocuments';
 import ViewFaqs from './components/KnowledgeBase/ViewFaqs';
 import ViewUrls from './components/KnowledgeBase/ViewUrls';
+import ChatHistories from './pages/DashBoard/ChatHistories';
 const ForgetPasswordPage = lazy(() => import('./pages/Login/forgetPassword'));
 const SignupPages = lazy(() => import('./pages/Login/hrSignupPage'));
 const HomePage = lazy(() => import('./pages/Login/homePage'));
@@ -149,7 +150,7 @@ const App = () => {
                 }
               />
               <Route
-                path='/chatbot'
+                path='/advisor'
                 element={
                   <RouteGuard>
                     <Chatbot />
@@ -161,6 +162,14 @@ const App = () => {
                 element={
                   <RouteGuard>
                     <AdvisorSettings />
+                  </RouteGuard>
+                }
+              />
+              <Route
+                path='/chat-histories'
+                element={
+                  <RouteGuard>
+                    <ChatHistories />
                   </RouteGuard>
                 }
               />
