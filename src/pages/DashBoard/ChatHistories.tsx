@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
-import { Dropdown, Flowbite, Pagination, Spinner, Table } from 'flowbite-react';
-import BackButton from '../../components/KnowledgeBase/BackButton';
-import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import type { RootState } from '../../services/store/store';
-import { getChats } from '../../services/slices/ai_advisor/chats';
 import { formatDistanceToNow } from 'date-fns';
+import { Pagination, Spinner } from 'flowbite-react';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { getChats } from '../../services/slices/ai_advisor/chats';
+import type { RootState } from '../../services/store/store';
 const ChatHistories = () => {
   const chatHistories = useSelector(
     (state: RootState) => state.chat.getChatData

@@ -1,18 +1,35 @@
-import React from "react";
-import { RiArrowGoBackLine } from "react-icons/ri";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { RiArrowGoBackLine } from 'react-icons/ri';
+import { Link } from 'react-router-dom';
 
-interface BackProps {
-  path: string;
-  route: string;
+interface CommonProps {
+  hidden?: boolean;
 }
 
-const BackButton: React.FC<BackProps> = ({ path, route }) => {
+export interface VisibleProps extends CommonProps {
+  path: string;
+  route: string;
+  hidden?: false;
+}
+
+export interface HiddenProps extends CommonProps {
+  path?: undefined;
+  route?: undefined;
+  hidden: true;
+}
+
+type BackButtonProps = VisibleProps | HiddenProps;
+
+const BackButton: React.FC<BackButtonProps> = (props) => {
+  if (props.hidden) {
+    return null; // Render nothing if hidden is true
+  }
+
   return (
-    <Link to={route}>
-      <div className="flex gap-2 text-gray-dark border rounded-lg px-4 items-center font-medium py-1 text-sm">
+    <Link to={props.route}>
+      <div className='flex gap-2 text-gray-dark border rounded-lg px-4 items-center font-medium py-1 text-sm'>
         <RiArrowGoBackLine />
-        <span className="font-medium">Back to {path}</span>
+        <span className='font-medium'>Back to {props.path}</span>
       </div>
     </Link>
   );

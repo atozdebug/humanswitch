@@ -1,21 +1,23 @@
-import SmartToyIcon from '@mui/icons-material/SmartToy';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import CreateButton from '../components/Home/createButton';
-import { Dialog, DialogActions, DialogContent, Button } from '@mui/material';
-import { useState } from 'react';
-import * as yup from 'yup';
-import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import dayjs, { Dayjs } from 'dayjs';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { useDispatch } from 'react-redux';
-import { createPlans, getPlans } from '../services/slices/dashboard/plans';
-import { Accordion } from 'flowbite-react';
-import { Checkbox, Label } from 'flowbite-react';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import { createRoles, getRoles } from '../services/slices/dashboard/roles';
+import SmartToyIcon from '@mui/icons-material/SmartToy';
+import { Dialog, DialogActions, DialogContent } from '@mui/material';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs, { Dayjs } from 'dayjs';
+import { Accordion, Checkbox, Label } from 'flowbite-react';
+import { memo, useMemo, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import * as yup from 'yup';
+import CreateButton from '../components/Home/createButton';
+import BackButton, {
+  type HiddenProps,
+  type VisibleProps,
+} from '../components/KnowledgeBase/BackButton';
 import { handleFinalReport } from '../services/slices/activity/activitySlice';
-import BackButton from '../components/KnowledgeBase/BackButton';
+import { createPlans, getPlans } from '../services/slices/dashboard/plans';
+import { createRoles, getRoles } from '../services/slices/dashboard/roles';
 
 const headers = [
   {
@@ -162,7 +164,7 @@ const defaultValues = {
 
 const Header = () => {
   const location = useLocation();
-  const dispatch: any = useDispatch();
+  const dispatch = useDispatch();
 
   const getBasePath = (pathname: any) => {
     const parts = pathname.split('/');
@@ -263,40 +265,25 @@ const Header = () => {
   return (
     <div className='bg-white shadow-sm md:py-5 md:px-8 px-4 py-4'>
       <div className='grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 flex items-center justify-between'>
-        {location.pathname === '/knowledge-base/new-document' ||
-        location.pathname === '/chat-histories' ? (
-          location.pathname === '/knowledge-base/new-document' ? (
-            <BackButton
-              path={'Knowledge Base'}
-              route={'/knowledge-base'}
-            />
-          ) : (
-            <BackButton
-              path={'Advisor'}
-              route={'/advisor'}
-            />
-          )
-        ) : (
-          <div className='flex justify-between items-center w-full'>
-            <div className='flex'>
-              <span className='bg-[#F6F8FA] p-2 rounded-full'>
-                <SmartToyIcon />
-              </span>
-              <div className='px-4'>
-                <h2 className='text-main-heading text-lg font-medium'>
-                  {title?.name}
-                </h2>
-                <p className='text-gray-dark text-sm'>{title?.description}</p>
+        <NavigationButton pathname={location.pathname} />
+        {location.pathname !== '/knowledge-base/new-document' &&
+          location.pathname !== '/chat-histories' && location.pathname !== '/advisor'  && (
+            <div className='flex justify-between items-center w-full'>
+              <div className='flex'>
+                <span className='bg-[#F6F8FA] p-2 rounded-full'>
+                  <SmartToyIcon />
+                </span>
+                <div className='px-4'>
+                  <h2 className='text-main-heading text-lg font-medium'>
+                    {title?.name}
+                  </h2>
+                  <p className='text-gray-dark text-sm'>{title?.description}</p>
+                </div>
               </div>
             </div>
-            {window.location.href.includes('/advisor?chat_id=') && (
-              <div>
-                <button onClick={() => navigate('/advisor')}>New Chat</button>
-              </div>
-            )}
-          </div>
-        )}
-
+          )}
+          
+     
         {location.pathname !== '/knowledge-base/new-document' && (
           <div className='rounded-lg flex justify-end'>
             {title?.buttonName &&
@@ -871,5 +858,20 @@ const Header = () => {
     </div>
   );
 };
+const NavigationButton = memo<{ pathname: string }>(({ pathname }) => {
+  const backButtonProps: VisibleProps | HiddenProps = useMemo(() => {
+    if (pathname === '/knowledge-base/new-document') {
+      // Add your props or logic here
+      return { path: 'Knowledge Base', route: '/knowledge-base' };
+    }
+    if (pathname === '/chat-histories') {
+      return { path: 'Advisor', route: '/advisor' };
+    }
 
+    // Default props or other conditions
+    return { hidden: true };
+  }, [pathname]);
+
+  return <BackButton {...backButtonProps} />;
+});
 export default Header;

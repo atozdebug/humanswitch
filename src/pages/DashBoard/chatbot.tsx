@@ -1,18 +1,20 @@
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { formatDistanceToNow } from 'date-fns';
+import { Spinner } from 'flowbite-react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useSearchParams } from 'react-router-dom';
 import io, { type Socket } from 'socket.io-client';
+import Markdown from 'react-markdown'
 import {
   getChatMessages,
   getChats,
 } from '../../services/slices/ai_advisor/chats';
-import { formatDistanceToNow } from 'date-fns';
-import { getAdvisor } from '../../services/slices/ai_advisor/setting';
+import { useNavigate } from 'react-router-dom';
+import { getAdvisor,getImage } from '../../services/slices/ai_advisor/setting';
 import type { RootState } from '../../services/store/store';
 import type { ChatMessageType } from '../../types';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { Spinner } from 'flowbite-react';
 // Replace this URL with your server's URL
 const SOCKET_SERVER_URL = 'ws://127.0.0.1:8000/';
 export interface NewMessageType {
@@ -25,7 +27,7 @@ const Chatbot = () => {
   const [query] = useSearchParams();
   const id = query.get('chat_id');
 
-  const [chatId, setChatId] = useState<String | null>(id);
+  const [chatId, setChatId] = useState<string | null>(id);
   const [socket, setSocket] = useState<Socket | null>();
   console.debug('ℹ️ ~ file: chatbot.tsx:27 ~ Chatbot ~ socket:', socket);
   const [userMessage, setUserMessage] = useState('');
@@ -36,11 +38,15 @@ const Chatbot = () => {
   const advisorDetails = useSelector(
     (state: RootState) => state.advisor?.getData
   );
+  
+  const advisorImage = useSelector(
+    (state: RootState) => state.advisor?.imageData
+  );
 
   const chatHistories = useSelector(
     (state: RootState) => state.chat.getChatData
   );
-
+  const navigate = useNavigate();
   const msgLoading = useSelector((state: RootState) => state.chat.loading);
 
   const dispatch = useDispatch();
@@ -49,6 +55,11 @@ const Chatbot = () => {
       dispatch(getAdvisor());
     }
   }, [advisorDetails]);
+  useEffect(() => {
+    if (!advisorImage) {
+      dispatch(getImage());
+    }
+  }, [advisorImage]);
 
   useEffect(() => {
     if (!chatHistories) {
@@ -185,7 +196,31 @@ const Chatbot = () => {
       console.log('Message is required 1');
     }
   };
+
+  useEffect(() => {
+    setChatId(id);
+  }, [id]);
+
   return (
+  <>
+  <div className='flex justify-between items-center w-full'>
+              <div className='flex'>
+                <span className='bg-[#F6F8FA] px-2 rounded-full'>
+                 <img src={advisorImage} alt="Advisor Logo" width='40' height='40'/>
+                </span>
+                <div className='px-4'>
+                  <h2 className='text-main-heading text-lg font-medium'>
+                    {advisorDetails?.bot_title}
+                  </h2>
+                  <p className='text-gray-dark text-sm'>A short description of the chatbot and its capabilities</p>
+                </div>
+              </div>
+              {window.location.href.includes('/advisor?chat_id=') && (
+                <div>
+                  <button onClick={() => navigate('/advisor')}>New Chat</button>
+                </div>
+              )}
+            </div>
     <div className='bg-gray-100 pb-5 max-h-[85vh] h-[85vh] '>
       {chatId ? (
         <div className='mx-auto lg:w-4/5 relative h-full py-4'>
@@ -202,7 +237,7 @@ const Chatbot = () => {
                       src='/assets/images/image.png'
                     />{' '}
                     <p className='bg-white  rounded-lg  text-sm font-normal'>
-                      {message?.content}
+                      <Markdown>{message?.content}</Markdown>
                     </p>
                   </div>
                 ) : (
@@ -374,7 +409,8 @@ const Chatbot = () => {
                       </svg>
                     ) : (
                       <p className='bg-white   rounded-lg text-sm font-normal'>
-                        {message?.content}
+                        
+                        <Markdown>{message?.content}</Markdown>
                       </p>
                     )}
                   </div>
@@ -464,6 +500,7 @@ const Chatbot = () => {
               </div>
             ))}
           </div>
+          { chatHistories?.data?.length>0 && 
           <div className='mt-10 px-4'>
             <div className='flex items-center justify-between'>
               <p className=''>Your recents chats</p>
@@ -479,6 +516,7 @@ const Chatbot = () => {
                 <div
                   key={index}
                   className='bg-white rounded-lg p-4'
+                  onClick={() => navigate(`/advisor?chat_id=${chat?.id}`)}
                 >
                   <div className=''>
                     <svg
@@ -515,9 +553,11 @@ const Chatbot = () => {
               ))}
             </div>
           </div>
+          }
         </div>
       )}
     </div>
+    </>
   );
 };
 
