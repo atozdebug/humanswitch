@@ -73,7 +73,7 @@ console.info(advisorImage)
   extraHeaders: {
     Authorization: 'Bearer ' + token,
   },
-  transports: ['websocket'],
+ 
 });
     newSocket.on('connect', () => {
       console.log('Socket connected');
