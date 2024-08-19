@@ -16,7 +16,7 @@ import { getAdvisor,getImage } from '../../services/slices/ai_advisor/setting';
 import type { RootState } from '../../services/store/store';
 import type { ChatMessageType } from '../../types';
 // Replace this URL with your server's URL
-const SOCKET_SERVER_URL = 'ws://humanswitch-backend.onrender.com/';
+const SOCKET_SERVER_URL = 'https://humanswitch-backend.onrender.com/';
 export interface NewMessageType {
   type: string;
   content: string;
@@ -73,6 +73,7 @@ console.info(advisorImage)
       extraHeaders: {
         Authorization: 'Bearer ' + token,
       },
+      transports: ['websocket'],
     });
     newSocket.on('connect', () => {
       console.log('Socket connected');
