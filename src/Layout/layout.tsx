@@ -28,7 +28,7 @@ const Layout = ({ children }: any) => {
       const checkBox = true; // Assuming checkBox is a boolean, you need to define it
 
       try {
-        const response = await fetch('https://humanswitch-backend.onrender.com/login/', {
+        const response = await fetch('https://humanswitch-backend.onrender.com/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
