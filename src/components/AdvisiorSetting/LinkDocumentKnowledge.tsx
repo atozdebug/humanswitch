@@ -1,19 +1,16 @@
-import { Button, Drawer } from 'flowbite-react';
-import { useState } from 'react';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { Checkbox } from 'flowbite-react';
-import { Dropdown, Flowbite, Pagination, Spinner, Table } from 'flowbite-react';
-import { useDispatch } from 'react-redux';
-import { getFaqs } from '../../services/slices/knowledge_base/faq';
-import { getDocuments } from '../../services/slices/knowledge_base/document';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
+import { Checkbox, Drawer, Pagination, Table } from 'flowbite-react'
+import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { getDocuments } from '../../services/slices/knowledge_base/document'
 export function LinkDocumentKnowledge({
   allDocuments,
   selectedDocuments,
   setSelectedDocuments,
-  isOpen,
-  setIsOpen,
+  // setIsOpen,
 }) {
   const dispatch = useDispatch();
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleClose = () => setIsOpen(false);
 
