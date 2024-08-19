@@ -16,7 +16,7 @@ import { getAdvisor,getImage } from '../../services/slices/ai_advisor/setting';
 import type { RootState } from '../../services/store/store';
 import type { ChatMessageType } from '../../types';
 // Replace this URL with your server's URL
-const SOCKET_SERVER_URL = 'ws://127.0.0.1:8000/';
+const SOCKET_SERVER_URL = 'ws://humanswitch-backend.onrender.com/';
 export interface NewMessageType {
   type: string;
   content: string;
@@ -42,7 +42,7 @@ const Chatbot = () => {
   const advisorImage = useSelector(
     (state: RootState) => state.advisor?.imageData
   );
-
+console.info(advisorImage)
   const chatHistories = useSelector(
     (state: RootState) => state.chat.getChatData
   );

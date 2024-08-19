@@ -3,7 +3,7 @@ import Header from './header';
 import SideBar from './sidebar';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-
+import axios from 'axios';
 const Layout = ({ children }: any) => {
   const [isTrue, setIsTrue] = useState(true);
   const location = useLocation();
@@ -16,10 +16,53 @@ const Layout = ({ children }: any) => {
   const data2 = useSelector((state: any) => state.authentication?.data);
   const logout = useSelector((state: any) => state.activity?.logout);
   const data3 = useSelector((state: any) => state.googleLogin?.data);
-
+  
+  
+  
   useEffect(() => {
     const token = localStorage.getItem('token');
 
+    async function getToken() {
+      const email = "superadmin@gmail.com";
+      const password = "SuperAdmin1";
+      const checkBox = true; // Assuming checkBox is a boolean, you need to define it
+
+      try {
+        const response = await fetch('https://humanswitch-backend.onrender.com/login/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email, password, checkBox }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const json = await response.json();
+
+        if (json?.access_token) {
+          localStorage.setItem('token', json.access_token);
+          console.log('Login successful');
+          initializeSocket(); // Initialize Socket.IO connection after login
+        } else {
+          console.error('Login failed', json);
+        }
+      } catch (error) {
+        console.error("Error occurred during login", error);
+      }
+    }
+
+    if (!token) {
+      getToken();
+    }
+  }, []); // Dependency array is empty, so this effect runs once after the first render
+
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+  
     token ? setIsTrue(true) : setIsTrue(true);
   }, [data, data2, logout, data3]);
 

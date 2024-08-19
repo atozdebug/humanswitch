@@ -2,7 +2,7 @@ import axios, { type AxiosRequestConfig, type AxiosResponse } from 'axios';
 
 const token = localStorage.getItem('token');
 export const axiosInstance = axios.create({
-  baseURL: 'http://localhost:8000',
+  baseURL: 'https://humanswitch-backend.onrender.com',
   headers: {
     Authorization: token,
   },
