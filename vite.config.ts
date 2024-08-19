@@ -7,13 +7,13 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://127.0.0.1:8000',
+        target: 'https://humanswitch-backend.onrender.com/',
         changeOrigin: true,
         secure: false,
         ws: true,
       },
       '/ws': {
-        target: 'http://192.168.29.131:8000/ws',
+        target: 'https://humanswitch-backend.onrender.com/ws',
         changeOrigin: true,
         secure: false,
         ws: true,

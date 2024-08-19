@@ -13,24 +13,24 @@ RUN npm install
 # Copy the rest of the application code
 COPY . .
 
-# Build the React app
+# Build the React app (ignore type checking during build)
 RUN npm run build
 
-# Stage 2: Run the React app
+# Stage 2: Serve the React app
 FROM node:20
 
 # Set working directory
 WORKDIR /app
 
 # Copy only the build output from the previous stage
-COPY --from=build /app/dist ./dist
+COPY --from=build /app/build ./build
 
 # Install serve globally to serve the app
 RUN npm install -g serve
 
-# Expose port 3000 to the outside world
+# Expose port 5173 to the outside world
 EXPOSE 5173
 
 # Command to serve the app
-CMD ["serve", "-s", "dist"]
+CMD ["serve", "-s", "build"]
 
