@@ -70,11 +70,11 @@ console.info(advisorImage)
   useEffect(() => {
     const token = localStorage.getItem('token');
     const newSocket = io(SOCKET_SERVER_URL, {
-      extraHeaders: {
-        Authorization: 'Bearer ' + token,
-      },
-      transports: ['websocket'],
-    });
+  extraHeaders: {
+    Authorization: 'Bearer ' + token,
+  },
+  transports: ['websocket'],
+});
     newSocket.on('connect', () => {
       console.log('Socket connected');
       setSocket(newSocket);
