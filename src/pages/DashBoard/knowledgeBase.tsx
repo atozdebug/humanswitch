@@ -1,15 +1,15 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
-import { useDispatch, useSelector } from 'react-redux';
-import Category from '../../components/KnowledgeBase/Category';
-import ContentOutline from '../../components/KnowledgeBase/ContentOutline';
-import RecentUpload from '../../components/KnowledgeBase/RecentUpload';
-import SideGraphAnalytics from '../../components/KnowledgeBase/SideGraphAnalytics';
-import { getDocuments } from '../../services/slices/knowledge_base/document';
-import { getFaqs } from '../../services/slices/knowledge_base/faq';
-import { getUrls } from '../../services/slices/knowledge_base/urls';
-import type { RootState } from '../../services/store/store';
-import { Spinner } from 'flowbite-react';
+import { useDispatch, useSelector } from "react-redux";
+import Category from "../../components/KnowledgeBase/Category";
+import ContentOutline from "../../components/KnowledgeBase/ContentOutline";
+import RecentUpload from "../../components/KnowledgeBase/RecentUpload";
+import SideGraphAnalytics from "../../components/KnowledgeBase/SideGraphAnalytics";
+import { getDocuments } from "../../services/slices/knowledge_base/document";
+import { getFaqs } from "../../services/slices/knowledge_base/faq";
+import { getUrls } from "../../services/slices/knowledge_base/urls";
+import type { RootState } from "../../services/store/store";
+import { Spinner } from "flowbite-react";
 
 const KnowledgeBase = () => {
   const allDocuments = useSelector(
@@ -24,7 +24,7 @@ const KnowledgeBase = () => {
   useEffect(() => {
     if (!allDocuments) {
       console.debug(
-        'ℹ️ ~ file: knowledgeBase.tsx:25 ~ useEffect ~ allDocuments:',
+        "ℹ️ ~ file: knowledgeBase.tsx:25 ~ useEffect ~ allDocuments:",
         allDocuments
       );
       dispatch(getDocuments({ page: 1 }));
@@ -37,9 +37,9 @@ const KnowledgeBase = () => {
     }
   }, [dispatch, allUrls]);
   useEffect(() => {
-    console.info('allFaqs', allFaqs);
+    console.info("allFaqs", allFaqs);
     if (!allFaqs) {
-      console.info('Enteered', allFaqs);
+      console.info("Enteered", allFaqs);
       dispatch(getFaqs({ page: 1 }));
     }
   }, [dispatch, allFaqs]);
@@ -52,11 +52,11 @@ const KnowledgeBase = () => {
   return (
     <>
       {/* max-h-vhcalc92px */}
-      <div className='content-right-inner min-h-vhcalc92px overflow-y-auto  lg:px-8 px-4 md:py-7 py-4 bg-lightgray'>
-        <div className='knowledge-inner bg-white rounded-[20px] lg:p-6 p-4'>
-          <ul className='grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5'>
-            <li className='grid-item xl:col-span-3 md:col-span-2'>
-              <div className='xl:max-w-p90 max-w-808'>
+      <div className="content-right-inner min-h-vhcalc92px overflow-y-auto  lg:px-8 px-4 md:py-7 py-4 bg-lightgray">
+        <div className="knowledge-inner bg-white rounded-[20px] lg:p-6 p-4">
+          <ul className="grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5">
+            <li className="grid-item xl:col-span-3 md:col-span-2">
+              <div className="xl:max-w-p90 max-w-808">
                 <Category />
                 {allDocuments && allUrls && allFaqs ? (
                   <RecentUpload
@@ -65,7 +65,7 @@ const KnowledgeBase = () => {
                     recentUrls={recentUrls}
                   />
                 ) : (
-                  <div className='flex justify-center my-6'>
+                  <div className="flex justify-center my-6">
                     <Spinner />
                   </div>
                 )}
@@ -73,7 +73,7 @@ const KnowledgeBase = () => {
                 {/* <ContentOutline /> */}
               </div>
             </li>
-            <li className='grid-item xl:col-span-1 md:col-span-2'>
+            <li className="grid-item xl:col-span-1 md:col-span-2">
               <SideGraphAnalytics
                 totalDocuments={allDocuments ? allDocuments.total : 0}
                 totalFaqs={allFaqs ? allFaqs.total : 0}

@@ -267,8 +267,11 @@ const Header = () => {
       <div className="grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 flex items-center justify-between">
         <NavigationButton pathname={location.pathname} />
         {location.pathname !== "/knowledge-base/new-document" &&
+          location.pathname !== "/knowledge-base/view-documents" &&
+          location.pathname !== "/knowledge-base/view-urls" &&
+          location.pathname !== "/knowledge-base/view-faqs" &&
           location.pathname !== "/chat-histories" &&
-          location.pathname !== "/advisor" && (
+          location.pathname !== "/chatbot" && (
             <div className="flex justify-between items-center w-full">
               <div className="flex">
                 <div className="bg-[#F6F8FA] p-4 flex justify-center items-center rounded-full">
@@ -284,23 +287,26 @@ const Header = () => {
             </div>
           )}
 
-        {location.pathname !== "/knowledge-base/new-document" && (
-          <div className="rounded-lg flex justify-end">
-            {title?.buttonName &&
-              title?.buttonRoute == "/knowledge-base/new-document" && (
-                <Link to={title.buttonRoute}>
-                  <CreateButton
-                    text={`Create New ${title?.buttonName}`}
-                    onClick={() =>
-                      title?.buttonRoute !== "/knowledge-base/new-document" &&
-                      onClick()
-                    }
-                    className=""
-                  />
-                </Link>
-              )}
-          </div>
-        )}
+        {location.pathname !== "/knowledge-base/new-document" &&
+          location.pathname !== "/knowledge-base/view-documents" &&
+          location.pathname !== "/knowledge-base/view-urls" &&
+          location.pathname !== "/knowledge-base/view-faqs" && (
+            <div className="rounded-lg flex justify-end w-full">
+              {title?.buttonName &&
+                title?.buttonRoute == "/knowledge-base/new-document" && (
+                  <Link to={title.buttonRoute}>
+                    <CreateButton
+                      text={`Create New ${title?.buttonName}`}
+                      onClick={() =>
+                        title?.buttonRoute !== "/knowledge-base/new-document" &&
+                        onClick()
+                      }
+                      className=""
+                    />
+                  </Link>
+                )}
+            </div>
+          )}
       </div>
       <Dialog
         fullWidth={true}
@@ -860,7 +866,12 @@ const Header = () => {
 };
 const NavigationButton = memo<{ pathname: string }>(({ pathname }) => {
   const backButtonProps: VisibleProps | HiddenProps = useMemo(() => {
-    if (pathname === "/knowledge-base/new-document") {
+    if (
+      pathname === "/knowledge-base/new-document" ||
+      pathname === "/knowledge-base/view-documents" ||
+      pathname === "/knowledge-base/view-urls" ||
+      pathname === "/knowledge-base/view-faqs"
+    ) {
       // Add your props or logic here
       return { path: "Knowledge Base", route: "/knowledge-base" };
     }

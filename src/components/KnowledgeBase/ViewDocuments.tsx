@@ -1,19 +1,19 @@
-import { Dropdown, Flowbite, Pagination, Spinner, Table } from 'flowbite-react';
-import React, { useEffect, useState } from 'react';
-import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
-import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
-import { GridExpandMoreIcon } from '@mui/x-data-grid';
-import { boolean } from 'yup';
-import { getRecentDocumentKnowledge } from '../../apis/documentKnowledge';
-import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
-import { get } from '../../apis';
-import { useDispatch, useSelector } from 'react-redux';
-import type { RootState } from '../../services/store/store';
+import { Dropdown, Flowbite, Pagination, Spinner, Table } from "flowbite-react";
+import React, { useEffect, useState } from "react";
+import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
+import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
+import { GridExpandMoreIcon } from "@mui/x-data-grid";
+import { boolean } from "yup";
+import { getRecentDocumentKnowledge } from "../../apis/documentKnowledge";
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+import { get } from "../../apis";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "../../services/store/store";
 import {
   deleteDocument,
-  getDocuments,
-} from '../../services/slices/knowledge_base/document';
-import { RiDeleteBin5Line } from 'react-icons/ri';
+  getDocuments
+} from "../../services/slices/knowledge_base/document";
+import { RiDeleteBin5Line } from "react-icons/ri";
 
 function ViewDocuments() {
   const allDocuments = useSelector(
@@ -26,7 +26,7 @@ function ViewDocuments() {
   useEffect(() => {
     if (!allDocuments) {
       console.debug(
-        'ℹ️ ~ file: knowledgeBase.tsx:25 ~ useEffect ~ allDocuments:',
+        "ℹ️ ~ file: knowledgeBase.tsx:25 ~ useEffect ~ allDocuments:",
         allDocuments
       );
       dispatch(getDocuments({ page: 1 }));
@@ -36,20 +36,20 @@ function ViewDocuments() {
     dispatch(deleteDocument(id))
       .then((result: any) => {
         if (result.payload.success) {
-          alert('Document deleted successfully.');
+          alert("Document deleted successfully.");
         } else {
           alert(`Failed to delete document: ${result.payload.error}`);
         }
       })
-      .catch((error) => {
-        alert('An unexpected error occurred. Please try again later.');
-        console.error('Delete document error:', error);
+      .catch(error => {
+        alert("An unexpected error occurred. Please try again later.");
+        console.error("Delete document error:", error);
       });
   };
-  const viewDocument = async (id) => {
+  const viewDocument = async id => {
     try {
       const response = await get(`/documents/${id}/download`, {
-        responseType: 'blob',
+        responseType: "blob"
       });
       if (response.status === 200) {
         // Convert Blob to a base64 string or Blob URL
@@ -61,101 +61,91 @@ function ViewDocuments() {
         }
       }
     } catch (error) {
-      console.error('Error fetching document:', error);
+      console.error("Error fetching document:", error);
     }
   };
   const onPageChange = (page: number) => {
     dispatch(getDocuments({ page: page }));
   };
   return (
-    <div className='pt-8 px-5'>
-      <div className='flex gap-2 text-sm font-semibold justify-between items-center text-darkgray2 pb-3 border-b'>
-        <div className='flex items-center gap-3'>
+    <div className="pt-8 px-5">
+      <div className="flex gap-2 text-sm font-semibold justify-between items-center text-darkgray2 pb-3 border-b">
+        <div className="flex items-center gap-3">
           <img
-            src='/assets/images/folder.png'
+            src="/assets/images/folder.png"
             width={16}
             height={16}
-            className='w-9 h-9'
+            className="w-9 h-9"
           />
-          <p className='text-xl'>Document Knowledge</p>
+          <p className="text-xl">Document Knowledge</p>
         </div>
-        <p className='text-xs text-lightgray4 pt-2px'>
+        <p className="text-xs text-lightgray4 pt-2px">
           {allDocuments ? allDocuments.total : 0} files
         </p>
       </div>
-      <div className='overflow-auto'>
-        {!loading ? (
+      <div className="overflow-auto">
+        {loading ? (
+          <div className="flex justify-center my-12">
+            <Spinner />
+          </div>
+        ) : allDocuments?.data?.length ? (
           <>
-            <Table className='relative z-10'>
-              <Table.Body className=''>
-                {/* Recent Documents  */}
-
+            <Table className="relative z-10">
+              <Table.Body>
+                {/* Recent Documents */}
                 {allDocuments?.data?.map((item, index) => (
                   <Table.Row
-                    className='text-darkgray2 border-b fw-medium'
+                    className="text-darkgray2 border-b fw-medium"
                     key={index}
                   >
                     <Table.Cell
-                      className={`"py-4 border-b pl-3" ${
-                        index === 1 ? 'border-none' : 'border-b'
+                      className={`py-4 border-b pl-3 ${
+                        index === 1 ? "border-none" : "border-b"
                       }`}
                     >
-                      <div className='flex gap-2 items-center min-w-[150px]'>
+                      <div className="flex gap-2 items-center min-w-[150px]">
                         <PictureAsPdfIcon />
 
-                        <p className='text-darkgray2 text-sm font-semibold'>
+                        <p className="text-darkgray2 text-sm font-semibold">
                           {item.name}
                         </p>
                       </div>
                     </Table.Cell>
                     <Table.Cell
-                      className={`"py-4 border-b " ${
-                        index === 1 ? 'border-none' : 'border-b'
+                      className={`py-4 border-b ${
+                        index === 1 ? "border-none" : "border-b"
                       }`}
                     >
-                      <p className='text-lightgray4 text-sm font-normal min-w-[148px]'>
+                      <p className="text-lightgray4 text-sm font-normal min-w-[148px]">
                         {`${new Date(item.created_at).getDate()},${new Date(
                           item.created_at
-                        ).toLocaleString('en-US', {
-                          month: 'short',
+                        ).toLocaleString("en-US", {
+                          month: "short"
                         })},${new Date(
                           item.created_at
                         ).getFullYear()}, ${new Date(
                           item.created_at
-                        ).toLocaleString('en-US', {
-                          hour: '2-digit',
-                          minute: '2-digit',
-                          hour12: true,
+                        ).toLocaleString("en-US", {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                          hour12: true
                         })}`}
                       </p>
                     </Table.Cell>
                     <Table.Cell
-                      className={`"py-4 border-b pl-3" ${
-                        index === 1 ? 'border-none' : 'border-b'
+                      className={`py-4 border-b pl-3 ${
+                        index === 1 ? "border-none" : "border-b"
                       }`}
-                    >
-                      {/* <div className='flex items-center gap-2'>
-                            <img
-                              src='/assets/images/folder.png'
-                              width={16}
-                              height={16}
-                              className='w-4 h-4'
-                            />
-                            <p className='text-lightgray4 text-sm font-medium'>
-                              References
-                            </p>
-                          </div> */}
-                    </Table.Cell>
-
+                    ></Table.Cell>
                     <Table.Cell
-                      className={`"py-4 border-b pl-3" ${
-                        index === 1 ? 'border-none' : 'border-b'
+                      className={`py-4 border-b pl-3 ${
+                        index === 1 ? "border-none" : "border-b"
                       }`}
                     >
-                      <div className='flex gap-2 md:gap-4 items-center justify-end'>
+                      <div className="flex gap-2 md:gap-4 items-center justify-end">
                         <button
                           onClick={() => viewDocument(item.id)}
-                          className='text-sm py-1 px-2 border border-gray-300 bg-white text-gray-600 rounded-lg'
+                          className="text-sm py-1 px-2 border border-gray-300 bg-white text-gray-600 rounded-lg"
                         >
                           View
                         </button>
@@ -164,18 +154,16 @@ function ViewDocuments() {
                           onClick={() => {
                             handleDelete(item.id);
                           }}
-                          stroke='red-code'
-                          className='text-red-code cursor-pointer'
+                          stroke="red-code"
+                          className="text-red-code cursor-pointer"
                         />
                       </div>
                     </Table.Cell>
                   </Table.Row>
                 ))}
-
-                {/* </Table.Row> */}
               </Table.Body>
             </Table>
-            <div className='flex justify-center mt-3'>
+            <div className="flex justify-center mt-3">
               <Pagination
                 currentPage={allDocuments?.page || 1}
                 totalPages={allDocuments?.total_pages || 1}
@@ -184,8 +172,8 @@ function ViewDocuments() {
             </div>
           </>
         ) : (
-          <div className='flex justify-center my-12'>
-            <Spinner />
+          <div className="flex justify-center my-12">
+            <p className="text-center text-gray-500">No Documents Available</p>
           </div>
         )}
 
